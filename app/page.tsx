@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+
+import Header from "./sections/Header";
+import Hero from "./sections/Hero";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <main className="w-full h-full overflow-clip">
+      <Header/>
+      <Hero />
+    </main>
+  );
+};
 
-export default page
+export default page;

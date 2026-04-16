@@ -1,20 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1b1a1a;
 }
 
 @theme inline {
+  --color-cream: #f6f1e7;
+  --color-sand: #e4bf8b;
+  --color-navy: #202a44;
+  --color-brown: #361C0C;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-helvetica);
+  --font-serif: var(--font-instrument-serif), serif;
 }
-
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-helvetica), Arial, Helvetica, sans-serif;
 }

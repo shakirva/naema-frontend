@@ -4,7 +4,7 @@ import Latest from "./Latest";
 
 const Shop = () => {
   return (
-    <section className="min-h-screen w-full bg-white px-16 py-12">
+    <section className="min-h-screen w-full bg-white  py-12 max-w-7xl mx-auto">
       <div className="flex flex-col w-full">
         <h2 className="font-serif text-[52px] text-center leading-none">
           Our Collection

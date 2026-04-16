@@ -17,60 +17,59 @@ type Product = {
 const products: Product[] = [
   {
     id: 1,
-    name: "Soft Rutab Medjool Dates",
-    tags: ["Ripe and Gooey", "GF"],
+    name: "Amber Dates",
+    tags: ["Soft", "Sweet"],
     price: "$34.99",
     rating: 5,
     reviewCount: 2672,
-    image: "/images/dates/soft-rutab.jpg",
+    image: "/x1.jpg",
   },
   {
     id: 2,
-    name: "Fancy Tight-Skinned  Dates",
-    tags: ["Firmer Chewier Bite", "GF"],
+    name: "Royal Dates",
+    tags: ["Firm", "Rich"],
     price: "$29.99",
     rating: 4.5,
     reviewCount: 693,
-    image: "/images/dates/fancy-tight.jpg",
+    image: "/x2.jpg",
   },
   {
     id: 3,
-    name: "Zahidi Dates",
-    tags: ["Subtle Sweetness", "GF"],
+    name: "Desert Gold",
+    tags: ["Light", "Mild"],
     price: "$39.99",
     rating: 4,
     reviewCount: 57,
-    image: "/images/dates/zahidi.jpg",
+    image: "/x3.jpg",
   },
   {
     id: 4,
-    name: "Dayri Dates",
-    tags: ["Healthy Honey", "GF"],
+    name: "Honey Dates",
+    tags: ["Juicy", "Smooth"],
     price: "$43.99",
     rating: 5,
     reviewCount: 11,
-    image: "/images/dates/dayri.jpg",
+    image: "/x4.jpg",
   },
   {
     id: 5,
-    name: "Medjool Date Sampler Box",
-    tags: ["Best Value", "GF"],
+    name: "Date Mix Box",
+    tags: ["Value", "Mix"],
     price: "$49.99",
     rating: 5,
     reviewCount: 312,
-    image: "/images/dates/sampler.jpg",
+    image: "/x5.jpg",
   },
   {
     id: 6,
-    name: "Organic Medjool Dates",
-    tags: ["Certified Organic", "GF"],
+    name: "Organic Dates",
+    tags: ["Organic", "Pure"],
     price: "$38.99",
     rating: 4.5,
     reviewCount: 148,
-    image: "/images/dates/organic.jpg",
+    image: "/x6.jpg",
   },
 ];
-
 const StarRating = ({ rating }: { rating: number }) => {
   return (
     <div className="flex items-center gap-0.5">
@@ -88,13 +87,13 @@ const StarRating = ({ rating }: { rating: number }) => {
             {filled ? (
               <path
                 d="M10 1.5l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.77l-4.78 2.43.91-5.32L2.27 7.12l5.34-.78L10 1.5z"
-                fill="#F59E0B"
+                fill="#ccba78"
               />
             ) : half ? (
               <>
                 <defs>
                   <linearGradient id={`half-${star}`}>
-                    <stop offset="50%" stopColor="#F59E0B" />
+                    <stop offset="50%" stopColor="#ccba78" />
                     <stop offset="50%" stopColor="#D1D5DB" />
                   </linearGradient>
                 </defs>
@@ -106,7 +105,7 @@ const StarRating = ({ rating }: { rating: number }) => {
             ) : (
               <path
                 d="M10 1.5l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.77l-4.78 2.43.91-5.32L2.27 7.12l5.34-.78L10 1.5z"
-                fill="#D1D5DB"
+                fill="#ccba78"
               />
             )}
           </svg>
@@ -127,7 +126,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   return (
     <div className="flex-none w-72 flex flex-col gap-3">
       {/* Image */}
-      <div className="relative w-full h-64 rounded-2xl overflow-hidden border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+      <div className="relative w-full h-64 rounded-2xl overflow-hidden border">
         <Image
           src={product.image}
           alt={product.name}
@@ -140,13 +139,13 @@ const ProductCard = ({ product }: { product: Product }) => {
       {/* Rating */}
       <div className="flex items-center gap-1.5">
         <StarRating rating={product.rating} />
-        <span className="text-sm font-semibold text-amber-600 underline underline-offset-2 cursor-pointer">
+        <span className="text-sm font-semibold text-gold underline underline-offset-2 cursor-pointer">
           ({product.reviewCount.toLocaleString()})
         </span>
       </div>
 
       {/* Name */}
-      <h3 className="font-extrabold text-base uppercase tracking-tight leading-tight text-zinc-900 line-clamp-2">
+      <h3 className="font-medium text-[20px]  capitalize tracking-tight leading-tight text-black line-clamp-2">
         {product.name}
       </h3>
 
@@ -155,7 +154,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         {product.tags.map((tag) => (
           <span
             key={tag}
-            className="px-3 py-0.5 text-xs font-semibold uppercase tracking-wide border border-zinc-800 rounded-full text-zinc-700 bg-white"
+            className=" px-2 py-0.5 leadind-none text-xs font-medium text-center   border border-black/60 rounded-full text-black/80 bg-white"
           >
             {tag}
           </span>
@@ -168,12 +167,8 @@ const ProductCard = ({ product }: { product: Product }) => {
       {/* Button */}
       <button
         onClick={handleAddToCart}
-        className={`w-full py-3.5 rounded-full border-2 border-black font-extrabold uppercase tracking-wide text-sm transition-all duration-200 cursor-pointer
-          ${
-            added
-              ? "bg-amber-500 text-white shadow-none translate-y-[2px]"
-              : "bg-[#F5F0E8] text-zinc-900 hover:bg-amber-500 hover:text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-[2px]"
-          }`}
+        className={`w-full py-3.5 rounded-full border-2 border-black font-bold uppercase tracking-tight text-sm transition-all duration-200 cursor-pointer
+         `}
       >
         {added ? "Added ✓" : "Add to Cart"}
       </button>
@@ -198,7 +193,10 @@ const Latest = () => {
   const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    el.scrollBy({ left: dir === "left" ? -SCROLL_AMOUNT : SCROLL_AMOUNT, behavior: "smooth" });
+    el.scrollBy({
+      left: dir === "left" ? -SCROLL_AMOUNT : SCROLL_AMOUNT,
+      behavior: "smooth",
+    });
     setTimeout(updateScrollState, 350);
   };
 
@@ -211,7 +209,8 @@ const Latest = () => {
             Shop Our Latest drops
           </h2>
           <p className="mt-2  text-[16px] text-black/80 tracking-tight">
-            From classic whole dates to gourmet stuffed varieties – find your perfect date match.
+            From classic whole dates to gourmet stuffed varieties – find your
+            perfect date match.
           </p>
         </div>
 
@@ -224,7 +223,7 @@ const Latest = () => {
             className={`w-11 h-11 rounded-full border border-black/50 flex items-center justify-center transition-all duration-150 cursor-pointer
               ${
                 canScrollLeft
-                  ? "bg-zinc-900 text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,0.3)] hover:bg-amber-500 hover:border-amber-500 active:shadow-none active:translate-y-px"
+                  ? "bg-black text-white   active:shadow-none "
                   : "bg-zinc-100 text-zinc-300 border-zinc-200 cursor-not-allowed"
               }`}
           >
@@ -237,7 +236,7 @@ const Latest = () => {
             className={`w-11 h-11 rounded-full border- border-black/50 flex items-center justify-center transition-all duration-150 cursor-pointer
               ${
                 canScrollRight
-                  ? "bg-zinc-900 text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,0.3)] hover:bg-amber-500 hover:border-amber-500 active:shadow-none active:translate-y-px"
+                  ? "bg-zinc-900 text-white  active:shadow-none "
                   : "bg-zinc-100 text-zinc-300 border-zinc-200 cursor-not-allowed"
               }`}
           >

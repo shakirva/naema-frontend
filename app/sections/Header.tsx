@@ -21,7 +21,7 @@ const navLinks = [
 const Header = () => {
   return (
     <header className="w-full  ">
-        <div className="w-full bg-sand text-black text-[12px] relative">
+        <div className="w-full bg-navy text-white text-[12px] relative">
               <div className="max-w-7xl mx-auto flex items-center justify-between py-4 ">
                 {/* Left */}
                 <div className="flex items-center gap-6">

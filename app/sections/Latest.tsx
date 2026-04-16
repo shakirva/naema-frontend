@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 type Product = {
   id: number;
@@ -162,12 +163,12 @@ const ProductCard = ({ product }: { product: Product }) => {
       </div>
 
       {/* Price */}
-      <p className="font-bold text-lg text-zinc-900">{product.price}</p>
+      <p className="font-bold text-lg text-black">{product.price}</p>
 
       {/* Button */}
       <button
         onClick={handleAddToCart}
-        className={`w-full py-3.5 rounded-full border-2 border-black/60 font-bold uppercase tracking-tight text-sm transition-all duration-200 cursor-pointer
+        className={`w-full py-3.5 rounded-full border-2 border-black/60 font-bold uppercase tracking-tight text-sm  hover:border-navy hover:bg-navy hover:text-white transition-all duration-200 cursor-pointer
          `}
       >
         {added ? "Added ✓" : "Add to Cart"}
@@ -256,7 +257,9 @@ const Latest = () => {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+   
     </div>
+   
   );
 };
 

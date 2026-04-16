@@ -22,7 +22,7 @@ const Hero = () => {
             Discover the finest selection of premium dates, nuts and artisan
             chocolate, masterfully created by Naema
           </p>
-          <Link href={"/shop"} className="w-[200px] bg-[#361C0C] text-white text-center px-6 py-4 leading-none  rounded-full uppercase mt-8">
+          <Link href={"/shop"} className="w-[200px] bg-navy text-white text-center px-6 py-4 leading-none  rounded-full uppercase mt-8 border-2 border-gold">
           Shop Now
           </Link>
         </div>

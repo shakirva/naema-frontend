@@ -1,11 +1,12 @@
 import Image from "next/image";
 import React from "react";
 import Latest from "./Latest";
+import Link from "next/link";
 
 const Shop = () => {
   return (
-    <section className="min-h-screen w-full bg-white  py-12 max-w-7xl mx-auto">
-      <div className="flex flex-col w-full">
+    <section className="min-h-screen w-full bg-white  px-16 py-12 ">
+      <div className="flex flex-col w-full max-w-7xl mx-auto">
         <h2 className="font-serif text-[52px] text-center leading-none">
           Our Collection
         </h2>
@@ -25,7 +26,9 @@ const Shop = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <p className="text-[24px] text-center text-black/80 tracking-tight font-medium">Dates</p>
+            <p className="text-[24px] text-center text-black/80 tracking-tight font-medium">
+              Dates
+            </p>
           </div>
 
           {/* Nuts */}
@@ -39,7 +42,9 @@ const Shop = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <p className="text-[24px] text-center text-black/80 tracking-tight font-medium">Nuts</p>
+            <p className="text-[24px] text-center text-black/80 tracking-tight font-medium">
+              Nuts
+            </p>
           </div>
 
           {/* Dry Fruits */}
@@ -53,7 +58,9 @@ const Shop = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <p className="text-[24px] text-center text-black/80 tracking-tight font-medium">Dry Fruits</p>
+            <p className="text-[24px] text-center text-black/80 tracking-tight font-medium">
+              Dry Fruits
+            </p>
           </div>
 
           {/* Chocolates */}
@@ -67,12 +74,23 @@ const Shop = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <p className="text-[24px] text-center text-black/80 tracking-tight font-medium">Chocolates</p>
+            <p className="text-[24px] text-center text-black/80 tracking-tight font-medium">
+              Chocolates
+            </p>
           </div>
         </div>
 
-        <Latest/>
+        <Latest />
+        <div className="w-full flex items-center justify-center">
+          <Link
+            href={"/shop"}
+            className="px-12 py-6 text-base font-medium uppercase tracking-tight border-2 border-gold bg-navy rounded-full text-white mt-6 w-fit "
+          >
+            Shop All Dates
+          </Link>
+        </div>
       </div>
+      
     </section>
   );
 };

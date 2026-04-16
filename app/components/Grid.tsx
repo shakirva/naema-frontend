@@ -1,0 +1,133 @@
+import Image from "next/image";
+import React from "react";
+
+type Item = {
+  id: number;
+  title: string;
+  category: string;
+  color: string;
+};
+
+const items: Item[] = [
+  { id: 1, title: "Soft Dates", category: "Trending", color: "bg-amber-300" },
+  {
+    id: 2,
+    title: "Premium Medjool",
+    category: "Best Seller",
+    color: "bg-orange-400",
+  },
+  { id: 3, title: "Zahidi", category: "Classic", color: "bg-yellow-500" },
+  { id: 4, title: "Stuffed Dates", category: "Popular", color: "bg-amber-600" },
+  { id: 5, title: "Luxury Box", category: "Gift", color: "bg-orange-600" },
+];
+
+const Grid = () => {
+  return (
+    <section className="w-full bg-navy px-16 py-12 mt-32 min-h-screen  relative">
+        <div className="absolute -top-10 -right-5">
+            <Image
+                src={"/palm-1.png"}
+                alt="dates"
+                
+                width={450}
+                height={450}
+              />
+        
+        </div>
+        <div className="absolute -top-10 -left-23">
+            <Image
+                src={"/palm-2.png"}
+                alt="dates"
+                
+                width={450}
+                height={450}
+              />
+        
+        </div>
+      <div className="max-w-7xl mx-auto">
+        <h2 className="font-serif text-[52px]  leading-none text-center text-white  ">
+          Handpicked Favorites
+        </h2>
+        <div className="w-full mt-24">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[380px] ">
+            {/* Row 1 */}
+            <div className="relative bg-cream rounded-xl overflow-hidden  border-2 border-gold">
+              <Image
+                src={"/chocolate.png"}
+                alt="dates"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
+                <span className="bg-white text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
+                  trending
+                </span>
+              </div>
+            </div>
+
+            <div className="relative bg-cream rounded-xl overflow-hidden  border-2 border-gold">
+              {" "}
+              <Image
+                src={"/dn.png"}
+                alt="dates"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
+                <span className="bg-white text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
+                  trending
+                </span>
+              </div>
+            </div>
+
+            <div className="relative bg-cream rounded-xl overflow-hidden  border-2 border-gold">
+              <Image
+                src={"/misc.png"}
+                alt="dates"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
+                <span className="bg-white text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
+                  trending
+                </span>
+              </div>
+            </div>
+
+            {/* Row 2 (split evenly) */}
+            <div className="relative bg-cream rounded-xl overflow-hidden  lg:col-span-1 border-2 border-gold">
+              {" "}
+              <Image
+                src={"/datedark.png"}
+                alt="dates"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
+                <span className="bg-white text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold text-black/80 tracking-tight border-gold border-2">
+                  trending
+                </span>
+              </div>
+            </div>
+
+            <div className="relative bg-cream rounded-xl overflow-hidden  lg:col-span-2 border-2 border-gold">
+              <Image
+                src={"/nutz.png"}
+                alt="dates"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
+                <span className="bg-white text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
+                  trending
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Grid;

@@ -20,9 +20,9 @@ const navLinks = [
 
 const Header = () => {
   return (
-    <header className="w-full ">
+    <header className="w-full  ">
         <div className="w-full bg-sand text-black text-[12px] relative">
-              <div className="max-w-8xl mx-auto flex items-center justify-between py-4 px-16">
+              <div className="max-w-7xl mx-auto flex items-center justify-between py-4 ">
                 {/* Left */}
                 <div className="flex items-center gap-6">
                   <div className="flex items-center gap-2 cursor-pointer">
@@ -52,7 +52,7 @@ const Header = () => {
             </div>
 
             <div className="w-full px-16 py-2  bg-white">
-      <div className="max-w-8xl mx-auto w-full flex items-center justify-center">
+      <div className="max-w-7xl mx-auto w-full flex items-center justify-center">
         <div className="flex  items-center  justify-between   w-full ">
           {/* Logo Placeholder */}
           <Image src="/logo.png" width={90} height={90} alt="logo" />

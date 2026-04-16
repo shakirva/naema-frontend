@@ -23,7 +23,7 @@ const items: Item[] = [
 
 const Grid = () => {
   return (
-    <section className="w-full bg-navy px-16 py-12 mt-32 min-h-screen  relative">
+    <section className="w-full bg-navy px-16 py-24 mt-32 min-h-screen  relative">
         <div className="absolute -top-10 -right-5">
             <Image
                 src={"/palm-1.png"}
@@ -49,7 +49,7 @@ const Grid = () => {
           Handpicked Favorites
         </h2>
         <div className="w-full mt-24">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[380px] ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[380px] ">
             {/* Row 1 */}
             <div className="relative bg-cream rounded-xl overflow-hidden  border-2 border-gold">
               <Image

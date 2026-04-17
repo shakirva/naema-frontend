@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import Latest from "./Latest";
 import Link from "next/link";
+import Best from "./Best";
 
 const Shop = () => {
   return (
@@ -81,6 +82,7 @@ const Shop = () => {
         </div>
 
         <Latest />
+        <Best/>
         <div className="w-full flex items-center justify-center">
           <Link
             href={"/shop"}

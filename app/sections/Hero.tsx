@@ -14,7 +14,7 @@ const Hero = () => {
             <IoMdStar size={24} color="#ccba78" /><IoMdStar size={24} color="#ccba78" /><IoMdStar size={24} color="#ccba78" /><IoMdStar size={24} color="#ccba78" /><IoMdStar size={24} color="#ccba78" />
         </div>
         <span className="text-xs text-black/60 mt-2 leading-none">Cherished by 100,000+ customers</span>
-          <h1 className="font-serif text-[64px] leading-none text-center mt-6">
+          <h1 className="font-serif text-[clamp(2.25rem,1.25rem+4.2vw,4rem)] leading-none text-center mt-6">
             Finest dates and artisan
             <br /> chocolate crafted by Naema.
           </h1>

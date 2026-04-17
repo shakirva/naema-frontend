@@ -177,7 +177,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   );
 };
 
-const Latest = () => {
+const Best = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -202,12 +202,12 @@ const Latest = () => {
   };
 
   return (
-    <div className="mt-32 bg-white">
+    <div className="mt-32 bg-white ">
       {/* Header row */}
       <div className="flex items-end justify-between mb-8">
         <div>
           <h2 className=" font-serif text-[48px]  leading-none">
-            Shop Our Latest drops
+            Shop Our Best Sellers
           </h2>
           <p className="mt-2  text-[16px] text-black/80 tracking-tight">
             From classic whole dates to gourmet stuffed varieties – find your
@@ -263,4 +263,4 @@ const Latest = () => {
   );
 };
 
-export default Latest;
+export default Best;

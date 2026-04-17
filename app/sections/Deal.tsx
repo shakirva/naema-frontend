@@ -4,9 +4,13 @@ import { FaPlus } from "react-icons/fa6";
 
 const Deal = () => {
   return (
-    <section className="bg-white px-16 py-16 w-full">
-      <div className="max-w-7xl mx-auto">
-        <div className="bg-cream border-2 border-gold flex rounded-xl  justify-between p-6">
+    <section className="bg-white px-16 py-32 w-full relative">
+      <div className="h-full w-full absolute inset-0 opacity-25">
+        <Image src="/goldpalmm.jpg" fill alt="palm" className=" object-cover " />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-1">
+        <div className="bg-cream border-2 border-gold flex rounded-xl  justify-between py-12 px-6">
           <div className="flex flex-col">
             <span className="w-fit uppercase font-medium tracking-tight text-[10px] bg-navy text-white px-2 py-2 rounded-full leading-none text-center  ">
               {" "}
@@ -41,7 +45,7 @@ const Deal = () => {
               />
             </div>
             <FaPlus size={32} color="black" />
-           
+
             <div className="w-[200px] h-[260px] rounded-[999px] overflow-hidden  rotate-25 ml-6">
               <Image
                 src="/chocos.jpg"

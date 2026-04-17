@@ -8,7 +8,7 @@ const Shop = () => {
   return (
     <section className="min-h-screen w-full bg-white  px-16 py-12 ">
       <div className="flex flex-col w-full max-w-7xl mx-auto">
-        <h2 className="font-serif text-[52px] text-center leading-none">
+        <h2 className="font-serif text-[64px] text-center leading-none">
           Our Collection
         </h2>
         <span className="text-[18px] tracking-tight leading-none text-center mt-4">
@@ -18,7 +18,7 @@ const Shop = () => {
         <div className="mt-24 flex justify-between items-center">
           {/* Dates */}
           <div className="flex flex-col gap-6 items-center justify-center">
-            <div className="w-[260px] h-[340px] rounded-[999px] overflow-hidden">
+            <div className="w-[260px] h-[340px] rounded-[999px] overflow-hidden border-3 border-gold">
               <Image
                 src="/dates.jpg"
                 alt="Dates"
@@ -34,7 +34,7 @@ const Shop = () => {
 
           {/* Nuts */}
           <div className="flex flex-col gap-6 items-center justify-center">
-            <div className="w-[260px] h-[340px] rounded-[999px] overflow-hidden">
+            <div className="w-[260px] h-[340px] rounded-[999px] overflow-hidden border-3 border-gold">
               <Image
                 src="/nuts.jpg"
                 alt="Nuts"
@@ -50,7 +50,7 @@ const Shop = () => {
 
           {/* Dry Fruits */}
           <div className="flex flex-col gap-6 items-center ">
-            <div className="w-[260px] h-[340px] rounded-[999px] overflow-hidden">
+            <div className="w-[260px] h-[340px] rounded-[999px] overflow-hidden border-3 border-gold">
               <Image
                 src="/dry.jpg"
                 alt="Dry Fruits"
@@ -66,7 +66,7 @@ const Shop = () => {
 
           {/* Chocolates */}
           <div className="flex flex-col gap-6 items-center justify-center">
-            <div className="w-[260px] h-[340px] rounded-[999px] overflow-hidden">
+            <div className="w-[260px] h-[340px] rounded-[999px] overflow-hidden border-3 border-gold">
               <Image
                 src="/chocos.jpg"
                 alt="Chocolates"

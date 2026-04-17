@@ -12,7 +12,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex  items-center gap-16 ">
           <div className="flex flex-col  w-[50%] ">
-            <h4 className="font-serif text-[54px]  leading-none ">
+            <h4 className="font-serif text-[72px]  leading-none ">
               Direct from <br /> Farm to You
             </h4>
             <p className="mt-2  text-[18px] text-white/80 tracking-tight max-w-[400]">

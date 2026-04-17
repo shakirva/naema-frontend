@@ -8,8 +8,11 @@ const Hero = () => {
     <section className="w-full h-screen  bg-cream bg-center bg-cover ">
       <div className="flex mx-auto max-w-8xl h-full">
         <div className="w-1/2 bg-brown relative">
+
         <Image src="/dates2.jpg" fill alt="Naema" className=" object-cover" /></div>
         <div className="w-1/2  text-black  flex flex-col items-center justify-center ">
+
+        
         <div className="flex gap-1">
             <IoMdStar size={24} color="#ccba78" /><IoMdStar size={24} color="#ccba78" /><IoMdStar size={24} color="#ccba78" /><IoMdStar size={24} color="#ccba78" /><IoMdStar size={24} color="#ccba78" />
         </div>

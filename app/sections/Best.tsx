@@ -228,7 +228,7 @@ const Best = () => {
                  : "bg-white text-zinc-300 border-gold border cursor-not-allowed"
              }`}
           >
-            <ChevronLeft className="w-5 h-5" strokeWidth={2.5} />
+            <ChevronLeft className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
           </button>
           <button
             onClick={() => scroll("right")}
@@ -241,7 +241,7 @@ const Best = () => {
                   : "bg-white text-zinc-300 border-gold border cursor-not-allowed"
               }`}
           >
-            <ChevronRight className="w-5 h-5" strokeWidth={2.5} />
+            <ChevronRight className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
           </button>
         </div>
       </div>

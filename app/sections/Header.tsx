@@ -9,7 +9,7 @@ import {
   FiShoppingCart,
 } from "react-icons/fi";
 
-const navLinks = [
+export const navLinks = [
   { label: "PREMIUM DATES", href: "/dates" },
   { label: "NUTS & DRY FRUITS", href: "/nuts" },
   { label: "ARTISAN CHOCOLATES", href: "/chocolates" },
@@ -59,7 +59,7 @@ const Header = () => {
 
           {/* Navigation */}
           <nav>
-            <div className="flex gap-4 text-[14px]  tracking-tight text-brown/80">
+            <div className="flex gap-4 text-[14px]  tracking-tight font-medium text-black/60">
               {navLinks.map((link, index) => (
                 <Link
                   key={index}

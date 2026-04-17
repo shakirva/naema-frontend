@@ -152,10 +152,10 @@ const ProductCard = ({ product }: { product: Product }) => {
 
       {/* Tags */}
       <div className="flex flex-wrap gap-2">
-        {product.tags.map((tag ,i) => (
+        {product.tags.map((tag, i) => (
           <span
             key={tag}
-            className={`px-2 py-0.5 leading-none text-xs font-medium text-center   border border-black/60 rounded-full text-black/80  ${i===0 ? "bg-gold/60" : "bg-white"}`}
+            className={`px-2 py-0.5 leading-none text-xs font-medium text-center   border border-black/60 rounded-full text-black/80  ${i === 0 ? "bg-gold/60" : "bg-white"}`}
           >
             {tag}
           </span>
@@ -202,7 +202,7 @@ const Best = () => {
   };
 
   return (
-    <div className="mt-32 bg-white ">
+    <div className="mt-32 bg-white">
       {/* Header row */}
       <div className="flex items-end justify-between mb-8">
         <div>
@@ -222,11 +222,11 @@ const Best = () => {
             disabled={!canScrollLeft}
             aria-label="Scroll left"
             className={`w-11 h-11 rounded-full border border-black/50 flex items-center justify-center transition-all duration-150 cursor-pointer
-              ${
-                canScrollLeft
-                  ? "bg-black text-white   active:shadow-none "
-                  : "bg-zinc-100 text-zinc-300 border-zinc-200 cursor-not-allowed"
-              }`}
+             ${
+               canScrollLeft
+                 ? "bg-navy text-white   active:shadow-none "
+                 : "bg-white text-zinc-300 border-gold border cursor-not-allowed"
+             }`}
           >
             <ChevronLeft className="w-5 h-5" strokeWidth={2.5} />
           </button>
@@ -237,8 +237,8 @@ const Best = () => {
             className={`w-11 h-11 rounded-full border- border-black/50 flex items-center justify-center transition-all duration-150 cursor-pointer
               ${
                 canScrollRight
-                  ? "bg-zinc-900 text-white  active:shadow-none "
-                  : "bg-zinc-100 text-zinc-300 border-zinc-200 cursor-not-allowed"
+                  ? "bg-navy text-white   active:shadow-none "
+                  : "bg-white text-zinc-300 border-gold border cursor-not-allowed"
               }`}
           >
             <ChevronRight className="w-5 h-5" strokeWidth={2.5} />
@@ -257,9 +257,7 @@ const Best = () => {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-   
     </div>
-   
   );
 };
 

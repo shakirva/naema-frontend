@@ -224,8 +224,8 @@ const Latest = () => {
             className={`w-11 h-11 rounded-full border border-black/50 flex items-center justify-center transition-all duration-150 cursor-pointer
               ${
                 canScrollLeft
-                  ? "bg-black text-white   active:shadow-none "
-                  : "bg-zinc-100 text-zinc-300 border-zinc-200 cursor-not-allowed"
+                  ? "bg-navy text-white   active:shadow-none "
+                  : "bg-white text-zinc-300 border-gold border cursor-not-allowed"
               }`}
           >
             <ChevronLeft className="w-5 h-5" strokeWidth={2.5} />
@@ -237,8 +237,8 @@ const Latest = () => {
             className={`w-11 h-11 rounded-full border- border-black/50 flex items-center justify-center transition-all duration-150 cursor-pointer
               ${
                 canScrollRight
-                  ? "bg-zinc-900 text-white  active:shadow-none "
-                  : "bg-zinc-100 text-zinc-300 border-zinc-200 cursor-not-allowed"
+                  ? "bg-navy text-white  active:shadow-none "
+                  : "bg-white text-zinc-300 border-gold border cursor-not-allowed"
               }`}
           >
             <ChevronRight className="w-5 h-5" strokeWidth={2.5} />

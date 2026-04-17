@@ -24,12 +24,12 @@ const items: Item[] = [
 const Grid = () => {
   return (
     <section className="w-full bg-[#0A223A] px-16 py-24 mt-32 min-h-screen  relative">
-      <div className="absolute -top-10 -right-5">
+      {/* <div className="absolute -top-10 -right-5">
         <Image src={"/palm-1.png"} alt="dates" width={450} height={450} />
       </div>
       <div className="absolute -top-10 -left-23">
         <Image src={"/palm-2.png"} alt="dates" width={450} height={450} />
-      </div>
+      </div> */}
       <div className="max-w-7xl mx-auto">
         <h2 className="font-serif text-[52px]  leading-none text-center text-white  ">
           Handpicked Favorites

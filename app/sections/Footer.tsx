@@ -8,14 +8,19 @@ import { AiOutlineInstagram, AiFillFacebook } from "react-icons/ai";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0A223A] px-16 py-12 text-cream w-full">
-      <div className="max-w-7xl mx-auto">
+    <footer className="bg-[#0A223A] px-16 py-12 text-cream w-full relative ">
+         <div className="h-full w-full absolute inset-0 opacity-5">
+                <Image src="/footer.png" fill alt="palm" className=" object-cover " />
+              </div>
+        
+      <div className="max-w-7xl mx-auto relative z-10">
+      
         
         {/* Top Section */}
         <div className="flex items-center gap-16">
           
           <div className="flex flex-col w-[50%]">
-            <h4 className="font-serif text-[54px] leading-none">
+            <h4 className="font-serif text-[64px] leading-none">
               Direct from <br /> Farm to You
             </h4>
 
@@ -26,25 +31,25 @@ const Footer = () => {
 
             <div className="flex gap-4 text-black mt-14">
               
-              <div className="h-[200px] max-w-[200px] rounded-lg border-2 border-gold bg-cream p-4 flex flex-col">
-                <PiTreePalm size={50} />
+              <div className="h-[250px] max-w-[250px] rounded-lg border-2 border-gold bg-cream p-4 flex flex-col">
+                <PiTreePalm size={70} />
                 <div className="mt-auto">
                   <h4 className="font-semibold font-serif text-[24px]">
                     Perfectly Ripened
                   </h4>
-                  <p className="text-base leading-[1.2em]">
+                  <p className="text-base leading-[1.2em] mt-2">
                     Harvested only when each date reaches its natural peak.
                   </p>
                 </div>
               </div>
 
-              <div className="h-[200px] max-w-[200px] text-black flex flex-col rounded-lg border-2 border-gold bg-cream p-4">
-                <LuShoppingBasket size={50} />
+              <div className="h-[250px] max-w-[250px] text-black flex flex-col rounded-lg border-2 border-gold bg-cream p-4">
+                <LuShoppingBasket size={70} />
                 <div className="mt-auto">
                   <h4 className="font-semibold font-serif text-[24px]">
                     Rooted in Tradition
                   </h4>
-                  <p className="text-base leading-[1.2em]">
+                  <p className="text-base leading-[1.2em] mt-2">
                     Years of expertise shape every harvest with care
                   </p>
                 </div>

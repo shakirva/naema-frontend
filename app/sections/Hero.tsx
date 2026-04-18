@@ -36,7 +36,7 @@ const Hero = () => {
             </p>
             <Link
               href={"/shop"}
-              className="w-[200px] bg-cream text-navy text-center font-medium tracking-tight px-6 py-4 leading-none  rounded-full uppercase mt-8 border-2 border-gold"
+              className="w-[200px]  border-gold border-2   bg-[#E7DCB7] text-navy text-center font-medium tracking-tight px-6 py-4 leading-none  rounded-full uppercase mt-8 border-2 border-gold"
             >
               Shop Now
             </Link>

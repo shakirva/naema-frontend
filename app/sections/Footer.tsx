@@ -8,7 +8,7 @@ import { AiOutlineInstagram, AiFillFacebook } from "react-icons/ai";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0A223A] px-16 py-12 text-white w-full">
+    <footer className="bg-[#0A223A] px-16 py-12 text-cream w-full">
       <div className="max-w-7xl mx-auto">
         
         {/* Top Section */}
@@ -19,7 +19,7 @@ const Footer = () => {
               Direct from <br /> Farm to You
             </h4>
 
-            <p className="mt-4 text-[18px] text-white/80 tracking-tight max-w-[400px]">
+            <p className="mt-4 text-[18px] text-cream/80 tracking-tight max-w-[400px]">
               Handled entirely in-house from growing to packing so you get
               nothing but the best.
             </p>
@@ -64,10 +64,10 @@ const Footer = () => {
         </div>
 
         {/* Divider */}
-        <div className="w-full h-px bg-white/70 my-16" />
+        <div className="w-full h-px bg-cream/70 my-16" />
 
         {/* Footer Links */}
-        <div className="grid grid-cols-4 gap-12 text-white">
+        <div className="grid grid-cols-4 gap-12 text-cream">
 
           {/* Brand */}
           <div>
@@ -81,24 +81,24 @@ const Footer = () => {
               />
             </Link>
 
-            <p className="text-white/70 text-sm leading-relaxed mb-6">
+            <p className="text-cream/70 text-sm leading-relaxed mb-6">
               Thoughtfully sourced dates, nuts, and chocolates — crafted for
               moments worth savoring.
             </p>
 
-            <p className="text-sm text-white/80 mb-2">
+            <p className="text-sm text-cream/80 mb-2">
               support@naema.co
             </p>
 
             <div className="flex gap-3 mt-4">
               <Link href="https://instagram.com" target="_blank">
-                <div className="w-9 h-9 border border-white/40 rounded-full flex items-center justify-center hover:border-white transition">
+                <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
                   <AiOutlineInstagram />
                 </div>
               </Link>
 
               <Link href="https://facebook.com" target="_blank">
-                <div className="w-9 h-9 border border-white/40 rounded-full flex items-center justify-center hover:border-white transition">
+                <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
                   <AiFillFacebook />
                 </div>
               </Link>
@@ -108,12 +108,12 @@ const Footer = () => {
           {/* Shop */}
           <div>
             <h4 className="font-semibold mb-4">Shop</h4>
-            <ul className="space-y-2 text-white/70 text-sm">
+            <ul className="space-y-2 text-cream/70 text-sm">
               {navLinks.slice(0, 4).map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="hover:text-white transition"
+                    className="hover:text-cream transition"
                   >
                     {link.label}
                   </Link>
@@ -125,12 +125,12 @@ const Footer = () => {
           {/* Explore */}
           <div>
             <h4 className="font-semibold mb-4">Explore</h4>
-            <ul className="space-y-2 text-white/70 text-sm">
+            <ul className="space-y-2 text-cream/70 text-sm">
               {navLinks.slice(4).map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="hover:text-white transition"
+                    className="hover:text-cream transition"
                   >
                     {link.label}
                   </Link>
@@ -138,13 +138,13 @@ const Footer = () => {
               ))}
 
               <li>
-                <Link href="/track" className="hover:text-white transition">
+                <Link href="/track" className="hover:text-cream transition">
                   Track Order
                 </Link>
               </li>
 
               <li>
-                <Link href="/contact" className="hover:text-white transition">
+                <Link href="/contact" className="hover:text-cream transition">
                   Contact
                 </Link>
               </li>
@@ -154,14 +154,14 @@ const Footer = () => {
           {/* Newsletter */}
           <div>
             <h4 className="font-semibold mb-4">The Inner Circle</h4>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-cream/70 text-sm mb-4">
               Join for early access, exclusive drops, and special offers.
             </p>
 
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-3 text-black bg-white rounded-full outline-none mb-3"
+              className="w-full px-4 py-3 text-black bg-cream rounded-full outline-none mb-3"
             />
 
             <button className="w-full bg-gold text-black py-3 rounded-full font-medium hover:opacity-90 transition">
@@ -171,20 +171,20 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex justify-between items-center mt-12 text-white/50 text-sm">
+        <div className="flex justify-between items-center mt-12 text-cream/50 text-sm">
           <p>© 2026 Naema. All rights reserved.</p>
 
           <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-white transition">
+            <Link href="/privacy" className="hover:text-cream transition">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-white transition">
+            <Link href="/terms" className="hover:text-cream transition">
               Terms
             </Link>
-            <Link href="/shipping" className="hover:text-white transition">
+            <Link href="/shipping" className="hover:text-cream transition">
               Shipping
             </Link>
-            <Link href="/returns" className="hover:text-white transition">
+            <Link href="/returns" className="hover:text-cream transition">
               Returns
             </Link>
           </div>

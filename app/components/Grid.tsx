@@ -32,10 +32,10 @@ const Grid = () => {
       </div> 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        <h2 className="font-serif text-[64px]  leading-none text-center text-white  ">
+        <h2 className="font-serif text-[64px]  leading-none text-center text-cream  ">
           Handpicked Favorites
         </h2>
-        <p className="mt-4 text-white text-center text-base tracking-tight">
+        <p className="mt-4 text-cream text-center text-base tracking-tight">
           Our top picks, loved by thousands of date lovers worldwide.
         </p>
 

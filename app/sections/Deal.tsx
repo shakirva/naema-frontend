@@ -29,13 +29,13 @@ const Deal = () => {
               <button className=" text-center py-3 px-6 rounded-full  font-bold uppercase tracking-tight text-sm bg-navy text-white border border-gold hover:text-white transition-all duration-200 cursor-pointer leading-none">
                 Add bundle - $23.87
               </button>
-              <button className=" text-center py-3 px-6 rounded-full border-2 border-black/60 font-bold uppercase tracking-tight text-sm  transition-all duration-200 cursor-pointer leaading-none">
+              <button className=" text-center py-3 px-6 rounded-full  border-gold border-2   bg-gold/40 font-bold uppercase tracking-tight text-sm  transition-all duration-200 cursor-pointer leaading-none">
                 View Details
               </button>
             </div>
           </div>
           <div className="flex items-center ">
-            <div className="w-[200px] h-[260px] rounded-[999px] overflow-hidden -rotate-25 mr-6">
+            <div className="w-[200px] h-[260px] rounded-[999px] overflow-hidden -rotate-25 mr-6 border-2 border-gold ">
               <Image
                 src="/dry.jpg"
                 alt="Dry Fruits"
@@ -46,7 +46,7 @@ const Deal = () => {
             </div>
             <FaPlus size={32} color="black" />
 
-            <div className="w-[200px] h-[260px] rounded-[999px] overflow-hidden  rotate-25 ml-6">
+            <div className="w-[200px] h-[260px] rounded-[999px] overflow-hidden  rotate-25 ml-6  border-2 border-gold ">
               <Image
                 src="/chocos.jpg"
                 alt="Chocolates"

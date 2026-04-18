@@ -12,7 +12,12 @@ const Hero = () => {
         </div>
         <div className="w-1/2  text-cream  flex flex-col items-center justify-center relative  ">
           <div className="h-full w-full absolute inset-0 opacity-10">
-            <Image src="/verydarkpalm.png" fill alt="palm" className=" object-cover " />
+            <Image
+              src="/verydarkpalm.png"
+              fill
+              alt="palm"
+              className=" object-cover "
+            />
           </div>
 
           <div className="relative z-1 flex flex-col items-center  ">

@@ -32,7 +32,7 @@ const Footer = () => {
             <div className="flex gap-4 text-black mt-14">
               
               <div className="h-[250px] max-w-[250px] rounded-lg border-2 border-gold bg-cream p-4 flex flex-col">
-                <PiTreePalm size={70} />
+                <PiTreePalm size={70} color="#baa448"  />
                 <div className="mt-auto">
                   <h4 className="font-semibold font-serif text-[24px]">
                     Perfectly Ripened
@@ -44,7 +44,7 @@ const Footer = () => {
               </div>
 
               <div className="h-[250px] max-w-[250px] text-black flex flex-col rounded-lg border-2 border-gold bg-cream p-4">
-                <LuShoppingBasket size={70} />
+                <LuShoppingBasket size={70} color="#baa448" />
                 <div className="mt-auto">
                   <h4 className="font-semibold font-serif text-[24px]">
                     Rooted in Tradition

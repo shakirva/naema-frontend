@@ -125,14 +125,14 @@ const ProductCard = ({ product }: { product: Product }) => {
   };
 
   return (
-    <div className="flex-none w-[296px] flex flex-col gap-3">
+    <div className="flex-none w-[296px] flex flex-col gap-3 group">
       {/* Image */}
       <div className="relative w-full h-64 rounded-2xl overflow-hidden border">
         <Image
           src={product.image}
           alt={product.name}
           fill
-          className="object-cover"
+          className="object-cover group-hover:scale-[1.1] transition-all duration-300 ease-in-out"
           sizes="288px"
         />
       </div>
@@ -168,7 +168,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       {/* Button */}
       <button
         onClick={handleAddToCart}
-        className={`w-full py-3.5 rounded-full border-2 border-black/60 font-bold uppercase tracking-tight text-sm  hover:border-navy hover:bg-navy hover:text-white transition-all duration-200 cursor-pointer
+        className={`w-full py-3.5 rounded-full border-2 border-gold  bg-gold/40 font-bold uppercase tracking-tight text-sm  hover:border-navy hover:bg-navy hover:text-white transition-all duration-200 cursor-pointer
          `}
       >
         {added ? "Added ✓" : "Add to Cart"}

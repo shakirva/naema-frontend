@@ -6,7 +6,7 @@ import Best from "./Best";
 
 const Shop = () => {
   return (
-    <section className="min-h-screen w-full bg-cream  px-16 py-12 ">
+    <section className="min-h-screen w-full bg-cream  px-16 pt-16 pb-32 ">
       <div className="flex flex-col w-full max-w-7xl mx-auto">
         <h2 className="font-serif text-[64px] text-center leading-none">
           Our Collection
@@ -83,10 +83,10 @@ const Shop = () => {
 
         <Latest />
         <Best/>
-        <div className="w-full flex items-center justify-center">
+        <div className="w-full flex items-center justify-center  mt-12 ">
           <Link
             href={"/shop"}
-            className="px-12 py-6 text-base font-medium uppercase tracking-tight border-2 border-gold bg-navy rounded-full text-white mt-6 w-fit "
+            className="px-12 py-6 text-base font-medium uppercase tracking-tight border-2 border-gold bg-navy rounded-full text-white  w-fit "
           >
             Shop All Dates
           </Link>

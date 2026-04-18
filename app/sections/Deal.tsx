@@ -4,15 +4,15 @@ import { FaPlus } from "react-icons/fa6";
 
 const Deal = () => {
   return (
-    <section className="bg-white px-16 py-32 w-full relative">
+    <section className="bg-cream px-16 py-32 w-full relative">
       <div className="h-full w-full absolute inset-0 opacity-25">
         <Image src="/goldpalmm.jpg" fill alt="palm" className=" object-cover " />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-1">
-        <div className="bg-cream border-2 border-gold flex rounded-xl  justify-between py-12 px-6">
+        <div className="bg-cream border-2 border-gold flex rounded-xl  justify-between py-12 px-8">
           <div className="flex flex-col">
-            <span className="w-fit uppercase font-medium tracking-tight text-[10px] bg-navy text-white px-2 py-2 rounded-full leading-none text-center  ">
+            <span className="w-fit capitalize font-medium tracking-tight text-[10px] border border-gold  bg-navy text-white px-2 py-2 rounded-full leading-none text-center  ">
               {" "}
               best value
             </span>

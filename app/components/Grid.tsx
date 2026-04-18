@@ -23,18 +23,19 @@ const items: Item[] = [
 
 const Grid = () => {
   return (
-    <section className="w-full bg-[#0A223A] px-16 pb-24 pt-12 mt-32 min-h-screen  relative rounded-t-[100px]">
-      {/* <div className="absolute -top-10 -right-5">
+    <section className="w-full bg-[#0A223A] px-16 pb-24 pt-16 min-h-screen  mt-12 relative rounded-t-[100px]">
+       {/* <div className="absolute -top-10 -right-5">
         <Image src={"/palm-1.png"} alt="dates" width={450} height={450} />
-      </div>
-      <div className="absolute -top-10 -left-23">
-        <Image src={"/palm-2.png"} alt="dates" width={450} height={450} />
       </div> */}
-      <div className="max-w-7xl mx-auto">
+      <div className="absolute inset-0 h-full w-full opacity-5 ">
+        <Image src={"/bigdarkpalm.png"} alt="dates" fill />
+      </div> 
+      <div className="max-w-7xl mx-auto relative z-10">
+        
         <h2 className="font-serif text-[64px]  leading-none text-center text-white  ">
           Handpicked Favorites
         </h2>
-        <p className="mt-2 text-white text-center text-base tracking-tight">
+        <p className="mt-4 text-white text-center text-base tracking-tight">
           Our top picks, loved by thousands of date lovers worldwide.
         </p>
 
@@ -49,7 +50,7 @@ const Grid = () => {
                 className="object-cover"
               />
               <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
-                <span className="bg-white text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
+                <span className="bg-cream text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
                   trending
                 </span>
               </div>
@@ -64,7 +65,7 @@ const Grid = () => {
                 className="object-cover"
               />
               <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
-                <span className="bg-white text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
+                <span className="bg-cream text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
                   trending
                 </span>
               </div>
@@ -78,7 +79,7 @@ const Grid = () => {
                 className="object-cover"
               />
               <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
-                <span className="bg-white text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
+                <span className="bg-cream text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
                   New
                 </span>
               </div>
@@ -94,7 +95,7 @@ const Grid = () => {
                 className="object-cover"
               />
               <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
-                <span className="bg-white text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold text-black/80 tracking-tight border-gold border-2">
+                <span className="bg-cream text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold text-black/80 tracking-tight border-gold border-2">
                   trending
                 </span>
               </div>
@@ -108,7 +109,7 @@ const Grid = () => {
                 className="object-cover"
               />
               <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
-                <span className="bg-white text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
+                <span className="bg-cream text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
                   trending
                 </span>
               </div>

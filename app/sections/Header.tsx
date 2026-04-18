@@ -51,7 +51,7 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="w-full px-16 py-2  bg-white">
+            <div className="w-full px-16 py-2  bg-cream">
       <div className="max-w-7xl mx-auto w-full flex items-center justify-center">
         <div className="flex  items-center  justify-between   w-full ">
           {/* Logo Placeholder */}

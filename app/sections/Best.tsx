@@ -23,7 +23,7 @@ const products: Product[] = [
     price: "$34.99",
     rating: 5,
     reviewCount: 2672,
-    image: "/x1.jpg",
+    image: "/n1.jpg",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const products: Product[] = [
     price: "$29.99",
     rating: 4.5,
     reviewCount: 693,
-    image: "/x2.jpg",
+    image: "/n2.jpg",
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const products: Product[] = [
     price: "$39.99",
     rating: 4,
     reviewCount: 57,
-    image: "/x3.jpg",
+    image: "/n3.jpg",
   },
   {
     id: 4,
@@ -50,7 +50,7 @@ const products: Product[] = [
     price: "$43.99",
     rating: 5,
     reviewCount: 11,
-    image: "/x4.jpg",
+    image: "/n4.jpg",
   },
   {
     id: 5,
@@ -59,7 +59,7 @@ const products: Product[] = [
     price: "$49.99",
     rating: 5,
     reviewCount: 312,
-    image: "/x5.jpg",
+    image: "/n5.jpg",
   },
   {
     id: 6,
@@ -68,7 +68,7 @@ const products: Product[] = [
     price: "$38.99",
     rating: 4.5,
     reviewCount: 148,
-    image: "/x6.jpg",
+    image: "/n6.jpg",
   },
 ];
 const StarRating = ({ rating }: { rating: number }) => {
@@ -125,7 +125,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   };
 
   return (
-    <div className="flex-none w-72 flex flex-col gap-3">
+    <div className="flex-none w-[296px] flex flex-col gap-3">
       {/* Image */}
       <div className="relative w-full h-64 rounded-2xl overflow-hidden border">
         <Image
@@ -202,7 +202,7 @@ const Best = () => {
   };
 
   return (
-    <div className="mt-32 bg-white">
+    <div className="mt-32 ">
       {/* Header row */}
       <div className="flex items-end justify-between mb-8">
         <div>

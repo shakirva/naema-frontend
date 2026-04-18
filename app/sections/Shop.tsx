@@ -6,7 +6,7 @@ import Best from "./Best";
 
 const Shop = () => {
   return (
-    <section className="min-h-screen w-full bg-white  px-16 py-12 ">
+    <section className="min-h-screen w-full bg-cream  px-16 py-12 ">
       <div className="flex flex-col w-full max-w-7xl mx-auto">
         <h2 className="font-serif text-[64px] text-center leading-none">
           Our Collection
@@ -20,7 +20,7 @@ const Shop = () => {
           <div className="flex flex-col gap-6 items-center justify-center">
             <div className="w-[260px] h-[340px] rounded-[999px] overflow-hidden border-3 border-gold">
               <Image
-                src="/dates.jpg"
+                src="/dbox.jpg"
                 alt="Dates"
                 width={260}
                 height={340}

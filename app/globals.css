@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -9,9 +9,10 @@
 @theme inline {
   --color-cream: #f6f1e7;
   --color-sand: #e4bf8b;
-  --color-gold:#ccba78;
-  --color-navy: #0D2E4D;
-  --color-brown: #361C0C;
+  --color-gold: #ccba78;
+ 
+  --color-navy: #0a223a;
+  --color-brown: #361c0c;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-helvetica);

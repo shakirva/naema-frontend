@@ -2,14 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { IoMdStar } from "react-icons/io";
+import ImageSlider from "../components/ImageSlider";
 
 const Hero = () => {
   return (
     <section className="w-full h-screen  bg-navy bg-center bg-cover ">
       <div className="flex mx-auto max-w-8xl h-full">
-        <div className="w-1/2 bg-brown relative">
-          <Image src="/dates2.jpg" fill alt="Naema" className=" object-cover" />
-        </div>
+        <ImageSlider/>
         <div className="w-1/2  text-cream  flex flex-col items-center justify-center relative  ">
           <div className="h-full w-full absolute inset-0 opacity-10">
             <Image

@@ -23,11 +23,12 @@ const items: Item[] = [
 
 const Grid = () => {
   return (
-    <section className="w-full bg-[#0A223A] px-16 pb-24 pt-16 min-h-screen  mt-12 relative rounded-t-[100px]">
+    
+    <section className="w-full bg-[#0A223A] px-16 pb-24 pt-16 min-h-screen  mt-12 relative rounded-t-[200px] overflow-hidden">
        {/* <div className="absolute -top-10 -right-5">
         <Image src={"/palm-1.png"} alt="dates" width={450} height={450} />
       </div> */}
-      <div className="absolute inset-0 h-full w-full opacity-5 ">
+      <div className="absolute inset-0 h-full w-full opacity-5  ">
         <Image src={"/bigdarkpalm.png"} alt="dates" fill />
       </div> 
       <div className="max-w-7xl mx-auto relative z-10">

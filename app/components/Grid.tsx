@@ -29,7 +29,7 @@ const Grid = () => {
         <Image src={"/palm-1.png"} alt="dates" width={450} height={450} />
       </div> */}
       <div className="absolute inset-0 h-full w-full opacity-5  ">
-        <Image src={"/bigdarkpalm.png"} alt="dates" fill />
+        <Image src={"/bigdarkpalm.png"} alt="dates" fill className="object-cover" />
       </div> 
       <div className="max-w-7xl mx-auto relative z-10">
         

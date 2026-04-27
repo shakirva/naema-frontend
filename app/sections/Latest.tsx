@@ -125,7 +125,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   };
 
   return (
-    <div className="flex-none w-[296px] flex flex-col gap-3 group">
+    <div className="flex-none w-[296px] max-md:w-[240px] flex flex-col gap-3 group">
       {/* Image */}
       <div className="relative w-full h-64 rounded-2xl overflow-hidden border">
         <Image
@@ -152,10 +152,10 @@ const ProductCard = ({ product }: { product: Product }) => {
 
       {/* Tags */}
       <div className="flex flex-wrap gap-2">
-        {product.tags.map((tag ,i) => (
+        {product.tags.map((tag, i) => (
           <span
             key={tag}
-            className={`px-2 py-0.5 leading-none text-xs font-medium text-center   border border-black/60 rounded-full text-black/80  ${i===0 ? "bg-gold/60" : "bg-white"}`}
+            className={`px-2 py-0.5 leading-none text-xs font-medium text-center   border border-black/60 rounded-full text-black/80  ${i === 0 ? "bg-gold/60" : "bg-white"}`}
           >
             {tag}
           </span>
@@ -202,21 +202,22 @@ const Latest = () => {
   };
 
   return (
-    <div className="mt-32 ">
+    <div className="mt-32 max-lg:mt-24 max-md:mt-12 ">
       {/* Header row */}
-      <div className="flex items-end justify-between mb-8">
-        <div>
-          <h2 className=" font-serif text-[48px]  leading-none">
+        <h2 className=" font-serif text-[clamp(2rem,3.33vw,3rem)]  leading-none">
             Shop Our Latest drops
           </h2>
-          <p className="mt-2  text-[16px] text-black/80 tracking-tight">
+      <div className="flex items-end justify-between mb-8">
+        <div>
+        
+          <p className="mt-2  text-[16px] max-md:text-sm text-black/80 tracking-tight">
             From classic whole dates to gourmet stuffed varieties – find your
             perfect date match.
           </p>
         </div>
 
         {/* Arrow Controls */}
-        <div className="flex items-center gap-2 shrink-0 ml-8">
+        <div className="flex items-center gap-2 shrink-0 ml-8 max-md:hidden">
           <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
@@ -228,7 +229,11 @@ const Latest = () => {
                   : "bg-white text-zinc-300 border-gold border cursor-not-allowed"
               }`}
           >
-            <ChevronLeft className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronLeft
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
           <button
             onClick={() => scroll("right")}
@@ -241,7 +246,11 @@ const Latest = () => {
                   : "bg-white text-zinc-300 border-gold border cursor-not-allowed"
               }`}
           >
-            <ChevronRight className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronRight
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
         </div>
       </div>
@@ -257,9 +266,7 @@ const Latest = () => {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-   
     </div>
-   
   );
 };
 

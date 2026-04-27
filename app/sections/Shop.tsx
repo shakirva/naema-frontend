@@ -131,7 +131,7 @@ const Shop = () => {
         <div className="w-full flex items-center justify-center mt-12">
           <Link
             href={"/shop"}
-            className="px-12 py-6 text-base font-medium uppercase tracking-tight border-2 border-gold bg-navy rounded-full text-white w-fit"
+            className="px-12 py-5 text-base font-medium  tracking-tight border-2 border-gold bg-navy rounded-full text-white w-fit"
           >
             Shop All Dates
           </Link>

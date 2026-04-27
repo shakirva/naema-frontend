@@ -125,7 +125,7 @@ const ProductCard = ({ product }: { product: Product }) => {
   };
 
   return (
-    <div className="flex-none w-[296px] flex flex-col gap-3 group">
+    <div className="flex-none w-[296px] max-md:w-[240px] flex flex-col gap-3 group">
       {/* Image */}
       <div className="relative w-full h-64 rounded-2xl overflow-hidden border  ">
         <Image
@@ -202,21 +202,22 @@ const Best = () => {
   };
 
   return (
-    <div className="mt-32 ">
+    <div className="mt-32  max-lg:mt-24 max-md:mt-12">
       {/* Header row */}
-      <div className="flex items-end justify-between mb-8">
-        <div>
-          <h2 className=" font-serif text-[48px]  leading-none">
+      <h2 className=" font-serif text-[clamp(2rem,3.33vw,3rem)]  leading-none">
             Shop Our Best Sellers
           </h2>
-          <p className="mt-2  text-[16px] text-black/80 tracking-tight">
+      <div className="flex items-end justify-between mb-8">
+        <div>
+          
+          <p className="mt-2  text-[16px]  max-md:text-sm text-black/80 tracking-tight">
             From classic whole dates to gourmet stuffed varieties – find your
             perfect date match.
           </p>
         </div>
 
         {/* Arrow Controls */}
-        <div className="flex items-center gap-2 shrink-0 ml-8">
+        <div className="flex items-center gap-2 shrink-0 ml-8 max-md:hidden">
           <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}

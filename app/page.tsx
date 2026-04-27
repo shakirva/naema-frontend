@@ -7,6 +7,7 @@ import Grid from "./components/Grid";
 import Deal from "./sections/Deal";
 import Footer from "./sections/Footer";
 import About from "./sections/About";
+import Wholesale from "./sections/Wholesale";
 
 const page = () => {
   return (
@@ -16,7 +17,9 @@ const page = () => {
       <Hero />
       <Shop/>
       <About/>
+    
       <Grid/>
+      
       <Deal/>
       <Footer/>
     </main>

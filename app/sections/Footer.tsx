@@ -10,16 +10,13 @@ import { navLinks } from "../constants";
 const Footer = () => {
   return (
     <footer className="bg-[#0A223A] px-16 py-12 text-cream w-full relative  max-lg:pt-8 max-lg:px-8 max-md:px-5 ">
-         <div className="h-full w-full absolute inset-0 opacity-5">
-                <Image src="/footer.png" fill alt="palm" className=" object-cover " />
-              </div>
-        
+      <div className="h-full w-full absolute inset-0 opacity-5">
+        <Image src="/footer.png" fill alt="palm" className=" object-cover " />
+      </div>
+
       <div className="max-w-7xl mx-auto relative z-10">
-      
-        
         {/* Top Section */}
         <div className="flex items-center max-lg:flex-col  gap-16">
-          
           <div className="flex flex-col lg:w-[50%] max-lg:w-full   order-2 lg:order-0">
             <h4 className="font-serif text-[clamp(2.50rem,4.44vw,4rem)] leading-none">
               Direct from <br className="max-lg:hidden" /> Farm to You
@@ -31,9 +28,8 @@ const Footer = () => {
             </p>
 
             <div className="flex gap-4 text-black mt-14">
-              
               <div className="lg:h-[250px] lg:max-w-[250px] flex-1 rounded-lg border-2 border-gold bg-cream p-4 flex flex-col">
-                <PiTreePalm size={70} color="#baa448"  />
+                <PiTreePalm size={70} color="#baa448" />
                 <div className="mt-auto">
                   <h4 className="font-semibold font-serif text-[24px] max-md:text-[20px]">
                     Perfectly Ripened
@@ -55,10 +51,9 @@ const Footer = () => {
                   </p>
                 </div>
               </div>
-
             </div>
           </div>
- 
+
           <div className="ml-auto lg:w-[50%] h-[600px]  w-full  overflow-hidden relative rounded-2xl border-3 border-gold">
             <Image
               src="/dateman.jpg"
@@ -73,8 +68,7 @@ const Footer = () => {
         <div className="w-full h-px bg-cream/70 my-16" />
 
         {/* Footer Links */}
-        <div className="grid grid-cols-4 gap-12 text-cream">
-
+        <div className="grid grid-cols-4 max-md:grid-cols-1 gap-8 text-cream">
           {/* Brand */}
           <div>
             <Link href="/">
@@ -86,23 +80,17 @@ const Footer = () => {
                 className="mb-4 cursor-pointer"
               />
             </Link>
-
             <p className="text-cream/70 text-sm leading-relaxed mb-6">
               Thoughtfully sourced dates, nuts, and chocolates — crafted for
               moments worth savoring.
             </p>
-
-            <p className="text-sm text-cream/80 mb-2">
-              support@naema.co
-            </p>
-
+            <p className="text-sm text-cream/80 mb-2">support@naema.co</p>
             <div className="flex gap-3 mt-4">
               <Link href="https://instagram.com" target="_blank">
                 <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
                   <AiOutlineInstagram />
                 </div>
               </Link>
-
               <Link href="https://facebook.com" target="_blank">
                 <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
                   <AiFillFacebook />
@@ -112,11 +100,11 @@ const Footer = () => {
           </div>
 
           {/* Shop */}
-          <div>
+          <div className="w-fit">
             <h4 className="font-semibold mb-4">Shop</h4>
             <ul className="space-y-2 text-cream/70 text-sm">
               {navLinks.slice(0, 4).map((link) => (
-                <li key={link.label}>
+                <li key={link.label} className="">
                   <Link
                     href={link.href}
                     className="hover:text-cream transition"
@@ -129,7 +117,7 @@ const Footer = () => {
           </div>
 
           {/* Explore */}
-          <div>
+          <div className="w-fit">
             <h4 className="font-semibold mb-4">Explore</h4>
             <ul className="space-y-2 text-cream/70 text-sm">
               {navLinks.slice(4).map((link) => (
@@ -142,13 +130,11 @@ const Footer = () => {
                   </Link>
                 </li>
               ))}
-
               <li>
                 <Link href="/track" className="hover:text-cream transition">
                   Track Order
                 </Link>
               </li>
-
               <li>
                 <Link href="/contact" className="hover:text-cream transition">
                   Contact
@@ -158,18 +144,16 @@ const Footer = () => {
           </div>
 
           {/* Newsletter */}
-          <div>
+          <div className=" max-md:col-span-1">
             <h4 className="font-semibold mb-4">The Inner Circle</h4>
             <p className="text-cream/70 text-sm mb-4">
               Join for early access, exclusive drops, and special offers.
             </p>
-
             <input
               type="email"
               placeholder="Enter your email"
               className="w-full px-4 py-3 text-black bg-cream rounded-full outline-none mb-3"
             />
-
             <button className="w-full bg-gold text-black py-3 rounded-full font-medium hover:opacity-90 transition">
               Join Now
             </button>
@@ -177,10 +161,9 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex justify-between items-center mt-12 text-cream/50 text-sm">
+        <div className="flex max-md:flex-col max-md:items-center max-md:gap-4 justify-between items-center mt-12 text-cream/50 text-sm">
           <p>© 2026 Naema. All rights reserved.</p>
-
-          <div className="flex gap-6">
+          <div className="flex gap-6 max-md:gap-4 flex-wrap max-md:justify-center">
             <Link href="/privacy" className="hover:text-cream transition">
               Privacy Policy
             </Link>
@@ -195,7 +178,6 @@ const Footer = () => {
             </Link>
           </div>
         </div>
-
       </div>
     </footer>
   );

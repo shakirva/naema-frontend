@@ -168,7 +168,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       {/* Button */}
       <button
         onClick={handleAddToCart}
-        className={`w-full py-3.5 rounded-full border-2 border-gold  bg-gold/40 font-bold uppercase tracking-tight text-sm  hover:border-navy hover:bg-navy hover:text-white transition-all duration-200 cursor-pointer
+        className={`w-full py-3.5 rounded-full border-2 border-gold  bg-gold/40 font-bold  tracking-tight text-sm  hover:border-navy hover:bg-navy hover:text-white transition-all duration-200 cursor-pointer
          `}
       >
         {added ? "Added ✓" : "Add to Cart"}

@@ -32,3 +32,9 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

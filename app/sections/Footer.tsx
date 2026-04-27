@@ -3,8 +3,9 @@ import { PiTreePalm } from "react-icons/pi";
 import { LuShoppingBasket } from "react-icons/lu";
 import Image from "next/image";
 import Link from "next/link";
-import { navLinks } from "./Header";
+
 import { AiOutlineInstagram, AiFillFacebook } from "react-icons/ai";
+import { navLinks } from "../constants";
 
 const Footer = () => {
   return (

@@ -4,13 +4,12 @@ import React from "react";
 import { IoMdStar } from "react-icons/io";
 import ImageSlider from "../components/ImageSlider";
 
-
 const Hero = () => {
   return (
     <section className="w-full h-screen  bg-navy bg-center bg-cover ">
-      <div className="flex mx-auto max-w-8xl h-full">
-        <ImageSlider/>
-        <div className="w-1/2  text-cream  flex flex-col items-center justify-center relative  ">
+      <div className="flex max-lg:flex-col max-lg:w-full mx-auto max-w-8xl h-full">
+        <ImageSlider />
+        <div className="w-1/2   max-lg:h-1/2  max-lg:w-full  text-cream  flex flex-col items-center justify-center relative  ">
           <div className="h-full w-full absolute inset-0 opacity-10">
             <Image
               src="/verydarkpalm.png"
@@ -20,7 +19,7 @@ const Hero = () => {
             />
           </div>
 
-          <div className="relative z-1 flex flex-col items-center  ">
+          <div className="relative z-1 flex flex-col items-center max-lg:px-6 max-lg:py-8  ">
             <div className="flex gap-1">
               <IoMdStar size={24} color="#ccba78" />
               <IoMdStar size={24} color="#ccba78" />
@@ -35,13 +34,13 @@ const Hero = () => {
               Finest dates and artisan
               <br /> chocolate crafted by Naema.
             </h1>
-            <p className="text-[18px] tracking-tight leading-[1.3em] max-w-[450px] text-center mt-6 text-cream/80">
+            <p className="lg:text-[18px] text-base max-md:text-sm tracking-tight leading-[1.3em] max-w-[450px] text-center mt-6 text-cream/80">
               Discover the finest selection of premium dates, nuts and artisan
               chocolate, masterfully created by Naema
             </p>
             <Link
               href={"/shop"}
-              className="w-[200px]  border-gold border-2   bg-[#E7DCB7] text-navy text-center font-medium tracking-tight px-6 py-4 leading-none  rounded-full  mt-8 border-2 border-gold"
+              className="w-[200px]  max-md:text-sm border-gold border-2   bg-[#E7DCB7] text-navy text-center font-medium tracking-tight px-6 py-4 leading-none  rounded-full  mt-8 border-2 border-gold"
             >
               Shop Now
             </Link>

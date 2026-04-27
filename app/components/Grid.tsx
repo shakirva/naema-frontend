@@ -24,7 +24,7 @@ const items: Item[] = [
 const Grid = () => {
   return (
     
-    <section className="w-full bg-[#0A223A] px-16 pb-24 pt-16 min-h-screen  mt-12 relative rounded-t-[200px] overflow-hidden">
+    <section className="w-full bg-[#0A223A]  px-16 py-16 max-lg:pt-8 max-lg:px-8 max-md:px-5 lg:rounded-t-[200px] max-lg:rounded-t-[100px] max-md:rounded-t-[50px] min-h-screen  mt-12 relative  overflow-hidden">
        {/* <div className="absolute -top-10 -right-5">
         <Image src={"/palm-1.png"} alt="dates" width={450} height={450} />
       </div> */}
@@ -33,14 +33,14 @@ const Grid = () => {
       </div> 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        <h2 className="font-serif text-[64px]  leading-none text-center text-cream  ">
+        <h2 className="font-serif text-[clamp(2rem,4.44vw,4rem)]  leading-none text-center text-cream  ">
           Handpicked Favorites
         </h2>
         <p className="mt-4 text-cream text-center text-base tracking-tight">
           Our top picks, loved by thousands of date lovers worldwide.
         </p>
 
-        <div className="w-full mt-24">
+        <div className="w-full mt-24 max-lg:mt-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[380px] ">
             {/* Row 1 */}
             <div className="relative bg-cream rounded-xl overflow-hidden  border-2 border-gold">

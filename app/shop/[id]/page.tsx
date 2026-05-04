@@ -10,6 +10,7 @@ import FAQ from "../components/FAQ";
 import Footer from "@/app/sections/Footer";
 
 
+
 /* ------------------ MOCK DATA ------------------ */
 
 const product = {
@@ -30,6 +31,56 @@ const sizes = [
   { label: "1kg", available: false },
   { label: "2kg", available: true },
 ];
+const CouponCard = ({ code, desc }: { code: string; desc: string }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  return (
+    <div
+      className="relative flex-none w-[260px] bg-gold rounded-2xl px-5 pt-5 pb-6 overflow-hidden"
+      style={{
+        /* notch cutouts on left and right center */
+        maskImage: `radial-gradient(circle 14px at 0% 65%, transparent 98%, black 100%),
+                    radial-gradient(circle 14px at 100% 65%, transparent 98%, black 100%)`,
+        maskComposite: "intersect",
+        WebkitMaskImage: `radial-gradient(circle 14px at 0% 65%, transparent 98%, black 100%),
+                          radial-gradient(circle 14px at 100% 65%, transparent 98%, black 100%)`,
+        WebkitMaskComposite: "source-in",
+      }}
+    >
+      {/* Decorative big % in background */}
+      <span className="absolute right-3 top-2 text-[80px] font-black text-navy/10 leading-none select-none">
+        %
+      </span>
+
+      {/* Dashed divider line at notch level */}
+      <div className="absolute left-4 right-4 border-t border-dashed border-navy/20"
+        style={{ top: "65%" }} />
+
+      {/* Code pill */}
+      <button
+        onClick={handleCopy}
+        className="flex items-center gap-2 border-2 border-dashed border-navy/40 rounded-xl px-3 py-1.5 w-fit bg-white/30 hover:bg-white/50 transition cursor-pointer"
+      >
+        <FiCopy size={13} className="text-navy shrink-0" />
+        <span className="text-sm font-bold tracking-widest text-navy">
+          {copied ? "Copied!" : code}
+        </span>
+      </button>
+
+      {/* Description */}
+      <p className="mt-6 text-[13px] font-medium text-navy/80 leading-snug">
+        {desc}
+      </p>
+    </div>
+  );
+};
 
 const ProductDetail = () => {
   const [qty, setQty] = useState(1);
@@ -40,7 +91,7 @@ const ProductDetail = () => {
     <>
     <section className="px-16 py-16 max-lg:px-8 max-md:px-5 bg-cream min-h-screen">
       <div className="max-w-[1440px] mx-auto flex max-lg:flex-col   items-start gap-16">
-        {/* LEFT → IMAGE (BRUTALIST STYLE) */}
+      
         <div className="w-1/2 max-lg:w-full border-2 border-black rounded-2xl overflow-hidden   self-start shrink-0">
           <div className="relative w-full h-[500px] max-lg:h-[350px]">
             <Image

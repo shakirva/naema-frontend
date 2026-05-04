@@ -58,7 +58,7 @@ const megaMenu = {
 
 const MegaMenu = () => (
   /* Removed absolute positioning from here so the parent wrapper can control it */
-  <div className="rounded-sm w-fit bg-white border-t-2 border-gold shadow-xl flex">
+  <div className="rounded-sm w-fit bg-cream border border-gold shadow-xl flex">
     {/* Left — columns */}
     <div className="flex flex-1 gap-8 px-10 py-8">
       {megaMenu.columns.map((col) => (

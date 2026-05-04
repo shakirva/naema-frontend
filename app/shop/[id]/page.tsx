@@ -6,6 +6,7 @@ import { IoMdStar } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import FrequentlyBought from "../components/FrequentlyBought";
 import CustomerReviews from "../components/CustomerReviews";
+import FAQ from "../components/FAQ";
 
 
 /* ------------------ MOCK DATA ------------------ */
@@ -204,7 +205,7 @@ const ProductDetail = () => {
         </div>
       </div>
       {/* RIGHT CHOICE SECTION */}
-      <div className="max-w-[1440px] mx-auto mt-16 border-2 border-black rounded-2xl px-16 py-12 max-lg:px-10 max-md:px-6 flex flex-col items-center text-center gap-6">
+      <div className="max-w-[1440px] mx-auto mt-16 border-1 border-navy rounded-2xl px-16 py-12 max-lg:px-10 max-md:px-6 flex flex-col items-center text-center gap-6">
         
         <h2 className="font-serif  text-[clamp(1.2rem,2vw,1.5rem)]  tracking-tight">
           Are {product.name} the right choice for you?
@@ -239,6 +240,7 @@ const ProductDetail = () => {
       </div>
       <FrequentlyBought currentId={Number(1)} />
       <CustomerReviews />
+      <FAQ />
     </section>
   );
 };

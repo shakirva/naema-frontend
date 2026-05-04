@@ -101,7 +101,7 @@ const Stars = ({ rating, size = 16 }: { rating: number; size?: number }) => (
 /* ------------------ REVIEW CARD ------------------ */
 
 const ReviewCard = ({ review }: { review: Review }) => (
-  <div className="border border-black/10 rounded-2xl p-6 flex gap-6 items-start">
+  <div className="border border-navy/50 rounded-2xl p-6 flex gap-6 items-start">
     <div className="flex-1 flex flex-col gap-2">
       {/* Name + verified */}
       <div className="flex items-center gap-2">
@@ -217,7 +217,7 @@ const CustomerReviews = () => {
     : reviews;
 
   return (
-    <div className="max-w-[1440px] mx-auto mt-20 px-16 max-lg:px-8 max-md:px-5 border border-gold py-10 rounded-xl">
+    <div className="max-w-[1440px] mx-auto mt-20 px-16 max-lg:px-8 max-md:px-5 border border-navy py-10 rounded-xl">
 
       {/* Section Header */}
       <div className="flex items-end justify-between mb-10">
@@ -243,7 +243,7 @@ const CustomerReviews = () => {
         </div>
 
         {/* Right — bars */}
-        <div className="flex flex-col gap-2.5 w-[500px]">
+        <div className="flex flex-col gap-2.5 lg:w-[500px]">
           {ratingBreakdown.map((row) => {
             const pct = Math.round((row.count / totalReviews) * 100);
             return (

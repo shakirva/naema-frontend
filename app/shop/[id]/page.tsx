@@ -7,6 +7,7 @@ import { FaPlus } from "react-icons/fa6";
 import FrequentlyBought from "../components/FrequentlyBought";
 import CustomerReviews from "../components/CustomerReviews";
 import FAQ from "../components/FAQ";
+import Footer from "@/app/sections/Footer";
 
 
 /* ------------------ MOCK DATA ------------------ */
@@ -36,11 +37,12 @@ const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState("500g");
 
   return (
+    <>
     <section className="px-16 py-16 max-lg:px-8 max-md:px-5 bg-cream min-h-screen">
-      <div className="max-w-[1440px] mx-auto flex  items-start gap-16">
+      <div className="max-w-[1440px] mx-auto flex max-lg:flex-col   items-start gap-16">
         {/* LEFT → IMAGE (BRUTALIST STYLE) */}
-        <div className="w-1/2 border-2 border-black rounded-2xl overflow-hidden   self-start shrink-0">
-          <div className="relative w-full h-[500px]">
+        <div className="w-1/2 max-lg:w-full border-2 border-black rounded-2xl overflow-hidden   self-start shrink-0">
+          <div className="relative w-full h-[500px] max-lg:h-[350px]">
             <Image
               src={product.image}
               alt={product.name}
@@ -51,7 +53,7 @@ const ProductDetail = () => {
         </div>
 
         {/* RIGHT → DETAILS */}
-        <div className="flex flex-col  w-1/2">
+        <div className="flex flex-col max-lg:w-full  w-1/2">
           {/* Rating */}
           <div className="flex items-center gap-2 ">
             {Array.from({ length: 5 }).map((_, i) => (
@@ -242,6 +244,8 @@ const ProductDetail = () => {
       <CustomerReviews />
       <FAQ />
     </section>
+    <Footer/>
+    </>
   );
 };
 

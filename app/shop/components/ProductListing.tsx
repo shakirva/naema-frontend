@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { FiSliders } from "react-icons/fi";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
+import Footer from "@/app/sections/Footer";
 
 
 /* ------------------ TYPES ------------------ */
@@ -196,7 +197,8 @@ const ProductListing = () => {
   }, [sortOrder, priceRange]);
 
   return (
-    <section className="px-16 py-10 max-lg:px-8 max-md:px-5">
+    <>
+    <section className="px-16 py-20 max-lg:px-8 max-md:px-5">
       {/* Top Bar */}
       <div className="w-full border-b border-black/10 pb-4 mb-10">
         <div className="max-w-[1440px] mx-auto flex items-center justify-between">
@@ -205,7 +207,7 @@ const ProductListing = () => {
             FILTER
           </button>
           <div className="flex items-center gap-2 text-sm text-black/70">
-            <Link href="/">HOME</Link>
+            <Link href="/">SHOP</Link>
             <span>{">"}</span>
             <span className="text-black font-medium">DATES</span>
           </div>
@@ -267,6 +269,8 @@ const ProductListing = () => {
         </div>
       </div>
     </section>
+    <Footer/>
+    </>
   );
 };
 

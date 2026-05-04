@@ -151,7 +151,7 @@ const WriteReview = ({ onClose }: { onClose: () => void }) => {
   const [comment, setComment] = useState("");
 
   return (
-    <div className="border-2 border-gold/40 w-[60%] mx-auto rounded-2xl p-6 flex flex-col  gap-5 bg-gold/5">
+    <div className="border-2 border-gold/40 lg:w-[60%] w-full mx-auto rounded-2xl p-6 flex flex-col  gap-5 bg-gold/5">
       <div className="flex items-center justify-between">
         <h3 className="font-serif text-xl">Write a Review</h3>
         <button
@@ -217,11 +217,11 @@ const CustomerReviews = () => {
     : reviews;
 
   return (
-    <div className="max-w-[1440px] mx-auto mt-20 px-16 max-lg:px-8 max-md:px-5 border border-navy py-10 rounded-xl">
+    <div className="max-w-[1440px] mx-auto mt-20 px-16 max-lg:px-8 max-md:px-5 border relative  border-navy py-10 rounded-xl">
 
       {/* Section Header */}
-      <div className="flex items-end justify-between mb-10">
-        <h2 className="font-serif text-[clamp(2rem,3.33vw,3rem)] leading-none">
+      <div className="flex items-end justify-between mb-10 relative ">
+        <h2 className="font-serif   text-[clamp(2rem,3.33vw,3rem)] leading-none">
           Customer Reviews
         </h2>
         <button
@@ -243,7 +243,7 @@ const CustomerReviews = () => {
         </div>
 
         {/* Right — bars */}
-        <div className="flex flex-col gap-2.5 lg:w-[500px]">
+        <div className="flex flex-col gap-2.5 w-full  lg:w-[500px]">
           {ratingBreakdown.map((row) => {
             const pct = Math.round((row.count / totalReviews) * 100);
             return (

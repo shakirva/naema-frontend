@@ -8,6 +8,7 @@ import FrequentlyBought from "../components/FrequentlyBought";
 import CustomerReviews from "../components/CustomerReviews";
 import FAQ from "../components/FAQ";
 import Footer from "@/app/sections/Footer";
+import { FiCopy } from "react-icons/fi";
 
 
 

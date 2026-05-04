@@ -74,7 +74,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           setAdded(true);
           setTimeout(() => setAdded(false), 1200);
         }}
-        className="mt-auto py-3 rounded-full border-2 border-gold bg-gold/40 text-sm font-medium hover:bg-navy hover:text-white transition-all duration-200 cursor-pointer"
+        className="mt-auto py-3 rounded-full border-2 hover:border-gold hover:bg-gold/40 hover:text-black text-sm font-medium bg-navy text-white transition-all duration-200 cursor-pointer"
       >
         {added ? "Added ✓" : "Add to Cart"}
       </button>

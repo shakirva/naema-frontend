@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { IoMdStar } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
+import FrequentlyBought from "../components/FrequentlyBought";
+import CustomerReviews from "../components/CustomerReviews";
+
 
 /* ------------------ MOCK DATA ------------------ */
 
@@ -13,6 +16,7 @@ const product = {
   rating: 4,
   reviews: 57,
   image: "/n1.jpg",
+  tags: ["Natural", "Fresh", "Premium"],
   description:
     "Carefully selected premium dates with a rich texture and natural sweetness. Perfect for daily use or gifting.",
 };
@@ -196,8 +200,45 @@ const ProductDetail = () => {
           </div>
 
           <div className="border-t" />
+          
         </div>
       </div>
+      {/* RIGHT CHOICE SECTION */}
+      <div className="max-w-[1440px] mx-auto mt-16 border-2 border-black rounded-2xl px-16 py-12 max-lg:px-10 max-md:px-6 flex flex-col items-center text-center gap-6">
+        
+        <h2 className="font-serif  text-[clamp(1.2rem,2vw,1.5rem)]  tracking-tight">
+          Are {product.name} the right choice for you?
+        </h2>
+
+        <p className="text-sm text-black/60 leading-relaxed max-w-[680px]">
+          If you're looking for naturally sweet, nutrient-dense fruit with a rich
+          flavour profile, {product.name} are the perfect choice — hand-selected
+          from the finest orchards and packed fresh for your doorstep.
+        </p>
+
+        <div className="flex gap-3 flex-wrap justify-center">
+          {product.tags?.length
+            ? product.tags.map((tag, i) => (
+                <span
+                  key={i}
+                  className="px-5 py-2 rounded-full border border-black text-sm font-medium bg-gold/20"
+                >
+                  {tag}
+                </span>
+              ))
+            : ["Natural", "Fresh", "Premium"].map((tag) => (
+                <span
+                  key={tag}
+                  className="px-5 py-2 rounded-full border border-black text-sm font-medium bg-gold/20"
+                >
+                  {tag}
+                </span>
+              ))}
+        </div>
+
+      </div>
+      <FrequentlyBought currentId={Number(1)} />
+      <CustomerReviews />
     </section>
   );
 };

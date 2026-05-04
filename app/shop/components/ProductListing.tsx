@@ -5,6 +5,7 @@ import { FiSliders } from "react-icons/fi";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import Footer from "@/app/sections/Footer";
+import { Product } from "@/app/constants";
 
 
 /* ------------------ TYPES ------------------ */

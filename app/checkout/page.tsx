@@ -285,7 +285,7 @@ const CheckoutPage = () => {
             </div>
 
            
-            <button className="w-full py-4 rounded-full bg-navy text-white font-medium text-sm hover:opacity-90 transition tracking-wide">
+            <button className="w-full py-4 max-lg:hidden rounded-full bg-navy text-white font-medium text-sm hover:opacity-90 transition tracking-wide">
               Place Order →
             </button>
           </div>
@@ -369,6 +369,10 @@ const CheckoutPage = () => {
                   </p>
                 )}
               </div>
+
+            <button className="w-full py-4 lg:hidden rounded-full bg-navy text-white font-medium text-sm hover:opacity-90 transition tracking-wide">
+              Place Order →
+            </button>
 
             </div>
           </div>

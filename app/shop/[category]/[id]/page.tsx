@@ -131,7 +131,7 @@ const ProductDetail = ({ params }: { params: { category: string; id: string } })
             </span>
 
             <p className="text-sm text-black/70 leading-relaxed mt-4">
-              {product.description}
+           
             </p>
 
             <div className="border-t mt-6">

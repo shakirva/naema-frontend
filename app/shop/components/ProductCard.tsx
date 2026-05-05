@@ -1,5 +1,6 @@
 "use client";
 
+import { useCart } from "@/app/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -17,6 +18,7 @@ export type Product = {
 
 const ProductCard = ({ product }: { product: Product }) => {
   const [added, setAdded] = useState(false);
+  const { addToCart } = useCart();
 
   return (
     <div className="flex flex-col gap-3 group">
@@ -42,11 +44,15 @@ const ProductCard = ({ product }: { product: Product }) => {
               color={i < Math.floor(product.rating) ? "#ccba78" : "#e5e5e5"}
             />
           ))}
-          <span className="text-xs text-black/60 ml-0.5">({product.reviews})</span>
+          <span className="text-xs text-black/60 ml-0.5">
+            ({product.reviews})
+          </span>
         </div>
 
         {/* Name */}
-        <h3 className="text-[15px] font-medium leading-tight">{product.name}</h3>
+        <h3 className="text-[15px] font-medium leading-tight">
+          {product.name}
+        </h3>
 
         {/* Tags */}
         <div className="flex gap-2 flex-wrap">
@@ -65,7 +71,9 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
 
         {/* Price */}
-        <p className="font-semibold text-[15px]">₹{product.price.toLocaleString()}</p>
+        <p className="font-semibold text-[15px]">
+          ₹{product.price.toLocaleString()}
+        </p>
       </Link>
 
       {/* Button — outside Link so it doesn't navigate */}
@@ -73,6 +81,13 @@ const ProductCard = ({ product }: { product: Product }) => {
         onClick={() => {
           setAdded(true);
           setTimeout(() => setAdded(false), 1200);
+          addToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            size: "500g", // default size
+          });
         }}
         className="mt-auto py-3 rounded-full border-2 hover:border-gold hover:bg-gold/40 hover:text-black text-sm font-medium bg-navy text-white transition-all duration-200 cursor-pointer"
       >

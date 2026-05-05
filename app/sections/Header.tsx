@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { navLinks } from "../constants";
+import { useCart } from "../context/CartContext";
 
 const megaMenu = {
   columns: [
@@ -53,8 +54,6 @@ const megaMenu = {
     { label: "Explore Premium Dates", image: "/datedark.png" },
   ],
 };
-
-
 
 const MegaMenu = () => (
   /* Removed absolute positioning from here so the parent wrapper can control it */
@@ -109,6 +108,7 @@ const MegaMenu = () => (
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopHovered, setShopHovered] = useState(false);
+  const { openCart, items } = useCart();
 
   return (
     <header className="w-full relative z-[9999]">
@@ -139,7 +139,6 @@ const Header = () => {
                       {link.label}
                     </Link>
 
-                   
                     {isShop && (
                       <div
                         className={`absolute top-full left-1/2 -translate-x-1/2 pt-5 transition-all duration-200 ease-in-out ${
@@ -167,8 +166,23 @@ const Header = () => {
                 className="bg-transparent outline-none text-cream placeholder:text-cream/40 text-[14px] w-[140px] focus:w-[180px] transition-all duration-300"
               />
             </div>
-            <FiUser size={20} className="cursor-pointer hidden lg:block" color="#f6f1e7" />
-            <FiShoppingCart size={20} className="cursor-pointer hidden lg:block" color="#f6f1e7" />
+            <FiUser
+              size={20}
+              className="cursor-pointer hidden lg:block"
+              color="#f6f1e7"
+            />
+            <button onClick={openCart} className="relative">
+              <FiShoppingCart
+                size={20}
+                className="cursor-pointer hidden lg:block"
+                color="#f6f1e7"
+              />
+              {items.length > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold rounded-full text-[9px] text-navy font-medium flex items-center justify-center">
+                  {items.reduce((sum, i) => sum + i.quantity, 0)}
+                </span>
+              )}
+            </button>
 
             {/* Hamburger */}
             <button
@@ -184,7 +198,9 @@ const Header = () => {
       {/* Mobile Overlay */}
       <div
         className={`fixed inset-0 bg-black/40 z-40 lg:hidden transition-opacity duration-300 ${
-          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          menuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setMenuOpen(false)}
       />
@@ -195,7 +211,10 @@ const Header = () => {
           w-full md:w-1/2
           ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        <button className="self-end text-navy" onClick={() => setMenuOpen(false)}>
+        <button
+          className="self-end text-navy"
+          onClick={() => setMenuOpen(false)}
+        >
           <FiX size={28} />
         </button>
 
@@ -214,10 +233,14 @@ const Header = () => {
 
         {/* Mobile shop sub-links */}
         <div className="border-t border-navy/10 pt-6 flex flex-col gap-4">
-          <span className="text-xs font-bold tracking-widest text-navy/40 uppercase">Shop by category</span>
+          <span className="text-xs font-bold tracking-widest text-navy/40 uppercase">
+            Shop by category
+          </span>
           {megaMenu.columns.map((col) => (
             <div key={col.heading}>
-              <span className="text-sm font-semibold text-navy">{col.heading}</span>
+              <span className="text-sm font-semibold text-navy">
+                {col.heading}
+              </span>
             </div>
           ))}
         </div>

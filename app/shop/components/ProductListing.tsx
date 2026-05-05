@@ -224,31 +224,7 @@ const PriceFilter = ({
     </div>
 
     {/* Price Range */}
-    <div>
-      <h3 className="text-sm font-medium mb-1">Price Range</h3>
-      <div className="flex items-center justify-between text-xs text-black/50 mb-3">
-        <span>₹{priceRange[0].toLocaleString()}</span>
-        <span>₹{priceRange[1].toLocaleString()}</span>
-      </div>
-      <div className="flex flex-col gap-2">
-        <input
-          type="range" min={min} max={max} value={priceRange[0]}
-          onChange={(e) => {
-            const val = Number(e.target.value);
-            if (val < priceRange[1]) setPriceRange([val, priceRange[1]]);
-          }}
-          className="w-full accent-[#ccba78] h-1 cursor-pointer"
-        />
-        <input
-          type="range" min={min} max={max} value={priceRange[1]}
-          onChange={(e) => {
-            const val = Number(e.target.value);
-            if (val > priceRange[0]) setPriceRange([priceRange[0], val]);
-          }}
-          className="w-full accent-[#ccba78] h-1 cursor-pointer"
-        />
-      </div>
-    </div>
+   
   </div>
 );
 

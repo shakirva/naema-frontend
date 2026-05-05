@@ -82,7 +82,7 @@ const FrequentlyBought = ({ currentId }: { currentId: number }) => {
       >
         {related.map((product) => (
           <div key={product.id} className="flex-none w-[280px] max-md:w-[240px]">
-            <ProductCard product={product} />
+            <ProductCard product={product} category={product.category} />
           </div>
         ))}
       </div>

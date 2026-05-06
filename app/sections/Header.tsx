@@ -119,7 +119,7 @@ const Header = () => {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <div className="flex gap-4 text-[14px] tracking-tight font-medium text-cream/60">
+            <div className="flex gap-12 text-[14px] tracking-tight font-medium text-cream/60">
               {navLinks.map((link, index) => {
                 const isShop = link.label.toLowerCase() === "shop";
                 return (
@@ -132,7 +132,7 @@ const Header = () => {
                   >
                     <Link
                       href={link.href}
-                      className={`cursor-pointer px-4 py-6 hover:text-cream duration-300 transition-colors ease-in-out block ${
+                      className={`cursor-pointer   underlinee hover:text-cream duration-300 transition-colors ease-in-out block ${
                         isShop && shopHovered ? "text-gold" : ""
                       }`}
                     >

@@ -6,12 +6,9 @@ import Link from "next/link";
 
 import { IoMdCheckmark } from "react-icons/io";
 import { FiChevronDown, FiLock } from "react-icons/fi";
-import { useCart } from "../context/CartContext";
-
-
+import { useCart } from "../../context/CartContext";
 
 type PaymentMethod = "upi" | "card" | "netbanking" | "cod";
-
 
 const Input = ({
   placeholder,
@@ -31,9 +28,13 @@ const Input = ({
   />
 );
 
-
-
-const SectionHeading = ({ number, title }: { number: string; title: string }) => (
+const SectionHeading = ({
+  number,
+  title,
+}: {
+  number: string;
+  title: string;
+}) => (
   <div className="flex items-center gap-3 mb-5">
     <span className="w-7 h-7 rounded-full bg-navy text-white text-xs font-bold flex items-center justify-center shrink-0">
       {number}
@@ -41,8 +42,6 @@ const SectionHeading = ({ number, title }: { number: string; title: string }) =>
     <h2 className="font-serif text-xl leading-none">{title}</h2>
   </div>
 );
-
-
 
 const PaymentOption = ({
   id,
@@ -62,7 +61,9 @@ const PaymentOption = ({
   <button
     onClick={onSelect}
     className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-xl border-2 text-left transition-all duration-150 cursor-pointer ${
-      selected ? "border-gold bg-gold/10" : "border-black/10 hover:border-black/30 bg-white"
+      selected
+        ? "border-gold bg-gold/10"
+        : "border-black/10 hover:border-black/30 bg-white"
     }`}
   >
     <div
@@ -100,8 +101,6 @@ const CheckoutPage = () => {
   return (
     <section className="min-h-screen bg-cream px-6 py-10 md:px-16">
       <div className="max-w-[900px] mx-auto">
-
-    
         <div className="mb-10">
           <Link href="/">
             <Image src="/logo.png" width={70} height={70} alt="Naema" />
@@ -109,10 +108,7 @@ const CheckoutPage = () => {
         </div>
 
         <div className="flex gap-16 max-lg:flex-col">
-
-       
           <div className="flex-1 flex flex-col gap-10">
-
             {/* 1. Contact */}
             <div>
               <SectionHeading number="1" title="Contact" />
@@ -125,24 +121,29 @@ const CheckoutPage = () => {
                       emailUpdates ? "bg-navy border-navy" : "border-black/30"
                     }`}
                   >
-                    {emailUpdates && <IoMdCheckmark size={10} className="text-white" />}
+                    {emailUpdates && (
+                      <IoMdCheckmark size={10} className="text-white" />
+                    )}
                   </div>
-                  <span className="text-xs text-black/60">Email me with news and exclusive offers</span>
+                  <span className="text-xs text-black/60">
+                    Email me with news and exclusive offers
+                  </span>
                 </label>
               </div>
             </div>
 
-          
             <div>
               <SectionHeading number="2" title="Delivery" />
               <div className="flex flex-col gap-3">
-
                 {/* Country — India only */}
                 <div className="relative">
                   <select className="w-full border border-black/20 rounded-xl px-4 py-3 text-sm outline-none focus:border-gold transition-colors bg-white appearance-none cursor-pointer">
                     <option value="IN">India</option>
                   </select>
-                  <FiChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 pointer-events-none" />
+                  <FiChevronDown
+                    size={14}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 pointer-events-none"
+                  />
                 </div>
 
                 <div className="flex gap-3">
@@ -159,18 +160,44 @@ const CheckoutPage = () => {
                     <select className="w-full border border-black/20 rounded-xl px-4 py-3 text-sm outline-none focus:border-gold transition-colors bg-white appearance-none cursor-pointer">
                       <option value="">State</option>
                       {[
-                        "Andhra Pradesh", "Assam", "Bihar", "Chhattisgarh",
-                        "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh",
-                        "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh",
-                        "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
-                        "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
-                        "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh",
-                        "Uttarakhand", "West Bengal",
+                        "Andhra Pradesh",
+                        "Assam",
+                        "Bihar",
+                        "Chhattisgarh",
+                        "Delhi",
+                        "Goa",
+                        "Gujarat",
+                        "Haryana",
+                        "Himachal Pradesh",
+                        "Jharkhand",
+                        "Karnataka",
+                        "Kerala",
+                        "Madhya Pradesh",
+                        "Maharashtra",
+                        "Manipur",
+                        "Meghalaya",
+                        "Mizoram",
+                        "Nagaland",
+                        "Odisha",
+                        "Punjab",
+                        "Rajasthan",
+                        "Sikkim",
+                        "Tamil Nadu",
+                        "Telangana",
+                        "Tripura",
+                        "Uttar Pradesh",
+                        "Uttarakhand",
+                        "West Bengal",
                       ].map((s) => (
-                        <option key={s} value={s}>{s}</option>
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
                       ))}
                     </select>
-                    <FiChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 pointer-events-none" />
+                    <FiChevronDown
+                      size={14}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 pointer-events-none"
+                    />
                   </div>
                   <Input placeholder="PIN code" half />
                 </div>
@@ -179,13 +206,20 @@ const CheckoutPage = () => {
               </div>
             </div>
 
-          
             <div>
               <SectionHeading number="3" title="Shipping Method" />
               <div className="flex flex-col gap-2">
                 {[
-                  { label: "Standard Delivery", time: "5–7 business days", price: total > 999 ? "FREE" : "₹99" },
-                  { label: "Express Delivery", time: "2–3 business days", price: "₹199" },
+                  {
+                    label: "Standard Delivery",
+                    time: "5–7 business days",
+                    price: total > 999 ? "FREE" : "₹99",
+                  },
+                  {
+                    label: "Express Delivery",
+                    time: "2–3 business days",
+                    price: "₹199",
+                  },
                 ].map((opt, i) => (
                   <div
                     key={i}
@@ -195,7 +229,9 @@ const CheckoutPage = () => {
                       <p className="font-medium">{opt.label}</p>
                       <p className="text-xs text-black/40 mt-0.5">{opt.time}</p>
                     </div>
-                    <span className={`font-semibold text-sm ${opt.price === "FREE" ? "text-gold" : ""}`}>
+                    <span
+                      className={`font-semibold text-sm ${opt.price === "FREE" ? "text-gold" : ""}`}
+                    >
                       {opt.price}
                     </span>
                   </div>
@@ -203,7 +239,6 @@ const CheckoutPage = () => {
               </div>
             </div>
 
-           
             <div>
               <SectionHeading number="4" title="Payment" />
               <p className="text-xs text-black/40 mb-4 flex items-center gap-1">
@@ -224,8 +259,15 @@ const CheckoutPage = () => {
                     <Input placeholder="Enter UPI ID (e.g. name@upi)" />
                     <div className="flex gap-3 mt-3">
                       {["gpay", "phonepe", "paytm"].map((app) => (
-                        <div key={app} className="px-3 py-2 border border-black/10 rounded-lg text-xs font-medium bg-white text-black/60 capitalize">
-                          {app === "gpay" ? "GPay" : app === "phonepe" ? "PhonePe" : "Paytm"}
+                        <div
+                          key={app}
+                          className="px-3 py-2 border border-black/10 rounded-lg text-xs font-medium bg-white text-black/60 capitalize"
+                        >
+                          {app === "gpay"
+                            ? "GPay"
+                            : app === "phonepe"
+                              ? "PhonePe"
+                              : "Paytm"}
                         </div>
                       ))}
                     </div>
@@ -264,11 +306,23 @@ const CheckoutPage = () => {
                     <div className="relative">
                       <select className="w-full border border-black/20 rounded-xl px-4 py-3 text-sm outline-none focus:border-gold bg-white appearance-none">
                         <option value="">Select your bank</option>
-                        {["SBI", "HDFC Bank", "ICICI Bank", "Axis Bank", "Kotak Bank", "Punjab National Bank", "Bank of Baroda", "Canara Bank"].map((b) => (
+                        {[
+                          "SBI",
+                          "HDFC Bank",
+                          "ICICI Bank",
+                          "Axis Bank",
+                          "Kotak Bank",
+                          "Punjab National Bank",
+                          "Bank of Baroda",
+                          "Canara Bank",
+                        ].map((b) => (
                           <option key={b}>{b}</option>
                         ))}
                       </select>
-                      <FiChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 pointer-events-none" />
+                      <FiChevronDown
+                        size={14}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 pointer-events-none"
+                      />
                     </div>
                   </div>
                 )}
@@ -284,34 +338,44 @@ const CheckoutPage = () => {
               </div>
             </div>
 
-           
             <button className="w-full py-4 max-lg:hidden rounded-full bg-navy text-white font-medium text-sm hover:opacity-90 transition tracking-wide">
               Place Order →
             </button>
           </div>
 
-         
           <div className="w-[380px] max-lg:w-full shrink-0">
             <div className="sticky top-10 flex flex-col gap-6">
-
-            
               <div className="bg-white border border-black/10 rounded-2xl p-6 flex flex-col gap-4">
-                <h3 className="font-serif text-lg leading-none">Order Summary</h3>
+                <h3 className="font-serif text-lg leading-none">
+                  Order Summary
+                </h3>
 
                 {items.length === 0 ? (
                   <p className="text-sm text-black/40">No items in cart.</p>
                 ) : (
                   items.map((item) => (
-                    <div key={`${item.id}-${item.size}`} className="flex gap-3 items-center">
+                    <div
+                      key={`${item.id}-${item.size}`}
+                      className="flex gap-3 items-center"
+                    >
                       <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-black/10 shrink-0">
-                        <Image src={item.image} alt={item.name} fill className="object-cover" />
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fill
+                          className="object-cover"
+                        />
                         <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-navy text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                           {item.quantity}
                         </span>
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium leading-tight">{item.name}</p>
-                        <p className="text-xs text-black/40">Size: {item.size}</p>
+                        <p className="text-sm font-medium leading-tight">
+                          {item.name}
+                        </p>
+                        <p className="text-xs text-black/40">
+                          Size: {item.size}
+                        </p>
                       </div>
                       <span className="text-sm font-semibold">
                         ₹{(item.price * item.quantity).toLocaleString()}
@@ -321,7 +385,6 @@ const CheckoutPage = () => {
                 )}
               </div>
 
-             
               <div className="flex gap-2">
                 <input
                   value={discountCode}
@@ -341,15 +404,20 @@ const CheckoutPage = () => {
                   ✓ 10% discount applied!
                 </p>
               )}
-          
+
               <div className="bg-white border border-black/10 rounded-2xl p-6 flex flex-col gap-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-black/60">Subtotal · {items.length} item{items.length !== 1 ? "s" : ""}</span>
+                  <span className="text-black/60">
+                    Subtotal · {items.length} item
+                    {items.length !== 1 ? "s" : ""}
+                  </span>
                   <span>₹{total.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-black/60">Shipping</span>
-                  <span className={shipping === 0 ? "text-gold font-medium" : ""}>
+                  <span
+                    className={shipping === 0 ? "text-gold font-medium" : ""}
+                  >
                     {shipping === 0 ? "FREE" : `₹${shipping}`}
                   </span>
                 </div>
@@ -361,7 +429,9 @@ const CheckoutPage = () => {
                 )}
                 <div className="border-t border-black/10 pt-3 flex justify-between font-semibold">
                   <span>Total</span>
-                  <span className="text-lg">₹{grandTotal.toLocaleString()}</span>
+                  <span className="text-lg">
+                    ₹{grandTotal.toLocaleString()}
+                  </span>
                 </div>
                 {total < 999 && (
                   <p className="text-xs text-black/40 text-center">
@@ -370,10 +440,9 @@ const CheckoutPage = () => {
                 )}
               </div>
 
-            <button className="w-full py-4 lg:hidden rounded-full bg-navy text-white font-medium text-sm hover:opacity-90 transition tracking-wide">
-              Place Order →
-            </button>
-
+              <button className="w-full py-4 lg:hidden rounded-full bg-navy text-white font-medium text-sm hover:opacity-90 transition tracking-wide">
+                Place Order →
+              </button>
             </div>
           </div>
         </div>

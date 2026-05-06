@@ -166,11 +166,15 @@ const Header = () => {
                 className="bg-transparent outline-none text-cream placeholder:text-cream/40 text-[14px] w-[140px] focus:w-[180px] transition-all duration-300"
               />
             </div>
-            <FiUser
-              size={20}
-              className="cursor-pointer hidden lg:block"
-              color="#f6f1e7"
-            />
+            <Link href={"/login"}>
+              {" "}
+              <FiUser
+                size={20}
+                className="cursor-pointer hidden lg:block"
+                color="#f6f1e7"
+              />
+            </Link>
+
             <button onClick={openCart} className="relative">
               <FiShoppingCart
                 size={20}

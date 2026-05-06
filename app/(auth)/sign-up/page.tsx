@@ -36,8 +36,8 @@ const SignupPage = () => {
           <Image src="/verydarkpalm.png" fill alt="" className="object-cover" />
         </div>
 
-        <div className="relative z-10 flex flex-col items-center text-center gap-6">
-          <Image src="/logo.png" width={100} height={100} alt="Naema" />
+        <div className="relative z-10 flex flex-col items-center justify-center text-center gap-6">
+          <Image src="/logo.png" width={90} height={90} alt="Naema" />
           <h2 className="font-serif text-[clamp(2rem,3vw,3rem)] text-cream leading-none">
             Join Naema.
           </h2>
@@ -47,7 +47,7 @@ const SignupPage = () => {
           </p>
 
           {/* Perks */}
-          <div className="flex flex-col gap-3 mt-4 w-full max-w-[260px]">
+          <div className="flex flex-col  items-center  gap-3 mt-4 w-full max-w-[260px]">
             {[
               "Exclusive member discounts",
               "Early access to new arrivals",
@@ -72,7 +72,7 @@ const SignupPage = () => {
           <Image src="/logo.png" width={70} height={70} alt="Naema" />
         </div>
 
-        <div className="w-full max-w-[420px] flex flex-col gap-8">
+        <div className="w-full max-w-[420px] flex flex-col gap-6">
 
           {/* Heading */}
           <div>
@@ -195,7 +195,7 @@ const SignupPage = () => {
                   emailUpdates ? "bg-navy border-navy" : "border-black/30"
                 }`}
               >
-                {emailUpdates && <IoMdCheckmark size={10} className="text-white" />}
+                {emailUpdates && <IoMdCheckmark size={10} className="text-cream" />}
               </div>
               <span className="text-xs text-black/50 leading-relaxed">
                 Email me with exclusive offers, new arrivals and Naema updates.
@@ -204,12 +204,12 @@ const SignupPage = () => {
           </div>
 
           {/* Submit */}
-          <button className="w-full py-4 rounded-full bg-navy text-white text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer tracking-wide">
+          <button className="w-full py-4 rounded-full bg-navy text-cream text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer">
             Create Account
           </button>
 
           {/* Terms */}
-          <p className="text-xs text-black/30 text-center leading-relaxed">
+          <p className="text-xs text-black/50 text-center leading-relaxed">
             By creating an account you agree to our{" "}
             <Link href="/terms" className="underline underline-offset-4 hover:text-black transition">
               Terms of Service

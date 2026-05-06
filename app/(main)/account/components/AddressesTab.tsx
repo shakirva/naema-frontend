@@ -51,7 +51,7 @@ const AddressesTab = () => {
 
   return (
     <div className="border border-black/10 rounded-2xl overflow-hidden">
-      <div className="flex items-center justify-between px-6 py-5 bg-black/[0.02] border-b border-black/10">
+      <div className="flex items-center justify-between max-md:px-4 px-6 py-5 bg-black/[0.02] border-b border-black/10">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-navy flex items-center justify-center">
             <FiMapPin size={18} className="text-white" />
@@ -63,14 +63,14 @@ const AddressesTab = () => {
         </div>
         <button
           onClick={() => setShowForm((s) => !s)}
-          className="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-gold bg-gold/20 text-sm font-medium hover:bg-navy hover:text-white transition cursor-pointer"
+          className="flex items-center gap-2 px-4 max-md:px-2 py-2 rounded-full border-2 border-gold bg-gold/20 md:text-sm  max-md:text-xs font-medium hover:bg-navy hover:text-white transition cursor-pointer"
         >
-          <FiPlus size={13} />
+          <FiPlus className="size-[14px] max-md:size-[8px]" />
           Add Address
         </button>
       </div>
 
-      <div className="p-6 flex flex-col gap-4">
+      <div className="max-md:py-6 max-md:px-4 p-6 flex flex-col gap-4">
         {showForm && (
           <div className="border-2 border-gold/40 rounded-2xl p-5 bg-gold/5 flex flex-col gap-3">
             <p className="text-sm font-medium">New Address</p>
@@ -111,7 +111,7 @@ const AddressesTab = () => {
             <div className="flex items-start justify-between">
               <p className="font-medium text-sm">{addr.name}</p>
               {addr.isDefault && (
-                <span className="text-[10px] bg-gold text-navy font-bold px-2.5 py-1 rounded-full tracking-wide">
+                <span className="text-[8px] bg-gold text-navy font-semibold px-2.5 py-1 rounded-full tracking-wide">
                   DEFAULT
                 </span>
               )}

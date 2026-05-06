@@ -26,22 +26,12 @@ const LoginPage = () => {
           <h2 className="font-serif text-[clamp(2rem,3vw,3rem)] text-cream leading-none">
             Welcome back.
           </h2>
-          <p className="text-cream/50 text-sm max-w-[300px] leading-relaxed tracking-tight">
+          <p className="text-cream/80 text-sm max-w-[300px] leading-relaxed tracking-tight">
             Sign in to track your orders, manage your account and enjoy
             exclusive member offers.
           </p>
 
-          {/* Decorative tags */}
-          <div className="flex gap-2 flex-wrap justify-center mt-4">
-            {["Premium Dates", "Artisan Chocolates", "Rare Nuts"].map((t) => (
-              <span
-                key={t}
-                className="text-[11px] px-3 py-1.5 rounded-full border border-gold/30 text-gold/70"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
+         
         </div>
       </div>
 
@@ -49,10 +39,10 @@ const LoginPage = () => {
       <div className="flex-1 flex flex-col items-center justify-center px-8 py-16">
         {/* Mobile logo */}
         <div className="lg:hidden mb-8">
-          <Image src="/logo.png" width={70} height={70} alt="Naema" />
+          <Image src="/logo.png" width={90} height={90} alt="Naema" />
         </div>
 
-        <div className="w-full max-w-[420px] flex flex-col gap-8">
+        <div className="w-full max-w-[420px] flex flex-col gap-6">
 
           {/* Heading */}
           <div>
@@ -114,21 +104,22 @@ const LoginPage = () => {
             </div>
 
             {/* Forgot */}
-            <Link
+            <div className="flex justify-center w-full"><Link
               href="/forgot-password"
-              className="text-xs text-black/40 hover:text-black transition underline underline-offset-4 w-fit"
+              className="text-xs text-black/40 w-fit  hover:text-black transition underline underline-offset-4 "
             >
               Forgot your password?
-            </Link>
+            </Link></div>
+            
           </div>
 
           {/* Submit */}
-          <button className="w-full py-4 rounded-full bg-navy text-white text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer tracking-wide">
+          <button className="w-full py-4 rounded-full bg-navy text-cream text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer ">
             Sign In
           </button>
 
           {/* Help */}
-          <p className="text-xs text-black/30 text-center leading-relaxed">
+          <p className="text-xs text-black/50 text-center leading-relaxed">
             Need help?{" "}
             <Link href="/contact" className="underline underline-offset-4 hover:text-black transition">
               Contact us

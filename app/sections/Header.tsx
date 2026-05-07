@@ -60,23 +60,32 @@ const MegaMenu = () => (
   /* Removed absolute positioning from here so the parent wrapper can control it */
   <div className="rounded-sm w-fit bg-cream border border-gold shadow-xl flex">
     {/* Left — columns */}
-    <div className="flex flex-1 gap-8 px-10 py-8">
-      {megaMenu.columns.map((col) => (
-        <div key={col.heading} className="flex flex-col gap-3 min-w-[110px]">
-          <span className="text-[20px] font-medium font-serif  text-black ">
-            {col.heading}
-          </span>
-          {col.links.map((item) => (
-            <Link
-              key={item}
-              href="/shop"
-              className="text-[13px] text-black/60 hover:text-gold transition-colors duration-200 leading-tight"
-            >
-              {item}
-            </Link>
-          ))}
-        </div>
-      ))}
+    <div className="flex flex-col px-10 py-8">
+      <div className="flex flex-1 gap-8 ">
+        {megaMenu.columns.map((col) => (
+          <div key={col.heading} className="flex flex-col gap-3 min-w-[110px]">
+            <span className="text-[20px] font-medium font-serif  text-black ">
+              {col.heading}
+            </span>
+            {col.links.map((item) => (
+              <Link
+                key={item}
+                href="/shop"
+                className="text-[13px] text-black/60 hover:text-gold transition-colors duration-200 leading-tight"
+              >
+                {item}
+              </Link>
+            ))}
+          </div>
+        ))}
+      </div>
+      <Link
+        href={"/shop"}
+        className="bg-navy text-cream text-sm px-6 py-2 w-fit mt-8 rounded-full"
+      >
+        {" "}
+        Shop all
+      </Link>
     </div>
 
     {/* Right — featured images */}
@@ -146,7 +155,7 @@ const Header = () => {
 
                     {isShop && (
                       <div
-                        className={`absolute top-full left-1/2 -translate-x-1/2 pt-5 transition-all duration-200 ease-in-out ${
+                        className={`absolute top-[40] left-1/2 -translate-x-1/2 pt-5 transition-all duration-200 ease-in-out ${
                           shopHovered
                             ? "opacity-100 pointer-events-auto translate-y-0"
                             : "opacity-0 pointer-events-none -translate-y-2"

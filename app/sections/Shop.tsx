@@ -32,9 +32,10 @@ const Shop = () => {
   };
 
   return (
-    <section className="min-h-screen w-full bg-cream px-16 pt-16 max-lg:pt-8 max-lg:px-8 max-md:px-5 pb-32">
-      <div className="flex flex-col w-full max-w-7xl mx-auto">
-        <h2 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] lg:text-center leading-none">
+    <section className="min-h-screen w-full bg-cream   px-16 pt-16 max-lg:pt-8 max-lg:px-8 max-md:px-5 pb-32">
+    
+      <div className="flex flex-col w-full max-w-[1440px] mx-auto">
+        <h2 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] lg:text-center leading-none bg-gold/20 border border-gold/50 px-4 py-2 rounded-full ">
           Our Collection
         </h2>
         <span className="lg:text-[18px] max-lg:hidden   tracking-tight leading-none lg:text-center mt-2 lg:mt-4">

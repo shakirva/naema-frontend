@@ -6,7 +6,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 const About = () => {
   return (
     <section className=" w-full bg-gold/30  px-16 py-16 max-lg:pt-8 max-lg:px-8 max-md:px-5 lg:rounded-[200px] max-lg:rounded-[100px] max-md:rounded-[50px] border-t-1 border-b border-navy ">
-      <div className="flex flex-col items-center  w-full max-w-7xl mx-auto h-full">
+      <div className="flex flex-col items-center  w-full max-w-[1440px] mx-auto h-full">
         <div>
           <h1 className="font-serif text-[clamp(2.25rem,5.56vw,5rem)] text-center leading-none">
             Our <span className="italic">Story</span>

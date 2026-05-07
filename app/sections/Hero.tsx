@@ -3,13 +3,17 @@ import Link from "next/link";
 import React from "react";
 import { IoMdStar } from "react-icons/io";
 import ImageSlider from "../components/ImageSlider";
+import { IoIosArrowRoundDown } from "react-icons/io";
 
 const Hero = () => {
   return (
     <section className="w-full h-screen  bg-navy bg-center bg-cover ">
-      <div className="flex max-lg:flex-col max-lg:w-full mx-auto max-w-8xl h-full">
+      <div className="flex max-lg:flex-col max-lg:w-full mx-auto h-full">
         <ImageSlider />
         <div className="w-1/2   max-lg:h-1/2  max-lg:w-full  text-cream  flex flex-col items-center justify-center relative  ">
+          <div className="absolute flex items-center justify-center bottom-0 right-8 translate-y-[50%]">
+            <div className="flower flex items-center justify-center size-16 bg-gold"><IoIosArrowRoundDown className="size-14 text-navy" /></div>
+          </div>
           <div className="h-full w-full absolute inset-0 opacity-10">
             <Image
               src="/verydarkpalm.png"

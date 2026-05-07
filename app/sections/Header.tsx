@@ -5,6 +5,7 @@ import Image from "next/image";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { navLinks } from "../constants";
 import { useCart } from "../context/CartContext";
+import { usePathname } from "next/navigation";
 
 const megaMenu = {
   columns: [
@@ -109,6 +110,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopHovered, setShopHovered] = useState(false);
   const { openCart, items } = useCart();
+  const pathname = usePathname();
 
   return (
     <header className="w-full relative z-[9999]">
@@ -122,6 +124,9 @@ const Header = () => {
             <div className="flex gap-12 text-[14px] tracking-tight font-medium text-cream/60">
               {navLinks.map((link, index) => {
                 const isShop = link.label.toLowerCase() === "shop";
+                const isActive =
+                  pathname === link.href ||
+                  pathname.startsWith(link.href + "/");
                 return (
                   <div
                     key={index}
@@ -132,9 +137,9 @@ const Header = () => {
                   >
                     <Link
                       href={link.href}
-                      className={`cursor-pointer   underlinee hover:text-cream duration-300 transition-colors ease-in-out block ${
+                      className={`cursor-pointer   underlinee hover:text-cream  duration-300 transition-colors ease-in-out block ${
                         isShop && shopHovered ? "text-gold" : ""
-                      }`}
+                      } ${isActive ? "text-gold" : "text-cream/60"}`}
                     >
                       {link.label}
                     </Link>

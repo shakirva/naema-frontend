@@ -4,6 +4,8 @@ import React, { useRef } from "react";
 import Latest from "./Latest";
 import Link from "next/link";
 import Best from "./Best";
+import ProductCarousel from "./ProductCarousel";
+import { products } from "../constants";
 
 const Shop = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -35,14 +37,17 @@ const Shop = () => {
         <h2 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] lg:text-center leading-none">
           Our Collection
         </h2>
-          <span className="lg:text-[18px] max-lg:hidden   tracking-tight leading-none lg:text-center mt-2 lg:mt-4">
-            Shop by preference
-          </span>
+        <span className="lg:text-[18px] max-lg:hidden   tracking-tight leading-none lg:text-center mt-2 lg:mt-4">
+          Shop by preference
+        </span>
         <div className="flex justify-between lg:hidden items-center w-full">
           <span className="lg:text-[18px]   tracking-tight leading-none lg:text-center mt-2 lg:mt-4">
             Shop by preference
           </span>
-          <Link href={"/shop"} className="text-sm text-black underline cursor-pointer">
+          <Link
+            href={"/shop"}
+            className="text-sm text-black underline cursor-pointer"
+          >
             view all
           </Link>
         </div>
@@ -126,8 +131,19 @@ const Shop = () => {
           </div>
         </div>
 
-        <Latest />
-        <Best />
+        <ProductCarousel
+          title="Shop Our Latest Drops"
+          description="From classic whole dates to gourmet stuffed varieties – find your perfect match."
+          products={products.slice(0, 6)}
+        />
+
+        <ProductCarousel
+          title="Shop Our Best Sellers"
+          description="Our most loved products, trusted by thousands of customers."
+          products={[...products]
+            .sort((a, b) => b.reviews - a.reviews)
+            .slice(0, 6)}
+        />
         <div className="w-full flex items-center justify-center mt-12">
           <Link
             href={"/shop"}

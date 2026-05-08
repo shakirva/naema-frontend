@@ -14,7 +14,7 @@ const page = () => {
   return (
     <main className="w-full h-full  overflow-clip">
       <Hero />
-      <Info/>
+     
       <Shop />
       <About />
 

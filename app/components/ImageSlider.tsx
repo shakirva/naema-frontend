@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import ParallaxImage from "./ParallaxImage";
 
 const images = ["/dates2.jpg", "/bg2.jpg", "/bg3.jpg", "/bg4.jpg", "/bg5.jpg"];
 
@@ -17,15 +18,19 @@ const ImageSlider = () => {
   return (
     <div className="w-1/2 max-lg:h-1/2  max-lg:w-full  bg-brown relative overflow-hidden">
       {images.map((src, index) => (
-        <Image
+        <div
           key={src}
-          src={src}
-          fill
-          alt="Naema"
-          className={`object-cover absolute inset-0 transition-opacity duration-700 ease-in-out ${
-            index === current ? "opacity-100" : "opacity-0"
+          className={`absolute inset-0 transition-opacity duration-1000 ease-out ${
+            index === current ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
-        />
+        >
+          <ParallaxImage
+            mainclass="w-full h-screen max-lg:h-full relative overflow-hidden "
+            imageClass="object-cover scale-110"
+            src={src}
+            alt="Naema"
+          />
+        </div>
       ))}
 
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">

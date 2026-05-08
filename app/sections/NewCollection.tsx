@@ -21,40 +21,42 @@ const NewCollection = () => {
 
   return (
     <section className="w-full bg-cream relative min-h-screen mt-24 border-black/60 border-b">
-
       {/* Section label */}
       <div className="flex flex-col w-full items-center px-5">
-        <h2 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] text-center leading-none">
+        <h2 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] text-center leading-none  bg-gold/20 border border-gold/50 rounded-lg px-6 py-2 -rotate-2">
           New Collections
         </h2>
-        <p className="mt-2 text-[16px] max-md:text-sm text-black/80 tracking-tight max-w-[450px] text-center">
-          Discover freshly curated selections of premium dates, artisan
-          chocolates, and handcrafted treats designed for everyday indulgence
-          and thoughtful gifting.
-        </p>
-        <Link
-          href="/shop"
-          className="px-5 py-2.5 text-sm font-medium mt-6 tracking-tight border-2 border-gold bg-cream rounded-full text-black w-fit"
-        >
-          Shop All Collections
-        </Link>
       </div>
 
       {/* Split layout */}
       <div className="flex max-lg:flex-col w-full items-center justify-between mt-12 mb-10">
-
         {/* LEFT — parallax image */}
-        <ParallaxImage
-          mainclass="w-1/2 max-lg:w-full h-[60vw] max-lg:h-[50vw] max-md:h-[70vw] relative overflow-hidden rounded-tr-md rounded-br-md max-lg:rounded-tr-none max-lg:rounded-br-none max-lg:rounded-bl-md max-lg:rounded-br-md"
-          imageClass="object-cover rounded-tr-md rounded-br-md scale-110 max-lg:rounded-tr-none max-lg:rounded-br-none"
-          src="/chocobg.jpg"
-          alt="Chocolate background"
-        />
+        <div className="flex flex-col gap-4  max-lg:w-full lg:w-1/2 h-full ">
+          <ParallaxImage
+            mainclass="w-full h-[60vw] max-lg:h-[50vw] max-md:h-[70vw] relative overflow-hidden rounded-tr-md rounded-br-md max-lg:rounded-tr-none max-lg:rounded-br-none max-lg:rounded-bl-md max-lg:rounded-br-md"
+            imageClass="object-cover rounded-tr-md rounded-br-md scale-110 max-lg:rounded-tr-none max-lg:rounded-br-none"
+            src="/chocobg.jpg"
+            alt="Chocolate background"
+          />
+          <div className="self-end max-w-[450px] pl-16 max-lg:pl-8 max-md:pl-5 flex flex-col items-start">
+            <p className="mt-2 text-[16px] max-md:text-sm text-black/80 tracking-tight text-left">
+              Discover freshly curated selections of premium dates, artisan
+              chocolates, and handcrafted treats designed for everyday
+              indulgence and thoughtful gifting.
+            </p>
+
+            <Link
+              href="/shop"
+              className="px-5 py-2.5 text-sm font-medium mt-6 tracking-tight border-2 border-gold bg-cream rounded-full text-black w-fit"
+            >
+              Shop All Collections
+            </Link>
+          </div>
+        </div>
 
         {/* RIGHT — card */}
         <div className="flex flex-col items-center justify-center relative w-1/2 max-lg:w-full max-lg:py-12 max-lg:px-5">
           <div className="flex items-center gap-4 max-md:gap-2">
-
             {/* Prev arrow */}
             <button
               onClick={prev}
@@ -66,7 +68,6 @@ const NewCollection = () => {
             {/* Card + dots */}
             <div className="flex flex-col">
               <div className="flex flex-col w-[400px] max-md:w-[320px] max-sm:w-[280px] h-[550px] max-md:h-[500px] gap-0 rounded-3xl overflow-hidden border border-black/10">
-
                 {/* Product image */}
                 <div className="relative h-[50%] w-full">
                   <Image
@@ -101,7 +102,8 @@ const NewCollection = () => {
                           ))}
                         </div>
                         <span className="text-xs text-black/40 underline underline-offset-2">
-                          {product.reviews} review{product.reviews !== 1 ? "s" : ""}
+                          {product.reviews} review
+                          {product.reviews !== 1 ? "s" : ""}
                         </span>
                       </div>
                     </div>
@@ -149,7 +151,9 @@ const NewCollection = () => {
                     key={i}
                     onClick={() => setIndex(i)}
                     className={`rounded-full transition-all duration-200 cursor-pointer ${
-                      i === index ? "w-6 h-2 bg-navy" : "w-2 h-2 bg-black/20 hover:bg-black/40"
+                      i === index
+                        ? "w-6 h-2 bg-navy"
+                        : "w-2 h-2 bg-black/20 hover:bg-black/40"
                     }`}
                   />
                 ))}

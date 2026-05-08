@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { Instrument_Serif } from "next/font/google";
 import { CartProvider } from "./context/CartContext";
+import LenisSmoothScroll from "./components/SmoothScroll/Lenis";
 
 
 export const metadata: Metadata = {
@@ -43,6 +44,7 @@ export default function RootLayout({
       className={`${helveticaNeue.variable} ${instrumentSerif.variable} antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
+           <LenisSmoothScroll />
         <CartProvider>
           {children}
         </CartProvider>

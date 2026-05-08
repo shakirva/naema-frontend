@@ -8,12 +8,14 @@ import Footer from "../sections/Footer";
 import About from "../sections/About";
 import Wholesale from "../sections/Wholesale";
 import Info from "../components/Info";
+import NewCollection from "../sections/NewCollection";
 
 
 const page = () => {
   return (
     <main className="w-full h-full  overflow-clip">
       <Hero />
+      <NewCollection/>
      
       <Shop />
       <About />

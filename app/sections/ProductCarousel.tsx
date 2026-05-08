@@ -109,7 +109,9 @@ const CarouselCard = ({ product }: { product: Product }) => {
       </div>
 
       {/* Price */}
-      <p className="font-bold text-lg text-black">₹{product.price.toLocaleString()}</p>
+      <p className="font-bold text-lg text-black">
+        ₹{product.price.toLocaleString()}
+      </p>
 
       {/* Button */}
       <button
@@ -147,13 +149,18 @@ const ProductCarousel = ({ title, description, products }: Props) => {
   const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    el.scrollBy({ left: dir === "left" ? -SCROLL_AMOUNT : SCROLL_AMOUNT, behavior: "smooth" });
+    el.scrollBy({
+      left: dir === "left" ? -SCROLL_AMOUNT : SCROLL_AMOUNT,
+      behavior: "smooth",
+    });
     setTimeout(updateScrollState, 350);
   };
 
   return (
-    <div className="mt-32 max-lg:mt-24 max-md:mt-12">
-      <h2 className="font-serif text-[clamp(2rem,3.33vw,3rem)] leading-none">{title}</h2>
+    <div className="mt-32 max-w-[1440px] mx-auto max-lg:mt-24 max-md:mt-12 px-16 pt-16 max-lg:pt-8 max-lg:px-8 max-md:px-5">
+      <h2 className="font-serif text-[clamp(2rem,3.33vw,3rem)] leading-none">
+        {title}
+      </h2>
 
       <div className="flex items-end justify-between mb-8">
         {description && (
@@ -168,23 +175,33 @@ const ProductCarousel = ({ title, description, products }: Props) => {
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer
-              ${canScrollLeft
-                ? "bg-navy border-navy active:shadow-none"
-                : "bg-white border-gold cursor-not-allowed"
+              ${
+                canScrollLeft
+                  ? "bg-navy border-navy active:shadow-none"
+                  : "bg-white border-gold cursor-not-allowed"
               }`}
           >
-            <ChevronLeft className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronLeft
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer
-              ${canScrollRight
-                ? "bg-navy border-navy active:shadow-none"
-                : "bg-white border-gold cursor-not-allowed"
+              ${
+                canScrollRight
+                  ? "bg-navy border-navy active:shadow-none"
+                  : "bg-white border-gold cursor-not-allowed"
               }`}
           >
-            <ChevronRight className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronRight
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
         </div>
       </div>

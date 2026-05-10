@@ -20,10 +20,10 @@ const NewCollection = () => {
   const next = () => setIndex((i) => (i === featured.length - 1 ? 0 : i + 1));
 
   return (
-    <section className="w-full bg-cream relative min-h-screen mt-24 border-black/60 border-b">
+    <section className="w-full bg-cream relative min-h-screen mt-24 border-darkgold border-b">
       {/* Section label */}
       <div className="flex flex-col w-full items-center px-5">
-        <h2 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] text-center leading-none  bg-gold/20 border border-gold/50 rounded-lg px-6 py-2 -rotate-2">
+        <h2 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] text-center leading-none  bg-gold/20 border border-gold/50 rounded-lg px-6 py-2 ">
           New Collections
         </h2>
       </div>

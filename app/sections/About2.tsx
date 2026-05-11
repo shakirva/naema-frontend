@@ -42,7 +42,7 @@ const About2 = () => {
   return (
     <section
       ref={container}
-      className="w-full relative h-[120vw] bg-cream px-16 py-32 max-lg:pt-8 max-lg:px-8 max-md:px-5"
+      className="w-full relative  bg-cream px-16 py-32 max-lg:pt-8 max-lg:px-8 max-md:px-5"
     >
       <div ref={sticker} className="absolute top-0 right-10 z-10 ">
         <DateSticker />
@@ -58,7 +58,7 @@ const About2 = () => {
         <div className="h-full w-full absolute inset-0 bg-gold opacity-15" />
       </div>
 
-      <div className="flex flex-col items-center justify-between relative w-full max-w-[1440px] mx-auto h-full">
+      <div className="flex flex-col items-center  relative w-full max-w-[1440px] mx-auto h-full">
         <span
           ref={span}
           className="font-serif text-[clamp(2.25rem,5.56vw,5rem)] text-center leading-none  bg-cream border-2 border-gold rounded-lg px-6 py-2 -rotate-2"
@@ -68,14 +68,14 @@ const About2 = () => {
 
         <p
           ref={title}
-          className="text-[clamp(3rem,12vw,180px)] font-serif font-medium text-cream leading-none text-center "
+          className="text-[clamp(3rem,12vw,180px)] font-serif font-medium text-cream leading-none text-center mt-32 "
         >
           Born in <br /> India
         </p>
 
         <p
           ref={para}
-          className="font-serif text-[clamp(1.5rem,3.33vw,3rem)]  text-cream leading-[1.25] text-center "
+          className="font-serif text-[clamp(1.5rem,3.33vw,3rem)]  text-cream leading-[1.25] text-center mt-40 "
         >
           Naema was created with a deep appreciation for exceptional dates,
           premium nuts, and thoughtful craftsmanship — bringing together rich
@@ -83,7 +83,7 @@ const About2 = () => {
           collection we create.
         </p>
 
-        <div className="w-full flex flex-col items-center ">
+        <div className="w-full flex flex-col items-center mt-42 ">
           <div ref={icons} className="flex flex-wrap justify-center gap-16  ">
             {/* Icon 1 */}
             <div className="flex flex-col gap-4 items-center justify-center">

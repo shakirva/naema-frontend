@@ -8,12 +8,15 @@ import Footer from "../sections/Footer";
 import About from "../sections/About";
 import NewCollection from "../sections/NewCollection";
 import Carousel from "../components/Carousel";
+import Pillars from "../sections/Pillars";
 
 const page = () => {
   return (
     <main className="w-full h-full  overflow-clip">
       <Hero />
+
       <Carousel />
+
       <NewCollection />
 
       <Shop />
@@ -22,6 +25,7 @@ const page = () => {
       <Grid />
 
       <Deal />
+      <Pillars />
       <Footer />
     </main>
   );

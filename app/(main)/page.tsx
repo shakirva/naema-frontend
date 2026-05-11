@@ -9,6 +9,7 @@ import About from "../sections/About";
 import NewCollection from "../sections/NewCollection";
 import Carousel from "../components/Carousel";
 import Pillars from "../sections/Pillars";
+import About2 from "../sections/About2";
 
 const page = () => {
   return (
@@ -20,6 +21,7 @@ const page = () => {
       <NewCollection />
 
       <Shop />
+      <About2/>
       <About />
 
       <Grid />

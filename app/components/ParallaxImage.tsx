@@ -31,7 +31,7 @@ const ParallaxImage = ({
         src={src}
         fill
         style={{ transform: `translateY(${offset}px)` }}
-        className={`size-full object-contain   ${imageClass}`}
+        className={`size-full object-cover   ${imageClass}`}
         alt={alt}
       />
     </div>

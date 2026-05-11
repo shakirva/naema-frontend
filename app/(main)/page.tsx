@@ -10,6 +10,7 @@ import NewCollection from "../sections/NewCollection";
 import Carousel from "../components/Carousel";
 import Pillars from "../sections/Pillars";
 import About2 from "../sections/About2";
+import Testimonials from "../sections/Testimonials";
 
 const page = () => {
   return (
@@ -21,8 +22,10 @@ const page = () => {
       <NewCollection />
 
       <Shop />
+      
       <About2/>
-      <About />
+      <Testimonials/>
+     
 
       <Grid />
 

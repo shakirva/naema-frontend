@@ -37,7 +37,7 @@ const Shop = () => {
       <div className="flex flex-col w-full max-w-[1440px] mx-auto px-16 pt-16 max-lg:pt-8 max-lg:px-8 max-md:px-5">
         <div className="w-full flex justify-center">
           {" "}
-          <h2 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4 py-2 rounded-full ">
+          <h2 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4 py-2  ">
             Our Collection
           </h2>
         </div>

@@ -123,10 +123,10 @@ const Header = () => {
 
   return (
     <header className="w-full relative z-[9999]">
-      <div className="w-full px-8 md:px-16 py-2 bg-navy relative">
+      <div className="w-full px-8 md:px-16 py-4 bg-navy relative">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           {/* Logo */}
-          <Image src="/logo.png" width={90} height={90} alt="logo" />
+          <Image src="/newnaema.png" width={90} height={90} alt="logo" />
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">

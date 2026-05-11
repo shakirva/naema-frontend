@@ -32,10 +32,10 @@ const About2 = () => {
         scrub: true,
       },
     });
-   tl.to(sticker.current, { y: -150 }, 0)      // Using pixels for more control
+   tl.to(sticker.current, { y: -200 }, 0)      // Using pixels for more control
       .to(span.current, { y: -100 }, 0)
       .to(title.current, { y: -200 }, 0)
-      .to(para.current, { y: -80 }, 0)         // Lower value for the tall para
+      .to(para.current, { y: -100 }, 0)         // Lower value for the tall para
       .to(icons.current, { y: -50 }, 0);
   }, { scope: container });
 
@@ -83,7 +83,7 @@ const About2 = () => {
           collection we create.
         </p>
 
-        <div className="w-full flex flex-col items-center mt-42 ">
+        <div className="w-full flex flex-col items-center justify-center mt-42 ">
           <div ref={icons} className="flex flex-wrap justify-center gap-16  ">
             {/* Icon 1 */}
             <div className="flex flex-col gap-4 items-center justify-center">
@@ -227,7 +227,7 @@ const About2 = () => {
                   </defs>
                 </svg>
               </div>
-              <p className="font-serif text-sm text-cream max-w-[100px] text-center leading-snug">
+              <p className="font-serif text-xl text-cream max-w-[100px] text-center leading-snug">
                 Farm-fresh delivery daily
               </p>
             </div>
@@ -329,7 +329,7 @@ const About2 = () => {
                   </defs>
                 </svg>
               </div>
-              <p className="font-serif text-sm text-cream max-w-[100px] text-center leading-snug">
+              <p className="font-serif text-xl text-cream max-w-[100px] text-center leading-snug">
                 Sourced straight from orchards
               </p>
             </div>
@@ -405,7 +405,7 @@ const About2 = () => {
                   </defs>
                 </svg>
               </div>
-              <p className="font-serif text-sm text-cream max-w-[100px] text-center leading-snug">
+              <p className="font-serif text-xl text-cream max-w-[100px] text-center leading-snug">
                 Premium quality, always
               </p>
             </div>

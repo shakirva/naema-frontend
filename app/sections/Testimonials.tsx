@@ -56,15 +56,16 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="w-full bg-cream py-24 overflow-hidden px-16 max-lg:px-8 max-md:px-5 ">
+    <section className="w-full bg-cream py-24 max-md:py-12 overflow-hidden px-16 max-lg:px-8 max-md:px-5 ">
       <div className="max-w-[1400px] mx-auto ">
         {/* Heading */}
         <div className="flex flex-col items-center">
-          <h2 className="font-serif text-[clamp(1.5rem,3.3vw,3rem)] lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4 py-2 -rotate-2  ">
+          <h2 className="font-serif text-[clamp(1.5rem,3.3vw,3rem)] lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4 py-2 ">
             Reviews
           </h2>
 
-          <h2 className="font-serif text-[clamp(2.5rem,5vw,5rem)] text-center leading-[1.25] mt-10 max-w-[900px] text-black">
+          <h2 className="font-serif text-[clamp(2.5rem,5vw,5rem)] text-center leading-[1.25] mt-10 max-lg:mt-5
+           max-w-[900px] text-black">
             Loved by people <span className="italic">everywhere.</span>
             <br />
             Here’s what they’re saying.
@@ -72,12 +73,12 @@ const Testimonials = () => {
         </div>
 
         {/* Cards */}
-        <div className="mt-24 overflow-x-auto scrollbar-hide">
+        <div className="mt-24 max-lg:mt-12 overflow-x-auto scrollbar-hide">
           <div className="flex gap-4 min-w-max pb-4">
             {testimonials.map((item) => (
               <div
                 key={item.id}
-                className={`w-[320px]  h-[430px] rounded-[22px] border border-black/20 flex flex-col justify-between p-4 ${item.bg}`}
+                className={`w-[320px]  h-[430px] rounded-[22px] border-2 shadow-sm border-gold flex flex-col justify-between p-4 ${item.bg}`}
               >
                 {/* Content */}
                 <div className="flex flex-col items-center justify-center flex-1 px-4">

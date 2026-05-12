@@ -75,7 +75,7 @@ const About2 = () => {
 
         <p
           ref={para}
-          className="font-serif text-[clamp(1.5rem,3.33vw,3rem)]  text-cream leading-[1.25] text-center mt-40 "
+          className="font-serif text-[clamp(1.5rem,3.33vw,3rem)]  text-cream leading-[1.25] text-center mt-20 "
         >
           Naema was created with a deep appreciation for exceptional dates,
           premium nuts, and thoughtful craftsmanship — bringing together rich

@@ -157,8 +157,8 @@ const ProductCarousel = ({ title, description, products }: Props) => {
   };
 
   return (
-    <div className="mt-32 max-w-[1440px] mx-auto max-lg:mt-20 max-md:mt-12 px-16 pt-16 max-lg:pt-8 max-lg:px-8 max-md:px-5">
-      <h2 className="font-serif text-[clamp(2rem,3.33vw,3rem)] leading-none">
+    <div className=" max-w-[1440px] mx-auto  px-16 pt-40 max-lg:pt-20 max-lg:px-8 max-md:px-5">
+      <h2 className="font-serif w-fit text-[clamp(2rem,3.33vw,3rem)] leading-none  bg-gold/20 border border-gold/50 rounded-lg px-4 py-2 ">
         {title}
       </h2>
 

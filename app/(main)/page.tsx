@@ -19,7 +19,7 @@ const page = () => {
 
       <Carousel />
 
-      <NewCollection />
+  
 
       <Shop />
       

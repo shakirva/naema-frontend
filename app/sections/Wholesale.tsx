@@ -4,7 +4,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 
 const Wholesale = () => {
   return (
-    <div className="max-w-7xl mx-auto relative z-1 mt-6">
+    <div className=" w-full max-w-[1400px] mx-auto ">
       <div className="bg-navy border-2 border-gold flex max-md:flex-col rounded-xl justify-between py-12 px-8 max-lg:py-8 max-lg:px-6 gap-6">
         
         {/* Text side */}

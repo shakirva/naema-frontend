@@ -119,7 +119,7 @@ const About2 = () => {
           ref={title}
           className="text-[clamp(3rem,14vw,180px)] font-serif font-medium text-cream leading-none text-center mt-12 md:mt-20 lg:mt-32"
         >
-          Born in <br /> India
+          Born in <br /> Kuwait
         </p>
 
         <p

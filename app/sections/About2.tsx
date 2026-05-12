@@ -16,6 +16,7 @@ const About2 = () => {
   const container = useRef<HTMLDivElement | null>(null);
 
   const sticker = useRef<HTMLDivElement | null>(null);
+  const stickerlg = useRef<HTMLDivElement | null>(null);
 
   const span = useRef<HTMLSpanElement | null>(null);
   const title = useRef<HTMLParagraphElement | null>(null);
@@ -23,28 +24,74 @@ const About2 = () => {
   const icons = useRef<HTMLDivElement | null>(null);
   const button = useRef<HTMLDivElement | null>(null);
 
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container.current,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-   tl.to(sticker.current, { y: -200 }, 0)      // Using pixels for more control
-      .to(span.current, { y: -100 }, 0)
-      .to(title.current, { y: -200 }, 0)
-      .to(para.current, { y: -100 }, 0)         // Lower value for the tall para
-      .to(icons.current, { y: -50 }, 0);
-  }, { scope: container });
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
 
+      mm.add("(max-width: 767px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: container.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+        tl.to(sticker.current, { y: -60 }, 0)
+          .to(span.current, { y: -10 }, 0)
+          .to(title.current, { y: -40 }, 0)
+          .to(para.current, { y: -20 }, 0)
+          .to(icons.current, { y: -15 }, 0);
+      });
+
+      mm.add("(min-width: 768px) and (max-width: 1023px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: container.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+        tl.to(sticker.current, { y: -120 }, 0)
+          .to(span.current, { y: -10 }, 0)
+          .to(stickerlg.current, { y: -120 }, 0)
+          .to(title.current, { y: -100 }, 0)
+          .to(para.current, { y: -60 }, 0)
+          .to(icons.current, { y: -30 }, 0);
+      });
+
+      mm.add("(min-width: 1024px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: container.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+        tl.to(sticker.current, { y: -200 }, 0)
+         .to(span.current, { y: -100 }, 0)
+          .to(stickerlg.current, { y: -200 }, 0)
+          .to(title.current, { y: -200 }, 0)
+          .to(para.current, { y: -100 }, 0)
+          .to(icons.current, { y: -50 }, 0);
+      });
+    },
+    { scope: container },
+  );
   return (
     <section
       ref={container}
       className="w-full relative  bg-cream px-16 py-32 max-lg:pt-8 max-lg:px-8 max-md:px-5"
     >
-      <div ref={sticker} className="absolute top-0 right-10 z-10 ">
+      <div ref={sticker} className="absolute top-0 right-2 z-10 lg:hidden">
+        <DateSticker size={120} />
+      </div>
+      <div
+        ref={stickerlg}
+        className="absolute top-0 right-10 z-10 max-lg:hidden "
+      >
         <DateSticker />
       </div>
 
@@ -59,23 +106,25 @@ const About2 = () => {
       </div>
 
       <div className="flex flex-col items-center  relative w-full max-w-[1440px] mx-auto h-full">
+        {/* Badge */}
         <span
           ref={span}
-          className="font-serif text-[clamp(2.25rem,5.56vw,5rem)] text-center leading-none  bg-cream border-2 border-gold rounded-lg px-6 py-2 -rotate-2"
+          className="font-serif text-[clamp(1.5rem,4vw,5rem)] text-center leading-none bg-cream border-2 border-gold rounded-lg px-4 md:px-6 py-2 -rotate-2"
         >
           Our <span className="italic">Story</span>
         </span>
 
+        {/* Hero text */}
         <p
           ref={title}
-          className="text-[clamp(3rem,12vw,180px)] font-serif font-medium text-cream leading-none text-center mt-32 "
+          className="text-[clamp(3rem,14vw,180px)] font-serif font-medium text-cream leading-none text-center mt-12 md:mt-20 lg:mt-32"
         >
           Born in <br /> India
         </p>
 
         <p
           ref={para}
-          className="font-serif text-[clamp(1.5rem,3.33vw,3rem)]  text-cream leading-[1.25] text-center mt-20 "
+          className="font-serif text-[clamp(1.1rem,2.5vw,3rem)] text-cream leading-[1.25] text-center mt-10 md:mt-14 lg:mt-20 max-w-[90%] md:max-w-[80%]"
         >
           Naema was created with a deep appreciation for exceptional dates,
           premium nuts, and thoughtful craftsmanship — bringing together rich
@@ -83,20 +132,18 @@ const About2 = () => {
           collection we create.
         </p>
 
-        <div className="w-full flex flex-col items-center justify-center mt-42 ">
-          <div ref={icons} className="flex flex-wrap justify-center gap-16  ">
-            {/* Icon 1 */}
-            <div className="flex flex-col gap-4 items-center justify-center">
-              <div className="size-32 bg-cream border-2 border-gold  rounded-full p-10">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-full h-full"
-                >
-                  <g clipPath="url(#clip0_5303_7089)">
+        {/* Icons + CTA */}
+        <div className="w-full flex flex-col items-center justify-center mt-16 md:mt-24 lg:mt-32 gap-12 md:gap-16">
+          <div
+            ref={icons}
+            className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16"
+          >
+            {[
+              {
+                id: "clip0_5303_7089",
+                label: "Farm-fresh delivery daily",
+                paths: (
+                  <>
                     <path
                       d="M15.3491 7.69635H19.1746C20.1892 7.69635 21.1622 8.09939 21.8796 8.81681C22.5971 9.53423 23.0001 10.5073 23.0001 11.5218V17.2601C23.0001 17.5137 22.8993 17.757 22.72 17.9363C22.5406 18.1157 22.2974 18.2164 22.0437 18.2164H15.3491V7.69635Z"
                       fill="white"
@@ -219,31 +266,14 @@ const About2 = () => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_5303_7089">
-                      <rect width="24" height="24" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
-              <p className="font-serif text-xl text-cream max-w-[100px] text-center leading-snug">
-                Farm-fresh delivery daily
-              </p>
-            </div>
-
-            {/* Icon 2 */}
-            <div className="flex flex-col gap-4 items-center justify-center">
-              <div className="size-32 bg-cream  border-2 border-gold  rounded-full p-10 flex">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-full h-full"
-                >
-                  <g clipPath="url(#clip0_5303_7258)">
+                  </>
+                ),
+              },
+              {
+                id: "clip0_5303_7258",
+                label: "Sourced straight from orchards",
+                paths: (
+                  <>
                     <path
                       d="M19.0629 12.8608L18.3073 5.68692C18.2836 5.45114 18.1732 5.23256 17.9976 5.07351C17.8219 4.91447 17.5935 4.82628 17.3565 4.82605H11.4261C11.1891 4.82628 10.9607 4.91447 10.785 5.07351C10.6094 5.23256 10.499 5.45114 10.4753 5.68692L9.71964 12.8608C9.70623 12.9942 9.72102 13.129 9.76305 13.2563C9.80507 13.3836 9.8734 13.5007 9.9636 13.5999C10.0538 13.6991 10.1638 13.7783 10.2866 13.8322C10.4094 13.8862 10.5421 13.9137 10.6762 13.913H18.116C18.2501 13.9137 18.3828 13.8862 18.5056 13.8322C18.6283 13.7783 18.7384 13.6991 18.8286 13.5999C18.9187 13.5007 18.9871 13.3836 19.0291 13.2563C19.0711 13.129 19.0859 12.9942 19.0725 12.8608H19.0629Z"
                       fill="#C2F3FF"
@@ -272,7 +302,7 @@ const About2 = () => {
                       strokeLinejoin="round"
                     />
                     <path
-                      d="M22.0433 8.65198H16.3042C16.0505 8.65198 15.8072 8.75275 15.6278 8.93214C15.4484 9.11152 15.3477 9.35481 15.3477 9.6085V14.3911C15.3477 14.6448 15.4484 14.8881 15.6278 15.0675C15.8072 15.2469 16.0505 15.3476 16.3042 15.3476H22.0433C22.297 15.3476 22.5403 15.2469 22.7197 15.0675C22.8991 14.8881 22.9998 14.6448 22.9998 14.3911V9.6085C22.9998 9.48289 22.9751 9.35851 22.927 9.24245C22.8789 9.1264 22.8085 9.02096 22.7197 8.93214C22.6309 8.84332 22.5254 8.77286 22.4094 8.72479C22.2933 8.67672 22.1689 8.65198 22.0433 8.65198Z"
+                      d="M22.0433 8.65198H16.3042C16.0505 8.65198 15.8072 8.75275 15.6278 8.93214C15.4484 9.11152 15.3477 9.35481 15.3477 9.6085V14.3911C15.3477 14.6448 15.4484 14.8881 15.6278 15.0675C15.8072 15.2469 16.0505 15.3476 16.3042 15.3476H22.0433C22.297 15.3476 22.5403 15.2469 22.7197 15.0675C22.8991 14.8881 22.9998 14.6448 22.9998 14.3911V9.6085C22.9998 9.35481 22.8991 9.11152 22.7197 8.93214C22.5403 8.75275 22.297 8.65198 22.0433 8.65198Z"
                       fill="#FF808C"
                     />
                     <path
@@ -280,7 +310,7 @@ const About2 = () => {
                       fill="#FFBFC5"
                     />
                     <path
-                      d="M22.0433 8.65198H16.3042C16.0505 8.65198 15.8072 8.75275 15.6278 8.93214C15.4484 9.11152 15.3477 9.35481 15.3477 9.6085V14.3911C15.3477 14.6448 15.4484 14.8881 15.6278 15.0675C15.8072 15.2469 16.0505 15.3476 16.3042 15.3476H22.0433C22.297 15.3476 22.5403 15.2469 22.7197 15.0675C22.8991 14.8881 22.9998 14.6448 22.9998 14.3911V9.6085C22.9998 9.48289 22.9751 9.35851 22.927 9.24245C22.8789 9.1264 22.8085 9.02096 22.7197 8.93214C22.6309 8.84332 22.5254 8.77286 22.4094 8.72479C22.2933 8.67672 22.1689 8.65198 22.0433 8.65198Z"
+                      d="M22.0433 8.65198H16.3042C16.0505 8.65198 15.8072 8.75275 15.6278 8.93214C15.4484 9.11152 15.3477 9.35481 15.3477 9.6085V14.3911C15.3477 14.6448 15.4484 14.8881 15.6278 15.0675C15.8072 15.2469 16.0505 15.3476 16.3042 15.3476H22.0433C22.297 15.3476 22.5403 15.2469 22.7197 15.0675C22.8991 14.8881 22.9998 14.6448 22.9998 14.3911V9.6085C22.9998 9.35481 22.8991 9.11152 22.7197 8.93214C22.5403 8.75275 22.297 8.65198 22.0433 8.65198Z"
                       stroke="#191919"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -321,31 +351,14 @@ const About2 = () => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_5303_7258">
-                      <rect width="24" height="24" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
-              <p className="font-serif text-xl text-cream max-w-[100px] text-center leading-snug">
-                Sourced straight from orchards
-              </p>
-            </div>
-
-            {/* Icon 3 */}
-            <div className="flex flex-col gap-4 items-center justify-center">
-              <div className="size-32 bg-cream border-2 border-gold  rounded-full p-10">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-full h-full"
-                >
-                  <g clipPath="url(#clip0_5303_7199)">
+                  </>
+                ),
+              },
+              {
+                id: "clip0_5303_7199",
+                label: "Premium quality, always",
+                paths: (
+                  <>
                     <path
                       d="M17.4149 16.0959L18.8491 8.65369H2.24561L3.65774 15.9736C3.73928 16.3438 3.94677 16.6741 4.24471 16.9085C4.54265 17.1428 4.91267 17.2665 5.29169 17.2585H16.0066C16.3399 17.2585 16.6628 17.1425 16.9197 16.9304C17.1767 16.7182 17.3518 16.4232 17.4149 16.0959Z"
                       fill="#FFF9BF"
@@ -393,35 +406,54 @@ const About2 = () => {
                     />
                     <path
                       d="M18.7718 13.7697L19.9995 16.6159H22.3897C22.5107 16.611 22.6302 16.6436 22.7318 16.7093C22.8336 16.775 22.9125 16.8705 22.9576 16.9829C23.0028 17.0952 23.0121 17.2188 22.9842 17.3366C22.9563 17.4544 22.8925 17.5608 22.8018 17.6408L20.7261 19.4862L21.8734 22.1278C21.9241 22.2486 21.9356 22.3823 21.9063 22.51C21.8769 22.6376 21.8082 22.7529 21.7099 22.8394C21.6115 22.926 21.4885 22.9794 21.3581 22.9922C21.2277 23.005 21.0965 22.9765 20.9833 22.9108L18.2106 21.3476L15.438 22.9108C15.3246 22.9762 15.1935 23.0045 15.0633 22.9915C14.9329 22.9787 14.81 22.9251 14.7117 22.8388C14.6134 22.7524 14.5446 22.6373 14.5151 22.5097C14.4854 22.3823 14.4966 22.2486 14.5469 22.1278L15.6942 19.4871L13.6233 17.6408C13.5329 17.5609 13.4693 17.455 13.4415 17.3375C13.4138 17.2201 13.4229 17.0969 13.4678 16.9848C13.5128 16.8727 13.5912 16.7774 13.6924 16.7116C13.7938 16.6459 13.9128 16.6132 14.0334 16.6178H16.4237L17.6522 13.7716C17.7068 13.6701 17.7878 13.5853 17.8868 13.5262C17.9857 13.4671 18.0987 13.4358 18.214 13.4358C18.3292 13.4358 18.4423 13.4671 18.5411 13.5262C18.6401 13.5853 18.7211 13.6701 18.7757 13.7716L18.7718 13.7697Z"
+                      fill="#FFEF5E"
                       stroke="#191919"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_5303_7199">
-                      <rect width="24" height="24" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
+                    <path
+                      d="M19.9991 16.616L18.7715 13.7697C18.7169 13.6682 18.6359 13.5834 18.537 13.5242C18.4381 13.4651 18.325 13.434 18.2098 13.434C18.0945 13.434 17.9815 13.4651 17.8826 13.5242C17.7836 13.5834 17.7027 13.6682 17.6481 13.7697L16.4195 16.616H14.0293C13.9085 16.6117 13.7895 16.6447 13.6883 16.711C13.5872 16.777 13.5091 16.8728 13.4645 16.985C13.42 17.0974 13.4114 17.2207 13.4397 17.3381C13.468 17.4556 13.5321 17.5613 13.6229 17.6409L15.6967 19.4881L14.5494 22.1289C14.4925 22.27 14.4897 22.4273 14.5418 22.5705L20.4953 16.617L19.9991 16.616Z"
+                      fill="#FFF9BF"
+                    />
+                  </>
+                ),
+              },
+            ].map(({ id, label, paths }) => (
+              <div
+                key={id}
+                className="flex flex-col gap-3 md:gap-4 items-center justify-center"
+              >
+                <div className="size-20 md:size-24 lg:size-32 bg-cream border-2 border-gold rounded-full p-6 md:p-7 lg:p-10">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-full h-full"
+                  >
+                    <g clipPath={`url(#${id})`}>{paths}</g>
+                    <defs>
+                      <clipPath id={id}>
+                        <rect width="24" height="24" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+                <p className="font-serif text-base md:text-lg lg:text-xl text-cream max-w-[90px] md:max-w-[100px] text-center leading-snug">
+                  {label}
+                </p>
               </div>
-              <p className="font-serif text-xl text-cream max-w-[100px] text-center leading-snug">
-                Premium quality, always
-              </p>
-            </div>
+            ))}
           </div>
 
-          <div
-            ref={button}
-            className="w-full flex items-center justify-center  "
+          {/* CTA */}
+          <Link
+            href="/about"
+            className="px-8 md:px-12 py-4 md:py-5 text-sm md:text-base font-medium tracking-tight border-2 border-gold bg-navy rounded-full text-cream transition-all hover:bg-cream hover:text-navy"
           >
-            <Link
-              href="/about"
-              className="px-12 py-5 text-base font-medium tracking-tight border-2 border-gold bg-navy rounded-full text-cream w-fit transition-all hover:bg-cream hover:text-navy"
-            >
-              Our origins
-            </Link>
-          </div>
+            Our origins
+          </Link>
         </div>
       </div>
     </section>

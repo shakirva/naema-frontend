@@ -33,8 +33,8 @@ const Shop = () => {
     <section className="min-h-screen w-full bg-cream pb-16 lg:pb-32">
 
       <h1 className="font-serif text-[clamp(1.75rem,4.5vw,3.5rem)] text-center px-5 md:px-8 lg:px-16 pt-10 lg:pt-16 leading-tight">
-        A great box starts with carefully selected dates,
-        <br className="hidden md:block" /> roasted nuts, and rich artisan chocolate.
+        A great box starts with carefully selected <span className="italic">dates</span>dates,
+        <br className="hidden md:block" /> roasted  <span className="italic">nuts</span>, and rich artisan <span className="italic">chocolate.</span>
       </h1>
 
       <ProductCarousel

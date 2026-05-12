@@ -13,7 +13,7 @@ const ValueSection = () => {
         <Image src="/goldpalmm.jpg" fill alt="palm" className="object-cover" />
       </div>
 
-      <div className="relative z-10 flex flex-col gap-24 max-lg:gap-16">
+      <div className="relative z-10 flex flex-col gap-18 max-lg:gap-16">
         {/* Pillars */}
         <Pillars />
 

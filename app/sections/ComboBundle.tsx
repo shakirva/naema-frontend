@@ -5,7 +5,7 @@ import { FaPlus } from "react-icons/fa6";
 const ComboBundle = () => {
   return (
     <div className="max-w-[1440px] mx-auto w-full">
-      <div className="bg-cream border-2 border-gold flex max-md:flex-col rounded-xl justify-between py-12 px-8 max-lg:py-8 max-lg:px-6 gap-6">
+      <div className="bg-cream border-2 border-gold flex max-md:flex-col rounded-xl justify-between lg:py-20 py-12 px-8 max-lg:py-8 max-lg:px-6 gap-6">
 
         <div className="flex flex-col max-md:items-center flex-1">
           <span className="w-fit capitalize font-medium tracking-tight text-[10px] border border-gold bg-navy text-white px-3 py-2 rounded-full leading-none text-center">

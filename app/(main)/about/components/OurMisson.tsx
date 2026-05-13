@@ -12,7 +12,7 @@ const OurMisson = () => {
           <h3 className="font-serif text-[clamp(2rem,3.3vw,3rem)] text-black/90 leading-none mt-6 text-center max-w-[550px]">
             Exceptional Flavours Crafted For Everyday Indulgence
           </h3>
-          <p className="lg:text-[20px] text-black/80  tracking-tight leading-none text-center mt-12 max-w-[450px]">
+          <p className="lg:text-[18px] text-black/80  tracking-tight leading-[1.25] text-center mt-12 max-w-[450px]">
             We source premium dates, chocolate, nuts, and dry fruits with a
             focus on quality and freshness. Every collection is thoughtfully
             curated for rich flavour, elegant presentation, and ingredients

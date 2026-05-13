@@ -117,14 +117,14 @@ const About2 = () => {
         {/* Hero text */}
         <p
           ref={title}
-          className="text-[clamp(3rem,14vw,180px)] font-serif font-medium text-cream leading-none text-center mt-12 md:mt-20 lg:mt-32"
+          className="text-[clamp(3rem,14vw,180px)] font-serif font-medium text-cream leading-none text-center mt-12 md:mt-18 lg:mt-24"
         >
           Born in <br /> Kuwait
         </p>
 
         <p
           ref={para}
-          className="font-serif text-[clamp(1.1rem,2.5vw,3rem)] text-cream leading-[1.25] text-center mt-10 md:mt-14 lg:mt-20 max-w-[90%] md:max-w-[80%]"
+          className="font-serif text-[clamp(1.1rem,2.5vw,3rem)] text-cream leading-[1.25] text-center mt-10 md:mt-12 lg:mt-14 max-w-[90%] md:max-w-[80%]"
         >
           Naema was created with a deep appreciation for exceptional dates,
           premium nuts, and thoughtful craftsmanship — bringing together rich
@@ -133,7 +133,7 @@ const About2 = () => {
         </p>
 
         {/* Icons + CTA */}
-        <div className="w-full flex flex-col items-center justify-center mt-16 md:mt-24 lg:mt-32 gap-12 md:gap-16">
+        <div className="w-full flex flex-col items-center justify-center mt-12 md:mt-18 lg:mt-24 gap-12 md:gap-16">
           <div
             ref={icons}
             className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16"

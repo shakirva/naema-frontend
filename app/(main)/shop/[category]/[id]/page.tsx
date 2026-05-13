@@ -1,210 +1,192 @@
 "use client";
 
-import React, { useState } from "react";
-import { useParams, notFound } from "next/navigation"; // ✅ useParams added
+import React, { useState, useEffect } from "react";
+import { useParams, notFound } from "next/navigation";
 import Image from "next/image";
 import { IoMdStar } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 
 import Footer from "@/app/sections/Footer";
-import { FiCopy } from "react-icons/fi";
 import FrequentlyBought from "../../components/FrequentlyBought";
 import CustomerReviews from "../../components/CustomerReviews";
 import FAQ from "../../components/FAQ";
-import { products } from "@/app/constants";
-
-const sizes = [
-  { label: "250g", available: true },
-  { label: "500g", available: true },
-  { label: "1kg", available: false },
-  { label: "2kg", available: true },
-];
+import medusa from "@/lib/medusa";
+import {
+  MedusaProduct,
+  MedusaProductVariant,
+  getKWDPrice,
+  formatKWD,
+} from "@/lib/types";
+import { useCart } from "@/app/context/CartContext";
 
 const ProductDetail = () => {
-  const params = useParams(); // ✅ FIX
+  const params = useParams();
+  const productId = params.id as string;
 
-  // ✅ hooks stay exactly where they were logically
+  const [product, setProduct] = useState<MedusaProduct | null>(null);
+  const [notFoundFlag, setNotFoundFlag] = useState(false);
   const [qty, setQty] = useState(1);
+  const [selectedVariant, setSelectedVariant] = useState<MedusaProductVariant | null>(null);
   const [open, setOpen] = useState("shipping");
-  const [selectedSize, setSelectedSize] = useState("500g");
+  const [added, setAdded] = useState(false);
+  const { addToCart } = useCart();
 
-  // ✅ FIX: use params safely
-  const product = products.find(
-    (p) => p.id === Number(params.id) && p.category === params.category,
-  );
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const { product: data } = await medusa.store.product.retrieve(productId, {
+          fields: "id,title,handle,thumbnail,description,variants,variants.prices,tags,images,categories",
+        } as Parameters<typeof medusa.store.product.retrieve>[1]);
+        const p = data as unknown as MedusaProduct;
+        setProduct(p);
+        if (p.variants?.length) setSelectedVariant(p.variants[0]);
+      } catch {
+        setNotFoundFlag(true);
+      }
+    };
+    fetchProduct();
+  }, [productId]);
 
-  if (!product) return notFound();
+  if (notFoundFlag) return notFound();
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-navy border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  const image = product.thumbnail ?? product.images?.[0]?.url ?? "/n1.jpg";
+  const price = selectedVariant ? getKWDPrice(selectedVariant) : null;
+  const tags = product.tags?.map((t) => t.value) ?? [];
+
+  const handleAddToCart = async () => {
+    if (!selectedVariant) return;
+    setAdded(true);
+    await addToCart(selectedVariant.id, qty);
+    setTimeout(() => setAdded(false), 1200);
+  };
 
   return (
     <>
       <section className="px-16 py-16 max-lg:px-8 max-md:px-5 bg-cream min-h-screen">
-        <div className="max-w-[1440px] mx-auto flex max-lg:flex-col   items-start gap-16">
-          <div className="w-1/2 max-lg:w-full border-2 border-black rounded-2xl overflow-hidden   self-start shrink-0">
+        <div className="max-w-[1440px] mx-auto flex max-lg:flex-col items-start gap-16">
+          {/* Image */}
+          <div className="w-1/2 max-lg:w-full border-2 border-black rounded-2xl overflow-hidden self-start shrink-0">
             <div className="relative w-full h-[500px] max-lg:h-[350px]">
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                className="object-cover"
-              />
+              <Image src={image} alt={product.title} fill className="object-cover" />
             </div>
           </div>
 
-          {/* RIGHT → DETAILS */}
-          <div className="flex flex-col max-lg:w-full  w-1/2">
-            {/* Rating */}
-            <div className="flex items-center gap-2 ">
+          {/* Details */}
+          <div className="flex flex-col max-lg:w-full w-1/2">
+            {/* Stars */}
+            <div className="flex items-center gap-2">
               {Array.from({ length: 5 }).map((_, i) => (
-                <IoMdStar
-                  key={i}
-                  size={18}
-                  color={i < product.rating ? "#ccba78" : "#e5e5e5"}
-                />
+                <IoMdStar key={i} size={18} color={i < 4 ? "#ccba78" : "#e5e5e5"} />
               ))}
-              <span className="text-sm text-black/60">({product.reviews})</span>
             </div>
 
-            {/* Title */}
-            <h1 className="font-serif text-[clamp(2rem,3vw,3rem)] leading-none mt-4">
-              {product.name}
-            </h1>
-            {/* Size Selector */}
-            <div className="flex flex-col gap-3 mt-4">
-              <p className="text-sm font-medium tracking-tight">
-                Size —{" "}
-                <span className="text-black/50 font-normal">
-                  {selectedSize}
-                </span>
-              </p>
-              <div className="flex gap-2 flex-wrap">
-                {sizes.map((size) => (
-                  <button
-                    key={size.label}
-                    disabled={!size.available}
-                    onClick={() =>
-                      size.available && setSelectedSize(size.label)
-                    }
-                    className={`relative px-5 py-2 rounded-full border text-sm font-medium transition-all duration-150
-                    ${
-                      !size.available
-                        ? "border-black/10 text-black/25 cursor-not-allowed line-through"
-                        : selectedSize === size.label
-                          ? "bg-navy text-white border-navy"
-                          : "border-black/20 text-black/70 hover:border-black cursor-pointer"
-                    }`}
-                  >
-                    {size.label}
-                    {!size.available && (
-                      <span className="absolute -top-2 -right-1 text-[9px] bg-gold text-black/40 px-1.5 py-0.5 rounded-full leading-none">
-                        sold out
-                      </span>
-                    )}
-                  </button>
-                ))}
+            <h1 className="font-serif text-[clamp(2rem,3vw,3rem)] leading-none mt-4">{product.title}</h1>
+
+            {/* Variant Selector */}
+            {product.variants?.length > 0 && (
+              <div className="flex flex-col gap-3 mt-4">
+                <p className="text-sm font-medium tracking-tight">
+                  Size — <span className="text-black/50 font-normal">{selectedVariant?.title}</span>
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  {product.variants.map((v) => {
+                    const vPrice = getKWDPrice(v);
+                    const isSelected = selectedVariant?.id === v.id;
+                    return (
+                      <button
+                        key={v.id}
+                        onClick={() => setSelectedVariant(v)}
+                        className={`px-5 py-2 rounded-full border text-sm font-medium transition-all duration-150 ${
+                          isSelected
+                            ? "bg-navy text-white border-navy"
+                            : "border-black/20 text-black/70 hover:border-black cursor-pointer"
+                        }`}
+                      >
+                        {v.title}
+                        {vPrice !== null && (
+                          <span className="ml-1.5 text-xs opacity-70">{formatKWD(vPrice)}</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* Quantity + CTA */}
-            <div className="flex items-center  gap-4 mt-6">
-              {/* Qty */}
+            {/* Qty + Add to Cart */}
+            <div className="flex items-center gap-4 mt-6">
               <div className="flex items-center border border-black/20 rounded-full overflow-hidden">
-                <button
-                  onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  className="px-4 py-2"
-                >
-                  -
-                </button>
+                <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="px-4 py-2">-</button>
                 <span className="px-4">{qty}</span>
-                <button
-                  onClick={() => setQty((q) => q + 1)}
-                  className="px-4 py-2"
-                >
-                  +
-                </button>
+                <button onClick={() => setQty((q) => q + 1)} className="px-4 py-2">+</button>
               </div>
-
-              {/* Add to cart */}
-              <button className="flex-1 py-3  rounded-full bg-navy text-white border-2 border-gold hover:bg-transparent hover:text-black transition">
-                Add to Cart
+              <button
+                onClick={handleAddToCart}
+                disabled={!selectedVariant}
+                className="flex-1 py-3 rounded-full bg-navy text-white border-2 border-gold hover:bg-transparent hover:text-black transition disabled:opacity-40"
+              >
+                {added ? "Added ✓" : "Add to Cart"}
               </button>
             </div>
+
             {/* Price */}
             <p className="text-2xl font-semibold tracking-tight mt-4">
-              ₹{(product.price * qty).toLocaleString()}
-              {qty > 1 && (
+              {price !== null
+                ? formatKWD(price * qty)
+                : "—"}
+              {qty > 1 && price !== null && (
                 <span className="text-sm font-normal text-black/40 ml-2">
-                  (₹{product.price.toLocaleString()} × {qty})
+                  ({formatKWD(price)} × {qty})
                 </span>
               )}
             </p>
             <span className="text-xs font-light">
-              {" "}
-              <span className="underline">Shipping</span> calculated at
-              checkout.
+              <span className="underline">Shipping</span> calculated at checkout.
             </span>
 
             {/* Description */}
-            <p className="text-sm text-black/70 leading-relaxed mt-4">
-              {product.description}
-            </p>
+            {product.description && (
+              <p className="text-sm text-black/70 leading-relaxed mt-4">{product.description}</p>
+            )}
 
-            {/* Shipping */}
+            {/* Shipping accordion */}
             <div className="border-t mt-6">
               <div
                 onClick={() => setOpen(open === "shipping" ? "" : "shipping")}
                 className="flex justify-between items-center py-4 cursor-pointer"
               >
-                <span className="font-medium text-sm">
-                  Shipping Information
-                </span>
-                <FaPlus
-                  size={12}
-                  className={`transition-transform duration-300 ease-in-out ${
-                    open === "shipping" ? "rotate-45" : "rotate-0"
-                  }`}
-                />
+                <span className="font-medium text-sm">Shipping Information</span>
+                <FaPlus size={12} className={`transition-transform duration-300 ${open === "shipping" ? "rotate-45" : "rotate-0"}`} />
               </div>
-              <div
-                className={`grid transition-all duration-500 ${
-                  open === "shipping"
-                    ? "grid-rows-[1fr] pb-4"
-                    : "grid-rows-[0fr]"
-                }`}
-              >
+              <div className={`grid transition-all duration-500 ${open === "shipping" ? "grid-rows-[1fr] pb-4" : "grid-rows-[0fr]"}`}>
                 <div className="overflow-hidden min-h-0">
                   <p className="text-sm text-black/60 leading-relaxed">
-                    Orders are processed within 2–3 business days. Delivered in
-                    4–6 days.
+                    Kuwait: Standard delivery 2–3 days, Express same-day available. Free shipping on orders above KD 10.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Package */}
+            {/* Package accordion */}
             <div className="border-t">
               <div
                 onClick={() => setOpen(open === "package" ? "" : "package")}
                 className="flex justify-between items-center py-4 cursor-pointer"
               >
                 <span className="font-medium text-sm">Package Contains</span>
-                <FaPlus
-                  size={12}
-                  className={`transition-transform duration-300 ease-in-out ${
-                    open === "package" ? "rotate-45" : "rotate-0"
-                  }`}
-                />
+                <FaPlus size={12} className={`transition-transform duration-300 ${open === "package" ? "rotate-45" : "rotate-0"}`} />
               </div>
-              <div
-                className={`grid transition-all duration-500 ${
-                  open === "package"
-                    ? "grid-rows-[1fr] pb-4"
-                    : "grid-rows-[0fr]"
-                }`}
-              >
+              <div className={`grid transition-all duration-500 ${open === "package" ? "grid-rows-[1fr] pb-4" : "grid-rows-[0fr]"}`}>
                 <div className="overflow-hidden min-h-0">
                   <p className="text-sm text-black/60 leading-relaxed">
-                    1 premium pack of {product.name} — {selectedSize},
-                    vacuum-sealed for freshness.
+                    1 premium pack of {product.title} — {selectedVariant?.title}, vacuum-sealed for freshness.
                   </p>
                 </div>
               </div>
@@ -214,40 +196,23 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        <div className="max-w-[1440px] mx-auto mt-16 border-1 border-navy rounded-2xl px-16 py-12 max-lg:px-10 max-md:px-6 flex flex-col items-center text-center gap-6">
-          <h2 className="font-serif text-[clamp(1.2rem,2vw,1.5rem)] tracking-tight">
-            Are {product.name} the right choice for you?
-          </h2>
-
-          <p className="text-sm text-black/60 leading-relaxed max-w-[680px]">
-            If you're looking for naturally sweet, nutrient-dense fruit with a
-            rich flavour profile, {product.name} are the perfect choice —
-            hand-selected from the finest orchards and packed fresh for your
-            doorstep.
-          </p>
-
-          <div className="flex gap-3 flex-wrap justify-center">
-            {product.tags?.length
-              ? product.tags.map((tag, i) => (
-                  <span
-                    key={i}
-                    className="px-5 py-2 rounded-full border border-black text-sm font-medium bg-gold/20"
-                  >
-                    {tag}
-                  </span>
-                ))
-              : ["Natural", "Fresh", "Premium"].map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-5 py-2 rounded-full border border-black text-sm font-medium bg-gold/20"
-                  >
-                    {tag}
-                  </span>
-                ))}
+        {/* Tags section */}
+        {tags.length > 0 && (
+          <div className="max-w-[1440px] mx-auto mt-16 border-1 border-navy rounded-2xl px-16 py-12 max-lg:px-10 max-md:px-6 flex flex-col items-center text-center gap-6">
+            <h2 className="font-serif text-[clamp(1.2rem,2vw,1.5rem)] tracking-tight">
+              Why choose {product.title}?
+            </h2>
+            <div className="flex gap-3 flex-wrap justify-center">
+              {tags.map((tag) => (
+                <span key={tag} className="px-5 py-2 rounded-full border border-black text-sm font-medium bg-gold/20">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        <FrequentlyBought currentId={product.id} />
+        <FrequentlyBought currentProductId={productId} />
         <CustomerReviews />
         <FAQ />
       </section>

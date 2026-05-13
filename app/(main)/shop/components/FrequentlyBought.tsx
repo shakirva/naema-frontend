@@ -1,20 +1,34 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
 import ProductCard from "./ProductCard";
-import { products } from "@/app/constants";
+import { MedusaProduct } from "@/lib/types";
+import medusa from "@/lib/medusa";
 
-const FrequentlyBought = ({ currentId }: { currentId: number }) => {
+const REGION_ID = process.env.NEXT_PUBLIC_KUWAIT_REGION_ID || "reg_01KQVDZRC5V1R8SKYCN644H08T";
+
+const FrequentlyBought = ({ currentProductId }: { currentProductId?: string }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [related, setRelated] = useState<MedusaProduct[]>([]);
 
   const SCROLL_AMOUNT = 320;
 
-  // Filter out the current product so it doesn't show itself
-  const related = products.filter((p) => p.id !== currentId);
+  useEffect(() => {
+    medusa.store.product
+      .list({
+        region_id: REGION_ID,
+        limit: 10,
+        fields: "id,title,handle,thumbnail,variants.*,variants.calculated_price",
+      } as Parameters<typeof medusa.store.product.list>[0])
+      .then((res) => {
+        const all = (res as { products: MedusaProduct[] }).products ?? [];
+        setRelated(currentProductId ? all.filter((p) => p.id !== currentProductId) : all);
+      })
+      .catch(() => setRelated([]));
+  }, [currentProductId]);
 
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -32,6 +46,8 @@ const FrequentlyBought = ({ currentId }: { currentId: number }) => {
     });
     setTimeout(updateScrollState, 350);
   };
+
+  if (!related.length) return null;
 
   return (
     <div className="mt-24 max-lg:mt-16">
@@ -82,7 +98,7 @@ const FrequentlyBought = ({ currentId }: { currentId: number }) => {
       >
         {related.map((product) => (
           <div key={product.id} className="flex-none w-[280px] max-md:w-[240px]">
-            <ProductCard product={product} category={product.category} />
+            <ProductCard product={product} />
           </div>
         ))}
       </div>

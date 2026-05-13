@@ -5,41 +5,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCart } from "../context/CartContext";
-import { Product } from "@/app/constants";
+import { MedusaProduct, formatKWD, getKWDPrice } from "@/lib/types";
 
 /* ------------------ STAR RATING ------------------ */
-
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="flex items-center gap-0.5">
     {[1, 2, 3, 4, 5].map((star) => {
       const filled = rating >= star;
-      const half = !filled && rating >= star - 0.5;
       return (
         <svg key={star} className="w-4 h-4" viewBox="0 0 20 20" fill="none">
-          {filled ? (
-            <path
-              d="M10 1.5l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.77l-4.78 2.43.91-5.32L2.27 7.12l5.34-.78L10 1.5z"
-              fill="#ccba78"
-            />
-          ) : half ? (
-            <>
-              <defs>
-                <linearGradient id={`half-${star}`}>
-                  <stop offset="50%" stopColor="#ccba78" />
-                  <stop offset="50%" stopColor="#D1D5DB" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M10 1.5l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.77l-4.78 2.43.91-5.32L2.27 7.12l5.34-.78L10 1.5z"
-                fill={`url(#half-${star})`}
-              />
-            </>
-          ) : (
-            <path
-              d="M10 1.5l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.77l-4.78 2.43.91-5.32L2.27 7.12l5.34-.78L10 1.5z"
-              fill="#D1D5DB"
-            />
-          )}
+          <path
+            d="M10 1.5l2.39 4.84 5.34.78-3.86 3.76.91 5.32L10 13.77l-4.78 2.43.91-5.32L2.27 7.12l5.34-.78L10 1.5z"
+            fill={filled ? "#ccba78" : "#D1D5DB"}
+          />
         </svg>
       );
     })}
@@ -47,69 +25,74 @@ const StarRating = ({ rating }: { rating: number }) => (
 );
 
 /* ------------------ CARD ------------------ */
-
-const CarouselCard = ({ product }: { product: Product }) => {
+const CarouselCard = ({ product }: { product: MedusaProduct }) => {
   const { addToCart } = useCart();
   const [added, setAdded] = useState(false);
 
-  const handleAdd = (e: React.MouseEvent) => {
-    e.preventDefault(); // don't trigger Link navigation
-    addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      size: "500g",
-    });
+  // Pick the first (cheapest) variant — 250g
+  const defaultVariant = product.variants?.[0];
+  const price = defaultVariant ? getKWDPrice(defaultVariant) : null;
+
+  // Derive category slug from product handle (handle IS the slug: pista, walnut, etc.)
+  const categorySlug = product.handle ?? "pista";
+
+  const handleAdd = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!defaultVariant) return;
+    await addToCart(defaultVariant.id);
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
   };
 
   return (
     <Link
-      href={`/shop/${product.category}/${product.id}`}
+      href={`/shop/${categorySlug}/${product.id}`}
       className="flex-none w-[296px] max-md:w-[240px] flex flex-col gap-3 group"
     >
       {/* Image */}
-      <div className="relative w-full h-64 rounded-2xl overflow-hidden border border-black/10">
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          className="object-cover group-hover:scale-[1.1] transition-all duration-300 ease-in-out"
-          sizes="296px"
-        />
+      <div className="relative w-full h-64 rounded-2xl overflow-hidden border border-black/10 bg-cream">
+        {product.thumbnail ? (
+          <Image
+            src={product.thumbnail}
+            alt={product.title}
+            fill
+            className="object-cover group-hover:scale-[1.1] transition-all duration-300 ease-in-out"
+            sizes="296px"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-black/20 text-sm">No image</div>
+        )}
       </div>
 
-      {/* Rating */}
+      {/* Rating (static for now) */}
       <div className="flex items-center gap-1.5">
-        <StarRating rating={product.rating} />
-        <span className="text-sm font-semibold text-gold underline underline-offset-2">
-          ({product.reviews.toLocaleString()})
-        </span>
+        <StarRating rating={5} />
+        <span className="text-sm font-semibold text-gold underline underline-offset-2">(4.9)</span>
       </div>
 
       {/* Name */}
       <h3 className="font-medium text-[20px] capitalize tracking-tight leading-tight text-black line-clamp-2">
-        {product.name}
+        {product.title}
       </h3>
 
-      {/* Tags */}
+      {/* Tags / variants */}
       <div className="flex flex-wrap gap-2">
-        {product.tags.map((tag, i) => (
+        {product.variants?.map((v, i) => (
           <span
-            key={tag}
+            key={v.id}
             className={`px-2 py-0.5 leading-none text-xs font-medium border border-black/60 rounded-full text-black/80 ${
               i === 0 ? "bg-gold/60" : "bg-white"
             }`}
           >
-            {tag}
+            {v.title}
           </span>
         ))}
       </div>
 
       {/* Price */}
-      <p className="font-bold text-lg text-black">₹{product.price.toLocaleString()}</p>
+      <p className="font-bold text-lg text-black">
+        {price !== null ? `From ${formatKWD(price)}` : "–"}
+      </p>
 
       {/* Button */}
       <button
@@ -123,11 +106,10 @@ const CarouselCard = ({ product }: { product: Product }) => {
 };
 
 /* ------------------ CAROUSEL ------------------ */
-
 type Props = {
   title: string;
   description?: string;
-  products: Product[];
+  products: MedusaProduct[];
 };
 
 const ProductCarousel = ({ title, description, products }: Props) => {
@@ -151,45 +133,38 @@ const ProductCarousel = ({ title, description, products }: Props) => {
     setTimeout(updateScrollState, 350);
   };
 
+  if (!products.length) return null;
+
   return (
     <div className="mt-32 max-lg:mt-24 max-md:mt-12">
       <h2 className="font-serif text-[clamp(2rem,3.33vw,3rem)] leading-none">{title}</h2>
 
       <div className="flex items-end justify-between mb-8">
         {description && (
-          <p className="mt-2 text-[16px] max-md:text-sm text-black/80 tracking-tight">
-            {description}
-          </p>
+          <p className="mt-2 text-[16px] max-md:text-sm text-black/80 tracking-tight">{description}</p>
         )}
-
-        {/* Arrows */}
         <div className="flex items-center gap-2 shrink-0 ml-8 max-md:hidden">
           <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
-            className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer
-              ${canScrollLeft
-                ? "bg-navy border-navy active:shadow-none"
-                : "bg-white border-gold cursor-not-allowed"
-              }`}
+            className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer ${
+              canScrollLeft ? "bg-navy border-navy" : "bg-white border-gold cursor-not-allowed"
+            }`}
           >
             <ChevronLeft className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
           </button>
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
-            className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer
-              ${canScrollRight
-                ? "bg-navy border-navy active:shadow-none"
-                : "bg-white border-gold cursor-not-allowed"
-              }`}
+            className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer ${
+              canScrollRight ? "bg-navy border-navy" : "bg-white border-gold cursor-not-allowed"
+            }`}
           >
             <ChevronRight className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
           </button>
         </div>
       </div>
 
-      {/* Scrollable row */}
       <div
         ref={scrollRef}
         onScroll={updateScrollState}

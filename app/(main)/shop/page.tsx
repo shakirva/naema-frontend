@@ -6,36 +6,60 @@ import { FiArrowRight } from "react-icons/fi";
 
 const categories = [
   {
-    slug: "dates",
-    label: "Dates",
-    description: "Hand-picked premium dates from the finest orchards.",
+    slug: "pista",
+    label: "Pistachio",
+    description: "Roasted & salted premium pistachios, rich in flavour.",
     image: "/n1.jpg",
-    count: 24,
-    tags: ["Pressed", "Stuffed", "Dry", "Gift Boxes"],
+    count: 3,
+    tags: ["Roasted", "Salted", "250g", "500g", "1kg"],
   },
   {
-    slug: "nuts",
-    label: "Nuts",
-    description: "Freshly sourced almonds, cashews, pistachios and more.",
+    slug: "walnut",
+    label: "Walnuts",
+    description: "Extra light halves — crisp, golden, and full of goodness.",
     image: "/n2.jpg",
-    count: 12,
-    tags: ["Almonds", "Cashews", "Walnuts", "Pistachios"],
+    count: 3,
+    tags: ["Extra Light", "Halves", "250g", "500g", "1kg"],
   },
   {
-    slug: "dry-fruits",
-    label: "Dry Fruits",
-    description: "Sun-dried fruits packed with natural goodness.",
+    slug: "almond",
+    label: "Almonds",
+    description: "California Mamra almonds — crunchy and nutrient-packed.",
     image: "/n3.jpg",
-    count: 10,
-    tags: ["Raisins", "Figs", "Apricots", "Prunes"],
+    count: 3,
+    tags: ["California", "Mamra", "250g", "500g", "1kg"],
   },
   {
-    slug: "chocolates",
-    label: "Chocolates",
-    description: "Artisan chocolates crafted with the finest cacao.",
+    slug: "cashew",
+    label: "Cashews",
+    description: "W240 King Size cashews — the finest premium grade.",
     image: "/n4.jpg",
-    count: 8,
-    tags: ["Dark", "Milk", "Date Chocolates", "Gift Box"],
+    count: 3,
+    tags: ["W240", "King Size", "250g", "500g", "1kg"],
+  },
+  {
+    slug: "pumpkin-seed",
+    label: "Pumpkin Seeds",
+    description: "Organic green pumpkin seeds, protein-rich superfoods.",
+    image: "/n5.jpg",
+    count: 3,
+    tags: ["Organic", "Green", "250g", "500g", "1kg"],
+  },
+  {
+    slug: "fig",
+    label: "Figs",
+    description: "Premium Anjeer figs — naturally sweet and chewy.",
+    image: "/n6.jpg",
+    count: 3,
+    tags: ["Anjeer", "Premium", "250g", "500g", "1kg"],
+  },
+  {
+    slug: "kismiss",
+    label: "Raisins",
+    description: "Golden raisins — sun-dried and bursting with sweetness.",
+    image: "/dry.jpg",
+    count: 3,
+    tags: ["Golden", "Seedless", "250g", "500g", "1kg"],
   },
 ];
 
@@ -57,8 +81,8 @@ const CategoryPage = () => {
             Our Collection
           </h1>
           <p className="mt-4 text-base text-black/50 max-w-[480px] leading-relaxed">
-            From premium dates to artisan chocolates — explore everything
-            Naema has to offer.
+            Premium dry fruits & nuts sourced from the world&apos;s finest orchards —
+            delivered fresh to Kuwait.
           </p>
         </div>
 
@@ -85,7 +109,7 @@ const CategoryPage = () => {
 
               {/* Count badge */}
               <div className="absolute top-5 right-5 bg-gold/90 text-navy text-xs font-bold px-3 py-1.5 rounded-full">
-                {cat.count} products
+                {cat.count} sizes
               </div>
 
               {/* Content */}
@@ -97,7 +121,6 @@ const CategoryPage = () => {
                   <p className="text-white/70 text-sm max-w-[340px] leading-snug">
                     {cat.description}
                   </p>
-                  {/* Tags */}
                   <div className="flex gap-2 flex-wrap mt-1">
                     {cat.tags.map((tag) => (
                       <span
@@ -109,8 +132,6 @@ const CategoryPage = () => {
                     ))}
                   </div>
                 </div>
-
-                {/* Arrow */}
                 <div className="w-12 h-12 rounded-full bg-gold flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-200">
                   <FiArrowRight size={18} className="text-navy" />
                 </div>

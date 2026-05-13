@@ -2,7 +2,7 @@ import React from "react";
 
 const OurMisson = () => {
   return (
-    <section className=" w-full bg-cream    ">
+    <section className=" w-full bg-cream  border-y-2 border-darkgold   ">
       <div className=" max-w-[1440px] mx-auto px-16  max-lg:px-8 max-md:px-5">
         <div className="w-full flex flex-col  items-center py-16">
           {" "}

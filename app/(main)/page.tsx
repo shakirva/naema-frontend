@@ -10,6 +10,7 @@ import Carousel from "../components/Carousel";
 
 import About2 from "../sections/About2";
 import Testimonials from "../sections/Testimonials";
+import SocialFeed from "../sections/SocialFeed";
 
 const page = () => {
   return (
@@ -26,6 +27,7 @@ const page = () => {
       <Grid />
 
       <Deal />
+      <SocialFeed/>
 
       <Footer />
     </main>

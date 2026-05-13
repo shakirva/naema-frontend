@@ -72,15 +72,9 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <Link href="/">
-              <Image
-                src="/logo.png"
-                width={70}
-                height={70}
-                alt="logo"
-                className="mb-4 cursor-pointer"
-              />
+              <Image src="/newnaema.png" width={90} height={90} alt="logo" />
             </Link>
-            <p className="text-cream/70 text-sm leading-relaxed mb-6">
+            <p className="text-cream/70 text-sm leading-relaxed  mt-4 mb-6">
               Thoughtfully sourced dates, nuts, and chocolates — crafted for
               moments worth savoring.
             </p>

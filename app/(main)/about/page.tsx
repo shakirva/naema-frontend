@@ -7,6 +7,7 @@ import FounderNote from "./components/FounderNote";
 import NaemaValues from "./components/NaemaValues";
 import OurStoryBlocks from "./components/OurStoryBlocks";
 import Footer from "@/app/sections/Footer";
+import Hospitality from "./components/Hospitality";
 
 const page = () => {
   return (
@@ -15,7 +16,9 @@ const page = () => {
       <OurMisson />
       <FounderNote />
       <NaemaValues />
+      <Hospitality/>
       <OurStoryBlocks />
+
       <Footer/>
     </section>
   );

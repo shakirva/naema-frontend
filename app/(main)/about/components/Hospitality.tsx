@@ -30,7 +30,7 @@ const cards = [
 ];
 
 const Hospitality = () => {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(1);
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -58,6 +58,10 @@ const Hospitality = () => {
       isAutoScrolling.current = false;
     }, 500);
   };
+
+  useEffect(() => {
+    scrollToCard(1);
+  }, []);
 
   useEffect(() => {
     const container = sliderRef.current;
@@ -150,9 +154,8 @@ const Hospitality = () => {
             ref={sliderRef}
             className="
               flex gap-6 overflow-x-auto scrollbar-hide
-              snap-x snap-mandatory scroll-smooth
-              pb-2
-              px-[5vw] lg:px-[20vw]
+              snap-x snap-proximity scroll-smooth
+              pb-2 px-5 md:px-8
             "
           >
             {cards.map((card) => (
@@ -160,16 +163,18 @@ const Hospitality = () => {
                 key={card.title}
                 className="
                   relative
-                  min-w-[88vw]
-                  md:min-w-[75vw]
-                  lg:min-w-[43vw]
+                  min-w-[92vw]
+                  md:min-w-[78vw]
+                  lg:min-w-[48vw]
                   h-[420px]
                   md:h-[480px]
-                  rounded-xl
+                  rounded-[24px]
                   overflow-hidden
                   border border-gold/30
                   shrink-0
                   snap-center
+                  first:ml-[2vw]
+                  last:mr-[2vw]
                 "
               >
                 {/* Image */}
@@ -185,7 +190,7 @@ const Hospitality = () => {
 
                 {/* Floating content */}
                 <div
-                  className={`absolute left-5 bottom-5 md:left-8 md:bottom-8 max-w-[300px] md:max-w-[320px] rounded-xl border border-black/10 px-5 py-5 md:px-6 md:py-6 ${card.accent}`}
+                  className={`absolute left-5 bottom-5 md:left-8 md:bottom-8 max-w-[300px] md:max-w-[320px] rounded-xl border border-black/10 px-5 py-5 md:px-6 md:py-6 backdrop-blur-sm ${card.accent}`}
                 >
                   <h3 className="font-serif text-[clamp(2rem,3vw,3rem)] text-navy leading-none">
                     {card.title}

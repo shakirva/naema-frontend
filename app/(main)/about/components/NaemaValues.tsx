@@ -4,31 +4,42 @@ import React from "react";
 const values = [
   {
     title: "Naturally Sourced",
-    description: "Every date and nut traced back to its orchard. No shortcuts, no compromise.",
+    description:
+      "Every date and nut traced back to its orchard. No shortcuts, no compromise.",
     image: "/val1.png",
   },
   {
     title: "Zero Additives",
-    description: "Pure as nature intended. Nothing artificial ever makes it into our products.",
+    description:
+      "Pure as nature intended. Nothing artificial ever makes it into our products.",
     image: "/val-2.png",
   },
   {
     title: "Responsible Farming",
-    description: "We work only with growers who respect the land and the people who work it.",
+    description:
+      "We work only with growers who respect the land and the people who work it.",
     image: "/val-3.png",
   },
   {
     title: "Premium Always",
-    description: "Every product is held to the same uncompromising standard before it reaches you.",
+    description:
+      "Every product is held to the same uncompromising standard before it reaches you.",
     image: "/val-4.png",
   },
 ];
 
 const NaemaValues = () => {
   return (
-    <section className="w-full bg-navy px-5 md:px-8 lg:px-16 py-16 md:py-24">
-      <div className="max-w-[1000px] mx-auto flex flex-col items-center">
-
+    <section className="w-full bg-navy px-5 md:px-8 lg:px-16 py-16 md:py-24 relative overflow-scroll">
+      <div className="absolute inset-0 h-full w-full opacity-5  ">
+        <Image
+          src={"/bigdarkpalm.png"}
+          alt="dates"
+          fill
+          className="object-cover"
+        />
+      </div>
+      <div className="max-w-[1000px]  relative z-1 mx-auto flex flex-col items-center">
         {/* Label */}
         <span className="font-serif text-[clamp(1rem,1.5vw,1.5rem)] text-cream font-medium lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4 py-2">
           Our Values
@@ -56,7 +67,12 @@ const NaemaValues = () => {
             >
               {/* Image */}
               <div className="relative w-16 h-16 md:w-24 md:h-24 lg:w-28 lg:h-28">
-                <Image src={v.image} alt={v.title} fill className="object-contain" />
+                <Image
+                  src={v.image}
+                  alt={v.title}
+                  fill
+                  className="object-contain"
+                />
               </div>
 
               <div className="flex flex-col gap-2">
@@ -70,7 +86,6 @@ const NaemaValues = () => {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

@@ -1,21 +1,24 @@
-import Image from "next/image";
+"use client";
+
+import ParallaxImage from "@/app/components/ParallaxImage";
 import React from "react";
+
 
 const Hero = () => {
   return (
-    <section className="w-full relative h-[80vh]">
-      <Image
-        src="/aboutpalm.jpg"
+    <section className="w-full relative h-screen">
+      <ParallaxImage
+        mainclass="w-full h-full absolute inset-0 overflow-hidden"
+        imageClass="object-cover object-bottom scale-110 opacity-50"
+        src="/palmbg.png"
         alt="palm"
-        fill
-        className="object-cover saturate-50"
       />
 
-      <div className="absolute inset-0 flex flex-col justify-end px-16 pb-12 max-lg:px-8 max-md:px-5">
-        <h1 className="font-serif text-[clamp(2.5rem,5vw,4rem)] leading-none text-black">
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-5 md:px-8 lg:px-16">
+        <h1 className="font-serif text-[clamp(3rem,9vw,8rem)] leading-none text-black text-center">
           Great Flavour. <br /> In Every Collection.
         </h1>
-        <p className="text-base tracking-tight mt-4 max-w-[350px] text-black/80">
+        <p className="text-[clamp(0.875rem,1.3vw,1.1rem)] tracking-tight mt-6 max-w-[400px] text-black/80 text-center">
           Discover the craftsmanship, quality, and care behind everything we
           create.
         </p>

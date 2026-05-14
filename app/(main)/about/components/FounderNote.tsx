@@ -3,7 +3,7 @@ import React from "react";
 
 const FounderNote = () => {
   return (
-    <section className="w-full bg-gold/50 px-5 md:px-8 lg:px-16 py-16 md:py-24  border-b-2 border-darkgold ">
+    <section className="w-full bg-gold/20 px-5 md:px-8 lg:px-16 py-16 md:py-24  border-b-2 border-darkgold ">
       <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center lg:justify-center gap-10 md:gap-16 lg:gap-20">
         {/* Left — main image */}
         <div className="w-full lg:flex-1 lg:w-[38%] shrink-0 rounded-2xl overflow-hidden border-2 border-gold h-[420px] md:h-[550px] lg:h-[650px] relative">

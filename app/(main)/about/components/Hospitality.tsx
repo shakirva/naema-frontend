@@ -106,7 +106,7 @@ const Hospitality = () => {
   }, []);
 
   return (
-    <section className="w-full bg-gold/20 px-5 md:px-8 lg:px-16 py-16 md:py-24 overflow-hidden">
+    <section className="w-full bg-gold/20 px-5 md:px-8 lg:px-16 py-16 md:py-24 overflow-hidden border-y-2 border-gold">
       <div className="max-w-[1440px] mx-auto flex flex-col items-center">
         {/* Label */}
         <span className="font-serif text-[22px] text-navy leading-none w-fit bg-gold/20 border border-gold/40 rounded-lg px-4 py-2">

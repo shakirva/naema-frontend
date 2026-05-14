@@ -3,7 +3,7 @@ import React from "react";
 
 const OurStoryBlocks = () => {
   return (
-    <section className="w-full bg-cream px-5 md:px-8 lg:px-16 py-16 md:py-24 relative overflow-hidden">
+    <section className="w-full bg-cream px-5 md:px-8 lg:px-16 py-16 md:py-24  border-b-2 border-gold relative overflow-hidden">
       <div className="h-full w-full absolute inset-0 opacity-10">
               <Image src="/goldpalmm.jpg" fill alt="palm" className="object-cover" />
             </div>

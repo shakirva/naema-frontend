@@ -1,121 +1,155 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
-type Item = {
-  id: number;
-  title: string;
-  category: string;
-  color: string;
-};
-
-const items: Item[] = [
-  { id: 1, title: "Soft Dates", category: "Trending", color: "bg-amber-300" },
+const items = [
   {
-    id: 2,
-    title: "Premium Medjool",
-    category: "Best Seller",
-    color: "bg-orange-400",
+    title: "The Royal Ajwa",
+    image: "/chocolate.png",
+    height: "lg:row-span-2",
   },
-  { id: 3, title: "Zahidi", category: "Classic", color: "bg-yellow-500" },
-  { id: 4, title: "Stuffed Dates", category: "Popular", color: "bg-amber-600" },
-  { id: 5, title: "Luxury Box", category: "Gift", color: "bg-orange-600" },
+  {
+    title: "The Sweetness of Tradition",
+    image: "/dn.png",
+  },
+  {
+    title: "The Caramelly Classic",
+    image: "/datedark.png",
+  },
+  {
+    title: "An Exquisite Symphony",
+    image: "/misc.png",
+    height: "lg:row-span-2",
+  },
 ];
 
 const Grid = () => {
   return (
-    
-    <section className="w-full bg-[#0A223A]  px-16 py-16 max-lg:pt-8 max-lg:px-8 max-md:px-5 lg:rounded-t-[200px] max-lg:rounded-t-[100px] max-md:rounded-t-[50px] min-h-screen  mt-12 relative  overflow-hidden">
-       {/* <div className="absolute -top-10 -right-5">
-        <Image src={"/palm-1.png"} alt="dates" width={450} height={450} />
-      </div> */}
-      <div className="absolute inset-0 h-full w-full opacity-5  ">
-        <Image src={"/bigdarkpalm.png"} alt="dates" fill className="object-cover" />
-      </div> 
-      <div className="max-w-7xl mx-auto relative z-10">
-        
-        <h2 className="font-serif text-[clamp(2rem,4.44vw,4rem)]  leading-none text-center text-cream  ">
-          Handpicked Favorites
-        </h2>
-        <p className="mt-4 text-cream text-center text-base tracking-tight">
-          Our top picks, loved by thousands of date lovers worldwide.
-        </p>
+    <section className="w-full bg-[#0A223A] px-5 md:px-8 lg:px-16 py-16 md:py-24 lg:rounded-t-[200px] md:rounded-t-[120px] rounded-t-[60px] relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 opacity-5">
+        <Image
+          src="/bigdarkpalm.png"
+          alt="Palm"
+          fill
+          className="object-cover"
+        />
+      </div>
 
-        <div className="w-full mt-24 max-lg:mt-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[380px] ">
-            {/* Row 1 */}
-            <div className="relative bg-cream rounded-xl overflow-hidden  border-2 border-gold">
-              <Image
-                src={"/chocolate.png"}
-                alt="dates"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
-                <span className="bg-cream text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
-                  trending
-                </span>
-              </div>
-            </div>
+      <div className="max-w-[1500px] mx-auto relative z-10">
+        {/* Heading */}
+        <div className="flex flex-col items-center text-center">
+          <span className="font-serif text-[22px] text-cream leading-none w-fit bg-gold/10 border border-gold/30 rounded-lg px-4 py-2">
+            Featured Collections
+          </span>
 
-            <div className="relative bg-cream rounded-xl overflow-hidden  border-2 border-gold">
-              {" "}
-              <Image
-                src={"/dn.png"}
-                alt="dates"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
-                <span className="bg-cream text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
-                  trending
-                </span>
-              </div>
-            </div>
+          <h2 className="font-serif text-[clamp(2.8rem,6vw,6rem)] leading-[0.95] text-cream mt-8 max-w-[900px]">
+            Handpicked <span className="italic">Favorites.</span>
+          </h2>
 
-            <div className="relative bg-cream rounded-xl overflow-hidden  border-2 border-gold">
-              <Image
-                src={"/misc.png"}
-                alt="dates"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
-                <span className="bg-cream text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
-                  New
-                </span>
-              </div>
-            </div>
+          <p className="mt-6 text-cream/70 text-[clamp(1rem,1.5vw,1.15rem)] tracking-tight leading-[1.3] max-w-[620px]">
+            Curated selections crafted for gifting, sharing, and everyday
+            indulgence.
+          </p>
+        </div>
 
-            {/* Row 2 (split evenly) */}
-            <div className="relative bg-cream rounded-xl overflow-hidden  lg:col-span-1 border-2 border-gold">
-              {" "}
-              <Image
-                src={"/datedark.png"}
-                alt="dates"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
-                <span className="bg-cream text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold text-black/80 tracking-tight border-gold border-2">
-                  trending
-                </span>
-              </div>
-            </div>
+        {/* Grid */}
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_0.9fr_1fr] gap-5 lg:auto-rows-[280px]">
+          {/* Left Tall Card */}
+          <Link
+            href="/shop"
+            className={`
+              group relative overflow-hidden rounded-[28px]
+              border border-gold/30
+              h-[420px] md:h-[520px] lg:h-auto
+              ${items[0].height}
+            `}
+          >
+            <Image
+              src={items[0].image}
+              alt={items[0].title}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            />
 
-            <div className="relative bg-cream rounded-xl overflow-hidden  lg:col-span-2 border-2 border-gold">
-              <Image
-                src={"/nutz.png"}
-                alt="dates"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 w-full h-full px-4 py-4 flex flex-col justify-between hover:bg-black/60 z-10 transition-colors duration-300 ease-in-out">
-                <span className="bg-cream text-black px-6 py-4 text-lg capitalize rounded-full w-fit text-center font-semibold  tracking-tight border-gold border-2 ">
-                  trending
-                </span>
-              </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+            <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
+              <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[280px]">
+                {items[0].title}
+              </h3>
+
+              <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
+                View Collection
+              </span>
             </div>
+          </Link>
+
+          {/* Middle Column */}
+          <div className="flex flex-col gap-5 lg:h-[calc(280px*2+20px)]">
+            {items.slice(1, 3).map((item) => (
+              <Link
+                key={item.title}
+                href="/shop"
+                className="
+                  group relative overflow-hidden
+                  rounded-[28px]
+                  border border-gold/30
+                  flex-1
+                  min-h-[240px]
+                "
+              >
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
+
+                <div className="absolute bottom-0 left-0 w-full p-5 md:p-6">
+                  <h3 className="font-serif text-[clamp(1.8rem,2vw,2.8rem)] leading-[1] text-cream max-w-[300px]">
+                    {item.title}
+                  </h3>
+
+                  <span className="inline-block mt-3 text-sm text-gold border-b border-gold/40 pb-1">
+                    View Collection
+                  </span>
+                </div>
+              </Link>
+            ))}
           </div>
+
+          {/* Right Tall Card */}
+          <Link
+            href="/shop"
+            className={`
+              group relative overflow-hidden rounded-[28px]
+              border border-gold/30
+              h-[420px] md:h-[520px] lg:h-auto
+              ${items[3].height}
+            `}
+          >
+            <Image
+              src={items[3].image}
+              alt={items[3].title}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            />
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+            <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
+              <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[320px]">
+                {items[3].title}
+              </h3>
+
+              <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
+                View Collection
+              </span>
+            </div>
+          </Link>
         </div>
       </div>
     </section>

@@ -51,7 +51,7 @@ const DateSticker = ({ size = 220 }: { size?: number }) => {
         letterSpacing="5"
       >
         <textPath href="#bottomArc" startOffset="50%" textAnchor="middle">
-          ✦ NATURALLY SOURCED ✦ INDIA
+          ✦ NATURALLY SOURCED ✦ KUWAIT
         </textPath>
       </text>
 

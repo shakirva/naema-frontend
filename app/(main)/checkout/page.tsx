@@ -103,7 +103,7 @@ const CheckoutPage = () => {
       <div className="max-w-[900px] mx-auto">
         <div className="mb-10">
           <Link href="/">
-            <Image src="/logo.png" width={70} height={70} alt="Naema" />
+            <Image src="/naemadarklogo.png" width={70} height={70} alt="logo" />
           </Link>
         </div>
 

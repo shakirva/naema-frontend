@@ -115,12 +115,17 @@ const Shop = () => {
       />
 
       <div className="w-full flex items-center justify-center mt-10 lg:mt-12">
-        <Link
-          href="/shop"
-          className="px-8 md:px-12 py-4 md:py-5 text-base font-medium tracking-tight border-2 border-gold bg-navy rounded-full text-white"
-        >
-          Shop All Dates
-        </Link>
+       <Link
+  href="/shop"
+  className="px-8 md:px-12 py-4 md:py-5 text-base font-medium tracking-tight border-2 border-gold bg-navy rounded-full text-white relative group overflow-hidden inline-block"
+>
+  <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+    Shop All Dates
+  </span>
+  <span className="block absolute inset-0 flex items-center justify-center bg-[#E7DCB7] text-navy  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+    Shop All Dates
+  </span>
+</Link>
       </div>
 
     </section>

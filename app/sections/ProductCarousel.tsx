@@ -185,11 +185,16 @@ const CarouselCard = ({ product }: { product: Product }) => {
 
       {/* BUTTON */}
       <button
-        onClick={handleAdd}
-        className="w-full py-3.5 rounded-full border-2 border-gold bg-gold/40 font-bold tracking-tight text-sm hover:border-navy hover:bg-navy hover:text-white transition-all duration-200 cursor-pointer"
-      >
-        {added ? "Added ✓" : "Add to Cart"}
-      </button>
+  onClick={handleAdd}
+  className="w-full relative rounded-full border-2 border-gold bg-gold/40 font-bold tracking-tight text-sm cursor-pointer group overflow-hidden"
+>
+  <span className="block py-3.5 group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+    {added ? "Added ✓" : "Add to Cart"}
+  </span>
+  <span className="block absolute inset-0 py-3.5 bg-navy text-white border-2 border-navy rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+    {added ? "Added ✓" : "Add to Cart"}
+  </span>
+</button>
     </Link>
   );
 };

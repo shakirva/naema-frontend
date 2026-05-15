@@ -186,12 +186,17 @@ const About2 = () => {
           </div>
 
           {/* CTA */}
-          <Link
-            href="/about"
-            className="px-8 md:px-12 py-4 md:py-5 text-sm md:text-base font-medium tracking-tight border-2 border-gold bg-navy rounded-full text-cream transition-all hover:bg-cream hover:text-navy"
-          >
-            Our origins
-          </Link>
+         <Link
+  href="/about"
+  className="px-8 md:px-12 py-4 md:py-5 text-sm md:text-base font-medium tracking-tight border-2 border-gold bg-cream rounded-full text-navy relative group overflow-hidden inline-block"
+>
+  <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+    Our Origins
+  </span>
+  <span className="block absolute inset-0 flex items-center justify-center bg-navy text-cream  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+    Our Origins
+  </span>
+</Link>
         </div>
       </div>
     </section>

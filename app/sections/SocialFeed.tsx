@@ -66,7 +66,10 @@ const SocialFeed = () => {
 
               {/* Icon */}
               <div className="absolute top-4 right-4 w-11 h-11 rounded-full bg-cream/90 backdrop-blur-sm border border-gold flex items-center justify-center">
-                <FiInstagram className="text-navy text-[18px]" color="#baa448" />
+                <FiInstagram
+                  className="text-navy text-[18px]"
+                  color="#baa448"
+                />
               </div>
             </Link>
           ))}
@@ -75,12 +78,19 @@ const SocialFeed = () => {
         {/* CTA */}
         <Link
           href="/"
-          className="mt-12 flex items-center gap-3 rounded-full border-2 border-gold bg-navy px-7 py-3 text-cream hover:bg-gold hover:text-navy transition-all duration-300"
+          className="mt-12 inline-flex items-center gap-3 rounded-full border-2 border-gold bg-navy px-7 py-3 text-cream relative group overflow-hidden"
         >
-          <FiInstagram className="text-[18px] " color="" />
-
-          <span className="text-sm font-medium  leading-none tracking-tight">
-            Follow Us 
+          <span className="flex items-center gap-3 group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+            <FiInstagram className="text-[18px]" />
+            <span className="text-sm font-medium leading-none tracking-tight">
+              Follow Us
+            </span>
+          </span>
+          <span className="absolute inset-0 flex items-center justify-center gap-3 bg-gold text-navy  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+            <FiInstagram className="text-[18px]" />
+            <span className="text-sm font-medium leading-none tracking-tight">
+              Follow Us
+            </span>
           </span>
         </Link>
       </div>

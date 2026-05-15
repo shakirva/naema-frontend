@@ -12,7 +12,9 @@ const Hero = () => {
         <ImageSlider />
         <div className="w-1/2   max-lg:h-1/2  max-lg:w-full  text-cream  flex flex-col items-center justify-center relative  ">
           <div className="absolute flex items-center justify-center bottom-0 right-8 translate-y-[50%]">
-            <div className="flower flex items-center justify-center size-16 bg-gold"><IoIosArrowRoundDown className="size-14 text-navy" /></div>
+            <div className="flower flex items-center justify-center size-16 bg-gold">
+              <IoIosArrowRoundDown className="size-14 text-navy" />
+            </div>
           </div>
           <div className="h-full w-full absolute inset-0 opacity-10">
             <Image
@@ -42,12 +44,17 @@ const Hero = () => {
               Discover the finest selection of premium dates, nuts and artisan
               chocolate, masterfully created by Naema
             </p>
-            <Link
-              href={"/shop"}
-              className="w-[200px]  max-md:text-sm border-gold border-2   bg-[#E7DCB7] text-navy text-center font-medium tracking-tight px-6 py-4 leading-none  rounded-full  mt-8 border-2 border-gold"
-            >
-              Shop Now
-            </Link>
+           <Link
+  href="/shop"
+  className="w-[200px] max-md:text-sm relative rounded-full font-medium tracking-tight inline-block text-center mt-8 group overflow-hidden border-2 border-gold"
+>
+  <span className="block px-6 py-4 leading-none bg-[#E7DCB7] text-navy rounded-full group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+    Shop Now
+  </span>
+  <span className="block absolute inset-0 px-6 py-4 leading-none bg-navy text-gold rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+    Shop Now
+  </span>
+</Link>
           </div>
         </div>
       </div>

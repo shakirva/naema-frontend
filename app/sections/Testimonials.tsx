@@ -58,7 +58,7 @@ const Testimonials = () => {
           </h2>
 
           <h2 className="font-serif text-[clamp(2.5rem,5vw,5rem)] text-center leading-[1.25] mt-10 max-lg:mt-5 max-w-[900px] text-black">
-            Loved by people <span className="italic">everywhere.</span>
+            Loved by people <span className="italic text-deepgold">everywhere.</span>
             <br />
             Here's what they're saying.
           </h2>

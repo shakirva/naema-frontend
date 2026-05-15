@@ -108,7 +108,7 @@ const Pillars = () => {
       {/* Heading */}
       <div className="flex flex-col items-center gap-4 text-center">
         <h3 className="font-serif text-black text-[clamp(2rem,4.4vw,4rem)] leading-none max-w-[650px]">
-          Nature's <span className="italic">Finest</span>, Delivered with Purpose.
+          Nature's <span className="italic text-deepgold">Finest</span>, Delivered with Purpose.
         </h3>
         <h3 className="font-serif text-[clamp(1rem,1.5vw,1.5rem)] mt-4 leading-none text-black/70">
           Where Quality is Not a Promise — It's Our Standard.

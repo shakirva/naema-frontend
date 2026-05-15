@@ -44,7 +44,7 @@ const Grid = () => {
           </span>
 
           <h2 className="font-serif text-[clamp(2.8rem,6vw,6rem)] leading-[0.95] text-cream mt-8 max-w-[900px]">
-            Handpicked <span className="italic">Favorites.</span>
+            Handpicked <span className="italic text-gold">Favorites.</span>
           </h2>
 
           <p className="mt-6 text-cream/70 text-[clamp(1rem,1.5vw,1.15rem)] tracking-tight leading-[1.3] max-w-[620px]">

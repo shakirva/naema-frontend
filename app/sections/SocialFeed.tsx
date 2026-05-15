@@ -35,7 +35,7 @@ const SocialFeed = () => {
 
         {/* Heading */}
         <h2 className="font-serif text-[clamp(2.5rem,6vw,6rem)] text-center text-navy leading-[0.95] mt-8">
-          Follow the <span className="italic">Naema</span>
+          Follow the <span className="italic text-deepgold">Naema</span>
           <br />
           Experience.
         </h2>

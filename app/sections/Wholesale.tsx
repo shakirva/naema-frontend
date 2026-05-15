@@ -43,7 +43,7 @@ const Wholesale = () => {
           </h2>
 
           <div className="max-w-[700px] mt-6">
-            <h2 className="font-serif text-[clamp(2.5rem,5.5vw,7rem)] leading-[1] tracking-tight">
+            <h2 className="font-serif text-[clamp(2.5rem,5.5vw,7rem)] text-lightgold leading-[1] tracking-tight">
               Our Café &<br />
               Wholesale Partners
             </h2>

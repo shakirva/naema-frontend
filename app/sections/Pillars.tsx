@@ -6,13 +6,15 @@ const pillars = [
   {
     numeral: "I",
     title: "Quality",
-    description: "We never settle. Every product meets the highest standard before it reaches you.",
+    description:
+      "We never settle. Every product meets the highest standard before it reaches you.",
     image: "/quality.jpg",
   },
   {
     numeral: "II",
     title: "Trust",
-    description: "Our word is our bond. Reliable and consistent, every single time.",
+    description:
+      "Our word is our bond. Reliable and consistent, every single time.",
     image: "/trust.jpg",
   },
   {
@@ -104,11 +106,11 @@ const PillarCard = ({ pillar }: { pillar: (typeof pillars)[0] }) => {
 const Pillars = () => {
   return (
     <div className="flex flex-col items-center w-full max-w-[1440px] mx-auto gap-14">
-
       {/* Heading */}
       <div className="flex flex-col items-center gap-4 text-center">
         <h3 className="font-serif text-black text-[clamp(2rem,4.4vw,4rem)] leading-none max-w-[650px]">
-          Nature's <span className="italic text-deepgold">Finest</span>, Delivered with Purpose.
+          Nature's <span className="italic text-deepgold">Finest</span>,
+          Delivered with Purpose.
         </h3>
         <h3 className="font-serif text-[clamp(1rem,1.5vw,1.5rem)] mt-4 leading-none text-black/70">
           Where Quality is Not a Promise — It's Our Standard.
@@ -123,72 +125,59 @@ const Pillars = () => {
       </div>
 
       {/* Commitment box */}
-      <div className="w-full border-2 border-gold rounded-2xl bg-navy px-16 py-24 max-md:py-12 max-lg:px-10 max-md:px-8 flex flex-col md:flex-row items-center justify-between gap-16">
-
+      <div className="w-full border-2 border-deepgold rounded-2xl bg-navy px-16 py-24 max-md:py-12 max-lg:px-10 max-md:px-8 flex flex-col md:flex-row items-center justify-between gap-16">
         {/* Left — text */}
         <div className="flex flex-col gap-6 flex-1 max-w-[480px] max-md:text-center max-md:items-center">
-         
-          <h3 className="font-serif text-[clamp(2rem,3.5vw,3.5rem)] text-cream leading-none">
-            Our Unbreakable<br />
-   Commitment
+          <h3 className="font-serif text-[clamp(2rem,4.5vw,4.5rem)] text-cream leading-none">
+            Our Unbreakable
+            <br />
+           <span className="italic text-lightgold">Commitment</span> 
           </h3>
           <p className="text-cream/70 text-[clamp(0.9rem,1.3vw,1.1rem)] leading-relaxed tracking-tight">
-            We will never compromise on quality, freshness, or delivery.
-            From our sourcing partners to your doorstep — every Naema
-            product carries the same unwavering promise of excellence,
-            rooted in the finest orchards across India.
+            We will never compromise on quality, freshness, or delivery. From
+            our sourcing partners to your doorstep — every Naema product carries
+            the same unwavering promise of excellence, rooted in the finest
+            orchards across India.
           </p>
           <div className="w-10 h-px bg-gold" />
-          <p className="font-serif  text-cream text-sm">
-            — The Naema Promise
-          </p>
+          <p className="font-serif  text-cream text-sm">— The Naema Promise</p>
         </div>
 
         {/* Right — stacked stat cards */}
-       <div className="relative flex-1 flex flex-col gap-2 items-start max-md:items-center max-md:gap-0   justify-center w-full max-w-[420px] min-h-[300px]">
-  {/* Card 1 */}
-  <div
-    className=" w-[320px] max-lg:w-[280px]  -translate-x-10 -rotate-3 max-md:translate-0  bg-cream rounded-lg border border-gold/30 px-4 py-4 flex items-end gap-4"
-    
-  >
-    <span className="font-serif font-bold text-[clamp(2.5rem,8vw,6.25rem)] leading-[0.8] text-navy">
-      100%
-    </span>
+        <div className="relative flex-1 flex flex-col gap-2 items-start max-md:items-center max-md:gap-0   justify-center w-full max-w-[420px] min-h-[300px]">
+          {/* Card 1 */}
+          <div className=" w-[320px] max-lg:w-[280px]  -translate-x-10 -rotate-3 max-md:translate-0 shadow-[0_8px_30px_rgba(204,186,120,0.25)] bg-cream rounded-lg border-2 border-gold px-4 py-4 flex items-end gap-4">
+            <span className="font-serif font-bold text-[clamp(2.5rem,8vw,6.25rem)] leading-[0.8] text-navy">
+              100%
+            </span>
 
-    <span className="text-[10px] font-medium tracking-wider whitespace-pre-line text-navy opacity-80 leading-tight pb-1">
-      {"NATURALLY\nSOURCED\nINGREDIENTS"}
-    </span>
-  </div>
+            <span className="text-[10px] font-medium tracking-wider whitespace-pre-line text-navy opacity-80 leading-tight pb-1">
+              {"NATURALLY\nSOURCED\nINGREDIENTS"}
+            </span>
+          </div>
 
-  {/* Card 2 */}
-  <div
-    className=" rotate-4 bg-gold rounded-lg border w-[320px] max-lg:w-[280px] max-md:translate-0 border-gold/30 px-4 py-4 flex items-end gap-4 translate-x-10 "
-    
-  >
-    <span className="font-serif font-bold text-[clamp(2.5rem,8vw,6.25rem)] leading-[0.8] text-navy">
-      50+
-    </span>
+          {/* Card 2 */}
+          <div className=" rotate-4 bg-gold rounded-lg  w-[320px] max-lg:w-[280px]  shadow-[0_8px_30px_rgba(204,186,120,0.25)] max-md:translate-0 border-2 border-deepgold px-4 py-4 flex items-end gap-4 translate-x-10 ">
+            <span className="font-serif font-bold text-[clamp(2.5rem,8vw,6.25rem)] leading-[0.8] text-navy">
+              50+
+            </span>
 
-    <span className="text-[10px] font-medium tracking-wider whitespace-pre-line text-navy opacity-80 leading-tight pb-1">
-      {"TRUSTED\nFARM\nPARTNERS"}
-    </span>
-  </div>
+            <span className="text-[10px] font-medium tracking-wider whitespace-pre-line text-navy opacity-80 leading-tight pb-1">
+              {"TRUSTED\nFARM\nPARTNERS"}
+            </span>
+          </div>
 
-  {/* Card 3 */}
-  <div
-    className=" -rotate-3 bg-[#c8a96e] w-[320px] max-lg:w-[280px] max-md:translate-0  rounded-lg border border-gold/30 px-4 py-4 flex -translate-x-2 items-end gap-4"
-   
-  >
-    <span className="font-serif font-bold text-[clamp(2.5rem,8vw,6.25rem)] leading-[0.8] text-navy">
-      10K+
-    </span>
+          {/* Card 3 */}
+          <div className=" -rotate-3 bg-[#c8a96e] w-[320px] max-lg:w-[280px]  shadow-[0_8px_30px_rgba(204,186,120,0.25)] max-md:translate-0  rounded-lg border-2 border-gold px-4 py-4 flex -translate-x-2 items-end gap-4">
+            <span className="font-serif font-bold text-[clamp(2.5rem,8vw,6.25rem)] leading-[0.8] text-navy">
+              10K+
+            </span>
 
-    <span className="text-[10px] font-medium tracking-wider whitespace-pre-line text-navy opacity-80 leading-tight pb-1">
-      {"ORDERS\nDELIVERED\nFRESH"}
-    </span>
-  </div>
-</div>
-
+            <span className="text-[10px] font-medium tracking-wider whitespace-pre-line text-navy opacity-80 leading-tight pb-1">
+              {"ORDERS\nDELIVERED\nFRESH"}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );

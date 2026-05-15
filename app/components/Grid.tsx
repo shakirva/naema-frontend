@@ -60,7 +60,7 @@ const Grid = () => {
             href="/shop"
             className={`
               group relative overflow-hidden rounded-[28px]
-              border border-gold/30
+              border-2 border-gold
               h-[420px] md:h-[520px] lg:h-auto
               ${items[0].height}
             `}
@@ -94,7 +94,7 @@ const Grid = () => {
                 className="
                   group relative overflow-hidden
                   rounded-[28px]
-                  border border-gold/30
+                  border-2 border-gold
                   flex-1
                   min-h-[240px]
                 "
@@ -126,7 +126,7 @@ const Grid = () => {
             href="/shop"
             className={`
               group relative overflow-hidden rounded-[28px]
-              border border-gold/30
+              border-2 border-gold
               h-[420px] md:h-[520px] lg:h-auto
               ${items[3].height}
             `}

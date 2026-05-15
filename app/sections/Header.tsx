@@ -5,7 +5,7 @@ import Image from "next/image";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { navLinks } from "../constants";
 import { useCart } from "../context/CartContext";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const megaMenu = {
   columns: [
@@ -118,8 +118,18 @@ const MegaMenu = () => (
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopHovered, setShopHovered] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const { openCart, items } = useCart();
   const pathname = usePathname();
+  const router = useRouter();
+
+  const submitSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = searchQuery.trim();
+    if (!q) return;
+    router.push(`/search?q=${encodeURIComponent(q)}`);
+    setMenuOpen(false);
+  };
 
   return (
     <header className="w-full relative z-[9999]">
@@ -172,14 +182,21 @@ const Header = () => {
 
           {/* Right Icons */}
           <div className="flex items-center gap-4">
-            <div className="hidden lg:flex items-center bg-transparent border border-cream/40 rounded-full px-3 py-1.5 focus-within:border-cream transition-all duration-300">
-              <FiSearch size={20} className="text-cream mr-2" />
+            <form
+              onSubmit={submitSearch}
+              className="hidden lg:flex items-center bg-transparent border border-cream/40 rounded-full px-3 py-1.5 focus-within:border-cream transition-all duration-300"
+            >
+              <button type="submit" aria-label="Search" className="flex items-center">
+                <FiSearch size={20} className="text-cream mr-2" />
+              </button>
               <input
                 type="text"
                 placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-transparent outline-none text-cream placeholder:text-cream/40 text-[14px] w-[140px] focus:w-[180px] transition-all duration-300"
               />
-            </div>
+            </form>
             <Link href={"/login"}>
               {" "}
               <FiUser
@@ -235,6 +252,22 @@ const Header = () => {
         >
           <FiX size={28} />
         </button>
+
+        <form
+          onSubmit={submitSearch}
+          className="flex items-center border border-navy/30 rounded-full px-4 py-2 focus-within:border-navy transition-all duration-300"
+        >
+          <button type="submit" aria-label="Search" className="flex items-center">
+            <FiSearch size={20} className="text-navy mr-2" />
+          </button>
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="bg-transparent outline-none text-navy placeholder:text-navy/40 text-[15px] flex-1"
+          />
+        </form>
 
         <nav className="flex flex-col gap-6 mt-4">
           {navLinks.map((link, index) => (

@@ -3,20 +3,36 @@ import Image from "next/image";
 import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import ProductCarousel from "./ProductCarousel";
-import { MedusaProduct } from "@/lib/types";
+import { MedusaProduct, MedusaProductCategory } from "@/lib/types";
 import medusa from "@/lib/medusa";
 
 const REGION_ID = process.env.NEXT_PUBLIC_KUWAIT_REGION_ID || "reg_01KQVDZRC5V1R8SKYCN644H08T";
+const CATEGORY_FALLBACK_IMG = "/n1.jpg";
 
 const Shop = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [products, setProducts] = useState<MedusaProduct[]>([]);
+  const [categories, setCategories] = useState<MedusaProductCategory[]>([]);
 
   useEffect(() => {
     medusa.store.product
       .list({ region_id: REGION_ID, limit: 20, fields: "id,title,handle,thumbnail,variants.*,variants.calculated_price" } as Parameters<typeof medusa.store.product.list>[0])
       .then((res) => setProducts((res as { products: MedusaProduct[] }).products ?? []))
       .catch(() => setProducts([]));
+
+    medusa.store.category
+      .list({
+        limit: 50,
+        fields: "id,name,handle,rank,parent_category_id,metadata",
+      } as Parameters<typeof medusa.store.category.list>[0])
+      .then((res) => {
+        const list = (res as { product_categories: MedusaProductCategory[] }).product_categories ?? [];
+        const topLevel = list
+          .filter((c) => !c.parent_category_id)
+          .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
+        setCategories(topLevel);
+      })
+      .catch(() => setCategories([]));
   }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -71,32 +87,27 @@ const Shop = () => {
             scrollbar-hide max-lg:cursor-grab max-lg:active:cursor-grabbing
             pb-4 lg:pb-0 lg:mx-0 lg:px-0"
         >
-          {[
-            { label: "Pistachios", slug: "pista", img: "/n1.jpg" },
-            { label: "Walnuts",    slug: "walnut", img: "/n2.jpg" },
-            { label: "Almonds",    slug: "almond", img: "/n3.jpg" },
-            { label: "Cashews",    slug: "cashew", img: "/n4.jpg" },
-            { label: "Pumpkin",    slug: "pumpkin-seed", img: "/n5.jpg" },
-            { label: "Figs",       slug: "fig",    img: "/n6.jpg" },
-            { label: "Raisins",    slug: "kismiss", img: "/dry.jpg" },
-          ].map(({ label, slug, img }) => (
-            <Link
-              key={slug}
-              href={`/shop/${slug}`}
-              className="flex flex-col gap-6 items-center justify-center flex-shrink-0 snap-center group"
-            >
-              <div className="w-[200px] h-[260px] lg:w-[160px] lg:h-[210px] rounded-[999px] overflow-hidden border-3 border-gold group-hover:border-navy transition-colors duration-200">
-                <Image
-                  src={img}
-                  alt={label}
-                  width={200}
-                  height={260}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <p className="text-[22px] text-center text-black/80 tracking-tight font-medium">{label}</p>
-            </Link>
-          ))}
+          {categories.map((cat) => {
+            const img = cat.metadata?.image_url || CATEGORY_FALLBACK_IMG;
+            return (
+              <Link
+                key={cat.id}
+                href={`/shop/${cat.handle}`}
+                className="flex flex-col gap-6 items-center justify-center flex-shrink-0 snap-center group"
+              >
+                <div className="w-50 h-[260px] lg:w-40 lg:h-[210px] rounded-[999px] overflow-hidden border-3 border-gold group-hover:border-navy transition-colors duration-200">
+                  <Image
+                    src={img}
+                    alt={cat.name}
+                    width={200}
+                    height={260}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <p className="text-[22px] text-center text-black/80 tracking-tight font-medium">{cat.name}</p>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Carousels fed from real Medusa data */}

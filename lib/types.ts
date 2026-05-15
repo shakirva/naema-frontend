@@ -23,6 +23,9 @@ export type MedusaProductCategory = {
   id: string;
   name: string;
   handle: string;
+  rank?: number;
+  parent_category_id?: string | null;
+  metadata?: { image_url?: string | null; icon?: string | null } | null;
 };
 
 export type MedusaProduct = {
@@ -35,6 +38,14 @@ export type MedusaProduct = {
   variants: MedusaProductVariant[];
   categories: MedusaProductCategory[];
   tags?: { id: string; value: string }[];
+};
+
+export type MedusaCollection = {
+  id: string;
+  title: string;
+  handle: string;
+  metadata?: Record<string, unknown> | null;
+  products?: MedusaProduct[];
 };
 
 // ─── Cart / line-item types ────────────────────────────────────────────────────

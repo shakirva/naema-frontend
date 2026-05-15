@@ -14,7 +14,7 @@ const OurMisson = () => {
             Our Mission
           </h2>
           <h3 className="font-serif text-[clamp(2.8rem,8vw,5rem)] text-black/90 leading-none mt-6 text-center">
-            Exceptional Flavours Crafted <br/> For Everyday Indulgence
+            Exceptional Flavours Crafted <br/> For Everyday <span className="italic text-deepgold">Indulgence</span>
           </h3>
           <p className="lg:text-[20px] text-black/80  tracking-tight leading-[1.25] text-center mt-12 max-w-[450px]">
             We source premium dates, chocolate, nuts, and dry fruits with a

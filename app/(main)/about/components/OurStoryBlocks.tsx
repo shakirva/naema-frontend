@@ -10,7 +10,7 @@ const OurStoryBlocks = () => {
       <div className="max-w-[1440px] mx-auto flex flex-col">
 
         <h2 className="font-serif text-[clamp(2.8rem,8vw,5rem)] text-center text-navy leading-none">
-          Rooted in Kuwait, <br /><span className="italic">Crafted for You.</span>
+          Rooted in Kuwait, <br /><span className="italic text-deepgoldgit">Crafted for You.</span>
         </h2>
 
         {/* Block 1 */}

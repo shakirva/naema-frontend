@@ -115,7 +115,7 @@ const Hospitality = () => {
 
         {/* Heading */}
         <h2 className="font-serif text-[clamp(2.8rem,7vw,6rem)] text-center text-navy leading-[0.95] mt-8 max-w-[900px]">
-          A Taste of <span className="italic">Hospitality.</span>
+          A Taste of <span className="italic text-deepgold">Hospitality.</span>
         </h2>
 
         {/* Body */}

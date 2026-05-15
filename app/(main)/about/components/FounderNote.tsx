@@ -22,7 +22,7 @@ const FounderNote = () => {
             <h2 className="font-serif text-[clamp(2.8rem,8vw,5rem)] text-navy leading-none">
               A Note From
               <br />
-              Our Brand
+              Our <span className="italic text-deepgold">Brand</span> 
             </h2>
 
             <div className="shrink-0 w-16 h-24 md:w-24 md:h-36 lg:w-30 lg:h-44 rounded-xl overflow-hidden border-2 -rotate-2 border-gold relative">

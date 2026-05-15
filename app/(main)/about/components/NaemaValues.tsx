@@ -47,7 +47,7 @@ const NaemaValues = () => {
 
         {/* Big heading */}
         <h2 className="font-serif text-[clamp(3rem,10vw,7.5rem)] text-cream leading-none text-center mt-8 max-w-[900px]">
-          Fresh From the <span className="italic">Source.</span>
+          Fresh From the <span className="italic text-lightgold">Source.</span>
         </h2>
 
         {/* Body */}

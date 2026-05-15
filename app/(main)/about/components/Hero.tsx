@@ -18,7 +18,7 @@ const Hero = () => {
         <h1 className="font-serif text-[clamp(3rem,9vw,8rem)] leading-none text-black text-center">
           Great Flavour. <br /> In Every Collection.
         </h1>
-        <p className="text-[clamp(0.875rem,1.3vw,1.1rem)] tracking-tight mt-6 max-w-[400px] text-black/80 text-center">
+        <p className="text-[20px] leading-[1.25] max-lg:text-[18px] max-md:text-[16px] tracking-tight mt-6 max-w-[400px] text-black/80 text-center">
           Discover the craftsmanship, quality, and care behind everything we
           create.
         </p>

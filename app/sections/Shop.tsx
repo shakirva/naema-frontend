@@ -47,8 +47,8 @@ const Shop = () => {
 
       <div className="flex flex-col w-full max-w-[1440px] mx-auto px-5 md:px-8 lg:px-16 pt-10 lg:pt-16">
 
-        <div className="w-full flex justify-center mt-10 lg:mt-20">
-          <h2 className="font-serif text-[clamp(2rem,4.4vw,4rem)] lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4 py-2">
+        <div className="lg:mx-auto  mt-10 lg:mt-20">
+          <h2 className="font-serif text-[clamp(2rem,4.4vw,4rem)] lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4  py-2">
             Our Collection
           </h2>
         </div>
@@ -57,7 +57,7 @@ const Shop = () => {
           Shop by preference
         </span>
 
-        <div className="flex justify-between lg:hidden items-center w-full mt-2">
+        <div className="flex justify-between lg:hidden items-center w-full mt-4">
           <span className="text-base tracking-tight leading-none">
             Shop by preference
           </span>

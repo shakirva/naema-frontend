@@ -101,6 +101,16 @@ const Testimonials = () => {
             ))}
           </div>
         </div>
+        {/* Swipe hint */}
+<div className="flex items-center justify-center gap-2 mt-3">
+  <div className="w-10 h-[2px] bg-deepgold/40 rounded-full" />
+
+  <span className="text-xs tracking-tight text-deepgold">
+    Swipe to explore
+  </span>
+
+  <div className="w-10 h-[2px] bg-deepgold/40 rounded-full" />
+</div>
       </div>
     </section>
   );

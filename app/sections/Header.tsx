@@ -68,7 +68,7 @@ const MegaMenu = () => (
       <div className="flex gap-16">
         {megaMenu.columns.map((col) => (
           <div key={col.heading} className="flex flex-col gap-3 min-w-[120px]">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-black/40 uppercase">
+            <span className="text-[10px] font-bold  text-black/40 uppercase">
               {col.heading}
             </span>
             <div className="flex flex-col gap-2.5">
@@ -104,7 +104,7 @@ const MegaMenu = () => (
     </div>
 
     
-    <div className="flex gap-3  pr-16 py-10 shrink-0 border-l border-gold/20">
+    <div className="flex gap-3  pr-16 pl-8  py-10 shrink-0 border-l border-gold/20">
       {megaMenu.featured.map((f) => (
         <Link
           key={f.label}

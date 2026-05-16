@@ -88,16 +88,19 @@ const MegaMenu = () => (
 
      
       <Link
-        href="/shop"
-        className="relative group overflow-hidden inline-flex w-fit items-center justify-center px-6 py-2.5 rounded-full bg-navy text-cream text-sm font-medium border-2 border-gold"
-      >
-        <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
-          Shop All
-        </span>
-        <span className="block absolute inset-0 flex items-center justify-center bg-gold/30 text-navy border-2 border-gold rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
-          Shop All
-        </span>
-      </Link>
+  href="/shop"
+  className="relative inline-flex w-fit overflow-hidden rounded-full border-2 border-gold bg-navy text-sm font-medium tracking-tight text-cream group"
+>
+  {/* DEFAULT TEXT */}
+  <span className="block px-6 py-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
+    Shop All
+  </span>
+
+  {/* HOVER LAYER */}
+  <span className="absolute inset-0 flex items-center justify-center rounded-full  bg-cream text-navy translate-y-full scale-[0.5] transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0 group-hover:scale-100">
+    Shop All
+  </span>
+</Link>
     </div>
 
     

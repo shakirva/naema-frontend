@@ -102,7 +102,7 @@ const CarouselCard = ({ product }: { product: MedusaProduct }) => {
                   : "bg-[#b63f3f] text-white"
               }`}
             >
-              {String(product.metadata.badge)}
+              {String(product.metadata?.badge)}
             </span>
           )}
         </div>

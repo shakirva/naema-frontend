@@ -93,11 +93,11 @@ const CarouselCard = ({ product }: { product: MedusaProduct }) => {
           {Boolean(product.metadata?.badge) && (
             <span
               className={`text-[10px] font-medium uppercase leading-none px-3 py-1 rounded-full ${
-                product.metadata.badge === "New"
+                product.metadata?.badge === "New"
                   ? "bg-[#e6f2d7] text-black"
-                  : product.metadata.badge === "Limited"
+                  : product.metadata?.badge === "Limited"
                   ? "bg-navy text-cream"
-                  : product.metadata.badge === "Best Seller"
+                  : product.metadata?.badge === "Best Seller"
                   ? "bg-gold text-black"
                   : "bg-[#b63f3f] text-white"
               }`}

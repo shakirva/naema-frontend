@@ -9,8 +9,11 @@
 @theme inline {
   --color-cream: #f6f1e7;
   --color-sand: #e4bf8b;
+  --color-lightgold:#e4d59f;
   --color-gold: #ccba78;
   --color-darkgold: #baa448;
+  --color-deepgold:#a48924;
+   --color-lightgold: #d4caa2;
 
   --color-navy: #0a223a;
   --color-brown: #361c0c;
@@ -60,7 +63,6 @@ body {
 }
 
 .flower {
- 
   --g: /8.448% 8.448% radial-gradient(#000 calc(71% - 1px), #0000 71%) no-repeat;
   -webkit-mask:
     100% 50% var(--g),
@@ -134,4 +136,18 @@ body {
     96.624% 31.938% var(--g),
     99.149% 40.813% var(--g),
     radial-gradient(100% 100%, #000 45.581%, #0000 calc(45.581% + 1px));
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Move by 1/3 because we have 3 sets of badges */
+    transform: translateX(calc(-33.33%));
+  }
+}
+
+.carousel-anim {
+  animation: scroll 20s linear infinite;
 }

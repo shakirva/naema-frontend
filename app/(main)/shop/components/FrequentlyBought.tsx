@@ -1,106 +1,67 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import ProductCard from "./ProductCard";
-import { MedusaProduct } from "@/lib/types";
-import medusa from "@/lib/medusa";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { useCart } from "@/app/context/CartContext";
+import { getProducts } from "@/lib/api";
+import type { MedusaProduct } from "@/lib/types";
+import { formatPrice, getProductPrice, getCheapestVariant } from "@/lib/types";
 
-const REGION_ID = process.env.NEXT_PUBLIC_KUWAIT_REGION_ID || "reg_01KQVDZRC5V1R8SKYCN644H08T";
-
-const FrequentlyBought = ({ currentProductId }: { currentProductId?: string }) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-  const [related, setRelated] = useState<MedusaProduct[]>([]);
-
-  const SCROLL_AMOUNT = 320;
+const FrequentlyBought = ({ currentProductId }: { currentProductId: string }) => {
+  const { addToCart } = useCart();
+  const [products, setProducts] = useState<MedusaProduct[]>([]);
 
   useEffect(() => {
-    medusa.store.product
-      .list({
-        region_id: REGION_ID,
-        limit: 10,
-        fields: "id,title,handle,thumbnail,variants.*,variants.calculated_price",
-      } as Parameters<typeof medusa.store.product.list>[0])
-      .then((res) => {
-        const all = (res as { products: MedusaProduct[] }).products ?? [];
-        setRelated(currentProductId ? all.filter((p) => p.id !== currentProductId) : all);
-      })
-      .catch(() => setRelated([]));
+    const load = async () => {
+      const res = await getProducts({ limit: 6 });
+      // Filter out current product
+      setProducts(res.products.filter((p) => p.id !== currentProductId).slice(0, 3));
+    };
+    load();
   }, [currentProductId]);
 
-  const updateScrollState = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 0);
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
-  };
-
-  const scroll = (dir: "left" | "right") => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollBy({
-      left: dir === "left" ? -SCROLL_AMOUNT : SCROLL_AMOUNT,
-      behavior: "smooth",
-    });
-    setTimeout(updateScrollState, 350);
-  };
-
-  if (!related.length) return null;
+  if (products.length === 0) return null;
 
   return (
-    <div className="mt-24 max-lg:mt-16">
-      {/* Header */}
-      <h2 className="font-serif text-[clamp(2rem,3.33vw,3rem)] leading-none">
+    <div className="max-w-[1440px] mx-auto mt-16">
+      <h2 className="font-serif text-[clamp(1.5rem,2.5vw,2rem)] mb-8">
         Frequently Bought Together
       </h2>
-      <div className="flex items-end justify-between mb-8 mt-2">
-        <p className="text-[16px] max-md:text-sm text-black/60 tracking-tight">
-          Customers who bought this also loved these.
-        </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {products.map((p) => {
+          const variant = getCheapestVariant(p);
+          const price = getProductPrice(p);
+          const thumbnail = p.thumbnail || p.images?.[0]?.url || "/n1.jpg";
 
-        {/* Arrow Controls */}
-        <div className="flex items-center gap-2 shrink-0 ml-8 max-md:hidden">
-          <button
-            onClick={() => scroll("left")}
-            disabled={!canScrollLeft}
-            aria-label="Scroll left"
-            className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer
-              ${canScrollLeft
-                ? "bg-navy border-navy active:shadow-none"
-                : "bg-white border-gold cursor-not-allowed"
-              }`}
-          >
-            <ChevronLeft className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
-          </button>
-          <button
-            onClick={() => scroll("right")}
-            disabled={!canScrollRight}
-            aria-label="Scroll right"
-            className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer
-              ${canScrollRight
-                ? "bg-navy border-navy active:shadow-none"
-                : "bg-white border-gold cursor-not-allowed"
-              }`}
-          >
-            <ChevronRight className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
-          </button>
-        </div>
-      </div>
-
-      {/* Scrollable Cards */}
-      <div
-        ref={scrollRef}
-        onScroll={updateScrollState}
-        className="flex gap-6 overflow-x-auto pb-4 scroll-smooth"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-      >
-        {related.map((product) => (
-          <div key={product.id} className="flex-none w-[280px] max-md:w-[240px]">
-            <ProductCard product={product} />
-          </div>
-        ))}
+          return (
+            <div
+              key={p.id}
+              className="flex gap-4 items-center border border-black/10 rounded-2xl p-4 bg-white"
+            >
+              <div className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0">
+                <Image
+                  src={thumbnail}
+                  alt={p.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium leading-tight">{p.title}</p>
+                <p className="text-sm font-semibold mt-1">
+                  {formatPrice(price)}
+                </p>
+              </div>
+              <button
+                onClick={() => variant && addToCart(variant.id, 1)}
+                disabled={!variant}
+                className="px-4 py-2 rounded-full border-2 border-gold bg-gold/30 text-xs font-medium hover:bg-navy hover:text-white transition shrink-0 disabled:opacity-50"
+              >
+                Add
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

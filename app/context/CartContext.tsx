@@ -8,14 +8,15 @@ import {
   useCallback,
   ReactNode,
 } from "react";
-import medusa from "@/lib/medusa";
-import { MedusaCart, MedusaLineItem, formatKWD } from "@/lib/types";
+import {
+  createCart,
+  getCart,
+  addItemToCart,
+  updateCartItem,
+  removeCartItem,
+} from "@/lib/api";
+import type { MedusaCart, MedusaLineItem } from "@/lib/types";
 
-// ─── Kuwait region ID ─────────────────────────────────────────────────────────
-const KUWAIT_REGION_ID = "reg_01KQVDZRC5V1R8SKYCN644H08T";
-const CART_ID_KEY = "medusa_cart_id";
-
-// ─── Context shape ─────────────────────────────────────────────────────────────
 type CartContextType = {
   cart: MedusaCart | null;
   items: MedusaLineItem[];
@@ -25,121 +26,103 @@ type CartContextType = {
   closeCart: () => void;
   addToCart: (variantId: string, quantity?: number) => Promise<void>;
   removeFromCart: (lineItemId: string) => Promise<void>;
-  updateQty: (lineItemId: string, quantity: number) => Promise<void>;
-  totalFormatted: string;
+  updateQty: (lineItemId: string, qty: number) => Promise<void>;
+  refreshCart: () => Promise<void>;
+  total: number;
+  subtotal: number;
   itemCount: number;
 };
 
 const CartContext = createContext<CartContextType | null>(null);
 
-// ─── Provider ─────────────────────────────────────────────────────────────────
+const CART_ID_KEY = "medusa_cart_id";
+
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<MedusaCart | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // ── Initialise or rehydrate cart ──────────────────────────────────────────
-  useEffect(() => {
-    const init = async () => {
+  const openCart = () => setIsOpen(true);
+  const closeCart = () => setIsOpen(false);
+
+  // Initialize or restore cart
+  const initCart = useCallback(async () => {
+    try {
       const storedId = localStorage.getItem(CART_ID_KEY);
       if (storedId) {
-        try {
-          const { cart: existing } = await medusa.store.cart.retrieve(storedId);
-          setCart(existing as unknown as MedusaCart);
+        const existing = await getCart(storedId);
+        if (existing) {
+          setCart(existing);
           return;
-        } catch {
-          localStorage.removeItem(CART_ID_KEY);
         }
       }
-      try {
-        const { cart: fresh } = await medusa.store.cart.create({
-          region_id: KUWAIT_REGION_ID,
-        });
-        localStorage.setItem(CART_ID_KEY, fresh.id);
-        setCart(fresh as unknown as MedusaCart);
-      } catch (err) {
-        console.error("Failed to create Medusa cart:", err);
+      // Create new cart
+      const newCart = await createCart();
+      if (newCart) {
+        localStorage.setItem(CART_ID_KEY, newCart.id);
+        setCart(newCart);
       }
-    };
-    init();
+    } catch (err) {
+      console.error("Cart init failed:", err);
+    }
   }, []);
 
-  const ensureCart = useCallback(async (): Promise<string> => {
-    if (cart?.id) return cart.id;
-    const { cart: fresh } = await medusa.store.cart.create({
-      region_id: KUWAIT_REGION_ID,
-    });
-    localStorage.setItem(CART_ID_KEY, fresh.id);
-    setCart(fresh as unknown as MedusaCart);
-    return fresh.id;
-  }, [cart]);
+  useEffect(() => {
+    initCart();
+  }, [initCart]);
 
-  const addToCart = useCallback(
-    async (variantId: string, quantity = 1) => {
-      setLoading(true);
-      try {
-        const cartId = await ensureCart();
-        const { cart: updated } = await medusa.store.cart.createLineItem(
-          cartId,
-          { variant_id: variantId, quantity }
-        );
-        setCart(updated as unknown as MedusaCart);
+  const refreshCart = useCallback(async () => {
+    if (!cart?.id) return;
+    const updated = await getCart(cart.id);
+    if (updated) setCart(updated);
+  }, [cart?.id]);
+
+  const addToCart = async (variantId: string, quantity: number = 1) => {
+    if (!cart?.id) {
+      await initCart();
+    }
+    const cartId = cart?.id || localStorage.getItem(CART_ID_KEY);
+    if (!cartId) return;
+
+    setLoading(true);
+    try {
+      const updated = await addItemToCart(cartId, variantId, quantity);
+      if (updated) {
+        setCart(updated);
         setIsOpen(true);
-      } catch (err) {
-        console.error("addToCart error:", err);
-      } finally {
-        setLoading(false);
       }
-    },
-    [ensureCart]
-  );
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const removeFromCart = useCallback(
-    async (lineItemId: string) => {
-      if (!cart?.id) return;
-      setLoading(true);
-      try {
-        const { cart: updated } = await medusa.store.cart.deleteLineItem(
-          cart.id,
-          lineItemId
-        );
-        setCart(updated as unknown as MedusaCart);
-      } catch (err) {
-        console.error("removeFromCart error:", err);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [cart]
-  );
+  const removeFromCart = async (lineItemId: string) => {
+    if (!cart?.id) return;
+    setLoading(true);
+    try {
+      const updated = await removeCartItem(cart.id, lineItemId);
+      if (updated) setCart(updated);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const updateQty = useCallback(
-    async (lineItemId: string, quantity: number) => {
-      if (!cart?.id) return;
-      if (quantity < 1) {
-        await removeFromCart(lineItemId);
-        return;
-      }
-      setLoading(true);
-      try {
-        const { cart: updated } = await medusa.store.cart.updateLineItem(
-          cart.id,
-          lineItemId,
-          { quantity }
-        );
-        setCart(updated as unknown as MedusaCart);
-      } catch (err) {
-        console.error("updateQty error:", err);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [cart, removeFromCart]
-  );
+  const updateQty = async (lineItemId: string, qty: number) => {
+    if (!cart?.id) return;
+    if (qty < 1) return removeFromCart(lineItemId);
+    setLoading(true);
+    try {
+      const updated = await updateCartItem(cart.id, lineItemId, qty);
+      if (updated) setCart(updated);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const items = (cart?.items ?? []) as MedusaLineItem[];
-  const itemCount = items.reduce((s, i) => s + i.quantity, 0);
-  const totalFormatted = cart ? formatKWD(cart.total ?? 0) : "KD 0.000";
+  const items = cart?.items ?? [];
+  const total = cart?.total ?? 0;
+  const subtotal = cart?.subtotal ?? 0;
+  const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
     <CartContext.Provider
@@ -148,12 +131,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         items,
         isOpen,
         loading,
-        openCart: () => setIsOpen(true),
-        closeCart: () => setIsOpen(false),
+        openCart,
+        closeCart,
         addToCart,
         removeFromCart,
         updateQty,
-        totalFormatted,
+        refreshCart,
+        total,
+        subtotal,
         itemCount,
       }}
     >

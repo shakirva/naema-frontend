@@ -3,24 +3,32 @@ import React from "react";
 import Hero from "../sections/Hero";
 import Shop from "../sections/Shop";
 import Grid from "../components/Grid";
-import Deal from "../sections/Deal";
+import Deal from "../sections/ValueSection";
 import Footer from "../sections/Footer";
-import About from "../sections/About";
-import Wholesale from "../sections/Wholesale";
-import Info from "../components/Info";
 
+import Carousel from "../components/Carousel";
+
+import About2 from "../sections/About2";
+import Testimonials from "../sections/Testimonials";
+import SocialFeed from "../sections/SocialFeed";
 
 const page = () => {
   return (
     <main className="w-full h-full  overflow-clip">
       <Hero />
-      <Info/>
+
+      <Carousel />
+
       <Shop />
-      <About />
+
+      <About2 />
+      <Testimonials />
 
       <Grid />
 
       <Deal />
+      <SocialFeed/>
+
       <Footer />
     </main>
   );

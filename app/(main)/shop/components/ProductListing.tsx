@@ -1,15 +1,62 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { FiSliders } from "react-icons/fi";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import Footer from "@/app/sections/Footer";
-import medusa from "@/lib/medusa";
-import { MedusaProduct, getKWDPrice } from "@/lib/types";
+import { getProducts, getCategoryByHandle } from "@/lib/api";
+import type { MedusaProduct } from "@/lib/types";
+import { getProductPrice } from "@/lib/types";
+
+/* ------------------ TYPES ------------------ */
 
 type SortOrder = "default" | "low-to-high" | "high-to-low";
-type Props = { category: string; label: string };
+
+type Props = {
+  category: string;
+  label: string;
+};
+
+/* ------------------ PRICE FILTER ------------------ */
+
+const PriceFilter = ({
+  sortOrder,
+  setSortOrder,
+}: {
+  sortOrder: SortOrder;
+  setSortOrder: (order: SortOrder) => void;
+}) => (
+  <div className="mt-8 flex flex-col gap-5">
+    {/* Sort */}
+    <div>
+      <h3 className="text-sm font-medium mb-3">Sort by Price</h3>
+      <div className="flex flex-col gap-1">
+        {(
+          [
+            { label: "Default", value: "default" },
+            { label: "Low → High", value: "low-to-high" },
+            { label: "High → Low", value: "high-to-low" },
+          ] as { label: string; value: SortOrder }[]
+        ).map((opt) => (
+          <button
+            key={opt.value}
+            onClick={() => setSortOrder(opt.value)}
+            className={`w-full flex items-center justify-between px-3 py-2 rounded-full text-sm transition-colors
+              ${sortOrder === opt.value ? "bg-gold text-navy font-medium" : "text-black/70 hover:text-black"}`}
+          >
+            {opt.label}
+            {sortOrder === opt.value && (
+              <span className="w-1.5 h-1.5 rounded-full bg-navy" />
+            )}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+/* ------------------ PRODUCT LISTING ------------------ */
 
 const ProductListing = ({ category, label }: Props) => {
   const [products, setProducts] = useState<MedusaProduct[]>([]);
@@ -17,71 +64,50 @@ const ProductListing = ({ category, label }: Props) => {
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
 
   useEffect(() => {
-    const fetch = async () => {
+    const load = async () => {
       setLoading(true);
       try {
-        // Fetch products whose category handle matches the slug
-        const { products: data } = await medusa.store.product.list({
-          category_handle: [category],
-          fields: "id,title,handle,thumbnail,description,variants,variants.prices,tags,images,categories",
-          limit: 50,
-        } as Parameters<typeof medusa.store.product.list>[0]);
-        setProducts(data as unknown as MedusaProduct[]);
+        // Try to find category by handle and fetch products
+        const cat = await getCategoryByHandle(category);
+        if (cat) {
+          const res = await getProducts({ category_id: [cat.id], limit: 50 });
+          setProducts(res.products);
+        } else {
+          // Fallback: fetch all products
+          const res = await getProducts({ limit: 50 });
+          setProducts(res.products);
+        }
       } catch (err) {
-        console.error("Failed to fetch products:", err);
+        console.error("Failed to load products:", err);
       } finally {
         setLoading(false);
       }
     };
-    fetch();
+    load();
   }, [category]);
 
-  const filteredProducts = useMemo(() => {
-    const list = [...products];
+  const sortedProducts = useMemo(() => {
+    const sorted = [...products];
     if (sortOrder === "low-to-high") {
-      return list.sort((a, b) => {
-        const pa = getKWDPrice(a.variants?.[0]) ?? 0;
-        const pb = getKWDPrice(b.variants?.[0]) ?? 0;
-        return pa - pb;
-      });
+      sorted.sort((a, b) => getProductPrice(a) - getProductPrice(b));
+    } else if (sortOrder === "high-to-low") {
+      sorted.sort((a, b) => getProductPrice(b) - getProductPrice(a));
     }
-    if (sortOrder === "high-to-low") {
-      return list.sort((a, b) => {
-        const pa = getKWDPrice(a.variants?.[0]) ?? 0;
-        const pb = getKWDPrice(b.variants?.[0]) ?? 0;
-        return pb - pa;
-      });
-    }
-    return list;
+    return sorted;
   }, [products, sortOrder]);
 
   return (
     <>
       <section className="px-16 py-20 max-lg:px-8 max-md:px-5">
+
         {/* Top Bar */}
         <div className="w-full border-b border-black/10 pb-4 mb-10">
           <div className="max-w-[1440px] mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <button className="flex items-center gap-2 text-sm">
-                <FiSliders size={18} />
-                FILTER
-              </button>
-              <div className="flex gap-3 ml-4">
-                {(["default", "low-to-high", "high-to-low"] as SortOrder[]).map((opt) => (
-                  <button
-                    key={opt}
-                    onClick={() => setSortOrder(opt)}
-                    className={`text-xs px-3 py-1.5 rounded-full border transition ${
-                      sortOrder === opt
-                        ? "bg-navy text-white border-navy"
-                        : "border-black/20 text-black/60 hover:border-black"
-                    }`}
-                  >
-                    {opt === "default" ? "Default" : opt === "low-to-high" ? "Price ↑" : "Price ↓"}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <button className="flex items-center gap-2 text-sm">
+              <FiSliders size={18} />
+              FILTER
+            </button>
+            {/* Dynamic breadcrumb */}
             <div className="flex items-center gap-2 text-sm text-black/70">
               <Link href="/" className="hover:text-black transition">HOME</Link>
               <span>{">"}</span>
@@ -93,30 +119,67 @@ const ProductListing = ({ category, label }: Props) => {
         </div>
 
         {/* Main Layout */}
-        <div className="max-w-[1440px] mx-auto">
-          <div className="flex items-end justify-between mb-10">
-            <h1 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] leading-none">{label}</h1>
-            <span className="text-sm text-black/50">
-              {filteredProducts.length} product{filteredProducts.length !== 1 ? "s" : ""}
-            </span>
-          </div>
+        <div className="max-w-[1440px] mx-auto flex gap-12">
 
-          {loading ? (
-            <div className="flex justify-center py-24">
-              <div className="w-8 h-8 border-2 border-navy border-t-transparent rounded-full animate-spin" />
+          {/* Sidebar */}
+          <aside className="w-[260px] hidden lg:block shrink-0">
+            <h3 className="text-sm font-medium mb-4">Categories</h3>
+            <div className="flex flex-col gap-1">
+              <Link
+                href={`/shop/${category}`}
+                className="w-full flex items-center justify-between px-3 py-2 rounded-full text-sm bg-gold text-navy font-medium"
+              >
+                <span>{label}</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-white/30 text-navy">
+                  {products.length}
+                </span>
+              </Link>
             </div>
-          ) : filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
-              {filteredProducts.map((p) => (
-                <ProductCard key={p.id} product={p} category={category} />
-              ))}
+
+            <div className="my-6 border-t border-black/10" />
+
+            <PriceFilter
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />
+          </aside>
+
+          {/* Products */}
+          <div className="flex-1">
+            <div className="flex items-end justify-between mb-10">
+              {/* Dynamic heading */}
+              <h1 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] leading-none">
+                {label}
+              </h1>
+              <span className="text-sm text-black/50">
+                {sortedProducts.length} product{sortedProducts.length !== 1 ? "s" : ""}
+              </span>
             </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-24 text-black/40 gap-2">
-              <span className="text-4xl">🫙</span>
-              <p className="text-sm">No products in this category yet.</p>
-            </div>
-          )}
+
+            {loading ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
+                {[...Array(8)].map((_, i) => (
+                  <div key={i} className="flex flex-col gap-3 animate-pulse">
+                    <div className="w-full h-[260px] rounded-2xl bg-black/5" />
+                    <div className="h-4 w-3/4 rounded bg-black/5" />
+                    <div className="h-4 w-1/2 rounded bg-black/5" />
+                    <div className="h-10 rounded-full bg-black/5" />
+                  </div>
+                ))}
+              </div>
+            ) : sortedProducts.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
+                {sortedProducts.map((p) => (
+                  <ProductCard key={p.id} product={p} category={category} />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-24 text-black/40 gap-2">
+                <span className="text-4xl">🫙</span>
+                <p className="text-sm">No products found in this category.</p>
+              </div>
+            )}
+          </div>
         </div>
       </section>
       <Footer />

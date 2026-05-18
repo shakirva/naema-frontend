@@ -11,4 +11,6 @@ export const medusa = new Medusa({
   publishableKey: PUBLISHABLE_KEY,
 });
 
+export const MEDUSA_BACKEND_URL = BACKEND_URL;
+
 export default medusa;

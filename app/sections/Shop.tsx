@@ -1,13 +1,10 @@
 "use client";
 import Image from "next/image";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import ProductCarousel from "./ProductCarousel";
-import { MedusaProduct, MedusaProductCategory } from "@/lib/types";
-import medusa from "@/lib/medusa";
-
-const REGION_ID = process.env.NEXT_PUBLIC_KUWAIT_REGION_ID || "reg_01KQVDZRC5V1R8SKYCN644H08T";
-const CATEGORY_FALLBACK_IMG = "/n1.jpg";
+import { getProducts, getCategories } from "@/lib/api";
+import type { MedusaProduct, MedusaProductCategory } from "@/lib/types";
 
 const Shop = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -15,24 +12,16 @@ const Shop = () => {
   const [categories, setCategories] = useState<MedusaProductCategory[]>([]);
 
   useEffect(() => {
-    medusa.store.product
-      .list({ region_id: REGION_ID, limit: 20, fields: "id,title,handle,thumbnail,variants.*,variants.calculated_price" } as Parameters<typeof medusa.store.product.list>[0])
-      .then((res) => setProducts((res as { products: MedusaProduct[] }).products ?? []))
-      .catch(() => setProducts([]));
-
-    medusa.store.category
-      .list({
-        limit: 50,
-        fields: "id,name,handle,rank,parent_category_id,metadata",
-      } as Parameters<typeof medusa.store.category.list>[0])
-      .then((res) => {
-        const list = (res as { product_categories: MedusaProductCategory[] }).product_categories ?? [];
-        const topLevel = list
-          .filter((c) => !c.parent_category_id)
-          .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
-        setCategories(topLevel);
-      })
-      .catch(() => setCategories([]));
+    const load = async () => {
+      const [prodRes, cats] = await Promise.all([
+        getProducts({ limit: 20 }),
+        getCategories(),
+      ]);
+      setProducts(prodRes.products);
+      // Only top-level categories (no parent)
+      setCategories(cats.filter((c) => !c.parent_category_id));
+    };
+    load();
   }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -56,82 +45,123 @@ const Shop = () => {
     if (scrollRef.current) scrollRef.current.dataset.dragging = "false";
   };
 
+  // Split products for two carousels
+  const bestsellers = products.slice(0, 6);
+  const latest = products.slice(6, 12).length > 0 ? products.slice(6, 12) : products.slice(0, 6);
+
+  // Default category images (fallback)
+  const categoryImages: Record<string, string> = {
+    dates: "/dbox.jpg",
+    nuts: "/nuts.jpg",
+    "dry-fruits": "/dry.jpg",
+    chocolates: "/chocos.jpg",
+  };
+
   return (
-    <section className="min-h-screen w-full bg-cream px-16 pt-16 max-lg:pt-8 max-lg:px-8 max-md:px-5 pb-32">
-      <div className="flex flex-col w-full max-w-[1440px] mx-auto">
-        <h2 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] lg:text-center leading-none bg-gold/20 border border-gold/50 px-4 py-2 rounded-full">
-          Our Collection
-        </h2>
-        <span className="lg:text-[18px] max-lg:hidden tracking-tight leading-none lg:text-center mt-2 lg:mt-4">
+    <section className="min-h-screen w-full bg-cream pb-16 lg:pb-32">
+
+      <h1 className="font-serif text-[clamp(1.75rem,4.5vw,3.5rem)] text-center px-5 md:px-8 lg:px-16 pt-10 lg:pt-16 leading-tight">
+        A great box starts with carefully selected <span className="italic text-deepgold">dates,</span>
+        <br className="hidden md:block" /> roasted  <span className="italic text-deepgold">nuts,</span> and rich artisan <span className="italic text-deepgold">chocolate.</span>
+      </h1>
+
+      <ProductCarousel
+        title="Shop Our Best Sellers"
+        description="Our most loved products, trusted by thousands of customers."
+        products={bestsellers}
+      />
+
+      <div className="flex flex-col w-full max-w-[1440px] mx-auto px-5 md:px-8 lg:px-16 pt-10 lg:pt-16">
+
+        <div className="lg:mx-auto  mt-10 lg:mt-20">
+          <h2 className="font-serif text-[clamp(2rem,4.4vw,4rem)] lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4  py-2">
+            Our Collection
+          </h2>
+        </div>
+
+        <span className="hidden lg:block text-[18px] tracking-tight leading-none text-center mt-2 lg:mt-4">
           Shop by preference
         </span>
-        <div className="flex justify-between lg:hidden items-center w-full">
-          <span className="lg:text-[18px] tracking-tight leading-none lg:text-center mt-2 lg:mt-4">
+
+        <div className="flex justify-between lg:hidden items-center w-full mt-4">
+          <span className="text-base tracking-tight leading-none">
             Shop by preference
           </span>
-          <Link href="/shop" className="text-sm text-black underline cursor-pointer">
+          <Link href="/shop" className="text-sm text-black underline">
             view all
           </Link>
         </div>
 
-        {/* Category tiles */}
+        {/* Category circles — from Medusa or fallback */}
         <div
           ref={scrollRef}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
-          className="lg:mt-24 mt-14 flex lg:flex-wrap gap-8 lg:justify-between lg:items-center
+          className="mt-10 lg:mt-24 flex gap-5 md:gap-8
+            lg:flex-wrap lg:justify-between lg:items-center
             overflow-x-auto lg:overflow-x-visible
             snap-x snap-mandatory lg:snap-none
-            scrollbar-hide max-lg:cursor-grab max-lg:active:cursor-grabbing
-            pb-4 lg:pb-0 lg:mx-0 lg:px-0"
+            scrollbar-hide cursor-grab active:cursor-grabbing lg:cursor-default
+            pb-4 lg:pb-0
+            -mx-5 px-5 md:-mx-8 md:px-8 lg:mx-0 lg:px-0"
         >
-          {categories.map((cat) => {
-            const img = cat.metadata?.image_url || CATEGORY_FALLBACK_IMG;
-            return (
-              <Link
-                key={cat.id}
-                href={`/shop/${cat.handle}`}
-                className="flex flex-col gap-6 items-center justify-center flex-shrink-0 snap-center group"
-              >
-                <div className="w-50 h-[260px] lg:w-40 lg:h-[210px] rounded-[999px] overflow-hidden border-3 border-gold group-hover:border-navy transition-colors duration-200">
-                  <Image
-                    src={img}
-                    alt={cat.name}
-                    width={200}
-                    height={260}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <p className="text-[22px] text-center text-black/80 tracking-tight font-medium">{cat.name}</p>
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* Carousels fed from real Medusa data */}
-        <ProductCarousel
-          title="Shop Our Premium Range"
-          description="Premium dry fruits & nuts — available in 250g, 500g, and 1kg packs."
-          products={products}
-        />
-
-        <ProductCarousel
-          title="Our Best Sellers"
-          description="The most loved picks by our Kuwait customers."
-          products={[...products].reverse()}
-        />
-
-        <div className="w-full flex items-center justify-center mt-12">
-          <Link
-            href="/shop"
-            className="px-12 py-5 text-base font-medium tracking-tight border-2 border-gold bg-navy rounded-full text-white w-fit"
-          >
-            Shop All Products
-          </Link>
+          {(categories.length > 0
+            ? categories.map((cat) => ({
+                src: (cat.metadata?.image_url as string) || categoryImages[cat.handle] || "/n1.jpg",
+                label: cat.name,
+                href: `/shop/${cat.handle}`,
+              }))
+            : [
+                { src: "/dbox.jpg", label: "Dates", href: "/shop/dates" },
+                { src: "/nuts.jpg", label: "Nuts", href: "/shop/nuts" },
+                { src: "/dry.jpg", label: "Dry Fruits", href: "/shop/dry-fruits" },
+                { src: "/chocos.jpg", label: "Chocolates", href: "/shop/chocolates" },
+              ]
+          ).map(({ src, label, href }) => (
+            <Link
+              key={label}
+              href={href}
+              className="flex flex-col gap-4 lg:gap-6 items-center justify-center flex-shrink-0 snap-center"
+            >
+              <div className="w-[200px] h-[260px] md:w-[230px] md:h-[300px] lg:w-[260px] lg:h-[340px] rounded-[999px] overflow-hidden border-3 border-gold">
+                <Image
+                  src={src}
+                  alt={label}
+                  width={260}
+                  height={340}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <p className="text-[20px] lg:text-[24px] text-center text-black/80 tracking-tight font-medium">
+                {label}
+              </p>
+            </Link>
+          ))}
         </div>
       </div>
+
+      <ProductCarousel
+        title="Shop Our Latest Drops"
+        description="From classic whole dates to gourmet stuffed varieties – find your perfect match."
+        products={latest}
+      />
+
+      <div className="w-full flex items-center justify-center mt-10 lg:mt-12">
+       <Link
+  href="/shop"
+  className="px-8 md:px-12 py-4 md:py-5 text-base font-medium tracking-tight border-2 border-gold bg-navy rounded-full text-white relative group overflow-hidden inline-block"
+>
+  <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+    Shop All Products
+  </span>
+  <span className="block absolute inset-0 flex items-center justify-center bg-[#E7DCB7] text-navy  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+    Shop All Products
+  </span>
+</Link>
+      </div>
+
     </section>
   );
 };

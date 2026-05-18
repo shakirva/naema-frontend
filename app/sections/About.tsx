@@ -5,10 +5,10 @@ import { FaArrowRightLong } from "react-icons/fa6";
 
 const About = () => {
   return (
-    <section className=" w-full bg-gold/30  px-16 py-16 max-lg:pt-8 max-lg:px-8 max-md:px-5 lg:rounded-[200px] max-lg:rounded-[100px] max-md:rounded-[50px] border-t-1 border-b border-navy ">
+    <section className=" w-full bg-gold/30  px-16 py-16 max-lg:pt-8 max-lg:px-8 max-md:px-5  ">
       <div className="flex flex-col items-center  w-full max-w-[1440px] mx-auto h-full">
-        <div>
-          <h1 className="font-serif text-[clamp(2.25rem,5.56vw,5rem)] text-center leading-none">
+        <div className="flex flex-col items-center ">
+          <h1 className="font-serif text-[clamp(2.25rem,5.56vw,5rem)] text-center leading-none bg-darkgold/20 border border-gold/50 rounded-lg px-6 py-2 -rotate-2">
             Our <span className="italic">Story</span>
           </h1>
           <div className="flex items-center mt-6 max-lg:mt-4  ">

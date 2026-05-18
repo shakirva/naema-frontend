@@ -1,23 +1,6 @@
 import { notFound } from "next/navigation";
 import ProductListing from "../components/ProductListing";
-
-// Maps URL slug → display label
-// Includes both the original design slugs AND our actual Medusa category handles
-const categoryMap: Record<string, string> = {
-  // Original design categories
-  dates: "Dates",
-  nuts: "Nuts",
-  "dry-fruits": "Dry Fruits",
-  chocolates: "Chocolates",
-  // Our actual Medusa dry-fruit category handles
-  pista: "Pista",
-  walnut: "Walnut",
-  almond: "Almond",
-  cashew: "Cashew",
-  "pumpkin-seed": "Pumpkin Seed",
-  fig: "Fig",
-  kismiss: "Kismiss",
-};
+import { getCategoryByHandle } from "@/lib/api";
 
 const CategoryProductPage = async ({
   params,
@@ -25,8 +8,16 @@ const CategoryProductPage = async ({
   params: Promise<{ category: string }>;
 }) => {
   const { category } = await params;
-  const label = categoryMap[category];
-  if (!label) return notFound();
+
+  // Try to get the category from Medusa
+  const cat = await getCategoryByHandle(category);
+
+  // Use Medusa category name or fall back to formatted handle
+  const label = cat?.name || category
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+
   return <ProductListing category={category} label={label} />;
 };
 

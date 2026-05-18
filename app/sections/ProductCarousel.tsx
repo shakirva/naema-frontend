@@ -90,7 +90,7 @@ const CarouselCard = ({ product }: { product: MedusaProduct }) => {
 
         {/* TAGS as badges */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
-          {product.metadata?.badge && (
+          {Boolean(product.metadata?.badge) && (
             <span
               className={`text-[10px] font-medium uppercase leading-none px-3 py-1 rounded-full ${
                 product.metadata.badge === "New"

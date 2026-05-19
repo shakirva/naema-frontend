@@ -4,8 +4,9 @@ import { useState, useMemo } from "react";
 import { FiSliders } from "react-icons/fi";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
-import Footer from "@/app/sections/Footer";
+
 import { products, Product } from "@/app/constants";
+import Footer from "@/app/[locale]/sections/Footer";
 
 /* ------------------ TYPES ------------------ */
 

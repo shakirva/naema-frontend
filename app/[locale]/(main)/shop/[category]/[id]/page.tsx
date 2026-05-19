@@ -6,12 +6,12 @@ import Image from "next/image";
 import { IoMdStar } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 
-import Footer from "@/app/sections/Footer";
 import { FiCopy } from "react-icons/fi";
 import FrequentlyBought from "../../components/FrequentlyBought";
 import CustomerReviews from "../../components/CustomerReviews";
 import FAQ from "../../components/FAQ";
 import { products } from "@/app/constants";
+import Footer from "@/app/[locale]/sections/Footer";
 
 const sizes = [
   { label: "250g", available: true },

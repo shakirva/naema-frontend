@@ -4,8 +4,8 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useCart } from "../context/CartContext";
 import { Product } from "@/app/constants";
+import { useCart } from "@/app/context/CartContext";
 
 /* ------------------ STAR RATING ------------------ */
 
@@ -66,12 +66,11 @@ const CarouselCard = ({ product }: { product: Product }) => {
     setTimeout(() => setAdded(false), 1500);
   };
 
-  const discount =
-    product.originalPrice
-      ? Math.round(
-          ((product.originalPrice - product.price) / product.originalPrice) * 100
-        )
-      : null;
+  const discount = product.originalPrice
+    ? Math.round(
+        ((product.originalPrice - product.price) / product.originalPrice) * 100,
+      )
+    : null;
 
   return (
     <Link
@@ -99,10 +98,10 @@ const CarouselCard = ({ product }: { product: Product }) => {
                 product.badge === "New"
                   ? "bg-[#e6f2d7] text-black"
                   : product.badge === "Limited"
-                  ? "bg-navy text-cream"
-                  : product.badge === "Best Seller"
-                  ? "bg-gold text-black"
-                  : "bg-[#b63f3f] text-white"
+                    ? "bg-navy text-cream"
+                    : product.badge === "Best Seller"
+                      ? "bg-gold text-black"
+                      : "bg-[#b63f3f] text-white"
               }`}
             >
               {product.badge}
@@ -114,8 +113,12 @@ const CarouselCard = ({ product }: { product: Product }) => {
         {product.originalPrice && discount && (
           <div className="absolute top-3 right-3 z-10">
             <div className="bg-navy text-cream rounded-full w-14 h-14 flex flex-col items-center justify-center border border-gold">
-              <span className="text-[12px] leading-none font-bold">{discount}%</span>
-              <span className="text-[8px] leading-none uppercase mt-0.5">Off</span>
+              <span className="text-[12px] leading-none font-bold">
+                {discount}%
+              </span>
+              <span className="text-[8px] leading-none uppercase mt-0.5">
+                Off
+              </span>
             </div>
           </div>
         )}
@@ -219,7 +222,6 @@ const ProductCarousel = ({ title, description, products }: Props) => {
 
   return (
     <div className="max-w-[1440px] mx-auto px-16 pt-40 max-lg:px-8 max-lg:pt-20 max-md:px-0">
-
       {/* HEADING */}
       <h2 className="font-serif w-fit text-[clamp(2rem,3.33vw,3rem)] leading-none bg-gold/20 border border-gold/50 rounded-lg px-4 py-2 max-md:mx-5">
         {title}
@@ -240,26 +242,37 @@ const ProductCarousel = ({ title, description, products }: Props) => {
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer ${
-              canScrollLeft ? "bg-navy border-navy" : "bg-white border-gold cursor-not-allowed"
+              canScrollLeft
+                ? "bg-navy border-navy"
+                : "bg-white border-gold cursor-not-allowed"
             }`}
           >
-            <ChevronLeft className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronLeft
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer ${
-              canScrollRight ? "bg-navy border-navy" : "bg-white border-gold cursor-not-allowed"
+              canScrollRight
+                ? "bg-navy border-navy"
+                : "bg-white border-gold cursor-not-allowed"
             }`}
           >
-            <ChevronRight className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronRight
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
         </div>
       </div>
 
       {/* PRODUCTS + MOBILE OVERLAY ARROWS */}
       <div className="relative">
-
         {/* Mobile left arrow — centered vertically on card image */}
         <button
           onClick={() => scroll("left")}

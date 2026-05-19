@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { AiOutlineInstagram, AiFillFacebook } from "react-icons/ai";
-import { navLinks } from "../constants";
+import { navLinks } from "../../constants";
 
 const Footer = () => {
   return (

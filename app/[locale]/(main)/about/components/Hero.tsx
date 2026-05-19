@@ -1,8 +1,7 @@
 "use client";
 
-import ParallaxImage from "@/app/components/ParallaxImage";
+import ParallaxImage from "@/app/[locale]/components/ParallaxImage";
 import React from "react";
-
 
 const Hero = () => {
   return (

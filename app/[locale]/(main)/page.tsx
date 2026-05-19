@@ -1,16 +1,14 @@
 import React from "react";
-
 import Hero from "../sections/Hero";
-import Shop from "../sections/Shop";
-import Grid from "../components/Grid";
-import Deal from "../sections/ValueSection";
-import Footer from "../sections/Footer";
-
 import Carousel from "../components/Carousel";
-
+import Shop from "../sections/Shop";
 import About2 from "../sections/About2";
 import Testimonials from "../sections/Testimonials";
+import { Grid } from "lucide-react";
+import ValueSection from "../sections/ValueSection";
 import SocialFeed from "../sections/SocialFeed";
+import Footer from "../sections/Footer";
+
 
 const page = () => {
   return (
@@ -19,15 +17,15 @@ const page = () => {
 
       <Carousel />
 
-      <Shop />
+      <Shop/>
 
       <About2 />
       <Testimonials />
 
-      <Grid />
+      <Grid/>
 
-      <Deal />
-      <SocialFeed/>
+      <ValueSection />
+      <SocialFeed />
 
       <Footer />
     </main>

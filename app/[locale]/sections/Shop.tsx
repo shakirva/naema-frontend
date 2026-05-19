@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useRef } from "react";
 import Link from "next/link";
 import ProductCarousel from "./ProductCarousel";
-import { products } from "../constants";
+import { products } from "../../constants";
 
 const Shop = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -31,10 +31,12 @@ const Shop = () => {
 
   return (
     <section className="min-h-screen w-full bg-cream pb-16 lg:pb-32">
-
       <h1 className="font-serif text-[clamp(1.75rem,4.5vw,3.5rem)] text-center px-5 md:px-8 lg:px-16 pt-10 lg:pt-16 leading-tight">
-        A great box starts with carefully selected <span className="italic text-deepgold">dates,</span>
-        <br className="hidden md:block" /> roasted  <span className="italic text-deepgold">nuts,</span> and rich artisan <span className="italic text-deepgold">chocolate.</span>
+        A great box starts with carefully selected{" "}
+        <span className="italic text-deepgold">dates,</span>
+        <br className="hidden md:block" /> roasted{" "}
+        <span className="italic text-deepgold">nuts,</span> and rich artisan{" "}
+        <span className="italic text-deepgold">chocolate.</span>
       </h1>
 
       <ProductCarousel
@@ -46,7 +48,6 @@ const Shop = () => {
       />
 
       <div className="flex flex-col w-full max-w-[1440px] mx-auto px-5 md:px-8 lg:px-16 pt-10 lg:pt-16">
-
         <div className="lg:mx-auto  mt-10 lg:mt-20">
           <h2 className="font-serif text-[clamp(2rem,4.4vw,4rem)] lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4  py-2">
             Our Collection
@@ -115,19 +116,18 @@ const Shop = () => {
       />
 
       <div className="w-full flex items-center justify-center mt-10 lg:mt-12">
-       <Link
-  href="/shop"
-  className="px-8 md:px-12 py-4 md:py-5 text-base font-medium tracking-tight border-2 border-gold bg-navy rounded-full text-white relative group overflow-hidden inline-block"
->
-  <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
-    Shop All Dates
-  </span>
-  <span className="block absolute inset-0 flex items-center justify-center bg-[#E7DCB7] text-navy  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
-    Shop All Dates
-  </span>
-</Link>
+        <Link
+          href="/shop"
+          className="px-8 md:px-12 py-4 md:py-5 text-base font-medium tracking-tight border-2 border-gold bg-navy rounded-full text-white relative group overflow-hidden inline-block"
+        >
+          <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+            Shop All Dates
+          </span>
+          <span className="block absolute inset-0 flex items-center justify-center bg-[#E7DCB7] text-navy  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+            Shop All Dates
+          </span>
+        </Link>
       </div>
-
     </section>
   );
 };

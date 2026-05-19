@@ -51,24 +51,34 @@ const FrequentlyBought = ({ currentId }: { currentId: number }) => {
             disabled={!canScrollLeft}
             aria-label="Scroll left"
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer
-              ${canScrollLeft
-                ? "bg-navy border-navy active:shadow-none"
-                : "bg-white border-gold cursor-not-allowed"
+              ${
+                canScrollLeft
+                  ? "bg-navy border-navy active:shadow-none"
+                  : "bg-white border-gold cursor-not-allowed"
               }`}
           >
-            <ChevronLeft className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronLeft
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
             aria-label="Scroll right"
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer
-              ${canScrollRight
-                ? "bg-navy border-navy active:shadow-none"
-                : "bg-white border-gold cursor-not-allowed"
+              ${
+                canScrollRight
+                  ? "bg-navy border-navy active:shadow-none"
+                  : "bg-white border-gold cursor-not-allowed"
               }`}
           >
-            <ChevronRight className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronRight
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
         </div>
       </div>
@@ -81,7 +91,10 @@ const FrequentlyBought = ({ currentId }: { currentId: number }) => {
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {related.map((product) => (
-          <div key={product.id} className="flex-none w-[280px] max-md:w-[240px]">
+          <div
+            key={product.id}
+            className="flex-none w-[280px] max-md:w-[240px]"
+          >
             <ProductCard product={product} category={product.category} />
           </div>
         ))}

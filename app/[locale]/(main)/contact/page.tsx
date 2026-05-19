@@ -7,9 +7,11 @@ import {
   FiPhone,
   FiInstagram,
 } from "react-icons/fi";
+import Footer from "../../sections/Footer";
 
 const page = () => {
   return (
+    <>
     <main className="w-full bg-cream overflow-hidden">
       {/* Hero */}
       <section className="relative w-full px-5 md:px-8 lg:px-16 pt-32 pb-20">
@@ -226,6 +228,8 @@ const page = () => {
         </div>
       </section>
     </main>
+    <Footer/>
+    </>
   );
 };
 

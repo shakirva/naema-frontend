@@ -141,9 +141,14 @@ const CategoryItem = ({
           {hasChildren && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="14" height="14" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" strokeWidth="2"
-              strokeLinecap="round" strokeLinejoin="round"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
             >
               <polyline points="6 9 12 15 18 9" />
@@ -224,7 +229,6 @@ const PriceFilter = ({
     </div>
 
     {/* Price Range */}
-   
   </div>
 );
 
@@ -234,7 +238,7 @@ const ProductListing = ({ category, label }: Props) => {
   // Filter products for this category from constants
   const categoryProducts = useMemo(
     () => products.filter((p) => p.category === category),
-    [category]
+    [category],
   );
 
   const MIN_PRICE = categoryProducts.length
@@ -250,21 +254,25 @@ const ProductListing = ({ category, label }: Props) => {
   const [activeCategory, setActiveCategory] = useState(defaultActive);
   const [activeSubcategory, setActiveSubcategory] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
-  const [priceRange, setPriceRange] = useState<[number, number]>([MIN_PRICE, MAX_PRICE]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([
+    MIN_PRICE,
+    MAX_PRICE,
+  ]);
 
   const filteredProducts = useMemo(() => {
     let result = categoryProducts.filter(
-      (p) => p.price >= priceRange[0] && p.price <= priceRange[1]
+      (p) => p.price >= priceRange[0] && p.price <= priceRange[1],
     );
-    if (sortOrder === "low-to-high") result = [...result].sort((a, b) => a.price - b.price);
-    if (sortOrder === "high-to-low") result = [...result].sort((a, b) => b.price - a.price);
+    if (sortOrder === "low-to-high")
+      result = [...result].sort((a, b) => a.price - b.price);
+    if (sortOrder === "high-to-low")
+      result = [...result].sort((a, b) => b.price - a.price);
     return result;
   }, [categoryProducts, sortOrder, priceRange]);
 
   return (
     <>
       <section className="px-16 py-20 max-lg:px-8 max-md:px-5">
-
         {/* Top Bar */}
         <div className="w-full border-b border-black/10 pb-4 mb-10">
           <div className="max-w-[1440px] mx-auto flex items-center justify-between">
@@ -274,18 +282,23 @@ const ProductListing = ({ category, label }: Props) => {
             </button>
             {/* Dynamic breadcrumb */}
             <div className="flex items-center gap-2 text-sm text-black/70">
-              <Link href="/" className="hover:text-black transition">HOME</Link>
+              <Link href="/" className="hover:text-black transition">
+                HOME
+              </Link>
               <span>{">"}</span>
-              <Link href="/shop" className="hover:text-black transition">SHOP</Link>
+              <Link href="/shop" className="hover:text-black transition">
+                SHOP
+              </Link>
               <span>{">"}</span>
-              <span className="text-black font-medium">{label.toUpperCase()}</span>
+              <span className="text-black font-medium">
+                {label.toUpperCase()}
+              </span>
             </div>
           </div>
         </div>
 
         {/* Main Layout */}
         <div className="max-w-[1440px] mx-auto flex gap-12">
-
           {/* Sidebar */}
           <aside className="w-[260px] hidden lg:block shrink-0">
             <h3 className="text-sm font-medium mb-4">Categories</h3>
@@ -322,7 +335,8 @@ const ProductListing = ({ category, label }: Props) => {
                 {label}
               </h1>
               <span className="text-sm text-black/50">
-                {filteredProducts.length} product{filteredProducts.length !== 1 ? "s" : ""}
+                {filteredProducts.length} product
+                {filteredProducts.length !== 1 ? "s" : ""}
               </span>
             </div>
 

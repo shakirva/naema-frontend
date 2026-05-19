@@ -7,16 +7,23 @@ import Link from "next/link";
 import { useState } from "react";
 import { IoMdStar } from "react-icons/io";
 
-
-
-const ProductCard = ({ product, category }: { product: Product; category: string }) =>{
+const ProductCard = ({
+  product,
+  category,
+}: {
+  product: Product;
+  category: string;
+}) => {
   const [added, setAdded] = useState(false);
   const { addToCart } = useCart();
 
   return (
     <div className="flex flex-col gap-3 group">
       {/* Clickable area → product page */}
-      <Link href={`/shop/${category}/${product.id}`} className="flex flex-col gap-3">
+      <Link
+        href={`/shop/${category}/${product.id}`}
+        className="flex flex-col gap-3"
+      >
         {/* Image */}
         <div className="relative w-full h-[260px] rounded-2xl overflow-hidden">
           <Image

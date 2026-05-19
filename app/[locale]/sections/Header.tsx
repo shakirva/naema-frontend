@@ -3,9 +3,10 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
-import { navLinks } from "../constants";
-import { useCart } from "../context/CartContext";
+import { navLinks } from "../../constants";
+
 import { usePathname } from "next/navigation";
+import { useCart } from "@/app/context/CartContext";
 
 /* ------------------ DATA ------------------ */
 
@@ -53,17 +54,21 @@ const megaMenu = {
     },
   ],
   featured: [
-    { label: "Explore Gift Boxes", image: "/chocos.jpg", href: "/shop/chocolates" },
-    { label: "Explore Premium Dates", image: "/datedark.png", href: "/shop/dates" },
+    {
+      label: "Explore Gift Boxes",
+      image: "/chocos.jpg",
+      href: "/shop/chocolates",
+    },
+    {
+      label: "Explore Premium Dates",
+      image: "/datedark.png",
+      href: "/shop/dates",
+    },
   ],
 };
 
-
-
 const MegaMenu = () => (
   <div className="bg-cream border-t border-gold/30 shadow-xl w-full flex">
-
-    
     <div className="flex flex-col pl-16 py-10 gap-8 flex-1">
       <div className="flex gap-16">
         {megaMenu.columns.map((col) => (
@@ -86,24 +91,22 @@ const MegaMenu = () => (
         ))}
       </div>
 
-     
       <Link
-  href="/shop"
-  className="relative inline-flex w-fit overflow-hidden rounded-full border-2 border-gold bg-navy text-sm font-medium tracking-tight text-cream group"
->
-  {/* DEFAULT TEXT */}
-  <span className="block px-6 py-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
-    Shop All
-  </span>
+        href="/shop"
+        className="relative inline-flex w-fit overflow-hidden rounded-full border-2 border-gold bg-navy text-sm font-medium tracking-tight text-cream group"
+      >
+        {/* DEFAULT TEXT */}
+        <span className="block px-6 py-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
+          Shop All
+        </span>
 
-  {/* HOVER LAYER */}
-  <span className="absolute inset-0 flex items-center justify-center rounded-full  bg-cream text-navy translate-y-full scale-[0.5] transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0 group-hover:scale-100">
-    Shop All
-  </span>
-</Link>
+        {/* HOVER LAYER */}
+        <span className="absolute inset-0 flex items-center justify-center rounded-full  bg-cream text-navy translate-y-full scale-[0.5] transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0 group-hover:scale-100">
+          Shop All
+        </span>
+      </Link>
     </div>
 
-    
     <div className="flex gap-3  pr-16 pl-8  py-10 shrink-0 border-l border-gold/20">
       {megaMenu.featured.map((f) => (
         <Link
@@ -127,8 +130,6 @@ const MegaMenu = () => (
   </div>
 );
 
-
-
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopHovered, setShopHovered] = useState(false);
@@ -148,11 +149,9 @@ const Header = () => {
 
   return (
     <header className="w-full relative z-[9999]">
-
       {/* NAV BAR */}
       <div className="w-full px-8 md:px-16 py-4 bg-navy">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
-
           <Image src="/newnaema.png" width={90} height={90} alt="logo" />
 
           {/* Desktop Nav */}
@@ -186,7 +185,6 @@ const Header = () => {
             </div>
           </nav>
 
-         
           <div className="flex items-center gap-4">
             <div className="hidden lg:flex items-center bg-transparent border border-cream/40 rounded-full px-3 py-1.5 focus-within:border-cream transition-all duration-300">
               <FiSearch size={20} className="text-cream mr-2" />
@@ -197,29 +195,40 @@ const Header = () => {
               />
             </div>
             <Link href="/login">
-              <FiUser size={20} className="cursor-pointer hidden lg:block" color="#f6f1e7" />
+              <FiUser
+                size={20}
+                className="cursor-pointer hidden lg:block"
+                color="#f6f1e7"
+              />
             </Link>
             <button onClick={openCart} className="relative">
-              <FiShoppingCart size={20} className="cursor-pointer hidden lg:block" color="#f6f1e7" />
+              <FiShoppingCart
+                size={20}
+                className="cursor-pointer hidden lg:block"
+                color="#f6f1e7"
+              />
               {items.length > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold rounded-full text-[9px] text-navy font-medium flex items-center justify-center">
                   {items.reduce((sum, i) => sum + i.quantity, 0)}
                 </span>
               )}
             </button>
-            <button className="lg:hidden text-cream" onClick={() => setMenuOpen(!menuOpen)}>
+            <button
+              className="lg:hidden text-cream"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
               {menuOpen ? <FiX size={26} /> : <FiMenu size={26} />}
             </button>
           </div>
         </div>
       </div>
 
-     
       <div
         className={`hidden lg:block absolute top-full left-0 w-full transition-all duration-200 ease-in-out
-          ${shopHovered
-            ? "opacity-100 pointer-events-auto translate-y-0"
-            : "opacity-0 pointer-events-none -translate-y-1"
+          ${
+            shopHovered
+              ? "opacity-100 pointer-events-auto translate-y-0"
+              : "opacity-0 pointer-events-none -translate-y-1"
           }`}
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
@@ -230,7 +239,9 @@ const Header = () => {
       {/* Mobile Overlay */}
       <div
         className={`fixed inset-0 bg-black/40 z-40 lg:hidden transition-opacity duration-300 ${
-          menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          menuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setMenuOpen(false)}
       />
@@ -240,7 +251,10 @@ const Header = () => {
         className={`fixed top-0 right-0 h-full z-50 bg-cream flex flex-col px-10 py-12 gap-8 transition-transform duration-400 ease-in-out w-full md:w-1/2
           ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        <button className="self-end text-navy" onClick={() => setMenuOpen(false)}>
+        <button
+          className="self-end text-navy"
+          onClick={() => setMenuOpen(false)}
+        >
           <FiX size={28} />
         </button>
 

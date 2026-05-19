@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import { IoMdCheckmark } from "react-icons/io";
 import { FiChevronDown, FiLock } from "react-icons/fi";
-import { useCart } from "../../context/CartContext";
+import { useCart } from "../../../context/CartContext";
 
 type PaymentMethod = "upi" | "card" | "netbanking" | "cod";
 

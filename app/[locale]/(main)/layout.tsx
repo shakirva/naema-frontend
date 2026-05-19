@@ -1,3 +1,4 @@
+
 import Header from "../sections/Header";
 import CartSidebar from "./shop/components/CartSidebar";
 
@@ -8,7 +9,7 @@ export default function MainLayout({
 }) {
   return (
     <>
-      <Header />
+      <Header/>
       <CartSidebar />
       <main className="">{children}</main>
     </>

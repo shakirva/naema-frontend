@@ -4,8 +4,7 @@ import "./globals.css";
 
 import { Instrument_Serif } from "next/font/google";
 import { CartProvider } from "./context/CartContext";
-import LenisSmoothScroll from "./components/SmoothScroll/Lenis";
-
+import LenisSmoothScroll from "./[locale]/components/SmoothScroll/Lenis";
 
 export const metadata: Metadata = {
   title: "Naema",
@@ -21,7 +20,10 @@ const instrumentSerif = Instrument_Serif({
 
 const helveticaNeue = localFont({
   src: [
-    { path: "./fonts/HelveticaNeue/HelveticaNeueUltraLight.otf", weight: "100" },
+    {
+      path: "./fonts/HelveticaNeue/HelveticaNeueUltraLight.otf",
+      weight: "100",
+    },
     { path: "./fonts/HelveticaNeue/HelveticaNeueThin.otf", weight: "200" },
     { path: "./fonts/HelveticaNeue/HelveticaNeueLight.otf", weight: "300" },
     { path: "./fonts/HelveticaNeue/HelveticaNeueRoman.otf", weight: "400" },
@@ -44,10 +46,8 @@ export default function RootLayout({
       className={`${helveticaNeue.variable} ${instrumentSerif.variable} antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
-           <LenisSmoothScroll />
-        <CartProvider>
-          {children}
-        </CartProvider>
+        <LenisSmoothScroll />
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

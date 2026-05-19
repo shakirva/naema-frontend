@@ -220,7 +220,7 @@ const CartSidebar = () => {
             </p>
             <Link
               href="/checkout"
-              onClick={closeCart} 
+              onClick={closeCart}
               className="w-full py-4  rounded-full bg-navy text-white text-sm font-medium text-center hover:opacity-90 transition"
             >
               Proceed to Checkout →

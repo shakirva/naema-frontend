@@ -1,7 +1,9 @@
-import type { NextConfig } from "next";
+// next.config.mjs
+import createNextIntlPlugin from 'next-intl/plugin';
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+const withNextIntl = createNextIntlPlugin();
 
-export default nextConfig;
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+export default withNextIntl(nextConfig);

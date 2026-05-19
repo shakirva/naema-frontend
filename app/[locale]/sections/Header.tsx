@@ -1,14 +1,8 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Link, usePathname } from "@/i18n/routing";
 import Image from "next/image";
-import {
-  FiSearch,
-  FiUser,
-  FiShoppingCart,
-  FiMenu,
-  FiX,
-} from "react-icons/fi";
+import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { navLinks } from "../../constants";
 import { useCart } from "@/app/context/CartContext";
 import { useLocale } from "next-intl";
@@ -82,7 +76,6 @@ const MegaMenu = () => (
             <span className="text-[10px] font-bold  text-black/40 uppercase">
               {col.heading}
             </span>
-
             <div className="flex flex-col gap-2.5">
               {col.links.map((item) => (
                 <Link
@@ -125,9 +118,7 @@ const MegaMenu = () => (
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
-
           <div className="absolute inset-0 bg-navy/40" />
-
           <span className="absolute bottom-4 left-4 right-4 font-serif text-[18px] font-medium text-white leading-tight">
             {f.label}
           </span>
@@ -140,37 +131,12 @@ const MegaMenu = () => (
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopHovered, setShopHovered] = useState(false);
-  const [showHeader, setShowHeader] = useState(true);
-
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const lastScrollY = useRef(0);
 
   const { openCart, items } = useCart();
 
   const pathname = usePathname();
   const locale = useLocale();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY < 20) {
-        setShowHeader(true);
-      } else if (currentScrollY > lastScrollY.current) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
-
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const handleEnter = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -182,13 +148,9 @@ const Header = () => {
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-[9999] transition-transform duration-400 ease-in-out ${
-        showHeader ? "translate-y-0" : "-translate-y-full"
-      }`}
-    >
+    <header className="w-full relative z-[9999]">
       {/* NAV BAR */}
-      <div className="w-full px-8 md:px-16 lg:py-8 py-4 bg-navy">
+      <div className="w-full px-8 md:px-16 lg:py-8  py-4 bg-navy">
         <div className="max-w-[1440px] mx-auto w-full flex items-center justify-between">
           <Link
             href="/"
@@ -216,13 +178,12 @@ const Header = () => {
                   >
                     <Link
                       href={link.href}
-                      className={`cursor-pointer duration-300 transition-colors group ease-in-out block relative hover:text-cream
+                      className={`cursor-pointer duration-300 transition-colors group ease-in-out block relative  hover:text-cream
                         ${isActive ? "text-gold" : "text-cream/60"}
                         ${isShop && shopHovered ? "text-gold" : ""}
                       `}
                     >
-                      {link.label}
-
+                      {link.label}{" "}
                       {isShop ? (
                         <IoIosArrowDown className="inline-flex items-center ml-2 size-[14px] transition-all duration-300 group-hover:-rotate-180" />
                       ) : (
@@ -236,6 +197,8 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center gap-6">
+           
+
             <div className="hidden lg:flex items-center bg-transparent border border-cream/40 rounded-full px-3 py-1.5 focus-within:border-cream transition-all duration-300">
               <FiSearch size={20} className="text-cream mr-2" />
 
@@ -274,12 +237,11 @@ const Header = () => {
             >
               {menuOpen ? <FiX size={26} /> : <FiMenu size={26} />}
             </button>
-
             <div className="hidden lg:flex items-center gap-2 mr-2">
               <Link
                 href={pathname}
                 locale="en"
-                className={`text-[13px] tracking-tight transition-colors duration-300 ${
+                className={`text-[12px] tracking-tight transition-colors duration-300 ${
                   locale === "en"
                     ? "text-gold"
                     : "text-cream/50 hover:text-cream"
@@ -293,7 +255,7 @@ const Header = () => {
               <Link
                 href={pathname}
                 locale="ar"
-                className={`text-[13px] tracking-tight transition-colors duration-300 ${
+                className={`text-[12px] tracking-tight transition-colors duration-300 ${
                   locale === "ar"
                     ? "text-gold"
                     : "text-cream/50 hover:text-cream"

@@ -75,7 +75,7 @@ const CarouselCard = ({ product }: { product: Product }) => {
   return (
     <Link
       href={`/shop/${product.category}/${product.id}`}
-      className="flex-none w-[296px] max-md:w-[85vw] flex flex-col gap-3 group snap-center"
+      className="flex-none w-[310px] max-md:w-[85vw] flex flex-col gap-3 group snap-center"
     >
       {/* IMAGE */}
       <div className="relative w-full h-64 rounded-2xl overflow-hidden border border-black/10 bg-cream">

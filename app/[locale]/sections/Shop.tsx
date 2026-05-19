@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useRef } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import ProductCarousel from "./ProductCarousel";
 import { products } from "../../constants";
 
@@ -83,14 +83,19 @@ const Shop = () => {
             -mx-5 px-5 md:-mx-8 md:px-8 lg:mx-0 lg:px-0"
         >
           {[
-            { src: "/dbox.jpg", label: "Dates" },
-            { src: "/nuts.jpg", label: "Nuts" },
-            { src: "/dry.jpg", label: "Dry Fruits" },
-            { src: "/chocos.jpg", label: "Chocolates" },
-          ].map(({ src, label }) => (
-            <div
+            { src: "/dbox.jpg", label: "Dates", href: "/shop/dates" },
+            { src: "/nuts.jpg", label: "Nuts", href: "/shop/nuts" },
+            { src: "/dry.jpg", label: "Dry Fruits", href: "/shop/dry-fruits" },
+            {
+              src: "/chocos.jpg",
+              label: "Chocolates",
+              href: "/shop/chocolates",
+            },
+          ].map(({ src, label, href }) => (
+            <Link
               key={label}
-              className="flex flex-col gap-4 lg:gap-6 items-center justify-center flex-shrink-0 snap-center"
+              href={href}
+              className="flex flex-col gap-4 lg:gap-6 items-center justify-center flex-shrink-0 snap-center group"
             >
               <div className="w-[200px] h-[260px] md:w-[230px] md:h-[300px] lg:w-[260px] lg:h-[340px] rounded-[999px] overflow-hidden border-3 border-gold">
                 <Image
@@ -98,13 +103,14 @@ const Shop = () => {
                   alt={label}
                   width={260}
                   height={340}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
+
               <p className="text-[20px] lg:text-[24px] text-center text-black/80 tracking-tight font-medium">
                 {label}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

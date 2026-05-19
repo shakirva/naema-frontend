@@ -17,7 +17,7 @@ const ValueSection = () => {
         {/* Pillars */}
         <Pillars />
 
-        <ComboBundle />
+      
 
         <Wholesale />
       </div>

@@ -70,7 +70,7 @@ const PillarCard = ({ pillar }: { pillar: (typeof pillars)[0] }) => {
         src={pillar.image}
         alt={pillar.title}
         fill
-        className="object-cover transition-transform duration-500 group-hover:scale-105"
+        className="object-cover transition-transform duration-500 group-hover:scale-103"
       />
       <div
         className={`absolute bottom-0 left-0 right-0 bg-navy border-t border-gold px-6 transition-all duration-400 ease-in-out ${
@@ -82,7 +82,7 @@ const PillarCard = ({ pillar }: { pillar: (typeof pillars)[0] }) => {
             {pillar.title}
           </h3>
           <button
-            className="shrink-0 size-8 rounded-full border border-gold text-cream flex items-center justify-center text-lg leading-none transition-transform duration-300"
+            className="shrink-0 size-8 rounded-full border border-gold text-cream flex items-center justify-center text-lg leading-none transition-transform duration-500"
             style={{ transform: open ? "rotate(45deg)" : "rotate(0deg)" }}
             aria-label={open ? "Close" : "Open"}
           >
@@ -90,7 +90,7 @@ const PillarCard = ({ pillar }: { pillar: (typeof pillars)[0] }) => {
           </button>
         </div>
         <div
-          className={`overflow-hidden transition-all duration-400 ease-in-out ${
+          className={`overflow-hidden transition-all duration-500 ease-in-out ${
             open ? "max-h-40 mt-3 opacity-100" : "max-h-0 opacity-0"
           }`}
         >

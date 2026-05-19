@@ -65,7 +65,7 @@ const Footer = () => {
         </div>
 
         {/* Divider */}
-        <div className="w-full h-px bg-cream/70 my-16" />
+        <div className="w-full h-px bg-darkgold my-16" />
 
         {/* Footer Links */}
         <div className="grid grid-cols-4 max-md:grid-cols-1 gap-8 text-cream">
@@ -155,10 +155,10 @@ const Footer = () => {
               className="w-full px-4 py-3 text-black bg-cream rounded-full outline-none mb-3"
             />
             <button className="w-full bg-gold text-black py-3 rounded-full font-medium relative group overflow-hidden cursor-pointer">
-              <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+              <span className="block group-hover:-translate-y-full tracking-tight transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
                 Join Now
               </span>
-              <span className="block absolute inset-0 flex items-center justify-center bg-navy text-cream border-2 border-gold rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+              <span className="block absolute inset-0 flex items-center tracking-tight justify-center bg-navy text-cream border-2 border-gold rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
                 Join Now
               </span>
             </button>

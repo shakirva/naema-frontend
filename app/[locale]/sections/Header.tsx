@@ -150,7 +150,7 @@ const Header = () => {
   return (
     <header className="w-full relative z-[9999]">
       {/* NAV BAR */}
-      <div className="w-full px-8 md:px-16 lg:py-8  py-4 bg-navy">
+      <div className="w-full px-8 md:px-16 lg:py-8  py-4 bg-navy border-b border-darkgold">
         <div className="max-w-[1440px] mx-auto w-full flex items-center justify-between">
           <Link
             href="/"

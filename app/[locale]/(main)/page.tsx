@@ -4,10 +4,11 @@ import Carousel from "../components/Carousel";
 import Shop from "../sections/Shop";
 import About2 from "../sections/About2";
 import Testimonials from "../sections/Testimonials";
-import { Grid } from "lucide-react";
+
 import ValueSection from "../sections/ValueSection";
 import SocialFeed from "../sections/SocialFeed";
 import Footer from "../sections/Footer";
+import Grid from "../components/Grid";
 
 
 const page = () => {

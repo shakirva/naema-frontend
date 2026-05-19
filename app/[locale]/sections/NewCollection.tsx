@@ -6,8 +6,8 @@ import Link from "next/link";
 import { FiArrowLeft, FiArrowRight, FiShoppingCart } from "react-icons/fi";
 import { IoMdStar } from "react-icons/io";
 import { products } from "@/app/constants";
-import { useCart } from "../context/CartContext";
 import ParallaxImage from "../components/ParallaxImage";
+import { useCart } from "@/app/context/CartContext";
 
 const featured = products.slice(0, 4);
 

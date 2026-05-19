@@ -1,4 +1,4 @@
-import React from "react";
+
 import Hero from "../sections/Hero";
 import Carousel from "../components/Carousel";
 import Shop from "../sections/Shop";

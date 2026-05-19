@@ -5,5 +5,12 @@
     "titleLine2": "chocolate crafted by Naema.",
     "description": "Discover the finest selection of premium dates, nuts and artisan chocolate, masterfully created by Naema",
     "button": "Shop Now"
+  },
+
+  "Carousel": {
+    "farmToTable": "Farm to Table",
+    "premiumQuality": "Premium Quality",
+    "fastDelivery": "Fast Delivery",
+    "giftPackaging": "Gift Packaging"
   }
 }

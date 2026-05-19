@@ -83,7 +83,7 @@ const CarouselCard = ({ product }: { product: Product }) => {
           src={product.image}
           alt={product.name}
           fill
-          className="object-cover group-hover:scale-[1.08] transition-all duration-500 ease-out"
+          className="object-cover group-hover:scale-[1.05] transition-all duration-500 ease-out"
           sizes="296px"
         />
 

@@ -19,7 +19,7 @@ const Hero = () => {
 
         <div className="w-1/2 max-lg:h-1/2 max-lg:w-full text-cream flex flex-col items-center justify-center relative">
           <div className="absolute flex items-center justify-center bottom-0 right-8 translate-y-[50%]">
-            <div className="flower flex items-center justify-center size-16 bg-gold">
+            <div className="flower flex items-center justify-center size-16 ">
               <IoIosArrowRoundDown className="size-14 text-navy" />
             </div>
           </div>
@@ -35,11 +35,11 @@ const Hero = () => {
 
           <div className="relative z-1 flex flex-col items-center max-lg:px-6 max-lg:py-8">
             <div className="flex gap-1">
-              <IoMdStar size={24} color="#ccba78" />
-              <IoMdStar size={24} color="#ccba78" />
-              <IoMdStar size={24} color="#ccba78" />
-              <IoMdStar size={24} color="#ccba78" />
-              <IoMdStar size={24} color="#ccba78" />
+              <IoMdStar size={24} color="#e4d59f" />
+              <IoMdStar size={24} color="#e4d59f" />
+              <IoMdStar size={24} color="#e4d59f" />
+              <IoMdStar size={24} color="#e4d59f" />
+              <IoMdStar size={24} color="#e4d59f" />
             </div>
 
             <span className="text-xs text-cream/60 mt-2 leading-none">

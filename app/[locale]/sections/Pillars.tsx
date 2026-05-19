@@ -60,7 +60,7 @@ const PillarCard = ({ pillar }: { pillar: (typeof pillars)[0] }) => {
 
   return (
     <div
-      className="relative rounded-2xl overflow-hidden border border-gold cursor-pointer group"
+      className="relative rounded-2xl overflow-hidden border border-gold cursor-pointer shadow-lg group"
       style={{ minHeight: 420 }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
@@ -125,7 +125,7 @@ const Pillars = () => {
       </div>
 
       {/* Commitment box */}
-      <div className="w-full border-2 border-deepgold rounded-2xl bg-navy px-16 py-24 max-md:py-12 max-lg:px-10 max-md:px-8 flex flex-col md:flex-row items-center justify-between gap-16">
+      <div className="w-full border-2 border-deepgold  shadow-lg rounded-2xl bg-navy px-16 py-24 max-md:py-12 max-lg:px-10 max-md:px-8 flex flex-col md:flex-row items-center justify-between gap-16">
         {/* Left — text */}
         <div className="flex flex-col gap-6 flex-1 max-w-[480px] max-md:text-center max-md:items-center">
           <h3 className="font-serif text-[clamp(2rem,4.5vw,4.5rem)] text-cream leading-none">

@@ -87,7 +87,7 @@ const About2 = () => {
   return (
     <section
       ref={container}
-      className="w-full relative bg-cream px-16 py-32 max-lg:pt-8 max-lg:px-8 max-md:px-5"
+      className="w-full relative border-y-2 border-navy bg-cream px-16 py-32 max-lg:pt-8 max-lg:px-8 max-md:px-5"
     >
       {/* Stickers */}
       <div ref={sticker} className="absolute top-0 right-2 z-10 lg:hidden">

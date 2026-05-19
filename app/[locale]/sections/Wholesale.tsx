@@ -6,7 +6,7 @@ import ParallaxImage from "../components/ParallaxImage";
 
 const Wholesale = () => {
   return (
-    <section className="w-full bg-cream relative border border-darkgold/20 overflow-hidden rounded-xl">
+    <section className="w-full bg-cream relative border-2 shadow-lg border-darkgold overflow-hidden rounded-xl">
       <div className="flex max-lg:flex-col w-full min-h-[780px] max-lg:min-h-fit">
         {/* LEFT SIDE */}
         <div className="flex flex-col gap-4 max-lg:w-full lg:w-1/2 h-full">

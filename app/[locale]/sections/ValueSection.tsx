@@ -7,7 +7,7 @@ import ComboBundle from "./ComboBundle";
 
 const ValueSection = () => {
   return (
-    <section className="w-full relative px-16 py-24 max-lg:py-16 max-lg:px-8 max-md:px-5">
+    <section className="w-full relative px-16 py-24 max-lg:py-16 max-lg:px-8 max-md:px-5 border-y-2 border-darkgold">
       {/* Shared goldpalm background */}
       <div className="h-full w-full absolute inset-0 opacity-25">
         <Image src="/goldpalmm.jpg" fill alt="palm" className="object-cover" />

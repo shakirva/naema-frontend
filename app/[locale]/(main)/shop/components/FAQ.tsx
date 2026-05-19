@@ -39,7 +39,7 @@ const FAQItem = ({
 }) => (
   <div
     onClick={toggle}
-    className="border-1 border-navy/50 rounded-2xl px-6 cursor-pointer hover:border-gold/60 transition-colors duration-200"
+    className="border-1 border-navy/50 rounded-2xl px-6 cursor-pointer hover:border-gold transition-colors duration-200"
   >
     {/* Question row */}
     <div className="flex items-center justify-between py-5 gap-4">

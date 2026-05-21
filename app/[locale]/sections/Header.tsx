@@ -73,7 +73,7 @@ const MegaMenu = () => (
       <div className="flex gap-16">
         {megaMenu.columns.map((col) => (
           <div key={col.heading} className="flex flex-col gap-3 min-w-[120px]">
-            <span className="text-[10px] font-bold  text-black/40 uppercase">
+            <span className="text-[10px] font-bold text-black/40 uppercase">
               {col.heading}
             </span>
             <div className="flex flex-col gap-2.5">
@@ -146,13 +146,15 @@ const Header = () => {
     closeTimer.current = setTimeout(() => setShopHovered(false), 150);
   };
 
+  const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
+
   return (
     <header className="w-full relative z-[9999]">
       {/* NAV BAR */}
       <div className="w-full px-8 md:px-16 lg:py-8 py-6 bg-navy border-b border-darkgold">
         <div className="max-w-[1440px] mx-auto w-full flex items-center justify-between">
 
-          {/* Logo — left on mobile/tablet, centered on desktop via desktop nav layout */}
+          {/* Logo — left on mobile/tablet, centered on desktop */}
           <Link href="/" className="cursor-pointer lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
             <Image src="/newnaema.png" width={70} height={70} alt="logo" />
           </Link>
@@ -195,6 +197,7 @@ const Header = () => {
 
           {/* Right side icons */}
           <div className="flex items-center gap-6">
+            {/* Search — desktop only */}
             <div className="hidden lg:flex items-center bg-transparent border border-cream/40 rounded-full px-3 py-1.5 focus-within:border-cream transition-all duration-300">
               <FiSearch size={20} className="text-cream mr-2" />
               <input
@@ -204,6 +207,7 @@ const Header = () => {
               />
             </div>
 
+            {/* Login — desktop only */}
             <Link href="/login">
               <FiUser
                 size={20}
@@ -212,19 +216,21 @@ const Header = () => {
               />
             </Link>
 
+            {/* Cart — desktop only */}
             <button onClick={openCart} className="relative">
               <FiShoppingCart
                 size={20}
                 className="cursor-pointer hidden lg:block"
                 color="#f6f1e7"
               />
-              {items.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold rounded-full text-[9px] text-navy font-medium flex items-center justify-center">
-                  {items.reduce((sum, i) => sum + i.quantity, 0)}
+              {totalItems > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold rounded-full text-[9px] text-navy font-medium hidden lg:flex items-center justify-center">
+                  {totalItems}
                 </span>
               )}
             </button>
 
+            {/* Language — desktop only */}
             <div className="hidden lg:flex items-center gap-2 mr-2">
               <Link
                 href={pathname}
@@ -247,7 +253,21 @@ const Header = () => {
               </Link>
             </div>
 
-            {/* Burger — mobile/tablet only, naturally on the right */}
+            {/* Mobile/tablet: cart + login icons before burger */}
+            <Link href="/login" className="lg:hidden text-cream">
+              <FiUser size={22} color="#f6f1e7" />
+            </Link>
+
+            <button onClick={openCart} className="relative lg:hidden">
+              <FiShoppingCart size={22} color="#f6f1e7" />
+              {totalItems > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold rounded-full text-[9px] text-navy font-medium flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </button>
+
+            {/* Burger — mobile/tablet only */}
             <button
               className="lg:hidden text-cream"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -331,7 +351,7 @@ const Header = () => {
         </nav>
 
         <div className="border-t border-navy/10 pt-6 flex flex-col gap-4">
-          <span className="text-xs font-bold tracking-widest text-navy/40 uppercase">
+          <span className="text-xs font-semibold text-navy/80 uppercase">
             Shop by category
           </span>
           {megaMenu.columns.map((col) => (
@@ -339,7 +359,7 @@ const Header = () => {
               key={col.heading}
               href={`/shop/${col.heading.toLowerCase().replace(" ", "-")}`}
               onClick={() => setMenuOpen(false)}
-              className="text-sm font-semibold text-navy hover:text-gold transition-colors"
+              className="text-sm font-medium text-navy hover:text-gold transition-colors"
             >
               {col.heading}
             </Link>

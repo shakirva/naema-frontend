@@ -2,10 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { FiArrowRight } from "react-icons/fi";
-import { getCategories } from "@/lib/api";
-import type { MedusaProductCategory } from "@/lib/types";
+import { useState, useEffect, Suspense } from "react";
+import { FiArrowRight, FiSearch } from "react-icons/fi";
+import { getCategories, getProducts } from "@/lib/api";
+import type { MedusaProductCategory, MedusaProduct } from "@/lib/types";
+import { useSearchParams } from "next/navigation";
+import { formatPrice, getProductPrice, getCheapestVariant } from "@/lib/types";
+import { useCart } from "@/app/context/CartContext";
+import ProductCard from "./components/ProductCard";
 
 const defaultCategories = [
   {
@@ -38,8 +42,34 @@ const defaultCategories = [
   },
 ];
 
-const CategoryPage = () => {
+const ShopInner = () => {
   const [categories, setCategories] = useState<typeof defaultCategories>(defaultCategories);
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
+  const [searchResults, setSearchResults] = useState<MedusaProduct[]>([]);
+  const [searching, setSearching] = useState(false);
+
+  // When search query changes, fetch products
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    const doSearch = async () => {
+      setSearching(true);
+      try {
+        const res = await getProducts({ limit: 50 });
+        const filtered = res.products.filter((p) =>
+          p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (p.description || "").toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setSearchResults(filtered);
+      } finally {
+        setSearching(false);
+      }
+    };
+    doSearch();
+  }, [searchQuery]);
 
   useEffect(() => {
     const load = async () => {
@@ -65,6 +95,60 @@ const CategoryPage = () => {
     };
     load();
   }, []);
+
+  // ── SEARCH RESULTS VIEW ──────────────────────────────────────────────
+  if (searchQuery) {
+    return (
+      <section className="min-h-screen bg-cream px-16 py-16 max-lg:px-8 max-md:px-5">
+        <div className="max-w-[1440px] mx-auto">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 text-[11px] text-black/40 mb-8 tracking-[0.18em] uppercase">
+            <Link href="/" className="hover:text-black transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/shop" className="hover:text-black transition-colors">Shop</Link>
+            <span>/</span>
+            <span className="text-black">Search: &quot;{searchQuery}&quot;</span>
+          </div>
+          <div className="mb-10">
+            <h1 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] leading-none">
+              Search Results
+            </h1>
+            <p className="mt-3 text-sm text-black/50">
+              {searching ? "Searching..." : `${searchResults.length} result${searchResults.length !== 1 ? "s" : ""} for &quot;${searchQuery}&quot;`}
+            </p>
+          </div>
+          {searching ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
+              {[...Array(8)].map((_, i) => (
+                <div key={i} className="flex flex-col gap-3 animate-pulse">
+                  <div className="w-full h-[260px] rounded-2xl bg-black/5" />
+                  <div className="h-4 w-3/4 rounded bg-black/5" />
+                  <div className="h-4 w-1/2 rounded bg-black/5" />
+                  <div className="h-10 rounded-full bg-black/5" />
+                </div>
+              ))}
+            </div>
+          ) : searchResults.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
+              {searchResults.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  category={p.categories?.[0]?.handle || "all"}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-24 text-black/40 gap-3">
+              <FiSearch size={40} />
+              <p className="text-sm">No products found for &quot;{searchQuery}&quot;</p>
+              <Link href="/shop" className="text-sm text-gold underline">Browse all categories</Link>
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="min-h-screen bg-cream px-16 py-16 max-lg:px-8 max-md:px-5">
@@ -204,5 +288,15 @@ const CategoryPage = () => {
     </section>
   );
 };
+
+const CategoryPage = () => (
+  <Suspense fallback={
+    <div className="min-h-screen bg-cream flex items-center justify-center">
+      <div className="w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin" />
+    </div>
+  }>
+    <ShopInner />
+  </Suspense>
+);
 
 export default CategoryPage;

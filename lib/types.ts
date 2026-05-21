@@ -133,7 +133,7 @@ export type MedusaPaymentSession = {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 
-export function formatPrice(amount: number, currencyCode: string = "inr"): string {
+export function formatPrice(amount: number, currencyCode: string = "kwd"): string {
   const code = currencyCode.toLowerCase();
   // Medusa stores amounts in smallest unit
   if (code === "kwd") {

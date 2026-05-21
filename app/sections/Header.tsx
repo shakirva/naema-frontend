@@ -3,9 +3,11 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
+import { IoMdHeart } from "react-icons/io";
 import { navLinks } from "../constants";
 import { useCart } from "../context/CartContext";
-import { usePathname } from "next/navigation";
+import { useWishlist } from "../context/WishlistContext";
+import { usePathname, useRouter } from "next/navigation";
 import { getCategories } from "@/lib/api";
 import type { MedusaProductCategory } from "@/lib/types";
 
@@ -126,8 +128,18 @@ const Header = () => {
   const [shopHovered, setShopHovered] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { openCart, itemCount } = useCart();
+  const { count: wishlistCount } = useWishlist();
   const pathname = usePathname();
   const [megaMenu, setMegaMenu] = useState(defaultMegaMenu);
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      router.push(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
+    }
+  };
 
   useEffect(() => {
     const load = async () => {
@@ -212,11 +224,22 @@ const Header = () => {
               <input
                 type="text"
                 placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearch}
                 className="bg-transparent outline-none text-cream placeholder:text-cream/40 text-[14px] w-[140px] focus:w-[180px] transition-all duration-300"
               />
             </div>
             <Link href="/login">
               <FiUser size={20} className="cursor-pointer hidden lg:block" color="#f6f1e7" />
+            </Link>
+            <Link href="/wishlist" className="relative hidden lg:block">
+              <IoMdHeart size={22} color="#f6f1e7" className="cursor-pointer" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-400 rounded-full text-[9px] text-white font-medium flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
             <button onClick={openCart} className="relative">
               <FiShoppingCart size={20} className="cursor-pointer hidden lg:block" color="#f6f1e7" />

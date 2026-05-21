@@ -11,6 +11,7 @@ import Carousel from "../components/Carousel";
 import About2 from "../sections/About2";
 import Testimonials from "../sections/Testimonials";
 import SocialFeed from "../sections/SocialFeed";
+import NewCollection from "../sections/NewCollection";
 
 const page = () => {
   return (
@@ -18,6 +19,8 @@ const page = () => {
       <Hero />
 
       <Carousel />
+
+      <NewCollection />
 
       <Shop />
 

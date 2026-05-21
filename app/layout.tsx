@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { Instrument_Serif } from "next/font/google";
 import { CartProvider } from "./context/CartContext";
+import { WishlistProvider } from "./context/WishlistContext";
 import LenisSmoothScroll from "./components/SmoothScroll/Lenis";
 
 
@@ -45,9 +46,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans">
            <LenisSmoothScroll />
-        <CartProvider>
-          {children}
-        </CartProvider>
+        <WishlistProvider>
+          <CartProvider>
+            {children}
+          </CartProvider>
+        </WishlistProvider>
       </body>
     </html>
   );

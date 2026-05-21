@@ -1,20 +1,36 @@
 "use client";
 
 import { useCart } from "@/app/context/CartContext";
+import { useWishlist } from "@/app/context/WishlistContext";
 import { getCheapestVariant, getProductPrice, formatPrice } from "@/lib/types";
 import type { MedusaProduct } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { IoMdStar } from "react-icons/io";
+import { IoMdStar, IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 
 const ProductCard = ({ product, category }: { product: MedusaProduct; category: string }) => {
   const [added, setAdded] = useState(false);
   const { addToCart } = useCart();
+  const { isWishlisted, toggleWishlist } = useWishlist();
   const variant = getCheapestVariant(product);
   const price = getProductPrice(product);
   const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
   const tags = product.tags?.map((t) => t.value) ?? [];
+  const wishlisted = isWishlisted(product.id);
+
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWishlist({
+      id: product.id,
+      title: product.title,
+      thumbnail: product.thumbnail,
+      handle: product.handle,
+      price,
+      categoryHandle: category,
+    });
+  };
 
   const handleAdd = async () => {
     if (!variant) return;
@@ -36,6 +52,15 @@ const ProductCard = ({ product, category }: { product: MedusaProduct; category: 
             className="object-cover group-hover:scale-[1.05] transition-all duration-300"
             sizes="(max-width: 768px) 50vw, 25vw"
           />
+          {/* Wishlist heart */}
+          <button
+            onClick={handleWishlist}
+            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-sm hover:scale-110 transition-transform z-10"
+          >
+            {wishlisted
+              ? <IoMdHeart size={16} className="text-red-500" />
+              : <IoMdHeartEmpty size={16} className="text-black/50" />}
+          </button>
         </div>
 
         {/* Stars */}

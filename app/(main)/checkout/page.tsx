@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { IoMdCheckmark } from "react-icons/io";
 import { FiChevronDown, FiLock } from "react-icons/fi";
@@ -64,9 +65,9 @@ const SectionHeading = ({
 
 const CheckoutPage = () => {
   const { cart, items, total, subtotal, refreshCart } = useCart();
+  const router = useRouter();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("cod");
   const [processing, setProcessing] = useState(false);
-  const [orderComplete, setOrderComplete] = useState(false);
   const [shippingOptions, setShippingOptions] = useState<{ id: string; name: string; amount: number }[]>([]);
 
   // Form state
@@ -80,7 +81,7 @@ const CheckoutPage = () => {
     province: "",
     postalCode: "",
     phone: "",
-    countryCode: "in",
+    countryCode: "kw",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -112,23 +113,23 @@ const CheckoutPage = () => {
         shipping_address: {
           first_name: form.firstName || "Customer",
           last_name: form.lastName || "",
-          address_1: form.address1 || "123 Main St",
+          address_1: form.address1 || "Block 1, Street 1",
           address_2: form.address2 || "",
-          city: form.city || "Mumbai",
-          province: form.province || "Maharashtra",
-          postal_code: form.postalCode || "400001",
-          country_code: form.countryCode || "in",
+          city: form.city || "Kuwait City",
+          province: form.province || "Al Asimah",
+          postal_code: form.postalCode || "13000",
+          country_code: form.countryCode || "kw",
           phone: form.phone || "",
         },
         billing_address: {
           first_name: form.firstName || "Customer",
           last_name: form.lastName || "",
-          address_1: form.address1 || "123 Main St",
+          address_1: form.address1 || "Block 1, Street 1",
           address_2: form.address2 || "",
-          city: form.city || "Mumbai",
-          province: form.province || "Maharashtra",
-          postal_code: form.postalCode || "400001",
-          country_code: form.countryCode || "in",
+          city: form.city || "Kuwait City",
+          province: form.province || "Al Asimah",
+          postal_code: form.postalCode || "13000",
+          country_code: form.countryCode || "kw",
           phone: form.phone || "",
         },
       });
@@ -144,10 +145,13 @@ const CheckoutPage = () => {
       // 4. Complete the cart
       const result = await completeCart(cart.id);
       if (result) {
-        setOrderComplete(true);
-        // Clear cart from localStorage
         localStorage.removeItem("medusa_cart_id");
         await refreshCart();
+        // Redirect to success page with order details
+        const order = (result as Record<string, unknown>).order as Record<string, unknown> | undefined;
+        const orderId = order?.id as string | undefined;
+        const displayId = order?.display_id as number | undefined;
+        router.push(`/order-success${orderId ? `?order=${orderId}${displayId ? `&display=${displayId}` : ""}` : ""}`);
       }
     } catch (err) {
       console.error("Order failed:", err);
@@ -157,23 +161,15 @@ const CheckoutPage = () => {
     }
   };
 
-  if (orderComplete) {
+  if (items.length === 0 && !processing) {
     return (
       <section className="min-h-screen bg-cream flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-6">
-          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gold/30 border-2 border-gold flex items-center justify-center">
-            <IoMdCheckmark size={32} className="text-navy" />
-          </div>
-          <h1 className="font-serif text-3xl mb-4">Order Confirmed!</h1>
-          <p className="text-black/60 mb-8">
-            Thank you for your purchase. Your order has been placed successfully.
-            You will receive an email confirmation shortly.
-          </p>
-          <Link
-            href="/"
-            className="inline-block px-8 py-3 rounded-full bg-navy text-white font-medium text-sm hover:opacity-90 transition"
-          >
-            Continue Shopping
+          <span className="text-5xl">🫙</span>
+          <h1 className="font-serif text-3xl mt-4 mb-3">Your cart is empty</h1>
+          <p className="text-black/60 mb-6">Add some products before checking out.</p>
+          <Link href="/shop" className="inline-block px-8 py-3 rounded-full bg-navy text-white font-medium text-sm hover:opacity-90 transition">
+            Browse Shop
           </Link>
         </div>
       </section>
@@ -219,10 +215,10 @@ const CheckoutPage = () => {
                     onChange={handleChange}
                     className="w-full border border-black/20 rounded-xl px-4 py-3 text-sm outline-none focus:border-gold transition-colors bg-white appearance-none cursor-pointer"
                   >
-                    <option value="in">India</option>
                     <option value="kw">Kuwait</option>
                     <option value="ae">UAE</option>
                     <option value="sa">Saudi Arabia</option>
+                    <option value="in">India</option>
                   </select>
                   <FiChevronDown
                     size={14}

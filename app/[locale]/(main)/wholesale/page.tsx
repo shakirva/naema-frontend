@@ -172,40 +172,32 @@ const ProductCard = ({ product }: { product: Product }) => (
   <div className="flex flex-col gap-4 group">
     {/* Colored image card */}
     <div
-      className={`relative rounded-2xl overflow-hidden border-2 border-black/10 aspect-square ${product.color}`}
+      className={`relative rounded-2xl overflow-hidden border-2 border-darkgold aspect-square ${product.color}`}
     >
       {/* Category badge */}
       <div className="absolute top-4 left-4 z-10">
-        <span className="bg-white border-2 border-black text-black text-[11px] font-black tracking-wider px-3 py-1.5 rounded-lg uppercase">
+        <span className="bg-white border border-darkgold text-black text-[10px] font-bold leading-none   px-3 py-1.5 rounded-lg uppercase">
           {product.badge}
         </span>
       </div>
 
-      {/* Min order badge */}
-      <div className="absolute top-4 right-4 z-10">
-        <span className="bg-black/10 backdrop-blur-sm text-black/70 text-[10px] font-medium px-2.5 py-1 rounded-full">
-          Min. 20kg
-        </span>
-      </div>
-
       {/* Product image — fills container */}
-      <div className="absolute inset-0">
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          className="object-cover group-hover:scale-[1.05] transition-all duration-500 ease-out"
-        />
-      </div>
+
+      <Image
+        src={product.image}
+        alt={product.name}
+        fill
+        className="object-cover group-hover:scale-[1.03] transition-all duration-500 ease-out contrast-[1.12] saturate-[1.05] brightness-[1.03] "
+      />
 
       {/* Inquire button — bottom right, only on hover */}
       <div className="absolute bottom-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <Link
           href={`/contact?product=${encodeURIComponent(product.name)}`}
-          className="bg-white border-2 border-black rounded-xl px-3 py-2.5 flex flex-col items-center justify-center hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 cursor-pointer group/btn"
+          className="bg-white border-2 border-darkgold rounded-full px-3 py-2.5 flex flex-col items-center justify-center hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 cursor-pointer group/btn"
         >
           <FiArrowUpRight size={16} className="group-hover/btn:text-gold" />
-          <span className="text-[10px] font-bold leading-none mt-0.5">
+          <span className="text-[10px] font-medium leading-none mt-0.5">
             Inquire
           </span>
         </Link>
@@ -254,12 +246,12 @@ const WholesalePage = () => {
             {/* Heading */}
             <div>
               <h1 className="font-serif text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] text-cream max-w-[700px]">
-                Premium dates, <span className="italic text-cream">sourced</span>{" "}
-                at scale.
+                Premium dates,{" "}
+                <span className="italic text-lightgold">sourced</span> at scale.
               </h1>
               <p className="mt-4 text-base text-cream/80 max-w-[480px] leading-relaxed tracking-tight">
                 Bulk dates and dry fruits for businesses, retailers and
-                distributors. Minimum order 20kg. Pricing and availability on
+                distributors. <span className="text-lightgold">Minimum order 20kg.</span> Pricing and availability on
                 enquiry.
               </p>
             </div>
@@ -280,8 +272,8 @@ const WholesalePage = () => {
                     className={`px-5 py-2.5 rounded-xl border-2 text-sm font-medium tracking-tight transition-all duration-150 cursor-pointer
                       ${
                         activeCategory === cat
-                          ? "bg-gold text-black border-darkgold"
-                          : "bg-cream text-black/70 border-black/15 hover:border-black/40"
+                          ? "bg-lightgold text-black border-darkgold"
+                          : "bg-cream text-black/70 border-gold  hover:border-darkgold hover:text-black"
                       }`}
                   >
                     {cat}
@@ -339,10 +331,10 @@ const WholesalePage = () => {
                 className="relative group overflow-hidden inline-flex items-center justify-center px-8 py-4 rounded-full border-2 border-gold bg-navy text-cream text-sm font-medium tracking-tight shrink-0 cursor-pointer"
               >
                 <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
-                  Get in Touch
+                  Get in touch
                 </span>
-                <span className="block absolute inset-0 flex items-center justify-center bg-gold/30 text-navy border-2 border-gold rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
-                  Get in Touch
+                <span className="block absolute inset-0 flex items-center justify-center bg-cream text-black rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+                  Get in touch
                 </span>
               </Link>
             </div>

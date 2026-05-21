@@ -9,16 +9,19 @@ export async function getProducts(options?: {
   category_id?: string[];
   collection_id?: string[];
   order?: string;
+  q?: string;
 }): Promise<{ products: MedusaProduct[]; count: number }> {
   try {
-    const res = await medusa.store.product.list({
+    const params: Record<string, unknown> = {
       limit: options?.limit ?? 50,
       offset: options?.offset ?? 0,
       category_id: options?.category_id,
       collection_id: options?.collection_id,
       order: options?.order,
       fields: "+variants.prices,+images,+categories,+tags,+collection,+metadata",
-    });
+    };
+    if (options?.q) params.q = options.q;
+    const res = await medusa.store.product.list(params);
     return {
       products: (res.products ?? []) as unknown as MedusaProduct[],
       count: res.count ?? 0,

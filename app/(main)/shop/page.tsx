@@ -49,7 +49,7 @@ const ShopInner = () => {
   const [searchResults, setSearchResults] = useState<MedusaProduct[]>([]);
   const [searching, setSearching] = useState(false);
 
-  // When search query changes, fetch products
+  // When search query changes, fetch products using server-side search
   useEffect(() => {
     if (!searchQuery.trim()) {
       setSearchResults([]);
@@ -58,12 +58,8 @@ const ShopInner = () => {
     const doSearch = async () => {
       setSearching(true);
       try {
-        const res = await getProducts({ limit: 50 });
-        const filtered = res.products.filter((p) =>
-          p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (p.description || "").toLowerCase().includes(searchQuery.toLowerCase())
-        );
-        setSearchResults(filtered);
+        const res = await getProducts({ limit: 50, q: searchQuery.trim() });
+        setSearchResults(res.products);
       } finally {
         setSearching(false);
       }

@@ -1,7 +1,7 @@
 "use client";
 import { useLenis } from "lenis/react";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 type ImageProps = {
   mainclass?: string;
@@ -10,28 +10,23 @@ type ImageProps = {
   alt: string;
 };
 
-const ParallaxImage = ({
-  mainclass = "",
-  imageClass = "",
-  src,
-  alt,
-}: ImageProps) => {
+const ParallaxImage = ({ mainclass = "", imageClass = "", src, alt }: ImageProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [offset, setOffset] = useState(0);
+  const imageRef = useRef<HTMLImageElement>(null);
+
   useLenis(() => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const scrollY = rect.top / window.innerHeight;
-    setOffset(-scrollY * 120);
+    if (!containerRef.current || !imageRef.current) return;
+    const scrollY = containerRef.current.getBoundingClientRect().top / window.innerHeight;
+    imageRef.current.style.transform = `translateY(${-scrollY * 120}px)`;
   });
 
   return (
     <div ref={containerRef} className={`relative overflow-hidden ${mainclass}`}>
       <Image
+        ref={imageRef}
         src={src}
         fill
-        style={{ transform: `translateY(${offset}px)` }}
-        className={`size-full object-cover   ${imageClass}`}
+        className={`size-full object-cover ${imageClass}`}
         alt={alt}
       />
     </div>

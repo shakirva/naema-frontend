@@ -98,14 +98,13 @@ const MegaMenu = () => (
         <span className="block px-6 py-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
           Shop All
         </span>
-
-        <span className="absolute inset-0 flex items-center justify-center rounded-full  bg-cream text-navy translate-y-full scale-[0.5] transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0 group-hover:scale-100">
+        <span className="absolute inset-0 flex items-center justify-center rounded-full bg-cream text-navy translate-y-full scale-[0.5] transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0 group-hover:scale-100">
           Shop All
         </span>
       </Link>
     </div>
 
-    <div className="flex gap-3  pr-16 pl-8  py-10 shrink-0 border-l border-gold/20">
+    <div className="flex gap-3 pr-16 pl-8 py-10 shrink-0 border-l border-gold/20">
       {megaMenu.featured.map((f) => (
         <Link
           key={f.label}
@@ -150,21 +149,19 @@ const Header = () => {
   return (
     <header className="w-full relative z-[9999]">
       {/* NAV BAR */}
-      <div className="w-full px-8 md:px-16 lg:py-8  py-4 bg-navy border-b border-darkgold">
+      <div className="w-full px-8 md:px-16 lg:py-8 py-6 bg-navy border-b border-darkgold">
         <div className="max-w-[1440px] mx-auto w-full flex items-center justify-between">
-          <Link
-            href="/"
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-          >
+
+          {/* Logo — left on mobile/tablet, centered on desktop via desktop nav layout */}
+          <Link href="/" className="cursor-pointer lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
             <Image src="/newnaema.png" width={70} height={70} alt="logo" />
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex ">
+          <nav className="hidden lg:flex">
             <div className="flex gap-12 text-[14px] tracking-tight font-medium">
               {navLinks.map((link, index) => {
                 const isShop = link.label.toLowerCase() === "shop";
-
                 const isActive =
                   pathname === link.href ||
                   pathname.startsWith(link.href + "/");
@@ -178,7 +175,7 @@ const Header = () => {
                   >
                     <Link
                       href={link.href}
-                      className={`cursor-pointer duration-300 transition-colors group ease-in-out block relative  hover:text-cream
+                      className={`cursor-pointer duration-300 transition-colors group ease-in-out block relative hover:text-cream
                         ${isActive ? "text-gold" : "text-cream/60"}
                         ${isShop && shopHovered ? "text-gold" : ""}
                       `}
@@ -196,12 +193,10 @@ const Header = () => {
             </div>
           </nav>
 
+          {/* Right side icons */}
           <div className="flex items-center gap-6">
-           
-
             <div className="hidden lg:flex items-center bg-transparent border border-cream/40 rounded-full px-3 py-1.5 focus-within:border-cream transition-all duration-300">
               <FiSearch size={20} className="text-cream mr-2" />
-
               <input
                 type="text"
                 placeholder="Search..."
@@ -223,7 +218,6 @@ const Header = () => {
                 className="cursor-pointer hidden lg:block"
                 color="#f6f1e7"
               />
-
               {items.length > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold rounded-full text-[9px] text-navy font-medium flex items-center justify-center">
                   {items.reduce((sum, i) => sum + i.quantity, 0)}
@@ -231,39 +225,35 @@ const Header = () => {
               )}
             </button>
 
+            <div className="hidden lg:flex items-center gap-2 mr-2">
+              <Link
+                href={pathname}
+                locale="en"
+                className={`text-[12px] tracking-tight transition-colors duration-300 ${
+                  locale === "en" ? "text-gold" : "text-cream/50 hover:text-cream"
+                }`}
+              >
+                EN
+              </Link>
+              <span className="text-cream/20">/</span>
+              <Link
+                href={pathname}
+                locale="ar"
+                className={`text-[12px] tracking-tight transition-colors duration-300 ${
+                  locale === "ar" ? "text-gold" : "text-cream/50 hover:text-cream"
+                }`}
+              >
+                AR
+              </Link>
+            </div>
+
+            {/* Burger — mobile/tablet only, naturally on the right */}
             <button
               className="lg:hidden text-cream"
               onClick={() => setMenuOpen(!menuOpen)}
             >
               {menuOpen ? <FiX size={26} /> : <FiMenu size={26} />}
             </button>
-            <div className="hidden lg:flex items-center gap-2 mr-2">
-              <Link
-                href={pathname}
-                locale="en"
-                className={`text-[12px] tracking-tight transition-colors duration-300 ${
-                  locale === "en"
-                    ? "text-gold"
-                    : "text-cream/50 hover:text-cream"
-                }`}
-              >
-                EN
-              </Link>
-
-              <span className="text-cream/20">/</span>
-
-              <Link
-                href={pathname}
-                locale="ar"
-                className={`text-[12px] tracking-tight transition-colors duration-300 ${
-                  locale === "ar"
-                    ? "text-gold"
-                    : "text-cream/50 hover:text-cream"
-                }`}
-              >
-                AR
-              </Link>
-            </div>
           </div>
         </div>
       </div>
@@ -327,7 +317,6 @@ const Header = () => {
             >
               English
             </Link>
-
             <Link
               href={pathname}
               locale="ar"
@@ -345,7 +334,6 @@ const Header = () => {
           <span className="text-xs font-bold tracking-widest text-navy/40 uppercase">
             Shop by category
           </span>
-
           {megaMenu.columns.map((col) => (
             <Link
               key={col.heading}

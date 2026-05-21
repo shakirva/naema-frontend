@@ -169,35 +169,34 @@ const INITIAL_COUNT = 8;
 /* ------------------ PRODUCT CARD ------------------ */
 
 const ProductCard = ({ product }: { product: Product }) => (
-  <div className="flex flex-col gap-4 group">
+  <div className="flex flex-col gap-3 max-sm:gap-2 group">
     {/* Colored image card */}
     <div
-      className={`relative rounded-2xl overflow-hidden border-2 border-darkgold aspect-square ${product.color}`}
+      className={`relative rounded-2xl max-sm:rounded-xl overflow-hidden border-2 border-darkgold aspect-square ${product.color}`}
     >
       {/* Category badge */}
-      <div className="absolute top-4 left-4 z-10">
-        <span className="bg-white border border-darkgold text-black text-[10px] font-bold leading-none   px-3 py-1.5 rounded-lg uppercase">
+      <div className="absolute top-4 left-4 max-sm:top-2.5 max-sm:left-2.5 z-10">
+        <span className="bg-white border border-darkgold text-black text-[10px] max-sm:text-[9px] font-bold leading-none px-3 max-sm:px-2 py-1.5 rounded-lg uppercase">
           {product.badge}
         </span>
       </div>
 
       {/* Product image — fills container */}
-
       <Image
         src={product.image}
         alt={product.name}
         fill
-        className="object-cover group-hover:scale-[1.03] transition-all duration-500 ease-out contrast-[1.12] saturate-[1.05] brightness-[1.03] "
+        className="object-cover group-hover:scale-[1.03] transition-all duration-500 ease-out contrast-[1.12] saturate-[1.05] brightness-[1.03]"
       />
 
       {/* Inquire button — bottom right, only on hover */}
-      <div className="absolute bottom-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div className="absolute bottom-4 right-4 max-sm:bottom-2.5 max-sm:right-2.5 z-10 opacity-0 group-hover:opacity-100 max-sm:opacity-100 transition-opacity duration-200">
         <Link
           href={`/contact?product=${encodeURIComponent(product.name)}`}
-          className="bg-white border-2 border-darkgold rounded-full px-3 py-2.5 flex flex-col items-center justify-center hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 cursor-pointer group/btn"
+          className="bg-white border-2 border-darkgold rounded-full px-3 max-sm:px-2.5 py-2.5 max-sm:py-2 flex flex-col items-center justify-center hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 cursor-pointer group/btn"
         >
-          <FiArrowUpRight size={16} className="group-hover/btn:text-gold" />
-          <span className="text-[10px] font-medium leading-none mt-0.5">
+          <FiArrowUpRight size={14} className="group-hover/btn:text-gold" />
+          <span className="text-[10px] max-sm:text-[9px] font-medium leading-none mt-0.5">
             Inquire
           </span>
         </Link>
@@ -205,11 +204,11 @@ const ProductCard = ({ product }: { product: Product }) => (
     </div>
 
     {/* Info below card */}
-    <div className="flex flex-col gap-1.5 px-1">
-      <h3 className="font-serif text-[clamp(1.1rem,1.5vw,1.4rem)] leading-tight text-black">
+    <div className="flex flex-col gap-1 max-sm:gap-0.5 px-1">
+      <h3 className="font-serif text-[clamp(1rem,1.5vw,1.4rem)] leading-tight text-black">
         {product.name}
       </h3>
-      <p className="text-sm text-black/55 leading-snug tracking-tight line-clamp-2">
+      <p className="text-sm max-sm:text-xs text-black/55 leading-snug tracking-tight line-clamp-2">
         {product.description}
       </p>
     </div>
@@ -251,14 +250,15 @@ const Wholesale = () => {
               </h1>
               <p className="mt-4 text-base text-cream/80 max-w-[480px] leading-relaxed tracking-tight">
                 Bulk dates and dry fruits for businesses, retailers and
-                distributors. <span className="text-lightgold">Minimum order 20kg.</span> Pricing and availability on
-                enquiry.
+                distributors.{" "}
+                <span className="text-lightgold">Minimum order 20kg.</span>{" "}
+                Pricing and availability on enquiry.
               </p>
             </div>
 
             {/* Category filter pills */}
             <div className="flex flex-col gap-3">
-              <p className="text-[10px]  text-cream uppercase">
+              <p className="text-[10px] text-cream uppercase">
                 Explore by category
               </p>
               <div className="flex flex-wrap gap-2">
@@ -273,7 +273,7 @@ const Wholesale = () => {
                       ${
                         activeCategory === cat
                           ? "bg-lightgold text-black border-darkgold"
-                          : "bg-cream text-black/70 border-gold  hover:border-darkgold hover:text-black"
+                          : "bg-cream text-black/70 border-gold hover:border-darkgold hover:text-black"
                       }`}
                   >
                     {cat}
@@ -285,14 +285,14 @@ const Wholesale = () => {
         </div>
 
         {/* ── PRODUCTS GRID ── */}
-        <div className="bg-cream w-full px-16 py-16 max-lg:px-8 max-md:px-5">
+        <div className="bg-cream w-full px-16 py-16 max-lg:px-8 max-md:px-5 max-sm:px-4 max-sm:py-10">
           <div className="max-w-[1440px] mx-auto">
             {/* Results count */}
             <p className="text-sm text-black/40 mb-8 tracking-tight">
               Showing {visible.length} of {filtered.length} products
             </p>
 
-            <div className="grid grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1 gap-8">
+            <div className="grid grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-2 gap-8 max-sm:gap-4">
               {visible.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -316,7 +316,7 @@ const Wholesale = () => {
             )}
 
             {/* Enquiry CTA */}
-            <div className="mt-20 border-2 border-gold/40 rounded-2xl bg-gold/10 px-12 py-10 max-md:px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="mt-20 border-2 border-gold/40 rounded-2xl bg-gold/10 px-12 py-10 max-md:px-6 max-sm:px-5 max-sm:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
                 <h3 className="font-serif text-[clamp(1.5rem,2.5vw,2.2rem)] leading-tight text-black">
                   Ready to place a bulk order?
@@ -341,7 +341,6 @@ const Wholesale = () => {
           </div>
         </div>
       </section>
-     
     </>
   );
 };

@@ -142,11 +142,65 @@ const MegaMenu = () => (
   </div>
 );
 
+/* ------------------ SEARCH OVERLAY ------------------ */
+
+const SearchOverlay = ({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) => {
+  const [query, setQuery] = useState("");
+
+  return (
+    <div
+      className={`fixed inset-0 z-[99999] transition-all duration-300 ease-out
+        ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+    >
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-navy/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Search Bar Panel */}
+      <div
+        className={`relative z-10 w-full bg-cream border-b-2 border-darkgold shadow-2xl
+          transition-transform duration-300 ease-out
+          ${open ? "translate-y-0" : "-translate-y-full"}`}
+      >
+        <div className="max-w-[1440px] mx-auto px-8 h-[80px] flex items-center gap-4">
+          <FiSearch size={22} className="text-gold shrink-0" />
+
+          <input
+            autoFocus={open}
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search..."
+            className="flex-1 bg-transparent text-navy placeholder-navy/40 text-[18px] tracking-tight outline-none"
+          />
+
+          <button
+            onClick={onClose}
+            className="text-navy/60 hover:text-navy transition-colors"
+          >
+            <FiX size={26} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* ------------------ HEADER ------------------ */
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopHovered, setShopHovered] = useState(false);
+  // ── NEW ──
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -170,13 +224,20 @@ const Header = () => {
 
   return (
     <header className="w-full relative z-[9999] border-b border-darkgold bg-navy">
+      {/* ── NEW: Search Overlay ── */}
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+
       {/* TOP HEADER */}
       <div className="relative border-b border-darkgold">
         <div className="max-w-[1440px] mx-auto h-[80px] px-8 flex items-center justify-between">
 
           {/* LEFT */}
           <div className="flex items-center gap-5">
-            <button className="hidden lg:flex text-cream hover:text-gold transition-colors">
+            {/* ── CHANGED: onClick now opens search overlay ── */}
+            <button
+              className="hidden lg:flex text-cream hover:text-gold transition-colors"
+              onClick={() => setSearchOpen(true)}
+            >
               <FiSearch size={24} />
             </button>
           </div>

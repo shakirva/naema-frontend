@@ -19,8 +19,8 @@ const Hero = () => {
 
         <div className="w-1/2 max-lg:h-1/2 max-lg:w-full text-cream flex flex-col items-center justify-center relative">
           <div className="absolute flex items-center justify-center bottom-0 right-8 translate-y-[50%]">
-            <div className="flower flex items-center justify-center  bg-gold size-16 ">
-              <IoIosArrowRoundDown className="size-14 text-navy" />
+            <div className="flower flex items-center justify-center  bg-gold size-16 max-lg:size-12 ">
+              <IoIosArrowRoundDown className="size-14 max-lg:size-8 text-navy" />
             </div>
           </div>
 

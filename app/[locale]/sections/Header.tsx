@@ -3,13 +3,7 @@
 import React, { useState, useRef } from "react";
 import { Link, usePathname } from "@/i18n/routing";
 import Image from "next/image";
-import {
-  FiSearch,
-  FiUser,
-  FiShoppingCart,
-  FiMenu,
-  FiX,
-} from "react-icons/fi";
+import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import { navLinks } from "../../constants";
 import { useCart } from "@/app/context/CartContext";
@@ -230,7 +224,6 @@ const Header = () => {
       {/* TOP HEADER */}
       <div className="relative border-b border-darkgold">
         <div className="max-w-[1440px] mx-auto h-[80px] px-8 flex items-center justify-between">
-
           {/* LEFT */}
           <div className="flex items-center gap-5">
             {/* ── CHANGED: onClick now opens search overlay ── */}
@@ -258,7 +251,6 @@ const Header = () => {
 
           {/* RIGHT */}
           <div className="flex items-center gap-5">
-
             {/* LANGUAGE */}
             <div className="hidden lg:flex items-center gap-2">
               <Link
@@ -327,8 +319,7 @@ const Header = () => {
           const isShop = link.label.toLowerCase() === "shop";
 
           const isActive =
-            pathname === link.href ||
-            pathname.startsWith(link.href + "/");
+            pathname === link.href || pathname.startsWith(link.href + "/");
 
           return (
             <div
@@ -403,12 +394,36 @@ const Header = () => {
               key={index}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="text-[24px] font-medium text-cream hover:text-gold transition-colors"
+              className="text-[24px] font-medium text-navy hover:text-gold transition-colors"
             >
               {link.label}
             </Link>
           ))}
         </nav>
+        {/* MOBILE LANGUAGE SWITCHER */}
+        <div className="flex items-center gap-4 pt-2">
+          <Link
+            href={pathname}
+            locale="en"
+            onClick={() => setMenuOpen(false)}
+            className={`text-sm transition-colors ${
+              locale === "en" ? "text-gold" : "text-navy/50 hover:text-navy"
+            }`}
+          >
+            English
+          </Link>
+
+          <Link
+            href={pathname}
+            locale="ar"
+            onClick={() => setMenuOpen(false)}
+            className={`text-sm transition-colors ${
+              locale === "ar" ? "text-gold" : "text-navy/50 hover:text-navy"
+            }`}
+          >
+            العربية
+          </Link>
+        </div>
 
         <div className="border-t border-black/10 pt-6 flex flex-col gap-4">
           <span className="text-xs uppercase tracking-[0.2em] text-black/40 font-semibold">
@@ -420,7 +435,7 @@ const Header = () => {
               key={col.heading}
               href={`/shop/${col.heading.toLowerCase().replace(" ", "-")}`}
               onClick={() => setMenuOpen(false)}
-              className="text-sm text-cream hover:text-gold transition-colors"
+              className="text-sm text-navy hover:text-gold transition-colors"
             >
               {col.heading}
             </Link>

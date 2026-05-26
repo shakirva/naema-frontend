@@ -105,7 +105,7 @@ const About2 = () => {
       <div className="h-full w-full absolute inset-0">
         <ParallaxImage
           mainclass="h-full w-full absolute inset-0"
-          imageClass="object-cover"
+          imageClass="object-cover scale-120"
           src="/goldpalm.jpg"
           alt="palm"
         />

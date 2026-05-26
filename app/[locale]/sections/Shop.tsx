@@ -77,6 +77,12 @@ const Shop = () => {
         <span className="italic text-deepgold">chocolate.</span>
       </h1>
 
+      <ProductCarousel
+        title="Shop Our Best Sellers"
+        description="Our most loved products, trusted by thousands of customers."
+        products={products.slice(0, 10)}
+      />
+
       {productsByCollection.map(({ collection, items }) => (
         <ProductCarousel
           key={collection.id}

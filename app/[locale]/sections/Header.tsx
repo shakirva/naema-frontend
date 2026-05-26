@@ -76,7 +76,7 @@ const MegaMenu = () => (
       <div className="grid grid-cols-4 gap-14">
         {megaMenu.columns.map((col) => (
           <div key={col.heading} className="flex flex-col gap-4">
-            <span className="text-[10px] uppercase tracking-[0.25em] text-black/40 font-bold">
+            <span className="text-[10px] uppercase  text-black/60 font-bold">
               {col.heading}
             </span>
 
@@ -85,7 +85,7 @@ const MegaMenu = () => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="text-[13px] text-black/70 hover:text-gold transition-colors duration-200"
+                  className="text-[13px] text-black/70 hover:text-darkgold transition-colors duration-200"
                 >
                   {item.label}
                 </Link>
@@ -218,14 +218,14 @@ const Header = () => {
       />
 
       <div className="relative border-b border-lightgold/50">
-        <div className="h-[80px] px-6 lg:px-16 flex items-center justify-between">
+        <div className="md:h-[96px] h-[80]  px-6 lg:px-16 flex items-center justify-between">
           <div className="flex items-center gap-5">
             <button
               className="lg:hidden relative w-8 h-8 flex items-center justify-center z-[99999]"
               onClick={() => setMenuOpen(!menuOpen)}
             >
               <span
-                className={`absolute h-[2px] w-7 rounded-full transition-all duration-300 ease-in-out ${
+                className={`absolute h-[2px] w-5 rounded-full transition-all duration-300 ease-in-out ${
                   menuOpen
                     ? "rotate-45 bg-black"
                     : "-translate-y-2 bg-cream"
@@ -233,7 +233,7 @@ const Header = () => {
               />
 
               <span
-                className={`absolute h-[2px] w-7 rounded-full transition-all duration-300 ease-in-out ${
+                className={`absolute h-[2px] w-5  rounded-full transition-all duration-300 ease-in-out ${
                   menuOpen
                     ? "opacity-0 scale-0 bg-black"
                     : "opacity-100 scale-100 bg-cream"
@@ -241,7 +241,7 @@ const Header = () => {
               />
 
               <span
-                className={`absolute h-[2px] w-7 rounded-full transition-all duration-300 ease-in-out ${
+                className={`absolute h-[2px] w-5 rounded-full transition-all duration-300 ease-in-out ${
                   menuOpen
                     ? "-rotate-45 bg-black"
                     : "translate-y-2 bg-cream"
@@ -253,7 +253,7 @@ const Header = () => {
               className="hidden lg:flex text-cream hover:text-gold transition-colors"
               onClick={() => setSearchOpen(true)}
             >
-              <FiSearch size={24} />
+              <FiSearch size={24}  />
             </button>
           </div>
 
@@ -266,7 +266,7 @@ const Header = () => {
               width={65}
               height={65}
               alt="logo"
-              className="object-contain"
+              className="object-contain md:size-[65px] size-[48px]"
             />
           </Link>
 
@@ -275,7 +275,7 @@ const Header = () => {
               <Link
                 href={pathname}
                 locale="en"
-                className={`text-[12px] tracking-tight transition-colors duration-300 ${
+                className={`text-[14px] tracking-tight transition-colors duration-300 ${
                   locale === "en"
                     ? "text-gold"
                     : "text-cream/80 hover:text-cream"
@@ -289,7 +289,7 @@ const Header = () => {
               <Link
                 href={pathname}
                 locale="ar"
-                className={`text-[12px] tracking-tight transition-colors duration-300 ${
+                className={`text-[14px] tracking-tight transition-colors duration-300 ${
                   locale === "ar"
                     ? "text-gold"
                     : "text-cream/80 hover:text-cream"

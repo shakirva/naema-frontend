@@ -35,11 +35,11 @@ const Hero = () => {
 
           <div className="relative z-1 flex flex-col items-center max-lg:px-6 max-lg:py-8">
             <div className="flex gap-1">
-              <IoMdStar size={24} color="#e4d59f" />
-              <IoMdStar size={24} color="#e4d59f" />
-              <IoMdStar size={24} color="#e4d59f" />
-              <IoMdStar size={24} color="#e4d59f" />
-              <IoMdStar size={24} color="#e4d59f" />
+              <IoMdStar size={24} className="text-gold" />
+              <IoMdStar size={24} className="text-gold" />
+              <IoMdStar size={24} className="text-gold" />
+              <IoMdStar size={24} className="text-gold" />
+              <IoMdStar size={24} className="text-gold"/>
             </div>
 
             <span className="text-xs text-cream/60 mt-2 leading-none">

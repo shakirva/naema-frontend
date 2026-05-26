@@ -7,8 +7,6 @@ import {
   FiSearch,
   FiUser,
   FiShoppingCart,
-  FiMenu,
-  FiX,
 } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import { navLinks } from "../../constants";
@@ -179,7 +177,7 @@ const SearchOverlay = ({
             onClick={onClose}
             className="text-navy/60 hover:text-navy transition-colors"
           >
-            <FiX size={26} />
+            ✕
           </button>
         </div>
       </div>
@@ -223,10 +221,32 @@ const Header = () => {
         <div className="h-[80px] px-6 lg:px-16 flex items-center justify-between">
           <div className="flex items-center gap-5">
             <button
-              className="lg:hidden text-cream"
+              className="lg:hidden relative w-8 h-8 flex items-center justify-center z-[99999]"
               onClick={() => setMenuOpen(!menuOpen)}
             >
-              {menuOpen ? <FiX size={26} /> : <FiMenu size={26} />}
+              <span
+                className={`absolute h-[2px] w-7 rounded-full transition-all duration-300 ease-in-out ${
+                  menuOpen
+                    ? "rotate-45 bg-black"
+                    : "-translate-y-2 bg-cream"
+                }`}
+              />
+
+              <span
+                className={`absolute h-[2px] w-7 rounded-full transition-all duration-300 ease-in-out ${
+                  menuOpen
+                    ? "opacity-0 scale-0 bg-black"
+                    : "opacity-100 scale-100 bg-cream"
+                }`}
+              />
+
+              <span
+                className={`absolute h-[2px] w-7 rounded-full transition-all duration-300 ease-in-out ${
+                  menuOpen
+                    ? "-rotate-45 bg-black"
+                    : "translate-y-2 bg-cream"
+                }`}
+              />
             </button>
 
             <button
@@ -366,18 +386,13 @@ const Header = () => {
       />
 
       <div
-        className={`fixed top-0 right-0 h-full w-full md:w-1/2 bg-cream z-50 px-10 py-12 flex flex-col gap-8 transition-transform duration-500 ${
-          menuOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed top-0 left-0 h-full w-full md:w-1/2 bg-cream z-50 px-10 py-12 flex flex-col gap-8 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          menuOpen
+            ? "translate-x-0"
+            : "-translate-x-full"
         }`}
       >
-        <button
-          className="self-end text-navy"
-          onClick={() => setMenuOpen(false)}
-        >
-          <FiX size={28} />
-        </button>
-
-        <nav className="flex flex-col gap-6 mt-6">
+        <nav className="flex flex-col gap-6 mt-20">
           {navLinks.map((link, index) => (
             <Link
               key={index}

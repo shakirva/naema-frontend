@@ -1,11 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Product } from "@/app/constants";
-import { useCart } from "@/app/context/CartContext";
+import { useCart } from "../context/CartContext";
+import { getProducts } from "@/lib/api";
+import type { MedusaProduct } from "@/lib/types";
+import { getProductPrice, formatPrice, getCheapestVariant } from "@/lib/types";
 
 /* ------------------ STAR RATING ------------------ */
 
@@ -49,133 +51,104 @@ const StarRating = ({ rating }: { rating: number }) => (
 
 /* ------------------ CARD ------------------ */
 
-const CarouselCard = ({ product }: { product: Product }) => {
+const CarouselCard = ({ product }: { product: MedusaProduct }) => {
   const { addToCart } = useCart();
   const [added, setAdded] = useState(false);
+  const variant = getCheapestVariant(product);
+  const price = getProductPrice(product);
 
-  const handleAdd = (e: React.MouseEvent) => {
+  const handleAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
-    addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      size: "500g",
-    });
+    e.stopPropagation();
+    if (!variant) return;
+    await addToCart(variant.id, 1);
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
   };
 
-  const discount = product.originalPrice
-    ? Math.round(
-        ((product.originalPrice - product.price) / product.originalPrice) * 100,
-      )
-    : null;
+  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
+  const category = product.categories?.[0]?.handle || "all";
+  const tags = product.tags?.map((t) => t.value) ?? [];
 
   return (
     <Link
-      href={`/shop/${product.category}/${product.id}`}
-      className="flex-none w-[310px] max-md:w-[85vw] flex flex-col gap-3 group snap-center"
+      href={`/shop/${category}/${product.handle}`}
+      className="flex-none w-[296px] max-md:w-[85vw] flex flex-col gap-3 group snap-center"
     >
       {/* IMAGE */}
       <div className="relative w-full h-64 rounded-2xl overflow-hidden border border-black/10 bg-cream">
         <Image
-          src={product.image}
-          alt={product.name}
+          src={thumbnail}
+          alt={product.title}
           fill
-          className="object-cover group-hover:scale-[1.05] transition-all duration-500 ease-out"
+          className="object-cover group-hover:scale-[1.08] transition-all duration-500 ease-out"
           sizes="296px"
         />
 
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
 
-        {/* TOP BADGES */}
+        {/* TAGS as badges */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
-          {product.badge && (
+          {Boolean(product.metadata?.badge) && (
             <span
               className={`text-[10px] font-medium uppercase leading-none px-3 py-1 rounded-full ${
-                product.badge === "New"
+                product.metadata?.badge === "New"
                   ? "bg-[#e6f2d7] text-black"
-                  : product.badge === "Limited"
-                    ? "bg-navy text-cream"
-                    : product.badge === "Best Seller"
-                      ? "bg-gold text-black"
-                      : "bg-[#b63f3f] text-white"
+                  : product.metadata?.badge === "Limited"
+                  ? "bg-navy text-cream"
+                  : product.metadata?.badge === "Best Seller"
+                  ? "bg-gold text-black"
+                  : "bg-[#b63f3f] text-white"
               }`}
             >
-              {product.badge}
+              {String(product.metadata?.badge)}
             </span>
           )}
         </div>
-
-        {/* DISCOUNT */}
-        {product.originalPrice && discount && (
-          <div className="absolute top-3 right-3 z-10">
-            <div className="bg-navy text-cream rounded-full w-14 h-14 flex flex-col items-center justify-center border border-gold">
-              <span className="text-[12px] leading-none font-bold">
-                {discount}%
-              </span>
-              <span className="text-[8px] leading-none uppercase mt-0.5">
-                Off
-              </span>
-            </div>
-          </div>
-        )}
-
-        {/* BOTTOM STOCK TAG */}
-        {product.featured && (
-          <div className="absolute bottom-3 left-3 z-10">
-            <span className="bg-cream/90 backdrop-blur-sm text-black text-[10px] font-medium px-3 py-1 rounded-full border border-black/10">
-              Limited Stock
-            </span>
-          </div>
-        )}
       </div>
 
       {/* RATING */}
       <div className="flex items-center gap-1.5">
-        <StarRating rating={product.rating} />
+        <StarRating rating={5} />
         <span className="text-sm font-semibold text-gold underline underline-offset-2">
-          ({product.reviews.toLocaleString()})
+          (★)
         </span>
       </div>
 
       {/* NAME */}
       <h3 className="font-medium text-[20px] capitalize tracking-tight leading-tight text-black line-clamp-2">
-        {product.name}
+        {product.title}
       </h3>
 
       {/* TAGS */}
-      <div className="flex flex-wrap gap-2">
-        {product.tags.map((tag, i) => (
-          <span
-            key={tag}
-            className={`px-2 py-0.5 leading-none text-xs font-medium border border-black/20 rounded-full text-black/80 ${
-              i === 0 ? "bg-gold/40" : "bg-white"
-            }`}
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
+      {tags.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {tags.slice(0, 3).map((tag, i) => (
+            <span
+              key={tag}
+              className={`px-2 py-0.5 leading-none text-xs font-medium border border-black/20 rounded-full text-black/80 ${
+                i === 0 ? "bg-gold/40" : "bg-white"
+              }`}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* PRICE */}
       <div className="flex items-end gap-2">
         <p className="font-bold text-xl text-black">
-          ₹{product.price.toLocaleString()}
+          {formatPrice(price)}
         </p>
-        {product.originalPrice && (
-          <span className="text-black/35 line-through text-sm pb-[2px]">
-            ₹{product.originalPrice.toLocaleString()}
-          </span>
-        )}
       </div>
 
       {/* BUTTON */}
       <button
         onClick={handleAdd}
-        className="w-full relative rounded-full border-2 border-gold bg-gold/40 font-bold tracking-tight text-sm cursor-pointer group overflow-hidden"
+        disabled={!variant}
+        className="w-full relative rounded-full border-2 border-gold bg-gold/40 font-bold tracking-tight text-sm cursor-pointer group overflow-hidden disabled:opacity-50"
       >
         <span className="block py-3.5 group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
           {added ? "Added ✓" : "Add to Cart"}
@@ -193,13 +166,28 @@ const CarouselCard = ({ product }: { product: Product }) => {
 type Props = {
   title: string;
   description?: string;
-  products: Product[];
+  products?: MedusaProduct[];
+  fetchBestsellers?: boolean;
 };
 
-const ProductCarousel = ({ title, description, products }: Props) => {
+const ProductCarousel = ({ title, description, products: propProducts, fetchBestsellers }: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [products, setProducts] = useState<MedusaProduct[]>(propProducts ?? []);
+
+  useEffect(() => {
+    if (propProducts && propProducts.length > 0) {
+      setProducts(propProducts);
+      return;
+    }
+    // Fetch products from Medusa
+    const load = async () => {
+      const res = await getProducts({ limit: 10, order: fetchBestsellers ? "-created_at" : undefined });
+      setProducts(res.products);
+    };
+    load();
+  }, [propProducts, fetchBestsellers]);
 
   const SCROLL_AMOUNT = 320;
 
@@ -220,8 +208,26 @@ const ProductCarousel = ({ title, description, products }: Props) => {
     setTimeout(updateScrollState, 350);
   };
 
+  if (products.length === 0) {
+    return (
+      <div className="max-w-[1440px] mx-auto px-16 pt-20 max-lg:px-8 max-md:px-0">
+        <h2 className="font-serif w-fit text-[clamp(2rem,3.33vw,3rem)] leading-none bg-gold/20 border border-gold/50 rounded-lg px-4 py-2 max-md:mx-5">
+          {title}
+        </h2>
+        <div className="flex items-center justify-center py-16 text-black/40">
+          <div className="animate-pulse flex gap-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="w-[296px] h-80 rounded-2xl bg-black/5" />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-[1440px] mx-auto px-16 pt-40 max-lg:px-8 max-lg:pt-20 max-md:px-0">
+
       {/* HEADING */}
       <h2 className="font-serif w-fit text-[clamp(2rem,3.33vw,3rem)] leading-none bg-gold/20 border border-gold/50 rounded-lg px-4 py-2 max-md:mx-5">
         {title}
@@ -242,38 +248,27 @@ const ProductCarousel = ({ title, description, products }: Props) => {
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer ${
-              canScrollLeft
-                ? "bg-navy border-navy"
-                : "bg-white border-gold cursor-not-allowed"
+              canScrollLeft ? "bg-navy border-navy" : "bg-white border-gold cursor-not-allowed"
             }`}
           >
-            <ChevronLeft
-              className="w-5 h-5"
-              strokeWidth={2.5}
-              color="#ccba78"
-            />
+            <ChevronLeft className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
           </button>
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer ${
-              canScrollRight
-                ? "bg-navy border-navy"
-                : "bg-white border-gold cursor-not-allowed"
+              canScrollRight ? "bg-navy border-navy" : "bg-white border-gold cursor-not-allowed"
             }`}
           >
-            <ChevronRight
-              className="w-5 h-5"
-              strokeWidth={2.5}
-              color="#ccba78"
-            />
+            <ChevronRight className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
           </button>
         </div>
       </div>
 
       {/* PRODUCTS + MOBILE OVERLAY ARROWS */}
       <div className="relative">
-        {/* Mobile left arrow — centered vertically on card image */}
+
+        {/* Mobile left arrow */}
         <button
           onClick={() => scroll("left")}
           disabled={!canScrollLeft}
@@ -283,7 +278,7 @@ const ProductCarousel = ({ title, description, products }: Props) => {
           <ChevronLeft className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
         </button>
 
-        {/* Mobile right arrow — centered vertically on card image */}
+        {/* Mobile right arrow */}
         <button
           onClick={() => scroll("right")}
           disabled={!canScrollRight}

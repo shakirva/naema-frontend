@@ -1,12 +1,34 @@
 "use client";
 import Image from "next/image";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link } from "@/i18n/routing";
 import ProductCarousel from "./ProductCarousel";
-import { products } from "../../constants";
+import { getProducts, getCategories, getCollections } from "@/lib/api";
+import type { MedusaProduct, MedusaProductCategory } from "@/lib/types";
 
 const Shop = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [products, setProducts] = useState<MedusaProduct[]>([]);
+  const [latestProducts, setLatestProducts] = useState<MedusaProduct[]>([]);
+  const [categories, setCategories] = useState<MedusaProductCategory[]>([]);
+  const [collections, setCollections] = useState<{ id: string; title: string; handle: string }[]>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      const [prodRes, latestRes, cats, cols] = await Promise.all([
+        getProducts({ limit: 100 }), // Get all products for collections
+        getProducts({ limit: 10, order: "-created_at" }),
+        getCategories(),
+        getCollections(),
+      ]);
+      setProducts(prodRes.products);
+      setLatestProducts(latestRes.products);
+      setCollections(cols);
+      // Only top-level categories (no parent)
+      setCategories(cats.filter((c) => !c.parent_category_id));
+    };
+    load();
+  }, []);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     const el = scrollRef.current;
@@ -29,6 +51,22 @@ const Shop = () => {
     if (scrollRef.current) scrollRef.current.dataset.dragging = "false";
   };
 
+  // Products grouped by collection ID
+  const productsByCollection = collections.map((col) => ({
+    collection: col,
+    items: products.filter((p) => p.collection_id === col.id),
+  })).filter((group) => group.items.length > 0);
+
+  const latest = latestProducts.slice(0, 8);
+
+  // Default category images (fallback)
+  const categoryImages: Record<string, string> = {
+    dates: "/dbox.jpg",
+    nuts: "/nuts.jpg",
+    "dry-fruits": "/dry.jpg",
+    chocolates: "/chocos.jpg",
+  };
+
   return (
     <section className="min-h-screen w-full bg-cream pb-16 lg:pb-32">
       <h1 className="font-serif text-[clamp(1.75rem,4.5vw,3.5rem)] text-center px-5 md:px-8 lg:px-16 pt-10 lg:pt-16 leading-tight">
@@ -39,13 +77,14 @@ const Shop = () => {
         <span className="italic text-deepgold">chocolate.</span>
       </h1>
 
-      <ProductCarousel
-        title="Shop Our Best Sellers"
-        description="Our most loved products, trusted by thousands of customers."
-        products={[...products]
-          .sort((a, b) => b.reviews - a.reviews)
-          .slice(0, 6)}
-      />
+      {productsByCollection.map(({ collection, items }) => (
+        <ProductCarousel
+          key={collection.id}
+          title={collection.title}
+          description={`Shop our curated selection from the ${collection.title} collection.`}
+          products={items}
+        />
+      ))}
 
       <div className="flex flex-col w-full max-w-[1440px] mx-auto px-5 md:px-8 lg:px-16 pt-10 lg:pt-16">
         <div className="lg:mx-auto  mt-10 lg:mt-20">
@@ -82,16 +121,19 @@ const Shop = () => {
             pb-4 lg:pb-0
             -mx-5 px-5 md:-mx-8 md:px-8 lg:mx-0 lg:px-0"
         >
-          {[
-            { src: "/dbox.jpg", label: "Dates", href: "/shop/dates" },
-            { src: "/nuts.jpg", label: "Nuts", href: "/shop/nuts" },
-            { src: "/dry.jpg", label: "Dry Fruits", href: "/shop/dry-fruits" },
-            {
-              src: "/chocos.jpg",
-              label: "Chocolates",
-              href: "/shop/chocolates",
-            },
-          ].map(({ src, label, href }) => (
+          {(categories.length > 0
+            ? categories.map((cat) => ({
+                src: (cat.metadata?.image_url as string) || categoryImages[cat.handle] || "/n1.jpg",
+                label: cat.name,
+                href: `/shop/${cat.handle}`,
+              }))
+            : [
+                { src: "/dbox.jpg", label: "Dates", href: "/shop/dates" },
+                { src: "/nuts.jpg", label: "Nuts", href: "/shop/nuts" },
+                { src: "/dry.jpg", label: "Dry Fruits", href: "/shop/dry-fruits" },
+                { src: "/chocos.jpg", label: "Chocolates", href: "/shop/chocolates" },
+              ]
+          ).map(({ src, label, href }) => (
             <Link
               key={label}
               href={href}
@@ -118,7 +160,7 @@ const Shop = () => {
       <ProductCarousel
         title="Shop Our Latest Drops"
         description="From classic whole dates to gourmet stuffed varieties – find your perfect match."
-        products={products.slice(0, 6)}
+        products={latest}
       />
 
       <div className="w-full flex items-center justify-center mt-10 lg:mt-12">

@@ -1,20 +1,35 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import ProductCard from "./ProductCard";
-import { products } from "@/app/constants";
+import { getProducts } from "@/lib/api";
+import type { MedusaProduct } from "@/lib/types";
 
-const FrequentlyBought = ({ currentId }: { currentId: number }) => {
+const FrequentlyBought = ({ currentId }: { currentId: string }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [related, setRelated] = useState<MedusaProduct[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const SCROLL_AMOUNT = 320;
 
-  // Filter out the current product so it doesn't show itself
-  const related = products.filter((p) => p.id !== currentId);
+  useEffect(() => {
+    const fetchRelated = async () => {
+      setLoading(true);
+      try {
+        const res = await getProducts({ limit: 10 });
+        setRelated(res.products.filter(p => p.id !== currentId));
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRelated();
+  }, [currentId]);
 
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -32,6 +47,8 @@ const FrequentlyBought = ({ currentId }: { currentId: number }) => {
     });
     setTimeout(updateScrollState, 350);
   };
+
+  if (loading || related.length === 0) return null;
 
   return (
     <div className="mt-24 max-lg:mt-16">
@@ -90,14 +107,17 @@ const FrequentlyBought = ({ currentId }: { currentId: number }) => {
         className="flex gap-6 overflow-x-auto pb-4 scroll-smooth"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        {related.map((product) => (
-          <div
-            key={product.id}
-            className="flex-none w-[280px] max-md:w-[240px]"
-          >
-            <ProductCard product={product} category={product.category} />
-          </div>
-        ))}
+        {related.map((product) => {
+          const category = product.categories?.[0]?.handle || "all";
+          return (
+            <div
+              key={product.id}
+              className="flex-none w-[280px] max-md:w-[240px]"
+            >
+              <ProductCard product={product} category={category} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

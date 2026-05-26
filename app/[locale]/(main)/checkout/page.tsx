@@ -7,6 +7,7 @@ import Link from "next/link";
 import { IoMdCheckmark } from "react-icons/io";
 import { FiChevronDown, FiLock } from "react-icons/fi";
 import { useCart } from "../../../context/CartContext";
+import { formatPrice } from "@/lib/types";
 
 type PaymentMethod = "upi" | "card" | "netbanking" | "cod";
 
@@ -84,17 +85,20 @@ const PaymentOption = ({
 /* ------------------ CHECKOUT PAGE ------------------ */
 
 const CheckoutPage = () => {
-  const { items, total } = useCart();
+  const { items, total, subtotal, cart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("upi");
   const [discountCode, setDiscountCode] = useState("");
   const [discountApplied, setDiscountApplied] = useState(false);
   const [emailUpdates, setEmailUpdates] = useState(true);
 
-  const shipping = total > 999 ? 0 : 99;
-  const discount = discountApplied ? Math.round(total * 0.1) : 0;
-  const grandTotal = total + shipping - discount;
+  // In Medusa, shipping and total are computed in the backend cart. 
+  // If cart is available, we use cart values, else fallback to manual computation.
+  const shippingTotal = cart?.shipping_total || (subtotal > 999 * 100 ? 0 : 99 * 100);
+  const discountTotal = cart?.discount_total || (discountApplied ? Math.round(subtotal * 0.1) : 0);
+  const grandTotal = total || (subtotal + shippingTotal - discountTotal);
 
   const handleApplyDiscount = () => {
+    // In a real app this should call a Medusa API endpoint `medusa/carts/${cart.id}/taxes` or `line_items`
     if (discountCode.toLowerCase() === "naema10") setDiscountApplied(true);
   };
 
@@ -213,7 +217,7 @@ const CheckoutPage = () => {
                   {
                     label: "Standard Delivery",
                     time: "5–7 business days",
-                    price: total > 999 ? "FREE" : "₹99",
+                    price: subtotal > 999 * 100 ? "FREE" : "₹99",
                   },
                   {
                     label: "Express Delivery",
@@ -339,7 +343,7 @@ const CheckoutPage = () => {
             </div>
 
             <button className="w-full py-4 max-lg:hidden rounded-full bg-navy text-white font-medium text-sm hover:opacity-90 transition tracking-wide">
-              Place Order →
+               Complete Order →
             </button>
           </div>
 
@@ -353,35 +357,40 @@ const CheckoutPage = () => {
                 {items.length === 0 ? (
                   <p className="text-sm text-black/40">No items in cart.</p>
                 ) : (
-                  items.map((item) => (
-                    <div
-                      key={`${item.id}-${item.size}`}
-                      className="flex gap-3 items-center"
-                    >
-                      <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-black/10 shrink-0">
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          fill
-                          className="object-cover"
-                        />
-                        <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-navy text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-                          {item.quantity}
+                  items.map((item) => {
+                    const thumbnail = item.thumbnail || "/n1.jpg";
+                    return (
+                      <div
+                        key={item.id}
+                        className="flex gap-3 items-center"
+                      >
+                        <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-black/10 shrink-0 bg-cream">
+                          <Image
+                            src={thumbnail}
+                            alt={item.title}
+                            fill
+                            className="object-cover"
+                          />
+                          <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-navy text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                            {item.quantity}
+                          </span>
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm font-medium leading-tight">
+                            {item.title || item.product_title}
+                          </p>
+                          {item.variant_title && (
+                            <p className="text-xs text-black/40">
+                              Size: {item.variant_title}
+                            </p>
+                          )}
+                        </div>
+                        <span className="text-sm font-semibold">
+                          {formatPrice((item.unit_price ?? 0) * item.quantity)}
                         </span>
                       </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium leading-tight">
-                          {item.name}
-                        </p>
-                        <p className="text-xs text-black/40">
-                          Size: {item.size}
-                        </p>
-                      </div>
-                      <span className="text-sm font-semibold">
-                        ₹{(item.price * item.quantity).toLocaleString()}
-                      </span>
-                    </div>
-                  ))
+                    );
+                  })
                 )}
               </div>
 
@@ -411,37 +420,37 @@ const CheckoutPage = () => {
                     Subtotal · {items.length} item
                     {items.length !== 1 ? "s" : ""}
                   </span>
-                  <span>₹{total.toLocaleString()}</span>
+                  <span>{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-black/60">Shipping</span>
                   <span
-                    className={shipping === 0 ? "text-gold font-medium" : ""}
+                    className={shippingTotal === 0 ? "text-gold font-medium" : ""}
                   >
-                    {shipping === 0 ? "FREE" : `₹${shipping}`}
+                    {shippingTotal === 0 ? "FREE" : formatPrice(shippingTotal)}
                   </span>
                 </div>
-                {discountApplied && (
+                {discountTotal > 0 && (
                   <div className="flex justify-between text-sm text-gold">
-                    <span>Discount (NAEMA10)</span>
-                    <span>−₹{discount.toLocaleString()}</span>
+                    <span>Discount</span>
+                    <span>−{formatPrice(discountTotal)}</span>
                   </div>
                 )}
                 <div className="border-t border-black/10 pt-3 flex justify-between font-semibold">
                   <span>Total</span>
                   <span className="text-lg">
-                    ₹{grandTotal.toLocaleString()}
+                    {formatPrice(grandTotal)}
                   </span>
                 </div>
-                {total < 999 && (
-                  <p className="text-xs text-black/40 text-center">
-                    Add ₹{(999 - total).toLocaleString()} more for free shipping
+                {subtotal < 999 * 100 && (
+                  <p className="text-xs text-black/40 text-center mt-2">
+                    Add {formatPrice(999 * 100 - subtotal)} more for free shipping
                   </p>
                 )}
               </div>
 
               <button className="w-full py-4 lg:hidden rounded-full bg-navy text-white font-medium text-sm hover:opacity-90 transition tracking-wide">
-                Place Order →
+                Complete Order →
               </button>
             </div>
           </div>

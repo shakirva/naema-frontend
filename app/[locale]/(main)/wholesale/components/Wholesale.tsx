@@ -1,24 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { FiArrowUpRight } from "react-icons/fi";
-
+import { getProducts } from "@/lib/api";
+import type { MedusaProduct } from "@/lib/types";
 
 /* ------------------ DATA ------------------ */
-
-type Category = "All" | "Dates" | "Dry Fruits";
-
-type Product = {
-  id: number;
-  name: string;
-  category: Exclude<Category, "All">;
-  description: string;
-  image: string;
-  color: string;
-  badge: string;
-};
 
 const cardColors = [
   "bg-[#f5e6c8]",
@@ -31,202 +20,93 @@ const cardColors = [
   "bg-[#e2cfa4]",
 ];
 
-const products: Product[] = [
-  {
-    id: 1,
-    name: "Khudri",
-    category: "Dates",
-    description:
-      "A popular Saudi date known for its dry texture and exceptionally long shelf life.",
-    image: "/khudhri.jpeg",
-    color: cardColors[0],
-    badge: "DATES",
-  },
-  {
-    id: 2,
-    name: "Safawi",
-    category: "Dates",
-    description:
-      "Dark, moist dates from Madinah with a rich, naturally sweet flavour.",
-    image: "/safawi.jpeg",
-    color: cardColors[1],
-    badge: "DATES",
-  },
-  {
-    id: 3,
-    name: "Medjool Jordan",
-    category: "Dates",
-    description:
-      "Soft, large Jordanian Medjool dates with a rich caramel-like taste.",
-    image: "/mejdool-jordan.jpeg",
-    color: cardColors[2],
-    badge: "DATES",
-  },
-  {
-    id: 4,
-    name: "Mabroom",
-    category: "Dates",
-    description:
-      "Long, slender dates with a chewy texture and deep, earthy sweetness.",
-    image: "/mabroom.jpeg",
-    color: cardColors[3],
-    badge: "DATES",
-  },
-  {
-    id: 5,
-    name: "Ajwa",
-    category: "Dates",
-    description:
-      "Prized black dates from Madinah — soft, dark, and deeply flavourful.",
-    image: "/ajwa.jpeg",
-    color: cardColors[4],
-    badge: "DATES",
-  },
-  {
-    id: 6,
-    name: "Medjool Saudi",
-    category: "Dates",
-    description:
-      "Premium Saudi Medjool — large, moist, and irresistibly sweet.",
-    image: "/mejdool-saudi.jpeg",
-    color: cardColors[5],
-    badge: "DATES",
-  },
-  {
-    id: 7,
-    name: "Sikhai",
-    category: "Dates",
-    description:
-      "A golden-coloured variety with a soft texture and mild, honey-like sweetness.",
-    image: "/sikhai.jpeg",
-    color: cardColors[6],
-    badge: "DATES",
-  },
-  {
-    id: 8,
-    name: "Munaifi",
-    category: "Dates",
-    description:
-      "Rare and tender dates with a smooth, fudgy consistency and delicate flavour.",
-    image: "/munaifi.jpeg",
-    color: cardColors[7],
-    badge: "DATES",
-  },
-  {
-    id: 9,
-    name: "Mufathal",
-    category: "Dates",
-    description:
-      "Soft, amber-toned dates with a rich flavour profile and satisfying chew.",
-    image: "/mufathal.jpeg",
-    color: cardColors[0],
-    badge: "DATES",
-  },
-  {
-    id: 10,
-    name: "Galaxy",
-    category: "Dates",
-    description:
-      "A premium, glistening variety known for its unique sheen and rich sweetness.",
-    image: "/galaxy.jpeg",
-    color: cardColors[1],
-    badge: "DATES",
-  },
-  {
-    id: 11,
-    name: "Sukkari",
-    category: "Dates",
-    description:
-      "Beloved for their melt-in-the-mouth texture and exceptional natural sweetness.",
-    image: "/sukkari.jpeg",
-    color: cardColors[2],
-    badge: "DATES",
-  },
-  {
-    id: 12,
-    name: "Theen Iran",
-    category: "Dry Fruits",
-    description:
-      "Premium Iranian dried figs — naturally sun-dried with a soft interior and sweet bite.",
-    image: "/theen-iran.jpeg",
-    color: cardColors[3],
-    badge: "DRY FRUITS",
-  },
-  {
-    id: 13,
-    name: "Theen Afghan",
-    category: "Dry Fruits",
-    description:
-      "Afghan dried figs with a distinctive flavour — earthy, sweet and packed with nutrients.",
-    image: "/theen-afhan.jpeg",
-    color: cardColors[4],
-    badge: "DRY FRUITS",
-  },
-];
-
 const INITIAL_COUNT = 8;
 
 /* ------------------ PRODUCT CARD ------------------ */
 
-const ProductCard = ({ product }: { product: Product }) => (
-  <div className="flex flex-col gap-3 max-sm:gap-2 group">
-    {/* Colored image card */}
-    <div
-      className={`relative rounded-2xl max-sm:rounded-xl overflow-hidden border-2 border-darkgold aspect-square ${product.color}`}
-    >
-      {/* Category badge */}
-      <div className="absolute top-4 left-4 max-sm:top-2.5 max-sm:left-2.5 z-10">
-        <span className="bg-white border border-darkgold text-black text-[10px] max-sm:text-[9px] font-bold leading-none px-3 max-sm:px-2 py-1.5 rounded-lg uppercase">
-          {product.badge}
-        </span>
-      </div>
+const ProductCard = ({ product, index }: { product: MedusaProduct; index: number }) => {
+  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
+  const category = product.categories?.[0]?.handle || "Uncategorized";
+  const badge = product.metadata?.badge ? String(product.metadata.badge) : "WHOLESALE";
+  const color = cardColors[index % cardColors.length];
 
-      {/* Product image — fills container */}
-      <Image
-        src={product.image}
-        alt={product.name}
-        fill
-        className="object-cover group-hover:scale-[1.03] transition-all duration-500 ease-out contrast-[1.12] saturate-[1.05] brightness-[1.03]"
-      />
-
-      {/* Inquire button — bottom right, only on hover */}
-      <div className="absolute bottom-4 right-4 max-sm:bottom-2.5 max-sm:right-2.5 z-10 opacity-0 group-hover:opacity-100 max-sm:opacity-100 transition-opacity duration-200">
-        <Link
-          href={`/contact?product=${encodeURIComponent(product.name)}`}
-          className="bg-white border-2 border-darkgold rounded-full px-3 max-sm:px-2.5 py-2.5 max-sm:py-2 flex flex-col items-center justify-center hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 cursor-pointer group/btn"
-        >
-          <FiArrowUpRight size={14} className="group-hover/btn:text-gold" />
-          <span className="text-[10px] max-sm:text-[9px] font-medium leading-none mt-0.5">
-            Inquire
+  return (
+    <div className="flex flex-col gap-3 max-sm:gap-2 group">
+      {/* Colored image card */}
+      <div
+        className={`relative rounded-2xl max-sm:rounded-xl overflow-hidden border-2 border-darkgold aspect-square ${color}`}
+      >
+        {/* Category badge */}
+        <div className="absolute top-4 left-4 max-sm:top-2.5 max-sm:left-2.5 z-10">
+          <span className="bg-white border border-darkgold text-black text-[10px] max-sm:text-[9px] font-bold leading-none px-3 max-sm:px-2 py-1.5 rounded-lg uppercase">
+            {badge}
           </span>
-        </Link>
+        </div>
+
+        {/* Product image — fills container */}
+        <Image
+          src={thumbnail}
+          alt={product.title}
+          fill
+          className="object-cover group-hover:scale-[1.03] transition-all duration-500 ease-out contrast-[1.12] saturate-[1.05] brightness-[1.03]"
+        />
+
+        {/* Inquire button — bottom right, only on hover */}
+        <div className="absolute bottom-4 right-4 max-sm:bottom-2.5 max-sm:right-2.5 z-10 opacity-0 group-hover:opacity-100 max-sm:opacity-100 transition-opacity duration-200">
+          <Link
+            href={`/contact?product=${encodeURIComponent(product.title)}`}
+            className="bg-white border-2 border-darkgold rounded-full px-3 max-sm:px-2.5 py-2.5 max-sm:py-2 flex flex-col items-center justify-center hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 cursor-pointer group/btn"
+          >
+            <FiArrowUpRight size={14} className="group-hover/btn:text-gold" />
+            <span className="text-[10px] max-sm:text-[9px] font-medium leading-none mt-0.5">
+              Inquire
+            </span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Info below card */}
+      <div className="flex flex-col gap-1 max-sm:gap-0.5 px-1">
+        <h3 className="font-serif text-[clamp(1rem,1.5vw,1.4rem)] leading-tight text-black line-clamp-1">
+          {product.title}
+        </h3>
+        <p className="text-sm max-sm:text-xs text-black/55 leading-snug tracking-tight line-clamp-2">
+          {product.description || "Premium wholesale quality."}
+        </p>
       </div>
     </div>
-
-    {/* Info below card */}
-    <div className="flex flex-col gap-1 max-sm:gap-0.5 px-1">
-      <h3 className="font-serif text-[clamp(1rem,1.5vw,1.4rem)] leading-tight text-black">
-        {product.name}
-      </h3>
-      <p className="text-sm max-sm:text-xs text-black/55 leading-snug tracking-tight line-clamp-2">
-        {product.description}
-      </p>
-    </div>
-  </div>
-);
+  );
+};
 
 /* ------------------ PAGE ------------------ */
 
 const Wholesale = () => {
-  const [activeCategory, setActiveCategory] = useState<Category>("All");
+  const [activeCategory, setActiveCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+  const [products, setProducts] = useState<MedusaProduct[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const categories: Category[] = ["All", "Dates", "Dry Fruits"];
+  useEffect(() => {
+    const fetchAll = async () => {
+      setLoading(true);
+      try {
+        const res = await getProducts({ limit: 50 });
+        setProducts(res.products);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAll();
+  }, []);
+
+  const categories = ["All", ...Array.from(new Set(products.map(p => p.categories?.[0]?.handle).filter(Boolean)))];
 
   const filtered =
     activeCategory === "All"
       ? products
-      : products.filter((p) => p.category === activeCategory);
+      : products.filter((p) => p.categories?.[0]?.handle === activeCategory);
 
   const visible = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
@@ -269,7 +149,7 @@ const Wholesale = () => {
                       setActiveCategory(cat);
                       setVisibleCount(INITIAL_COUNT);
                     }}
-                    className={`px-5 py-2.5 rounded-xl border-2 text-sm font-medium tracking-tight transition-all duration-150 cursor-pointer
+                    className={`px-5 py-2.5 rounded-xl border-2 text-sm font-medium tracking-tight transition-all duration-150 cursor-pointer capitalize
                       ${
                         activeCategory === cat
                           ? "bg-lightgold text-black border-darkgold"
@@ -285,34 +165,43 @@ const Wholesale = () => {
         </div>
 
         {/* ── PRODUCTS GRID ── */}
-        <div className="bg-cream w-full px-16 py-16 max-lg:px-8 max-md:px-5 max-sm:px-4 max-sm:py-10">
+        <div className="bg-cream w-full px-16 py-16 max-lg:px-8 max-md:px-5 max-sm:px-4 max-sm:py-10 min-h-[500px]">
           <div className="max-w-[1440px] mx-auto">
-            {/* Results count */}
-            <p className="text-sm text-black/40 mb-8 tracking-tight">
-              Showing {visible.length} of {filtered.length} products
-            </p>
-
-            <div className="grid grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-2 gap-8 max-sm:gap-4">
-              {visible.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-
-            {/* Load more */}
-            {hasMore && (
-              <div className="flex justify-center mt-16">
-                <button
-                  onClick={() => setVisibleCount((c) => c + 4)}
-                  className="relative group overflow-hidden inline-flex items-center justify-center px-12 py-4 rounded-full border-2 border-gold bg-cream text-black text-sm font-medium tracking-tight cursor-pointer"
-                >
-                  <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
-                    Load More
-                  </span>
-                  <span className="block absolute inset-0 flex items-center justify-center bg-navy text-cream border-2 border-navy rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
-                    Load More
-                  </span>
-                </button>
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-20 text-black/40 gap-4">
+                <div className="w-8 h-8 border-4 border-gold border-t-transparent rounded-full animate-spin" />
+                <p className="text-sm">Loading products...</p>
               </div>
+            ) : (
+              <>
+                {/* Results count */}
+                <p className="text-sm text-black/40 mb-8 tracking-tight">
+                  Showing {visible.length} of {filtered.length} products
+                </p>
+
+                <div className="grid grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-2 gap-8 max-sm:gap-4">
+                  {visible.map((product, index) => (
+                    <ProductCard key={product.id} product={product} index={index} />
+                  ))}
+                </div>
+
+                {/* Load more */}
+                {hasMore && (
+                  <div className="flex justify-center mt-16">
+                    <button
+                      onClick={() => setVisibleCount((c) => c + 4)}
+                      className="relative group overflow-hidden inline-flex items-center justify-center px-12 py-4 rounded-full border-2 border-gold bg-cream text-black text-sm font-medium tracking-tight cursor-pointer"
+                    >
+                      <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+                        Load More
+                      </span>
+                      <span className="block absolute inset-0 flex items-center justify-center bg-navy text-cream border-2 border-navy rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+                        Load More
+                      </span>
+                    </button>
+                  </div>
+                )}
+              </>
             )}
 
             {/* Enquiry CTA */}

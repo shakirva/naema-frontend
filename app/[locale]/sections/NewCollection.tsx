@@ -1,23 +1,58 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { FiArrowLeft, FiArrowRight, FiShoppingCart } from "react-icons/fi";
 import { IoMdStar } from "react-icons/io";
-import { products } from "@/app/constants";
 import ParallaxImage from "../components/ParallaxImage";
 import { useCart } from "@/app/context/CartContext";
-
-const featured = products.slice(0, 4);
+import { getProducts } from "@/lib/api";
+import type { MedusaProduct } from "@/lib/types";
+import { getProductPrice, formatPrice, getCheapestVariant } from "@/lib/types";
 
 const NewCollection = () => {
   const [index, setIndex] = useState(0);
   const { addToCart } = useCart();
-  const product = featured[index];
+  const [featured, setFeatured] = useState<MedusaProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchNew = async () => {
+      setLoading(true);
+      try {
+        const res = await getProducts({ limit: 4, order: "-created_at" });
+        setFeatured(res.products);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchNew();
+  }, []);
 
   const prev = () => setIndex((i) => (i === 0 ? featured.length - 1 : i - 1));
   const next = () => setIndex((i) => (i === featured.length - 1 ? 0 : i + 1));
+
+  if (loading) {
+    return (
+      <section className="w-full bg-cream relative min-h-screen mt-24 border-darkgold border-b flex items-center justify-center">
+        <div className="animate-pulse flex flex-col items-center">
+          <div className="w-48 h-10 bg-black/10 rounded mb-10"></div>
+          <div className="w-[400px] h-[550px] bg-black/5 rounded-3xl"></div>
+        </div>
+      </section>
+    );
+  }
+
+  if (featured.length === 0) return null;
+
+  const product = featured[index];
+  const variant = getCheapestVariant(product);
+  const price = getProductPrice(product);
+  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
+  const category = product.categories?.[0]?.handle || "all";
 
   return (
     <section className="w-full bg-cream relative min-h-screen mt-24 border-darkgold border-b">
@@ -69,11 +104,11 @@ const NewCollection = () => {
             <div className="flex flex-col">
               <div className="flex flex-col w-[400px] max-md:w-[320px] max-sm:w-[280px] h-[550px] max-md:h-[500px] gap-0 rounded-3xl overflow-hidden border border-black/10">
                 {/* Product image */}
-                <div className="relative h-[50%] w-full">
+                <div className="relative h-[50%] w-full bg-cream">
                   <Image
                     key={product.id}
-                    src={product.image}
-                    alt={product.name}
+                    src={thumbnail}
+                    alt={product.title}
                     fill
                     className="object-cover transition-all duration-500"
                     sizes="(max-width: 768px) 320px, 400px"
@@ -88,54 +123,50 @@ const NewCollection = () => {
                 <div className="bg-white h-[50%] flex flex-col justify-between p-6 max-md:p-4">
                   <div className="flex flex-col">
                     <div className="flex justify-between items-center mb-4">
-                      <h3 className="font-serif text-[clamp(1rem,2.5vw,1.8rem)] leading-none">
-                        {product.name}
+                      <h3 className="font-serif text-[clamp(1rem,2.5vw,1.8rem)] leading-none line-clamp-1">
+                        {product.title}
                       </h3>
-                      <div className="flex flex-col items-end gap-2">
+                      <div className="flex flex-col items-end gap-2 shrink-0">
                         <div className="flex gap-0.5">
                           {Array.from({ length: 5 }).map((_, i) => (
                             <IoMdStar
                               key={i}
                               size={15}
-                              color={i < product.rating ? "#ccba78" : "#e5e5e5"}
+                              color="#ccba78"
                             />
                           ))}
                         </div>
                         <span className="text-xs text-black/40 underline underline-offset-2">
-                          {product.reviews} review
-                          {product.reviews !== 1 ? "s" : ""}
+                          (5) reviews
                         </span>
                       </div>
                     </div>
 
-                    <p className="text-sm text-black/60 leading-[1.25] max-w-[280px] mb-4">
+                    <p className="text-sm text-black/60 leading-[1.25] max-w-[280px] mb-4 line-clamp-2">
                       {product.description ??
                         "Hand-selected and carefully packed to preserve natural flavour and freshness."}
                     </p>
 
                     <p className="text-3xl font-semibold tracking-tight">
-                      ₹{product.price.toLocaleString()}
+                      {formatPrice(price)}
                     </p>
                   </div>
 
                   <div className="flex gap-3">
                     <button
-                      onClick={() =>
-                        addToCart({
-                          id: product.id,
-                          name: product.name,
-                          price: product.price,
-                          image: product.image,
-                          size: "500g",
-                        })
-                      }
-                      className="flex-1 flex items-center justify-center gap-2 py-2.5 max-md:text-xs rounded-full border-2 border-gold bg-gold/30 text-sm font-bold tracking-tight hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 cursor-pointer"
+                      disabled={!variant}
+                      onClick={async () => {
+                        if (variant) {
+                          await addToCart(variant.id, 1);
+                        }
+                      }}
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 max-md:text-xs rounded-full border-2 border-gold bg-gold/30 text-sm font-bold tracking-tight hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 cursor-pointer disabled:opacity-50"
                     >
                       <FiShoppingCart className="size-[14px] max-md:size-[12px]" />
                       Add to Cart
                     </button>
                     <Link
-                      href={`/shop/${product.category}/${product.id}`}
+                      href={`/shop/${category}/${product.handle}`}
                       className="flex-1 py-2.5 rounded-full flex items-center max-md:text-xs  justify-center bg-navy text-white font-bold tracking-tight text-sm hover:opacity-90 transition cursor-pointer"
                     >
                       View Product

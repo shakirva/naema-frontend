@@ -3,13 +3,17 @@
 import React, { useState, useRef } from "react";
 import { Link, usePathname } from "@/i18n/routing";
 import Image from "next/image";
-import { FiSearch, FiUser, FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
+import {
+  FiSearch,
+  FiUser,
+  FiShoppingCart,
+  FiMenu,
+  FiX,
+} from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import { navLinks } from "../../constants";
 import { useCart } from "@/app/context/CartContext";
 import { useLocale } from "next-intl";
-
-/* ------------------ DATA ------------------ */
 
 const megaMenu = {
   columns: [
@@ -68,11 +72,8 @@ const megaMenu = {
   ],
 };
 
-/* ------------------ MEGA MENU ------------------ */
-
 const MegaMenu = () => (
   <div className="bg-cream border-t border-darkgold shadow-2xl w-full flex">
-    {/* LEFT */}
     <div className="flex flex-col flex-1 px-16 py-12 gap-10">
       <div className="grid grid-cols-4 gap-14">
         {megaMenu.columns.map((col) => (
@@ -110,7 +111,6 @@ const MegaMenu = () => (
       </Link>
     </div>
 
-    {/* RIGHT */}
     <div className="flex gap-4 px-10 py-10 border-l border-darkgold/20">
       {megaMenu.featured.map((f) => (
         <Link
@@ -136,8 +136,6 @@ const MegaMenu = () => (
   </div>
 );
 
-/* ------------------ SEARCH OVERLAY ------------------ */
-
 const SearchOverlay = ({
   open,
   onClose,
@@ -149,20 +147,21 @@ const SearchOverlay = ({
 
   return (
     <div
-      className={`fixed inset-0 z-[99999] transition-all duration-300 ease-out
-        ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+      className={`fixed inset-0 z-[99999] transition-all duration-300 ease-out ${
+        open
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
+      }`}
     >
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-navy/60 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      {/* Search Bar Panel */}
       <div
-        className={`relative z-10 w-full bg-cream border-b-2 border-darkgold shadow-2xl
-          transition-transform duration-300 ease-out
-          ${open ? "translate-y-0" : "-translate-y-full"}`}
+        className={`relative z-10 w-full bg-cream border-b-2 border-darkgold shadow-2xl transition-transform duration-300 ease-out ${
+          open ? "translate-y-0" : "-translate-y-full"
+        }`}
       >
         <div className="max-w-[1440px] mx-auto px-8 h-[80px] flex items-center gap-4">
           <FiSearch size={22} className="text-gold shrink-0" />
@@ -188,12 +187,9 @@ const SearchOverlay = ({
   );
 };
 
-/* ------------------ HEADER ------------------ */
-
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopHovered, setShopHovered] = useState(false);
-  // ── NEW ──
   const [searchOpen, setSearchOpen] = useState(false);
 
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -217,16 +213,22 @@ const Header = () => {
   };
 
   return (
-    <header className="w-full relative z-[9999] border-b border-darkgold bg-navy">
-      {/* ── NEW: Search Overlay ── */}
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+    <header className="w-full relative z-[9999] bg-navy">
+      <SearchOverlay
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+      />
 
-      {/* TOP HEADER */}
-      <div className="relative border-b border-darkgold">
-        <div className="max-w-[1440px] mx-auto h-[80px] px-8 flex items-center justify-between">
-          {/* LEFT */}
+      <div className="relative border-b border-lightgold/50">
+        <div className="h-[80px] px-6 lg:px-16 flex items-center justify-between">
           <div className="flex items-center gap-5">
-            {/* ── CHANGED: onClick now opens search overlay ── */}
+            <button
+              className="lg:hidden text-cream"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? <FiX size={26} /> : <FiMenu size={26} />}
+            </button>
+
             <button
               className="hidden lg:flex text-cream hover:text-gold transition-colors"
               onClick={() => setSearchOpen(true)}
@@ -235,7 +237,6 @@ const Header = () => {
             </button>
           </div>
 
-          {/* LOGO */}
           <Link
             href="/"
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -249,9 +250,7 @@ const Header = () => {
             />
           </Link>
 
-          {/* RIGHT */}
-          <div className="flex items-center gap-5">
-            {/* LANGUAGE */}
+          <div className="flex items-center gap-4 lg:gap-5">
             <div className="hidden lg:flex items-center gap-2">
               <Link
                 href={pathname}
@@ -280,19 +279,24 @@ const Header = () => {
               </Link>
             </div>
 
-            {/* USER */}
+            <button
+              className="lg:hidden text-cream hover:text-gold transition-colors"
+              onClick={() => setSearchOpen(true)}
+            >
+              <FiSearch size={22} />
+            </button>
+
             <Link href="/login">
               <FiUser
                 size={22}
-                className="hidden lg:block text-cream hover:text-gold transition-colors"
+                className="text-cream hover:text-gold transition-colors"
               />
             </Link>
 
-            {/* CART */}
             <button onClick={openCart} className="relative">
               <FiShoppingCart
                 size={22}
-                className="hidden lg:block text-cream hover:text-gold transition-colors"
+                className="text-cream hover:text-gold transition-colors"
               />
 
               {totalItems > 0 && (
@@ -301,20 +305,11 @@ const Header = () => {
                 </span>
               )}
             </button>
-
-            {/* MOBILE MENU */}
-            <button
-              className="lg:hidden text-cream"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? <FiX size={26} /> : <FiMenu size={26} />}
-            </button>
           </div>
         </div>
       </div>
 
-      {/* DESKTOP NAV */}
-      <div className="hidden lg:flex border-b border-gold">
+      <div className="hidden lg:flex border-b border-lightgold/50">
         {navLinks.map((link, index) => {
           const isShop = link.label.toLowerCase() === "shop";
 
@@ -324,20 +319,17 @@ const Header = () => {
           return (
             <div
               key={index}
-              className="flex-1 relative border-r last:border-r-0 border-gold"
+              className="flex-1 relative border-r last:border-r-0 border-lightgold/50"
               onMouseEnter={() => isShop && handleEnter()}
               onMouseLeave={() => isShop && handleLeave()}
             >
               <Link
                 href={link.href}
-                className={`h-[64px] flex items-center justify-center text-[14px] uppercase tracking-tight font-medium transition-all duration-300 group
-                ${
+                className={`h-[50px] flex items-center justify-center text-[14px] uppercase tracking-tight font-medium transition-all duration-300 group ${
                   isActive
                     ? "text-gold bg-navy"
                     : "text-cream/80 bg-navy hover:text-cream"
-                }
-                ${isShop && shopHovered ? "bg-navy text-gold" : ""}
-              `}
+                } ${isShop && shopHovered ? "bg-navy text-gold" : ""}`}
               >
                 <span className="flex items-center gap-2">
                   {link.label}
@@ -352,10 +344,8 @@ const Header = () => {
         })}
       </div>
 
-      {/* MEGA MENU */}
       <div
-        className={`hidden lg:block absolute top-full left-0 w-full transition-all duration-200 ease-out
-        ${
+        className={`hidden lg:block absolute top-full left-0 w-full transition-all duration-200 ease-out ${
           shopHovered
             ? "opacity-100 pointer-events-auto translate-y-0"
             : "opacity-0 pointer-events-none -translate-y-2"
@@ -366,7 +356,6 @@ const Header = () => {
         <MegaMenu />
       </div>
 
-      {/* MOBILE OVERLAY */}
       <div
         className={`fixed inset-0 bg-black/40 z-40 lg:hidden transition-opacity duration-300 ${
           menuOpen
@@ -376,10 +365,10 @@ const Header = () => {
         onClick={() => setMenuOpen(false)}
       />
 
-      {/* MOBILE DRAWER */}
       <div
-        className={`fixed top-0 right-0 h-full w-full md:w-1/2 bg-cream z-50 px-10 py-12 flex flex-col gap-8 transition-transform duration-500
-        ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed top-0 right-0 h-full w-full md:w-1/2 bg-cream z-50 px-10 py-12 flex flex-col gap-8 transition-transform duration-500 ${
+          menuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
       >
         <button
           className="self-end text-navy"
@@ -400,14 +389,16 @@ const Header = () => {
             </Link>
           ))}
         </nav>
-        {/* MOBILE LANGUAGE SWITCHER */}
+
         <div className="flex items-center gap-4 pt-2">
           <Link
             href={pathname}
             locale="en"
             onClick={() => setMenuOpen(false)}
             className={`text-sm transition-colors ${
-              locale === "en" ? "text-gold" : "text-navy/50 hover:text-navy"
+              locale === "en"
+                ? "text-gold"
+                : "text-navy/50 hover:text-navy"
             }`}
           >
             English
@@ -418,7 +409,9 @@ const Header = () => {
             locale="ar"
             onClick={() => setMenuOpen(false)}
             className={`text-sm transition-colors ${
-              locale === "ar" ? "text-gold" : "text-navy/50 hover:text-navy"
+              locale === "ar"
+                ? "text-gold"
+                : "text-navy/50 hover:text-navy"
             }`}
           >
             العربية
@@ -433,7 +426,9 @@ const Header = () => {
           {megaMenu.columns.map((col) => (
             <Link
               key={col.heading}
-              href={`/shop/${col.heading.toLowerCase().replace(" ", "-")}`}
+              href={`/shop/${col.heading
+                .toLowerCase()
+                .replace(" ", "-")}`}
               onClick={() => setMenuOpen(false)}
               className="text-sm text-navy hover:text-gold transition-colors"
             >

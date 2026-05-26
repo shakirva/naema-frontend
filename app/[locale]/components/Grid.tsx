@@ -54,105 +54,175 @@ const Grid = () => {
           </p>
         </div>
 
-        {/* Grid */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_0.9fr_1fr] gap-5 lg:auto-rows-[280px] mb-5">
-          {/* Left Tall Card */}
-          <Link
-            href="/shop"
-            className={`
-              group relative overflow-hidden rounded-[28px]
-              border-2 border-gold
-              h-[420px] md:h-[520px] lg:h-auto
-              ${items[0].height}
-            `}
-          >
-            <Image
-              src={items[0].image}
-              alt={items[0].title}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-            />
+        {/* ── MOBILE & DESKTOP grid (hidden on tablet) ── */}
+        <div className="mt-16 mb-5 block md:hidden lg:block">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.9fr_1fr] gap-5 lg:auto-rows-[280px]">
+            {/* Left Tall Card */}
+            <Link
+              href="/shop"
+              className={`
+                group relative overflow-hidden rounded-[28px]
+                border-2 border-gold
+                h-[420px] lg:h-auto
+                ${items[0].height}
+              `}
+            >
+              <Image
+                src={items[0].image}
+                alt={items[0].title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
+                <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[280px]">
+                  {items[0].title}
+                </h3>
+                <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
+                  View Collection
+                </span>
+              </div>
+            </Link>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-
-            <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
-              <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[280px]">
-                {items[0].title}
-              </h3>
-
-              <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
-                View Collection
-              </span>
+            {/* Middle Column */}
+            <div className="flex flex-col gap-5 lg:h-[calc(280px*2+20px)]">
+              {items.slice(1, 3).map((item) => (
+                <Link
+                  key={item.title}
+                  href="/shop"
+                  className="
+                    group relative overflow-hidden
+                    rounded-[28px]
+                    border-2 border-gold
+                    flex-1
+                    min-h-[240px]
+                  "
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
+                  <div className="absolute bottom-0 left-0 w-full p-5 md:p-6">
+                    <h3 className="font-serif text-[clamp(1.8rem,2vw,2.8rem)] leading-[1] text-cream max-w-[300px]">
+                      {item.title}
+                    </h3>
+                    <span className="inline-block mt-3 text-sm text-gold border-b border-gold/40 pb-1">
+                      View Collection
+                    </span>
+                  </div>
+                </Link>
+              ))}
             </div>
-          </Link>
 
-          {/* Middle Column */}
-          <div className="flex flex-col gap-5 lg:h-[calc(280px*2+20px)]">
-            {items.slice(1, 3).map((item) => (
-              <Link
-                key={item.title}
-                href="/shop"
-                className="
-                  group relative overflow-hidden
-                  rounded-[28px]
-                  border-2 border-gold
-                  flex-1
-                  min-h-[240px]
-                "
-              >
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
-
-                <div className="absolute bottom-0 left-0 w-full p-5 md:p-6">
-                  <h3 className="font-serif text-[clamp(1.8rem,2vw,2.8rem)] leading-[1] text-cream max-w-[300px]">
-                    {item.title}
-                  </h3>
-
-                  <span className="inline-block mt-3 text-sm text-gold border-b border-gold/40 pb-1">
-                    View Collection
-                  </span>
-                </div>
-              </Link>
-            ))}
+            {/* Right Tall Card */}
+            <Link
+              href="/shop"
+              className={`
+                group relative overflow-hidden rounded-[28px]
+                border-2 border-gold
+                h-[420px] lg:h-auto
+                ${items[3].height}
+              `}
+            >
+              <Image
+                src={items[3].image}
+                alt={items[3].title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
+                <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[320px]">
+                  {items[3].title}
+                </h3>
+                <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
+                  View Collection
+                </span>
+              </div>
+            </Link>
           </div>
-
-          {/* Right Tall Card */}
-          <Link
-            href="/shop"
-            className={`
-              group relative overflow-hidden rounded-[28px]
-              border-2 border-gold
-              h-[420px] md:h-[520px] lg:h-auto
-              ${items[3].height}
-            `}
-          >
-            <Image
-              src={items[3].image}
-              alt={items[3].title}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-
-            <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
-              <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[320px]">
-                {items[3].title}
-              </h3>
-
-              <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
-                View Collection
-              </span>
-            </div>
-          </Link>
         </div>
-          <ComboBundle />
+
+        {/* ── TABLET grid (hidden on mobile and desktop) ── */}
+        <div className="mt-16 mb-5 hidden md:block lg:hidden">
+          <div className="grid grid-cols-1 gap-5">
+            {/* Card 1 — full width */}
+            <Link
+              href="/shop"
+              className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-[350px]"
+            >
+              <Image
+                src={items[0].image}
+                alt={items[0].title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute bottom-0 left-0 w-full p-8">
+                <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[280px]">
+                  {items[0].title}
+                </h3>
+                <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
+                  View Collection
+                </span>
+              </div>
+            </Link>
+
+            {/* Cards 2 & 3 — equal width side by side */}
+            <div className="grid grid-cols-2 gap-5">
+              {items.slice(1, 3).map((item) => (
+                <Link
+                  key={item.title}
+                  href="/shop"
+                  className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-[320px]"
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
+                  <div className="absolute bottom-0 left-0 w-full p-6">
+                    <h3 className="font-serif text-[clamp(1.8rem,2vw,2.8rem)] leading-[1] text-cream max-w-[300px]">
+                      {item.title}
+                    </h3>
+                    <span className="inline-block mt-3 text-sm text-gold border-b border-gold/40 pb-1">
+                      View Collection
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            {/* Card 4 — full width */}
+            <Link
+              href="/shop"
+              className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-[350px]"
+            >
+              <Image
+                src={items[3].image}
+                alt={items[3].title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute bottom-0 left-0 w-full p-8">
+                <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[320px]">
+                  {items[3].title}
+                </h3>
+                <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
+                  View Collection
+                </span>
+              </div>
+            </Link>
+          </div>
+        </div>
+
+        <ComboBundle />
       </div>
     </section>
   );

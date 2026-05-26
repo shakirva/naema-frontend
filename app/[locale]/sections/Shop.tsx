@@ -54,7 +54,7 @@ const Shop = () => {
   // Products grouped by collection ID
   const productsByCollection = collections.map((col) => ({
     collection: col,
-    items: products.filter((p) => p.collection_id === col.id),
+    items: products.filter((p) => p.collection?.id === col.id),
   })).filter((group) => group.items.length > 0);
 
   const latest = latestProducts.slice(0, 8);

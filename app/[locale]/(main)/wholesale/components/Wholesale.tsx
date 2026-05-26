@@ -146,7 +146,7 @@ const Wholesale = () => {
                   <button
                     key={cat}
                     onClick={() => {
-                      setActiveCategory(cat);
+                      if (cat) setActiveCategory(cat);
                       setVisibleCount(INITIAL_COUNT);
                     }}
                     className={`px-5 py-2.5 rounded-xl border-2 text-sm font-medium tracking-tight transition-all duration-150 cursor-pointer capitalize

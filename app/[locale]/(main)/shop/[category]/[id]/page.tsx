@@ -13,7 +13,7 @@ import Footer from "@/app/[locale]/sections/Footer";
 import { useCart } from "@/app/context/CartContext";
 import { getProductByHandle } from "@/lib/api";
 import type { MedusaProduct } from "@/lib/types";
-import { getProductPrice, formatPrice, getCheapestVariant } from "@/lib/types";
+import { getProductPrice, formatPrice, getCheapestVariant, getLowestPrice } from "@/lib/types";
 
 const ProductDetail = () => {
   const params = useParams(); 
@@ -77,7 +77,7 @@ const ProductDetail = () => {
   const variant = product.variants?.find(v => v.title === selectedSize) || getCheapestVariant(product);
   
   // Calculate price based on variant, or fallback to cheapest variant price
-  const price = variant ? getProductPrice(product, variant.id) : getProductPrice(product);
+  const price = variant ? (getLowestPrice(variant) ?? getProductPrice(product)) : getProductPrice(product);
 
   return (
     <>
@@ -124,7 +124,7 @@ const ProductDetail = () => {
                 </p>
                 <div className="flex gap-2 flex-wrap">
                   {product.variants.map((v) => {
-                    const isAvailable = v.inventory_quantity > 0 || v.allow_backorder;
+                    const isAvailable = (v.inventory_quantity ?? 0) > 0 || (v as any).allow_backorder;
                     return (
                       <button
                         key={v.id}

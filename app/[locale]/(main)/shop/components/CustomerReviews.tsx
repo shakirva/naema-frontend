@@ -217,7 +217,7 @@ const WriteReview = ({ onClose }: { onClose: () => void }) => {
   return (
     <div className="border-2 border-gold/40 rounded-2xl p-6 flex flex-col gap-5 bg-[#faf7ed] lg:w-[60%] mx-auto">
       <div className="flex items-center justify-between">
-        <h3 className="font-serif text-xl">Write a Review</h3>
+        <h3 className="font-serif tracking-tight text-xl">Write a Review</h3>
 
         <button
           onClick={onClose}

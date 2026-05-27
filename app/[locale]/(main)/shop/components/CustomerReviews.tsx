@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { IoMdStar, IoMdStarOutline, IoMdCheckmarkCircle } from "react-icons/io";
-import { FiSliders } from "react-icons/fi";
+import { IoMdStar, IoMdCheckmarkCircle } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
+import { FiSliders } from "react-icons/fi";
 
 type Review = {
   id: number;
@@ -16,15 +16,14 @@ type Review = {
   verified: boolean;
 };
 
-
-
 const reviews: Review[] = [
   {
     id: 1,
     name: "Priya M.",
     date: "12/2/2025",
     rating: 5,
-    comment: "These are absolutely delicious! Perfectly packaged and my new favourite date variety. Will order again.",
+    comment:
+      "These are absolutely delicious! Perfectly packaged and my new favourite date variety. Will order again.",
     itemType: "500g",
     image: "/n1.jpg",
     verified: true,
@@ -34,7 +33,8 @@ const reviews: Review[] = [
     name: "Rahul S.",
     date: "7/28/2025",
     rating: 5,
-    comment: "Good sweetness and flavour. Sometimes warming them for 10 seconds helps soften them up a little.",
+    comment:
+      "Good sweetness and flavour. Sometimes warming them for 10 seconds helps soften them up a little.",
     itemType: "1kg",
     image: "/n2.jpg",
     verified: true,
@@ -44,7 +44,8 @@ const reviews: Review[] = [
     name: "Aisha K.",
     date: "3/15/2025",
     rating: 4,
-    comment: "Really fresh and well packed. The gold packaging is beautiful — great as a gift too.",
+    comment:
+      "Really fresh and well packed. The gold packaging is beautiful — great as a gift too.",
     itemType: "250g",
     image: undefined,
     verified: true,
@@ -54,7 +55,8 @@ const reviews: Review[] = [
     name: "Mohammed R.",
     date: "1/10/2025",
     rating: 3,
-    comment: "Taste is good but a couple of dates were slightly dry. Overall still worth it for the price.",
+    comment:
+      "Taste is good but a couple of dates were slightly dry. Overall still worth it for the price.",
     itemType: "500g",
     image: undefined,
     verified: false,
@@ -64,7 +66,8 @@ const reviews: Review[] = [
     name: "Sneha T.",
     date: "11/5/2024",
     rating: 5,
-    comment: "Naema never disappoints. Ordered for Eid and everyone loved them. Premium quality.",
+    comment:
+      "Naema never disappoints. Ordered for Eid and everyone loved them. Premium quality.",
     itemType: "2kg",
     image: "/n3.jpg",
     verified: true,
@@ -80,91 +83,155 @@ const ratingBreakdown = [
 ];
 
 const totalReviews = ratingBreakdown.reduce((sum, r) => sum + r.count, 0);
+
 const avgRating = (
-  ratingBreakdown.reduce((sum, r) => sum + r.stars * r.count, 0) / totalReviews
+  ratingBreakdown.reduce((sum, r) => sum + r.stars * r.count, 0) /
+  totalReviews
 ).toFixed(1);
 
-/* ------------------ STAR ROW ------------------ */
-
-const Stars = ({ rating, size = 16 }: { rating: number; size?: number }) => (
+/* ─── Stars ─── */
+const Stars = ({
+  rating,
+  size = 14,
+}: {
+  rating: number;
+  size?: number;
+}) => (
   <div className="flex items-center gap-0.5">
     {Array.from({ length: 5 }).map((_, i) => (
       <IoMdStar
         key={i}
         size={size}
-        color={i < rating ? "#ccba78" : "#e5e5e5"}
+        color={i < rating ? "#ccba78" : "#e0ddd4"}
       />
     ))}
   </div>
 );
 
-/* ------------------ REVIEW CARD ------------------ */
-
+/* ─── Review Card ─── */
 const ReviewCard = ({ review }: { review: Review }) => (
-  <div className="border border-navy/50 rounded-2xl p-6 flex gap-6 items-start">
-    <div className="flex-1 flex flex-col gap-2">
-      {/* Name + verified */}
-      <div className="flex items-center gap-2">
-        <span className="font-medium text-sm">{review.name}</span>
-        {review.verified && (
-          <IoMdCheckmarkCircle size={16} className="text-gold" />
+  <div
+    className="
+      group rounded-2xl px-6 py-5 border transition-all duration-200
+      bg-[#faf7ed] border-gold/40 hover:border-gold
+    "
+  >
+    <div className="flex flex-col gap-4">
+      
+      {/* Top section */}
+      <div className="flex justify-between items-start gap-4">
+        
+        {/* Left */}
+        <div className="flex flex-col min-w-0">
+          <span className="font-semibold text-sm tracking-tight">
+            {review.name}
+          </span>
+
+          {review.verified && (
+            <span className="flex items-center gap-1 text-[10px] text-black/40 mt-0.5">
+              <IoMdCheckmarkCircle size={11} className="text-gold" />
+              Verified Buyer
+            </span>
+          )}
+        </div>
+
+        {/* Date */}
+        <span className="text-[11px] text-black/30 shrink-0">
+          {review.date}
+        </span>
+      </div>
+
+      {/* Desktop */}
+      <div className="hidden md:flex gap-5 items-start">
+        
+        {/* Content */}
+        <div className="flex-1 flex flex-col gap-3">
+          <Stars rating={review.rating} size={13} />
+
+          <p className="text-sm text-black/65 leading-relaxed">
+            {review.comment}
+          </p>
+
+          <div className="mt-1">
+            <span className="text-[11px] uppercase tracking-widest text-black/30 font-medium">
+              Item type:{" "}
+            </span>
+            <span className="text-[11px] text-black/50 font-semibold">
+              {review.itemType}
+            </span>
+          </div>
+        </div>
+
+        {/* Image */}
+        {review.image && (
+          <div
+            className="w-20 h-20 rounded-xl shrink-0 border border-black/8 bg-black/5"
+            style={{
+              backgroundImage: `url(${review.image})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
         )}
       </div>
 
-      {/* Date */}
-      <span className="text-xs text-black/40">{review.date}</span>
+      {/* Mobile + Tablet */}
+      <div className="flex md:hidden flex-col gap-4">
+        <Stars rating={review.rating} size={13} />
 
-      {/* Stars */}
-      <Stars rating={review.rating} size={14} />
+        <p className="text-sm text-black/65 leading-relaxed">
+          {review.comment}
+        </p>
 
-      {/* Comment */}
-      <p className="text-sm text-black/70 leading-relaxed mt-1">
-        {review.comment}
-      </p>
+        <div>
+          <span className="text-[11px] uppercase tracking-widest text-black/30 font-medium">
+            Item type:{" "}
+          </span>
+          <span className="text-[11px] text-black/50 font-semibold">
+            {review.itemType}
+          </span>
+        </div>
 
-      {/* Item type */}
-      <div className="mt-2">
-        <span className="text-xs text-black/40">Item type: </span>
-        <span className="text-xs text-black/60 font-medium">{review.itemType}</span>
+        {/* Image bottom */}
+        {review.image && (
+          <div
+            className="w-[50%] max-sm:w-full h-48 rounded-xl border border-black/8 bg-black/5"
+            style={{
+              backgroundImage: `url(${review.image})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+        )}
       </div>
     </div>
-
-    {/* Photo */}
-    {review.image && (
-      <div
-        className="w-24 h-24 rounded-xl overflow-hidden shrink-0 border border-black/10 bg-black/5"
-        style={{
-          backgroundImage: `url(${review.image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-    )}
   </div>
 );
 
-/* ------------------ WRITE REVIEW FORM ------------------ */
-
+/* ─── Write Review Form ─── */
 const WriteReview = ({ onClose }: { onClose: () => void }) => {
   const [hovered, setHovered] = useState(0);
   const [selected, setSelected] = useState(0);
   const [comment, setComment] = useState("");
 
   return (
-    <div className="border-2 border-gold/40 lg:w-[60%] w-full mx-auto rounded-2xl p-6 flex flex-col  gap-5 bg-gold/5">
+    <div className="border-2 border-gold/40 rounded-2xl p-6 flex flex-col gap-5 bg-[#faf7ed] lg:w-[60%] mx-auto">
       <div className="flex items-center justify-between">
         <h3 className="font-serif text-xl">Write a Review</h3>
+
         <button
           onClick={onClose}
-          className="text-black/40 hover:text-black transition"
+          className="text-black/30 hover:text-black transition"
         >
-          <FaPlus size={14} className="rotate-45" />
+          <FaPlus size={13} className="rotate-45" />
         </button>
       </div>
 
-      {/* Star picker */}
-      <div className="flex flex-col gap-1 ">
-        <span className="text-xs text-black/50 font-medium">Your Rating</span>
+      <div className="flex flex-col gap-1">
+        <span className="text-[11px] uppercase tracking-widest text-black/40 font-medium">
+          Your Rating
+        </span>
+
         <div className="flex gap-1">
           {Array.from({ length: 5 }).map((_, i) => (
             <button
@@ -174,8 +241,8 @@ const WriteReview = ({ onClose }: { onClose: () => void }) => {
               onClick={() => setSelected(i + 1)}
             >
               <IoMdStar
-                size={28}
-                color={i < (hovered || selected) ? "#ccba78" : "#e5e5e5"}
+                size={30}
+                color={i < (hovered || selected) ? "#ccba78" : "#e0ddd4"}
                 className="transition-colors cursor-pointer"
               />
             </button>
@@ -183,22 +250,23 @@ const WriteReview = ({ onClose }: { onClose: () => void }) => {
         </div>
       </div>
 
-      {/* Comment */}
       <div className="flex flex-col gap-1">
-        <span className="text-xs text-black/50 font-medium">Your Review</span>
+        <span className="text-[11px] uppercase tracking-widest text-black/40 font-medium">
+          Your Review
+        </span>
+
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           rows={4}
           placeholder="Share your experience with this product..."
-          className="w-full border border-black/20 rounded-xl px-4 py-3 text-sm resize-none outline-none focus:border-gold transition bg-white placeholder:text-black/30"
+          className="w-full border border-black/15 rounded-xl px-4 py-3 text-sm resize-none outline-none focus:border-gold/70 transition bg-white placeholder:text-black/25"
         />
       </div>
 
-      {/* Submit */}
       <button
         disabled={!selected || !comment.trim()}
-        className="py-3 rounded-full border-2 border-gold bg-gold/40 text-sm font-medium hover:bg-navy hover:text-white transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+        className="py-3 rounded-full border-2 border-gold bg-gold/30 text-sm font-semibold tracking-wide hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 disabled:opacity-35 disabled:cursor-not-allowed cursor-pointer"
       >
         Submit Review
       </button>
@@ -206,8 +274,7 @@ const WriteReview = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-/* ------------------ MAIN COMPONENT ------------------ */
-
+/* ─── Main ─── */
 const CustomerReviews = () => {
   const [showForm, setShowForm] = useState(false);
   const [filter, setFilter] = useState<number | null>(null);
@@ -217,49 +284,66 @@ const CustomerReviews = () => {
     : reviews;
 
   return (
-    <div className="max-w-[1440px] mx-auto mt-20 px-16 max-lg:px-8 max-md:px-5 border relative  border-navy py-10 rounded-xl">
-
-      {/* Section Header */}
-      <div className="flex items-end justify-between mb-10 relative ">
-        <h2 className="font-serif   text-[clamp(2rem,3.33vw,3rem)] leading-none">
+    <div className="max-w-[1440px] mx-auto mt-20 px-16 max-lg:px-8 max-md:px-5 border border-navy/20 py-12 rounded-2xl bg-white">
+      
+      {/* Header */}
+      <div className="flex items-end justify-between mb-10">
+        <h2 className="font-serif text-[clamp(2rem,3.33vw,3rem)] leading-none">
           Customer Reviews
         </h2>
+
         <button
           onClick={() => setShowForm((s) => !s)}
-          className="px-6 py-2.5 rounded-full border-2 border-gold bg-gold/20 text-sm font-medium hover:bg-navy hover:text-white transition-all duration-200 cursor-pointer hidden md:block"
+          className="px-6 py-2.5 rounded-full border-2 border-gold text-sm font-semibold tracking-wide hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 cursor-pointer hidden md:block"
         >
           {showForm ? "Cancel" : "Write a Review"}
         </button>
       </div>
 
-      {/* Summary + Breakdown */}
-      <div className="flex gap-16 lg:justify-center items-start max-md:flex-col max-md:gap-8 mb-10">
-
-        {/* Left — big number */}
+      {/* Summary */}
+      <div className="flex gap-14 lg:justify-center items-center max-md:flex-col max-md:gap-8 mb-10 bg-[#faf7ed] border border-gold/30 rounded-2xl px-8 py-7">
+        
+        {/* Score */}
         <div className="flex flex-col items-center gap-2 shrink-0">
-          <IoMdStar size={48} color="#ccba78" />
-          <span className="text-5xl font-semibold tracking-tight">{avgRating}</span>
-          <span className="text-sm text-black/50">{totalReviews} Reviews</span>
+          <IoMdStar size={44} color="#ccba78" />
+
+          <span className="text-6xl font-bold tracking-tight leading-none">
+            {avgRating}
+          </span>
+
+          <Stars rating={Math.round(parseFloat(avgRating))} size={16} />
+
+          <span className="text-xs text-black/40 mt-1">
+            {totalReviews} Reviews
+          </span>
         </div>
 
-        {/* Right — bars */}
-        <div className="flex flex-col gap-2.5 w-full  lg:w-[500px]">
+        {/* Bars */}
+        <div className="flex flex-col gap-2.5 w-full lg:w-[480px]">
           {ratingBreakdown.map((row) => {
             const pct = Math.round((row.count / totalReviews) * 100);
+            const isActive = filter === row.stars;
+
             return (
               <button
                 key={row.stars}
-                onClick={() => setFilter(filter === row.stars ? null : row.stars)}
+                onClick={() =>
+                  setFilter(filter === row.stars ? null : row.stars)
+                }
                 className="flex items-center gap-3 group cursor-pointer"
               >
-                <Stars rating={row.stars} size={13} />
-                <div className="flex-1 h-2 rounded-full bg-black/10 overflow-hidden">
+                <Stars rating={row.stars} size={12} />
+
+                <div className="flex-1 h-1.5 rounded-full bg-black/10 overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-gold transition-all duration-500"
+                    className={`h-full rounded-full transition-all duration-500 ${
+                      isActive ? "bg-navy" : "bg-gold"
+                    }`}
                     style={{ width: `${pct}%` }}
                   />
                 </div>
-                <span className="text-xs text-black/40 w-8 text-right">
+
+                <span className="text-xs text-black/35 w-8 text-right">
                   ({row.count})
                 </span>
               </button>
@@ -267,46 +351,52 @@ const CustomerReviews = () => {
           })}
         </div>
 
-        {/* Filter + Write on mobile */}
+        {/* Mobile buttons */}
         <div className="flex items-center gap-3 md:hidden w-full">
           <button
             onClick={() => setShowForm((s) => !s)}
-            className="flex-1 py-2.5 rounded-full border-2 border-gold bg-gold/20 text-sm font-medium"
+            className="flex-1 py-2.5 rounded-full border-2 border-gold text-sm font-semibold"
           >
             {showForm ? "Cancel" : "Write a Review"}
           </button>
-          <button className="w-10 h-10 rounded-full border border-black/20 flex items-center justify-center">
-            <FiSliders size={16} />
+
+          <button className="w-10 h-10 rounded-full border border-black/15 flex items-center justify-center">
+            <FiSliders size={15} />
           </button>
         </div>
       </div>
 
-      {/* Active filter badge */}
+      {/* Active filter */}
       {filter && (
         <div className="mb-6 flex items-center gap-2">
-          <span className="text-sm text-black/50">Showing {filter}-star reviews</span>
+          <span className="text-sm text-black/45">
+            Showing {filter}-star reviews
+          </span>
+
           <button
             onClick={() => setFilter(null)}
-            className="text-xs px-3 py-1 rounded-full bg-black/10 hover:bg-black/20 transition"
+            className="text-xs px-3 py-1 rounded-full bg-black/8 hover:bg-black/15 transition"
           >
             Clear
           </button>
         </div>
       )}
 
-      {/* Write Review Form */}
+      {/* Form */}
       {showForm && (
         <div className="mb-8">
           <WriteReview onClose={() => setShowForm(false)} />
         </div>
       )}
 
-      {/* Review Cards */}
-      <div className="flex flex-col gap-4">
+      {/* Cards */}
+      <div className="flex flex-col gap-3">
         {filtered.length > 0 ? (
-          filtered.map((r) => <ReviewCard key={r.id} review={r} />)
+          filtered.map((r) => (
+            <ReviewCard key={r.id} review={r} />
+          ))
         ) : (
-          <p className="text-sm text-black/40 py-10 text-center">
+          <p className="text-sm text-black/35 py-12 text-center">
             No reviews for this rating yet.
           </p>
         )}

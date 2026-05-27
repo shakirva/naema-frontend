@@ -177,6 +177,7 @@ const ProductCarousel = ({ title, description, products: propProducts, fetchBest
   const [products, setProducts] = useState<MedusaProduct[]>(propProducts ?? []);
 
   useEffect(() => {
+    let ignore = false;
     if (propProducts && propProducts.length > 0) {
       setProducts(propProducts);
       return;
@@ -184,9 +185,17 @@ const ProductCarousel = ({ title, description, products: propProducts, fetchBest
     // Fetch products from Medusa
     const load = async () => {
       const res = await getProducts({ limit: 10, order: fetchBestsellers ? "-created_at" : undefined });
-      setProducts(res.products);
+      if (!ignore) {
+        setProducts(res.products);
+      }
     };
-    load();
+    // Only fetch internally if propProducts is strictly undefined (meaning it's not being managed by a parent)
+    if (propProducts === undefined) {
+      load();
+    }
+    return () => {
+      ignore = true;
+    };
   }, [propProducts, fetchBestsellers]);
 
   const SCROLL_AMOUNT = 320;

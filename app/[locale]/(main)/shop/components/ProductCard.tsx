@@ -19,13 +19,12 @@ const ProductCard = ({
 
   return (
     <div className="flex flex-col gap-3 group">
-      {/* Clickable area → product page */}
       <Link
         href={`/shop/${category}/${product.id}`}
         className="flex flex-col gap-3"
       >
         {/* Image */}
-        <div className="relative w-full h-[260px] rounded-2xl overflow-hidden">
+        <div className="relative w-full h-[260px] rounded-2xl overflow-hidden border-2 border-[#ccba78]">
           <Image
             src={product.image}
             alt={product.name}
@@ -50,9 +49,7 @@ const ProductCard = ({
         </div>
 
         {/* Name */}
-        <h3 className="text-[15px] font-medium leading-tight">
-          {product.name}
-        </h3>
+        <h3 className="text-[15px] font-medium leading-tight">{product.name}</h3>
 
         {/* Tags */}
         <div className="flex gap-2 flex-wrap">
@@ -86,12 +83,17 @@ const ProductCard = ({
             name: product.name,
             price: product.price,
             image: product.image,
-            size: "500g", // default size
+            size: "500g",
           });
         }}
-        className="mt-auto py-3 rounded-full border-2 hover:border-gold hover:bg-gold/40 hover:text-black text-sm font-medium bg-navy text-white transition-all duration-200 cursor-pointer"
+        className="mt-auto relative rounded-full border-2 border-gold bg-gold/40 font-bold tracking-tight text-sm cursor-pointer group/btn overflow-hidden"
       >
-        {added ? "Added ✓" : "Add to Cart"}
+        <span className="block py-3 group-hover/btn:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+          {added ? "Added ✓" : "Add to Cart"}
+        </span>
+        <span className="block absolute inset-0 py-3 bg-navy text-white border-2 border-navy rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover/btn:scale-[1] group-hover/btn:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)] flex items-center justify-center">
+          {added ? "Added ✓" : "Add to Cart"}
+        </span>
       </button>
     </div>
   );

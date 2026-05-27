@@ -39,7 +39,7 @@ const ProductDetail = () => {
     <>
       <section className="px-16 py-16 max-lg:px-8 max-md:px-5 bg-cream min-h-screen">
         <div className="max-w-[1440px] mx-auto flex max-lg:flex-col   items-start gap-16">
-          <div className="w-1/2 max-lg:w-full border-2 border-black rounded-2xl overflow-hidden   self-start shrink-0">
+          <div className="w-1/2 max-lg:w-full border-2 border-gold rounded-2xl overflow-hidden   self-start shrink-0">
             <div className="relative w-full h-[500px] max-lg:h-[350px]">
               <Image
                 src={product.image}
@@ -124,8 +124,18 @@ const ProductDetail = () => {
               </div>
 
               {/* Add to cart */}
-              <button className="flex-1 py-3  rounded-full bg-navy text-white border-2 border-gold hover:bg-transparent hover:text-black transition">
-                Add to Cart
+              <button
+                onClick={() => {
+                  /* your existing cart logic if any */
+                }}
+                className="flex-1 relative rounded-full border-2 border-gold bg-navy text-white overflow-hidden group cursor-pointer"
+              >
+                <span className="block py-3 group-hover:-translate-y-full font-medium tracking-tight transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+                  Add to Cart
+                </span>
+                <span className="block absolute font-medium tracking-tight inset-0 py-3 bg-[#E7DCB7] text-navy rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)] flex items-center justify-center">
+                  Add to Cart
+                </span>
               </button>
             </div>
             {/* Price */}

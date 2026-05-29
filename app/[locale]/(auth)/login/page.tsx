@@ -1,15 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { FiEye, FiEyeOff, FiMail, FiLock } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
+import { login } from "../../../actions";
 
 const LoginPage = () => {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
+      
+      const res = await login(formData);
+      if (res.error) {
+        setError(res.error);
+      } else if (res.success) {
+        router.push("/account");
+      }
+    });
+  };
 
   return (
     <section className="min-h-screen bg-cream flex">
@@ -58,7 +80,12 @@ const LoginPage = () => {
           </div>
 
           {/* Google SSO */}
-          <button className="w-full flex items-center justify-center gap-3 py-3.5 rounded-full border-2 border-black/10 bg-white hover:border-gold transition-all duration-200 text-sm font-medium cursor-pointer">
+          <button
+            onClick={() => {
+              window.location.href = "/auth/customer/google";
+            }}
+            className="w-full flex items-center justify-center gap-3 py-3.5 rounded-full border-2 border-black/10 bg-white hover:border-gold transition-all duration-200 text-sm font-medium cursor-pointer"
+          >
             <FcGoogle size={20} />
             Continue with Google
           </button>
@@ -71,7 +98,9 @@ const LoginPage = () => {
           </div>
 
           {/* Form */}
-          <div className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+            {error && <div className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">{error}</div>}
+
 
             {/* Email */}
             <div className="relative">
@@ -111,12 +140,15 @@ const LoginPage = () => {
               Forgot your password?
             </Link></div>
             
-          </div>
-
           {/* Submit */}
-          <button className="w-full py-4 rounded-full bg-navy text-cream text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer ">
-            Sign In
+          <button 
+            type="submit" 
+            disabled={isPending}
+            className="w-full py-4 rounded-full bg-navy text-cream text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer disabled:opacity-50"
+          >
+            {isPending ? "Signing In..." : "Sign In"}
           </button>
+          </form>
 
           {/* Help */}
           <p className="text-xs text-black/50 text-center leading-relaxed">

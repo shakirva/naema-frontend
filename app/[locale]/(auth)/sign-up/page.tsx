@@ -1,17 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { FiEye, FiEyeOff, FiMail, FiLock, FiUser } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { IoMdCheckmark } from "react-icons/io";
+import { signup } from "../../../actions";
 
 const SignupPage = () => {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [emailUpdates, setEmailUpdates] = useState(true);
-  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("first_name", firstName);
+      formData.append("last_name", lastName);
+      formData.append("email", email);
+      formData.append("password", password);
+      
+      const res = await signup(formData);
+      if (res.error) {
+        setError(res.error);
+      } else if (res.success) {
+        router.push("/account");
+      }
+    });
+  };
 
   const passwordStrength = password.length === 0
     ? null
@@ -88,7 +122,12 @@ const SignupPage = () => {
           </div>
 
           {/* Google SSO */}
-          <button className="w-full flex items-center justify-center gap-3 py-3.5 rounded-full border-2 border-black/10 bg-white hover:border-gold transition-all duration-200 text-sm font-medium cursor-pointer">
+          <button
+            onClick={() => {
+              window.location.href = "/auth/customer/google";
+            }}
+            className="w-full flex items-center justify-center gap-3 py-3.5 rounded-full border-2 border-black/10 bg-white hover:border-gold transition-all duration-200 text-sm font-medium cursor-pointer"
+          >
             <FcGoogle size={20} />
             Continue with Google
           </button>
@@ -101,7 +140,8 @@ const SignupPage = () => {
           </div>
 
           {/* Form */}
-          <div className="flex flex-col gap-4">
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+            {error && <div className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">{error}</div>}
 
             {/* Name row */}
             <div className="flex gap-3">
@@ -110,14 +150,20 @@ const SignupPage = () => {
                 <input
                   type="text"
                   placeholder="First name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   className="w-full border border-black/20 rounded-xl pl-10 pr-4 py-3.5 text-sm outline-none focus:border-gold transition-colors bg-white placeholder:text-black/30"
+                  required
                 />
               </div>
               <div className="relative flex-1">
                 <input
                   type="text"
                   placeholder="Last name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   className="w-full border border-black/20 rounded-xl px-4 py-3.5 text-sm outline-none focus:border-gold transition-colors bg-white placeholder:text-black/30"
+                  required
                 />
               </div>
             </div>
@@ -128,7 +174,10 @@ const SignupPage = () => {
               <input
                 type="email"
                 placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full border border-black/20 rounded-xl pl-10 pr-4 py-3.5 text-sm outline-none focus:border-gold transition-colors bg-white placeholder:text-black/30"
+                required
               />
             </div>
 
@@ -177,7 +226,10 @@ const SignupPage = () => {
               <input
                 type={showConfirm ? "text" : "password"}
                 placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full border border-black/20 rounded-xl pl-10 pr-12 py-3.5 text-sm outline-none focus:border-gold transition-colors bg-white placeholder:text-black/30"
+                required
               />
               <button
                 onClick={() => setShowConfirm((s) => !s)}
@@ -201,12 +253,15 @@ const SignupPage = () => {
                 Email me with exclusive offers, new arrivals and Naema updates.
               </span>
             </label>
-          </div>
-
           {/* Submit */}
-          <button className="w-full py-4 rounded-full bg-navy text-cream text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer">
-            Create Account
+          <button 
+            type="submit" 
+            disabled={isPending}
+            className="w-full py-4 rounded-full bg-navy text-cream text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer disabled:opacity-50"
+          >
+            {isPending ? "Creating Account..." : "Create Account"}
           </button>
+          </form>
 
           {/* Terms */}
           <p className="text-xs text-black/50 text-center leading-relaxed">

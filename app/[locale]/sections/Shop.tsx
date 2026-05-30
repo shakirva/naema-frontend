@@ -127,19 +127,12 @@ const Shop = () => {
             pb-4 lg:pb-0
             -mx-5 px-5 md:-mx-8 md:px-8 lg:mx-0 lg:px-0"
         >
-          {(categories.length > 0
-            ? categories.map((cat) => ({
-                src: (cat.metadata?.image_url as string) || categoryImages[cat.handle] || "/n1.jpg",
-                label: cat.name,
-                href: `/shop/${cat.handle}`,
-              }))
-            : [
-                { src: "/dbox.jpg", label: "Dates", href: "/shop/dates" },
-                { src: "/nuts.jpg", label: "Nuts", href: "/shop/nuts" },
-                { src: "/dry.jpg", label: "Dry Fruits", href: "/shop/dry-fruits" },
-                { src: "/chocos.jpg", label: "Chocolates", href: "/shop/chocolates" },
-              ]
-          ).map(({ src, label, href }) => (
+          {([
+            { src: "/dbox.jpg", label: "Dates", href: "/shop/dates" },
+            { src: "/nuts.jpg", label: "Nuts", href: "/shop/nuts" },
+            { src: "/dry.jpg", label: "Dry Fruits", href: "/shop/dry-fruits" },
+            { src: "/chocos.jpg", label: "Chocolates", href: "/shop/chocolates" },
+          ]).map(({ src, label, href }) => (
             <Link
               key={label}
               href={href}

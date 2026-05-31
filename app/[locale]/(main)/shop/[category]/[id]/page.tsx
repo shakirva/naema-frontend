@@ -72,7 +72,7 @@ const ProductDetail = () => {
     setTimeout(() => setAdding(false), 1500);
   };
 
-  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
+  const thumbnail = product.thumbnail || product.images?.[0]?.url;
   const tags = product.tags?.map((t) => t.value) ?? [];
   const variant = product.variants?.find(v => v.title === selectedSize) || getCheapestVariant(product);
   
@@ -84,13 +84,17 @@ const ProductDetail = () => {
       <section className="px-16 py-16 max-lg:px-8 max-md:px-5 bg-cream min-h-screen mt-[90px]">
         <div className="max-w-[1440px] mx-auto flex max-lg:flex-col items-start gap-16">
           <div className="w-1/2 max-lg:w-full border-2 border-black rounded-2xl overflow-hidden self-start shrink-0">
-            <div className="relative w-full h-[500px] max-lg:h-[350px]">
-              <Image
-                src={thumbnail}
-                alt={product.title}
-                fill
-                className="object-cover"
-              />
+            <div className="relative w-full h-[500px] max-lg:h-[350px] bg-cream flex items-center justify-center">
+              {thumbnail ? (
+                <Image
+                  src={thumbnail}
+                  alt={product.title}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <span className="text-black/20 text-lg font-medium">No Image</span>
+              )}
             </div>
           </div>
 
@@ -174,7 +178,7 @@ const ProductDetail = () => {
               {/* Add to cart */}
               <button 
                 onClick={handleAddToCart}
-                disabled={!variant || adding}
+                disabled={!variant || adding || price === 0}
                 className="flex-1 py-3 rounded-full bg-navy text-white border-2 border-gold hover:bg-transparent hover:text-black transition disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {adding ? "Added ✓" : "Add to Cart"}
@@ -182,8 +186,8 @@ const ProductDetail = () => {
             </div>
             {/* Price */}
             <p className="text-2xl font-semibold tracking-tight mt-4">
-              {formatPrice(price * qty)}
-              {qty > 1 && (
+              {price === 0 ? "Price Unavailable" : formatPrice(price * qty)}
+              {qty > 1 && price > 0 && (
                 <span className="text-sm font-normal text-black/40 ml-2">
                   ({formatPrice(price)} × {qty})
                 </span>

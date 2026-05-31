@@ -20,7 +20,7 @@ const ProductCard = ({
   const variant = getCheapestVariant(product);
   const price = getProductPrice(product);
 
-  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
+  const thumbnail = product.thumbnail || product.images?.[0]?.url;
   const tags = product.tags?.map((t) => t.value) ?? [];
 
   return (
@@ -31,14 +31,18 @@ const ProductCard = ({
         className="flex flex-col gap-3"
       >
         {/* Image */}
-        <div className="relative w-full h-[260px] rounded-2xl overflow-hidden bg-cream">
-          <Image
-            src={thumbnail}
-            alt={product.title}
-            fill
-            className="object-cover group-hover:scale-[1.05] transition-all duration-300"
-            sizes="(max-width: 768px) 50vw, 25vw"
-          />
+        <div className="relative w-full h-[260px] rounded-2xl overflow-hidden bg-cream flex items-center justify-center">
+          {thumbnail ? (
+            <Image
+              src={thumbnail}
+              alt={product.title}
+              fill
+              className="object-cover group-hover:scale-[1.05] transition-all duration-300"
+              sizes="(max-width: 768px) 50vw, 25vw"
+            />
+          ) : (
+            <span className="text-black/20 text-sm font-medium">No Image</span>
+          )}
         </div>
 
         {/* Stars */}
@@ -78,13 +82,13 @@ const ProductCard = ({
 
         {/* Price */}
         <p className="font-semibold text-[15px]">
-          {formatPrice(price)}
+          {price === 0 ? "Price Unavailable" : formatPrice(price)}
         </p>
       </Link>
 
       {/* Button — outside Link so it doesn't navigate */}
       <button
-        disabled={!variant}
+        disabled={!variant || price === 0}
         onClick={async () => {
           if (!variant) return;
           setAdded(true);

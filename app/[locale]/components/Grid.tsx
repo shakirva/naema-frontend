@@ -1,30 +1,32 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import React from "react";
 import ComboBundle from "../sections/ComboBundle";
+import { getCollections } from "@/lib/api";
 
-const items = [
-  {
-    title: "The Royal Ajwa",
-    image: "/chocolate.png",
-    height: "lg:row-span-2",
-  },
-  {
-    title: "The Sweetness of Tradition",
-    image: "/dn.png",
-  },
-  {
-    title: "The Caramelly Classic",
-    image: "/datedark.png",
-  },
-  {
-    title: "An Exquisite Symphony",
-    image: "/misc.png",
-    height: "lg:row-span-2",
-  },
-];
+const Grid = async () => {
+  const collections = await getCollections();
 
-const Grid = () => {
+  const fallbackItems = [
+    { title: "The Royal Ajwa", image: "/chocolate.png", height: "lg:row-span-2", href: "/shop" },
+    { title: "The Sweetness of Tradition", image: "/dn.png", height: "", href: "/shop" },
+    { title: "The Caramelly Classic", image: "/datedark.png", height: "", href: "/shop" },
+    { title: "An Exquisite Symphony", image: "/misc.png", height: "lg:row-span-2", href: "/shop" },
+  ];
+
+  const items = fallbackItems.map((fallback, i) => {
+    const col = collections[i];
+    if (col) {
+      return {
+        title: col.title,
+        image: (col.metadata?.image as string) || fallback.image,
+        height: fallback.height,
+        href: `/shop/${col.handle}`,
+      };
+    }
+    return fallback;
+  });
+
   return (
     <section className="w-full bg-[#0A223A] px-5 md:px-8 lg:px-16 py-16 md:py-24 lg:rounded-t-[200px] md:rounded-t-[120px] rounded-t-[60px] border-t-10 border-darkgold relative overflow-hidden">
       {/* Background */}
@@ -59,7 +61,7 @@ const Grid = () => {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.9fr_1fr] gap-5 lg:auto-rows-[280px]">
             {/* Left Tall Card */}
             <Link
-              href="/shop"
+              href={items[0].href}
               className={`
                 group relative overflow-hidden rounded-[28px]
                 border-2 border-gold
@@ -89,7 +91,7 @@ const Grid = () => {
               {items.slice(1, 3).map((item) => (
                 <Link
                   key={item.title}
-                  href="/shop"
+                  href={item.href}
                   className="
                     group relative overflow-hidden
                     rounded-[28px]
@@ -119,7 +121,7 @@ const Grid = () => {
 
             {/* Right Tall Card */}
             <Link
-              href="/shop"
+              href={items[3].href}
               className={`
                 group relative overflow-hidden rounded-[28px]
                 border-2 border-gold
@@ -151,7 +153,7 @@ const Grid = () => {
           <div className="grid grid-cols-1 gap-5">
             {/* Card 1 — full width */}
             <Link
-              href="/shop"
+              href={items[0].href}
               className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-[350px]"
             >
               <Image
@@ -176,11 +178,11 @@ const Grid = () => {
               {items.slice(1, 3).map((item) => (
                 <Link
                   key={item.title}
-                  href="/shop"
+                  href={item.href}
                   className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-[320px]"
                 >
                   <Image
-                    src={item.image}
+                     src={item.image}
                     alt={item.title}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
@@ -200,7 +202,7 @@ const Grid = () => {
 
             {/* Card 4 — full width */}
             <Link
-              href="/shop"
+              href={items[3].href}
               className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-[350px]"
             >
               <Image

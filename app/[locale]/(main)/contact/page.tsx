@@ -1,6 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import {
   FiMail,
   FiMapPin,
@@ -10,6 +12,23 @@ import {
 import Footer from "../../sections/Footer";
 
 const page = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const targetEmails = "shakirshaki245@gmail.com,neamafoodstuff@gmail.com";
+    const mailtoSubject = encodeURIComponent(`Naema Inquiry: ${formData.subject || "Contact Form"}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    window.location.href = `mailto:${targetEmails}?subject=${mailtoSubject}&body=${body}`;
+  };
+
   return (
     <>
     <main className="w-full bg-cream overflow-hidden">
@@ -164,7 +183,7 @@ const page = () => {
               </h3>
             </div>
 
-            <form className="flex flex-col gap-5 mt-10">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-10">
               {/* Name */}
               <div className="flex flex-col gap-2">
                 <label className="text-sm text-navy/70 tracking-tight">
@@ -173,6 +192,9 @@ const page = () => {
 
                 <input
                   type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Your name"
                   className="w-full h-[58px] rounded-xl border border-gold/30 bg-cream px-5 outline-none text-navy placeholder:text-navy/35"
                 />
@@ -186,6 +208,9 @@ const page = () => {
 
                 <input
                   type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="you@example.com"
                   className="w-full h-[58px] rounded-xl border border-gold/30 bg-cream px-5 outline-none text-navy placeholder:text-navy/35"
                 />
@@ -199,6 +224,9 @@ const page = () => {
 
                 <input
                   type="text"
+                  required
+                  value={formData.subject}
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="Wholesale, gifting, order inquiry..."
                   className="w-full h-[58px] rounded-xl border border-gold/30 bg-cream px-5 outline-none text-navy placeholder:text-navy/35"
                 />
@@ -211,6 +239,9 @@ const page = () => {
                 </label>
 
                 <textarea
+                  required
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Tell us more about your inquiry..."
                   className="w-full h-[180px] rounded-xl border border-gold/30 bg-cream px-5 py-4 outline-none resize-none text-navy placeholder:text-navy/35"
                 />

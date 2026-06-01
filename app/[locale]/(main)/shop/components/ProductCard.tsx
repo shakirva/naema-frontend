@@ -13,36 +13,32 @@ const ProductCard = ({
   category,
 }: {
   product: MedusaProduct;
-  category: string;
+  category?: string;
 }) => {
   const [added, setAdded] = useState(false);
   const { addToCart } = useCart();
   const variant = getCheapestVariant(product);
   const price = getProductPrice(product);
 
-  const thumbnail = product.thumbnail || product.images?.[0]?.url;
+  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
   const tags = product.tags?.map((t) => t.value) ?? [];
 
   return (
     <div className="flex flex-col gap-3 group">
       {/* Clickable area → product page */}
       <Link
-        href={`/shop/${category}/${product.handle}`}
+        href={`/shop/${category || product.categories?.[0]?.handle || "all"}/${product.handle}`}
         className="flex flex-col gap-3"
       >
         {/* Image */}
-        <div className="relative w-full h-[260px] rounded-2xl overflow-hidden bg-cream flex items-center justify-center">
-          {thumbnail ? (
-            <Image
-              src={thumbnail}
-              alt={product.title}
-              fill
-              className="object-cover group-hover:scale-[1.05] transition-all duration-300"
-              sizes="(max-width: 768px) 50vw, 25vw"
-            />
-          ) : (
-            <span className="text-black/20 text-sm font-medium">No Image</span>
-          )}
+        <div className="relative w-full h-[260px] rounded-2xl overflow-hidden bg-cream">
+          <Image
+            src={thumbnail}
+            alt={product.title}
+            fill
+            className="object-cover group-hover:scale-[1.05] transition-all duration-300"
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
         </div>
 
         {/* Stars */}
@@ -82,13 +78,13 @@ const ProductCard = ({
 
         {/* Price */}
         <p className="font-semibold text-[15px]">
-          {price === 0 ? "Price Unavailable" : formatPrice(price)}
+          {formatPrice(price)}
         </p>
       </Link>
 
       {/* Button — outside Link so it doesn't navigate */}
       <button
-        disabled={!variant || price === 0}
+        disabled={!variant}
         onClick={async () => {
           if (!variant) return;
           setAdded(true);

@@ -1,17 +1,15 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, usePathname } from "@/i18n/routing";
 import Image from "next/image";
-import {
-  FiSearch,
-  FiUser,
-  FiShoppingCart,
-} from "react-icons/fi";
+import { FiSearch, FiUser, FiShoppingCart } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import { navLinks } from "../../constants";
 import { useCart } from "@/app/context/CartContext";
 import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
+import { getCategories } from "@/lib/api";
 
 const megaMenu = {
   columns: [
@@ -70,18 +68,18 @@ const megaMenu = {
   ],
 };
 
-const MegaMenu = () => (
+const MegaMenu = ({ categories }: { categories: any[] }) => (
   <div className="bg-cream border-t border-darkgold shadow-2xl w-full flex">
     <div className="flex flex-col flex-1 px-16 py-12 gap-10">
       <div className="grid grid-cols-4 gap-14">
-        {megaMenu.columns.map((col) => (
+        {categories.map((col) => (
           <div key={col.heading} className="flex flex-col gap-4">
             <span className="text-[10px] uppercase  text-black/60 font-bold">
               {col.heading}
             </span>
 
             <div className="flex flex-col gap-2.5">
-              {col.links.map((item) => (
+              {col.links.map((item: any) => (
                 <Link
                   key={item.label}
                   href={item.href}
@@ -142,6 +140,14 @@ const SearchOverlay = ({
   onClose: () => void;
 }) => {
   const [query, setQuery] = useState("");
+  const { push } = useRouter();
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && query.trim()) {
+      push(`/shop?search=${encodeURIComponent(query.trim())}`);
+      onClose();
+    }
+  };
 
   return (
     <div
@@ -169,6 +175,7 @@ const SearchOverlay = ({
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleSearch}
             placeholder="Search..."
             className="flex-1 bg-transparent text-navy placeholder-navy/40 text-[18px] tracking-tight outline-none"
           />
@@ -189,6 +196,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopHovered, setShopHovered] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [categories, setCategories] = useState<{ heading: string; links: { label: string; href: string }[] }[]>(megaMenu.columns);
 
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -209,6 +217,24 @@ const Header = () => {
       setShopHovered(false);
     }, 150);
   };
+
+  useEffect(() => {
+    getCategories().then((cats) => {
+      const parentCats = cats.filter((c) => !c.parent_category_id);
+      const dynamicCols = parentCats.map((parent) => {
+        const children = cats.filter((c) => c.parent_category_id === parent.id);
+        return {
+          heading: parent.name,
+          links: children.length > 0
+            ? children.map((child) => ({ label: child.name, href: `/shop/${child.handle}` }))
+            : [{ label: `All ${parent.name}`, href: `/shop/${parent.handle}` }],
+        };
+      });
+      if (dynamicCols.length > 0) {
+        setCategories(dynamicCols);
+      }
+    });
+  }, []);
 
   return (
     <header className="w-full relative z-[9999] bg-navy">
@@ -373,7 +399,7 @@ const Header = () => {
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
       >
-        <MegaMenu />
+        <MegaMenu categories={categories} />
       </div>
 
       <div
@@ -438,7 +464,7 @@ const Header = () => {
             Shop Categories
           </span>
 
-          {megaMenu.columns.map((col) => (
+          {categories.map((col) => (
             <Link
               key={col.heading}
               href={`/shop/${col.heading

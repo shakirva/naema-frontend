@@ -15,8 +15,9 @@ import { getProductPrice } from "@/lib/types";
 type SortOrder = "default" | "low-to-high" | "high-to-low";
 
 type Props = {
-  category: string;
+  category?: string;
   label: string;
+  searchQuery?: string;
 };
 
 /* ------------------ PRICE FILTER ------------------ */
@@ -59,7 +60,7 @@ const PriceFilter = ({
 
 /* ------------------ PRODUCT LISTING ------------------ */
 
-const ProductListing = ({ category, label }: Props) => {
+const ProductListing = ({ category, label, searchQuery }: Props) => {
   const [products, setProducts] = useState<MedusaProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
@@ -68,23 +69,32 @@ const ProductListing = ({ category, label }: Props) => {
     const load = async () => {
       setLoading(true);
       try {
-        // Try to find category by handle
-        const cat = await getCategoryByHandle(category);
-        if (cat) {
-          const res = await getProducts({ category_id: [cat.id], limit: 50 });
+        if (searchQuery) {
+          const res = await getProducts({ q: searchQuery, limit: 50 });
           setProducts(res.products);
-        } else {
-          // If not a category, check if it's a collection
-          const { getCollectionByHandle } = await import('@/lib/api');
-          const collection = await getCollectionByHandle(category);
-          if (collection) {
-            const res = await getProducts({ collection_id: [collection.id], limit: 50 });
+        } else if (category) {
+          // Try to find category by handle
+          const cat = await getCategoryByHandle(category);
+          if (cat) {
+            const res = await getProducts({ category_id: [cat.id], limit: 50 });
             setProducts(res.products);
           } else {
-            // Fallback: fetch all products
-            const res = await getProducts({ limit: 50 });
-            setProducts(res.products);
+            // If not a category, check if it's a collection
+            const { getCollectionByHandle } = await import('@/lib/api');
+            const collection = await getCollectionByHandle(category);
+            if (collection) {
+              const res = await getProducts({ collection_id: [collection.id], limit: 50 });
+              setProducts(res.products);
+            } else {
+              // Fallback: fetch all products
+              const res = await getProducts({ limit: 50 });
+              setProducts(res.products);
+            }
           }
+        } else {
+          // Fallback: fetch all products
+          const res = await getProducts({ limit: 50 });
+          setProducts(res.products);
         }
       } catch (err) {
         console.error("Failed to load products:", err);
@@ -93,7 +103,7 @@ const ProductListing = ({ category, label }: Props) => {
       }
     };
     load();
-  }, [category]);
+  }, [category, searchQuery]);
 
   const sortedProducts = useMemo(() => {
     const sorted = [...products];

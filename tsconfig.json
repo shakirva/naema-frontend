@@ -34,6 +34,13 @@
     "node_modules",
     "category-image-widget.tsx",
     "featured-product-widget.tsx",
-    "night-delivery-widget.tsx"
+    "night-delivery-widget.tsx",
+    "medusa-config-remote.ts",
+    "odoo-sync-job.ts",
+    "proxy.ts",
+    "rename-warehouse.js",
+    "test-api.js",
+    "test_cart_api.js",
+    "test_sdk.js"
   ]
 }

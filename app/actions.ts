@@ -304,3 +304,98 @@ export async function sendContactMessage(formData: FormData) {
     return { error: err.message || "Failed to send message. Please try again." };
   }
 }
+
+export async function updateCustomerDetails(data: { first_name?: string; last_name?: string; phone?: string }) {
+  const token = (await cookies()).get("_medusa_jwt")?.value;
+  if (!token) return { error: "Unauthorized" };
+
+  const backendUrl = getBackendUrl();
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "pk_ed2e2b7b35796dd735f8ca890ae87375a50d3e5ac2076922d317b3a52cb76042";
+
+  try {
+    const res = await fetch(`${backendUrl}/store/customers/me`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "x-publishable-api-key": publishableKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const resData = await res.json();
+    if (!res.ok) {
+      return { error: resData.message || "Failed to update profile details" };
+    }
+    return { success: true, customer: resData.customer };
+  } catch (err: any) {
+    console.error("Failed to update profile details:", err);
+    return { error: err.message || "Failed to update profile details" };
+  }
+}
+
+export async function addCustomerAddress(addressData: {
+  first_name: string;
+  last_name: string;
+  address_1: string;
+  address_2?: string;
+  city: string;
+  province: string;
+  postal_code: string;
+  country_code: string;
+  phone: string;
+}) {
+  const token = (await cookies()).get("_medusa_jwt")?.value;
+  if (!token) return { error: "Unauthorized" };
+
+  const backendUrl = getBackendUrl();
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "pk_ed2e2b7b35796dd735f8ca890ae87375a50d3e5ac2076922d317b3a52cb76042";
+
+  try {
+    const res = await fetch(`${backendUrl}/store/customers/me/addresses`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "x-publishable-api-key": publishableKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ address: addressData }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return { error: data.message || "Failed to add address" };
+    }
+    return { success: true };
+  } catch (err: any) {
+    console.error("Failed to add address:", err);
+    return { error: err.message || "Failed to add address" };
+  }
+}
+
+export async function deleteCustomerAddress(addressId: string) {
+  const token = (await cookies()).get("_medusa_jwt")?.value;
+  if (!token) return { error: "Unauthorized" };
+
+  const backendUrl = getBackendUrl();
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "pk_ed2e2b7b35796dd735f8ca890ae87375a50d3e5ac2076922d317b3a52cb76042";
+
+  try {
+    const res = await fetch(`${backendUrl}/store/customers/me/addresses/${addressId}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "x-publishable-api-key": publishableKey,
+      },
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return { error: data.message || "Failed to delete address" };
+    }
+    return { success: true };
+  } catch (err: any) {
+    console.error("Failed to delete address:", err);
+    return { error: err.message || "Failed to delete address" };
+  }
+}

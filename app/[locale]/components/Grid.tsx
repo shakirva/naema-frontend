@@ -44,6 +44,8 @@ const Grid = async () => {
     // 3. Fallback to static items
     return fallback;
   });
+
+  return (
     <section className="w-full bg-[#0A223A] px-5 md:px-8 lg:px-16 py-16 md:py-24 lg:rounded-t-[200px] md:rounded-t-[120px] rounded-t-[60px] border-t-10 border-darkgold relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 opacity-5">

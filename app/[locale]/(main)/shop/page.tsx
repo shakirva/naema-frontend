@@ -5,11 +5,12 @@ import ProductListing from "./components/ProductListing";
 import { getCategories } from "@/lib/api";
 
 type Props = {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }> | { [key: string]: string | string[] | undefined };
 };
 
 export default async function CategoryPage({ searchParams }: Props) {
-  const search = searchParams?.search as string | undefined;
+  const resolvedSearchParams = await searchParams;
+  const search = resolvedSearchParams?.search as string | undefined;
 
   if (search) {
     return <ProductListing label={`Search Results for "${search}"`} searchQuery={search} />;

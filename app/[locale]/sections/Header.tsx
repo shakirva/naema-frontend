@@ -69,16 +69,16 @@ const megaMenu = {
 };
 
 const MegaMenu = ({ categories }: { categories: any[] }) => (
-  <div className="bg-cream border-t border-darkgold shadow-2xl w-full flex">
-    <div className="flex flex-col flex-1 px-16 py-12 gap-10">
-      <div className="grid grid-cols-4 gap-14">
+  <div className="bg-cream border-x border-b border-darkgold/30 shadow-2xl rounded-b-[24px] overflow-hidden max-w-[1100px] mx-auto flex">
+    <div className="flex flex-col flex-1 px-10 py-8 gap-6">
+      <div className="grid grid-cols-4 gap-8">
         {categories.map((col) => (
-          <div key={col.heading} className="flex flex-col gap-4">
-            <span className="text-[10px] uppercase  text-black/60 font-bold">
+          <div key={col.heading} className="flex flex-col gap-3">
+            <span className="text-[10px] uppercase text-black/60 font-bold tracking-wider">
               {col.heading}
             </span>
 
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-2">
               {col.links.map((item: any) => (
                 <Link
                   key={item.label}
@@ -95,9 +95,9 @@ const MegaMenu = ({ categories }: { categories: any[] }) => (
 
       <Link
         href="/shop"
-        className="relative inline-flex w-fit overflow-hidden rounded-full border-2 border-gold bg-navy text-sm font-medium tracking-tight text-cream group"
+        className="relative inline-flex w-fit overflow-hidden rounded-full border border-gold bg-navy text-xs font-medium tracking-tight text-cream group"
       >
-        <span className="block px-6 py-2.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
+        <span className="block px-5 py-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
           Shop All
         </span>
 
@@ -107,12 +107,12 @@ const MegaMenu = ({ categories }: { categories: any[] }) => (
       </Link>
     </div>
 
-    <div className="flex gap-4 px-10 py-10 border-l border-darkgold/20">
+    <div className="flex gap-3 px-8 py-8 border-l border-darkgold/15 bg-black/[0.02]">
       {megaMenu.featured.map((f) => (
         <Link
           key={f.label}
           href={f.href}
-          className="relative w-[180px] h-[220px] overflow-hidden rounded-[24px] group"
+          className="relative w-[130px] h-[160px] overflow-hidden rounded-[16px] group"
         >
           <Image
             src={f.image}
@@ -121,9 +121,9 @@ const MegaMenu = ({ categories }: { categories: any[] }) => (
             className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/10" />
 
-          <span className="absolute bottom-5 left-5 right-5 font-serif text-[20px] leading-tight text-white">
+          <span className="absolute bottom-3 left-3 right-3 font-serif text-[15px] leading-tight text-white font-medium">
             {f.label}
           </span>
         </Link>
@@ -142,10 +142,16 @@ const SearchOverlay = ({
   const [query, setQuery] = useState("");
   const { push } = useRouter();
 
-  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && query.trim()) {
+  const triggerSearch = () => {
+    if (query.trim()) {
       push(`/shop?search=${encodeURIComponent(query.trim())}`);
       onClose();
+    }
+  };
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      triggerSearch();
     }
   };
 
@@ -168,7 +174,13 @@ const SearchOverlay = ({
         }`}
       >
         <div className="max-w-[1440px] mx-auto px-8 h-[80px] flex items-center gap-4">
-          <FiSearch size={22} className="text-gold shrink-0" />
+          <button
+            onClick={triggerSearch}
+            className="text-gold hover:text-darkgold transition-colors p-1"
+            title="Search"
+          >
+            <FiSearch size={22} className="shrink-0" />
+          </button>
 
           <input
             autoFocus={open}
@@ -181,8 +193,16 @@ const SearchOverlay = ({
           />
 
           <button
+            onClick={triggerSearch}
+            className="px-5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full bg-gold text-navy hover:bg-darkgold hover:text-cream transition-all duration-300"
+          >
+            Search
+          </button>
+
+          <button
             onClick={onClose}
-            className="text-navy/60 hover:text-navy transition-colors"
+            className="text-navy/60 hover:text-navy transition-colors p-1 ml-2 text-[20px]"
+            title="Close"
           >
             ✕
           </button>

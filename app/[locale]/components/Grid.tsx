@@ -2,10 +2,16 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import React from "react";
 import ComboBundle from "../sections/ComboBundle";
-import { getCollections } from "@/lib/api";
+import { getCollections, getProducts } from "@/lib/api";
 
 const Grid = async () => {
   const collections = await getCollections();
+  const { products } = await getProducts({ limit: 100 });
+
+  // Filter products by metadata.featured
+  const featuredProducts = products.filter(
+    (p) => p.metadata?.featured === true || p.metadata?.featured === "true" || p.metadata?.featured === "yes"
+  );
 
   const fallbackItems = [
     { title: "The Royal Ajwa", image: "/chocolate.png", height: "lg:row-span-2", href: "/shop" },
@@ -15,6 +21,17 @@ const Grid = async () => {
   ];
 
   const items = fallbackItems.map((fallback, i) => {
+    // 1. Try featured product first
+    const prod = featuredProducts[i];
+    if (prod) {
+      return {
+        title: prod.title,
+        image: prod.thumbnail || fallback.image,
+        height: fallback.height,
+        href: `/shop/${prod.categories?.[0]?.handle || "all"}/${prod.handle}`,
+      };
+    }
+    // 2. Try dynamic collection second
     const col = collections[i];
     if (col) {
       return {
@@ -24,10 +41,9 @@ const Grid = async () => {
         href: `/shop/${col.handle}`,
       };
     }
+    // 3. Fallback to static items
     return fallback;
   });
-
-  return (
     <section className="w-full bg-[#0A223A] px-5 md:px-8 lg:px-16 py-16 md:py-24 lg:rounded-t-[200px] md:rounded-t-[120px] rounded-t-[60px] border-t-10 border-darkgold relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 opacity-5">

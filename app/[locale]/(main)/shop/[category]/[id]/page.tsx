@@ -72,12 +72,28 @@ const ProductDetail = () => {
     setTimeout(() => setAdding(false), 1500);
   };
 
+  // Get best image with fallbacks
   const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
-  const tags = product.tags?.map((t) => t.value) ?? [];
-  const variant = product.variants?.find(v => v.title === selectedSize) || getCheapestVariant(product);
+  const tags = product.tags?.map((t) => t?.value).filter(Boolean) ?? [];
+  const variant = product.variants?.find(v => v?.title === selectedSize) || getCheapestVariant(product);
   
-  // Calculate price based on variant, or fallback to cheapest variant price
-  const price = variant ? (getLowestPrice(variant) ?? getProductPrice(product)) : getProductPrice(product);
+  // Calculate price with proper null checking
+  let price = 0;
+  if (variant) {
+    const variantPrice = getLowestPrice(variant);
+    if (variantPrice !== null) {
+      price = variantPrice;
+    } else {
+      price = getProductPrice(product) ?? 0;
+    }
+  } else {
+    price = getProductPrice(product) ?? 0;
+  }
+
+  // Ensure price is a number
+  if (typeof price !== 'number' || isNaN(price)) {
+    price = 0;
+  }
 
   return (
     <>

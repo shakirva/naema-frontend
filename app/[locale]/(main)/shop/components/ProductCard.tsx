@@ -18,10 +18,15 @@ const ProductCard = ({
   const [added, setAdded] = useState(false);
   const { addToCart } = useCart();
   const variant = getCheapestVariant(product);
-  const price = getProductPrice(product);
+  let price = getProductPrice(product) ?? 0;
+  
+  // Ensure price is valid
+  if (typeof price !== 'number' || isNaN(price)) {
+    price = 0;
+  }
 
   const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
-  const tags = product.tags?.map((t) => t.value) ?? [];
+  const tags = product.tags?.map((t) => t?.value).filter(Boolean) ?? [];
 
   return (
     <div className="flex flex-col gap-3 group">
@@ -34,7 +39,7 @@ const ProductCard = ({
         <div className="relative w-full h-[260px] rounded-2xl overflow-hidden bg-cream">
           <Image
             src={thumbnail}
-            alt={product.title}
+            alt={product.title || "Product"}
             fill
             className="object-cover group-hover:scale-[1.05] transition-all duration-300"
             sizes="(max-width: 768px) 50vw, 25vw"
@@ -57,7 +62,7 @@ const ProductCard = ({
 
         {/* Name */}
         <h3 className="text-[15px] font-medium leading-tight">
-          {product.title}
+          {product.title || "Untitled Product"}
         </h3>
 
         {/* Tags */}
@@ -71,7 +76,7 @@ const ProductCard = ({
                   : "border-black/20 text-black/70"
               }`}
             >
-              {tag}
+              {tag || "Tag"}
             </span>
           ))}
         </div>

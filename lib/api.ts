@@ -25,9 +25,20 @@ export async function getProducts(options?: {
     };
     if (options?.q) params.q = options.q;
     const res = await medusa.store.product.list(params);
+    
+    // Validate and filter products to ensure they have required fields
+    const products = (res.products ?? []) as unknown as MedusaProduct[];
+    const validProducts = products.filter(p => {
+      return p && 
+             typeof p === 'object' && 
+             p.id && 
+             p.title && 
+             Array.isArray(p.variants);
+    });
+    
     return {
-      products: (res.products ?? []) as unknown as MedusaProduct[],
-      count: res.count ?? 0,
+      products: validProducts,
+      count: validProducts.length,
     };
   } catch (err) {
     console.error("Failed to fetch products:", err);
@@ -44,7 +55,13 @@ export async function getProductByHandle(handle: string): Promise<MedusaProduct 
       limit: 1,
     });
     const products = (res.products ?? []) as unknown as MedusaProduct[];
-    return products[0] ?? null;
+    const product = products[0] ?? null;
+    
+    // Validate product has required fields
+    if (product && product.id && product.title && Array.isArray(product.variants)) {
+      return product;
+    }
+    return null;
   } catch (err) {
     console.error("Failed to fetch product by handle:", err);
     return null;
@@ -57,7 +74,13 @@ export async function getProductById(id: string): Promise<MedusaProduct | null> 
       region_id: KUWAIT_REGION_ID,
       fields: "+variants.calculated_price,+variants.prices,+images,+categories,+tags,+collection,+metadata",
     });
-    return (res.product ?? null) as unknown as MedusaProduct | null;
+    const product = (res.product ?? null) as unknown as MedusaProduct | null;
+    
+    // Validate product has required fields
+    if (product && product.id && product.title && Array.isArray(product.variants)) {
+      return product;
+    }
+    return null;
   } catch (err) {
     console.error("Failed to fetch product by ID:", err);
     return null;

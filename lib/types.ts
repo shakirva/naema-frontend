@@ -152,32 +152,66 @@ export function formatPrice(amount: number, currencyCode: string = "kwd"): strin
   return `${(amount / 100).toFixed(2)} ${currencyCode.toUpperCase()}`;
 }
 
-export function getLowestPrice(variant: MedusaProductVariant): number | null {
+export function getLowestPrice(variant: MedusaProductVariant | null | undefined): number | null {
+  if (!variant) return null;
+  
   // First try calculated_price (region-aware, comes from API with region_id)
   if (variant.calculated_price?.calculated_amount != null) {
     return variant.calculated_price.calculated_amount;
   }
+  
   // Fall back to KWD price from prices array
-  const kwdPrice = variant.prices?.find((p) => p.currency_code === "kwd");
-  if (kwdPrice) return kwdPrice.amount;
-  if (!variant.prices?.length) return null;
-  return Math.min(...variant.prices.map((p) => p.amount));
+  if (variant.prices && variant.prices.length > 0) {
+    const kwdPrice = variant.prices.find((p) => p?.currency_code === "kwd");
+    if (kwdPrice && kwdPrice.amount != null) return kwdPrice.amount;
+    
+    // Get minimum price from any currency
+    const validPrices = variant.prices
+      .filter((p) => p && p.amount != null)
+      .map((p) => p.amount);
+    if (validPrices.length > 0) {
+      return Math.min(...validPrices);
+    }
+  }
+  
+  return null;
 }
 
-export function getCheapestVariant(product: MedusaProduct): MedusaProductVariant | null {
-  if (!product.variants?.length) return null;
-  return product.variants.reduce((cheapest, v) => {
-    const price = getLowestPrice(v);
-    const cheapestPrice = getLowestPrice(cheapest);
-    if (price === null) return cheapest;
-    if (cheapestPrice === null) return v;
-    return price < cheapestPrice ? v : cheapest;
-  }, product.variants[0]);
+export function getCheapestVariant(product: MedusaProduct | null | undefined): MedusaProductVariant | null {
+  if (!product || !product.variants || product.variants.length === 0) return null;
+  
+  try {
+    return product.variants.reduce((cheapest, v) => {
+      if (!cheapest) return v;
+      if (!v) return cheapest;
+      
+      const price = getLowestPrice(v);
+      const cheapestPrice = getLowestPrice(cheapest);
+      
+      // If current variant has no price, skip it
+      if (price === null) return cheapest;
+      // If cheapest has no price, use current
+      if (cheapestPrice === null) return v;
+      // Otherwise compare
+      return price < cheapestPrice ? v : cheapest;
+    }, product.variants[0] || null);
+  } catch (err) {
+    console.error("Error getting cheapest variant:", err);
+    return product.variants[0] || null;
+  }
 }
 
-export function getProductPrice(product: MedusaProduct): number {
-  const variant = getCheapestVariant(product);
-  if (!variant) return 0;
-  const price = getLowestPrice(variant);
-  return price ?? 0;
+export function getProductPrice(product: MedusaProduct | null | undefined): number {
+  if (!product) return 0;
+  
+  try {
+    const variant = getCheapestVariant(product);
+    if (!variant) return 0;
+    
+    const price = getLowestPrice(variant);
+    return price ?? 0;
+  } catch (err) {
+    console.error("Error getting product price:", err);
+    return 0;
+  }
 }

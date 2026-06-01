@@ -71,33 +71,40 @@ const ProductListing = ({ category, label, searchQuery }: Props) => {
       try {
         if (searchQuery) {
           const res = await getProducts({ q: searchQuery, limit: 50 });
-          setProducts(res.products);
+          // Filter out invalid products
+          const validProducts = (res.products || []).filter(p => p && p.id && p.title);
+          setProducts(validProducts);
         } else if (category) {
           // Try to find category by handle
           const cat = await getCategoryByHandle(category);
           if (cat) {
             const res = await getProducts({ category_id: [cat.id], limit: 50 });
-            setProducts(res.products);
+            const validProducts = (res.products || []).filter(p => p && p.id && p.title);
+            setProducts(validProducts);
           } else {
             // If not a category, check if it's a collection
             const { getCollectionByHandle } = await import('@/lib/api');
             const collection = await getCollectionByHandle(category);
             if (collection) {
               const res = await getProducts({ collection_id: [collection.id], limit: 50 });
-              setProducts(res.products);
+              const validProducts = (res.products || []).filter(p => p && p.id && p.title);
+              setProducts(validProducts);
             } else {
               // Fallback: fetch all products
               const res = await getProducts({ limit: 50 });
-              setProducts(res.products);
+              const validProducts = (res.products || []).filter(p => p && p.id && p.title);
+              setProducts(validProducts);
             }
           }
         } else {
           // Fallback: fetch all products
           const res = await getProducts({ limit: 50 });
-          setProducts(res.products);
+          const validProducts = (res.products || []).filter(p => p && p.id && p.title);
+          setProducts(validProducts);
         }
       } catch (err) {
         console.error("Failed to load products:", err);
+        setProducts([]);
       } finally {
         setLoading(false);
       }

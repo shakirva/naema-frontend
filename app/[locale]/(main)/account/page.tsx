@@ -36,7 +36,7 @@ const NavItem = ({
 );
 
 const AccountPage = () => {
-  const [activeTab, setActiveTab] = useState<Tab>("profile");
+  const [activeTab, setActiveTab] = useState<Tab>("orders");
 
   return (
     <section className="min-h-screen bg-cream px-8 py-12 max-md:px-4">

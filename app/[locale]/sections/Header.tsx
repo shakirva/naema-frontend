@@ -352,7 +352,7 @@ const Header = () => {
               <FiSearch size={22} />
             </button>
 
-            <Link href="/login">
+            <Link href="/account">
               <FiUser
                 size={22}
                 className="text-cream hover:text-gold transition-colors"

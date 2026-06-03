@@ -179,7 +179,8 @@ export async function removeCartItem(
 ): Promise<MedusaCart | null> {
   try {
     const res = await medusa.store.cart.deleteLineItem(cartId, lineItemId);
-    return (res.cart ?? null) as unknown as MedusaCart | null;
+    // @ts-ignore - Medusa SDK returns the updated cart in `parent` for deletions
+    return (res.parent ?? res.cart ?? null) as unknown as MedusaCart | null;
   } catch (err) {
     console.error("Failed to remove cart item:", err);
     return null;

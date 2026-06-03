@@ -6,11 +6,156 @@
     "description": "Discover the finest selection of premium dates, nuts and artisan chocolate, masterfully created by Naema",
     "button": "Shop Now"
   },
-
   "Carousel": {
     "farmToTable": "Farm to Table",
     "premiumQuality": "Premium Quality",
     "fastDelivery": "Fast Delivery",
     "giftPackaging": "Gift Packaging"
+  },
+  "Shop": {
+    "greatBox": "A great box starts with carefully selected <dates>dates,</dates> roasted <nuts>nuts,</nuts> and rich artisan <chocolate>chocolate.</chocolate>",
+    "bestSellersTitle": "Shop Our Best Sellers",
+    "bestSellersDesc": "Our most loved products, trusted by thousands of customers.",
+    "collectionTitle": "Our Collection",
+    "shopByPreference": "Shop by preference",
+    "viewAll": "view all",
+    "categories": {
+      "Dates": "Dates",
+      "Nuts": "Nuts",
+      "Dry Fruits": "Dry Fruits",
+      "Chocolates": "Chocolates"
+    },
+    "latestDropsTitle": "Shop Our Latest Drops",
+    "latestDropsDesc": "From classic whole dates to gourmet stuffed varieties – find your perfect match.",
+    "shopAllDates": "Shop All Dates"
+  },
+  "About2": {
+    "ourStory": "Our <story>Story</story>",
+    "bornIn": "Born in",
+    "kuwait": "Kuwait",
+    "description": "Naema was created with a deep appreciation for exceptional dates, premium nuts, and thoughtful craftsmanship — bringing together rich flavour, everyday luxury, and carefully sourced ingredients in every collection we create.",
+    "features": {
+      "premium": "Premium quality, always",
+      "sourced": "Sourced straight from orchards",
+      "farmFresh": "Farm-fresh delivery daily"
+    },
+    "ourOrigins": "Our Origins"
+  },
+  "Testimonials": {
+    "reviews": "Reviews",
+    "titleLine1": "Loved by people <everywhere>everywhere.</everywhere>",
+    "titleLine2": "Here's what they're saying.",
+    "swipeToExplore": "Swipe to explore",
+    "items": {
+      "item1": {
+        "quote": "Perfectly soft, rich, and naturally sweet.",
+        "author": "Amina K."
+      },
+      "item2": {
+        "quote": "Fresh, crunchy, and packed beautifully. You can really taste the quality.",
+        "author": "Rahul M."
+      },
+      "item3": {
+        "quote": "The perfect balance of texture and sweetness. My family finished it instantly.",
+        "author": "Sara H."
+      },
+      "item4": {
+        "quote": "Luxury chocolate that actually tastes handcrafted.",
+        "author": "Yousef T."
+      },
+      "item5": {
+        "quote": "Elegant packaging and incredible flavour in every bite.",
+        "author": "Leena F."
+      }
+    }
+  },
+  "Grid": {
+    "featuredCollections": "Featured Collections",
+    "handpickedFavorites": "Handpicked <gold>Favorites.</gold>",
+    "curatedSelections": "Curated selections crafted for gifting, sharing, and everyday indulgence.",
+    "viewCollection": "View Collection",
+    "categories": {
+      "Dates": "Dates",
+      "Nuts": "Nuts",
+      "Chocolates": "Chocolates",
+      "BestSeller": "Best Seller",
+      "DryFruits": "Dry Fruits"
+    }
+  },
+  "ComboBundle": {
+    "title": "Indulgence, once isn't enough",
+    "description": "Sweet, soft, and made to be savored — our dates are more than just a treat. They're little moments of joy you'll find yourself coming back to, again and again.",
+    "viewDetails": "View Details",
+    "addBundle": "Add bundle",
+    "bestValue": "best value"
+  },
+  "ValueSection": {
+    "title": "Nature's <finest>Finest</finest>, Delivered with Purpose.",
+    "subtitle": "Where Quality is Not a Promise — It's Our Standard.",
+    "pillars": {
+      "quality": {
+        "title": "Quality",
+        "description": "We never settle. Every product meets the highest standard before it reaches you."
+      },
+      "trust": {
+        "title": "Trust",
+        "description": "Our word is our bond. Reliable and consistent, every single time."
+      },
+      "authenticity": {
+        "title": "Authenticity",
+        "description": "Genuine sourcing, true to nature. Nothing artificial, ever."
+      },
+      "premium": {
+        "title": "Premium",
+        "description": "Luxury in every grain and date we carefully deliver to you."
+      }
+    },
+    "commitment": {
+      "title": "Our Unbreakable <commitment>Commitment</commitment>",
+      "description": "We will never compromise on quality, freshness, or delivery. From our sourcing partners to your doorstep — every Naema product carries the same unwavering promise of excellence, rooted in the finest orchards across India.",
+      "promise": "— The Naema Promise"
+    },
+    "stats": {
+      "stat1": "NATURALLY\nSOURCED\nINGREDIENTS",
+      "stat2": "TRUSTED\nFARM\nPARTNERS",
+      "stat3": "ORDERS\nDELIVERED\nFRESH"
+    }
+  },
+  "SocialFeed": {
+    "badge": "Social Feed",
+    "title": "Follow the <naema>Naema</naema>\nExperience.",
+    "description": "From orchard moments to beautifully packed collections — discover what's happening behind the scenes and inside every Naema box.",
+    "followUs": "Follow Us"
+  },
+  "Wholesale": {
+    "partnerDesc": "Partner with Naema for premium dates, artisan chocolates, handpicked nuts, and luxury gifting collections crafted for cafés, hotels, retailers, and modern hospitality spaces.",
+    "becomePartner": "Become a Partner",
+    "badge": "Wholesale",
+    "title": "Our Café &\nWholesale Partners",
+    "description": "From boutique cafés to hospitality spaces, our collections bring premium flavour, elegant presentation, and dependable quality to customers every day.",
+    "learnMore": "Learn More"
+  },
+  "Footer": {
+    "title": "Direct from <br/> Farm to You",
+    "description": "Handled entirely in-house from growing to packing so you get nothing but the best.",
+    "perfectlyRipened": "Perfectly Ripened",
+    "perfectlyRipenedDesc": "Harvested only when each date reaches its natural peak.",
+    "rootedInTradition": "Rooted in Tradition",
+    "rootedInTraditionDesc": "Years of expertise shape every harvest with care",
+    "aboutDesc": "Thoughtfully sourced dates, nuts, and chocolates — crafted for moments worth savoring.",
+    "email": "support@naema.co",
+    "shop": "Shop",
+    "explore": "Explore",
+    "trackOrder": "Track Order",
+    "contact": "Contact",
+    "innerCircle": "The Inner Circle",
+    "innerCircleDesc": "Join for early access, exclusive drops, and special offers.",
+    "emailPlaceholder": "Enter your email",
+    "joinNow": "Join Now",
+    "copyright": "© 2026 Naema. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms",
+    "shipping": "Shipping",
+    "returns": "Returns"
   }
 }

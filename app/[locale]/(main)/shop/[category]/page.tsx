@@ -5,6 +5,8 @@ const categoryMap: Record<string, string> = {
   dates: "Dates",
   nuts: "Nuts",
   "dry-fruits": "Dry Fruits",
+  "dry-fruits-and-nuts": "Dry Fruits and Nuts",
+  "other-products": "Other Products",
   chocolates: "Chocolates",
 };
 

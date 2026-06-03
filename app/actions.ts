@@ -255,6 +255,137 @@ export async function cancelCustomerOrder(orderId: string) {
   }
 }
 
+export async function completeCheckoutFlowServer(
+  cartId: string,
+  email: string,
+  shippingAddress: any,
+  billingAddress: any
+) {
+  const token = (await cookies()).get("_medusa_jwt")?.value;
+  const backendUrl = getBackendUrl();
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "pk_ed2e2b7b35796dd735f8ca890ae87375a50d3e5ac2076922d317b3a52cb76042";
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "x-publishable-api-key": publishableKey,
+  };
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  try {
+    // If customer is logged in, always use their authenticated email
+    // This prevents orders from being linked to wrong customer when
+    // user types a different email in the checkout form
+    let checkoutEmail = email;
+    if (token) {
+      try {
+        const meRes = await fetch(`${backendUrl}/store/customers/me`, { headers });
+        if (meRes.ok) {
+          const meData = await meRes.json();
+          if (meData.customer?.email) {
+            checkoutEmail = meData.customer.email;
+          }
+        }
+      } catch (_) {
+        // Fall back to form email if customer fetch fails
+      }
+    }
+
+    // 1. Update Cart Address & Email (and customer_id if token exists)
+    const updateRes = await fetch(`${backendUrl}/store/carts/${cartId}`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        email: checkoutEmail,
+        shipping_address: shippingAddress,
+        billing_address: billingAddress,
+      }),
+    });
+
+    if (!updateRes.ok) {
+      const err = await updateRes.json().catch(() => ({}));
+      throw new Error(err.message || "Failed to update cart delivery parameters.");
+    }
+
+    // 2. Fetch Shipping Options
+    const shippingOptsRes = await fetch(`${backendUrl}/store/shipping-options?cart_id=${cartId}`, {
+      headers,
+    });
+    if (!shippingOptsRes.ok) {
+      throw new Error("Failed to retrieve shipping options for your region.");
+    }
+    const shippingOptsData = await shippingOptsRes.json();
+    const shippingOpts = shippingOptsData.shipping_options || [];
+    
+    // Filter options with valid amount
+    const validOpts = shippingOpts.filter((o: any) => typeof o.amount === 'number');
+    if (validOpts.length === 0) {
+      throw new Error("No active shipping options available for the Kuwait region. Please contact support.");
+    }
+
+    // Add first shipping option to cart
+    const addShipRes = await fetch(`${backendUrl}/store/carts/${cartId}/shipping-methods`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        option_id: validOpts[0].id,
+      }),
+    });
+    if (!addShipRes.ok) {
+      throw new Error("Failed to assign shipping method to cart.");
+    }
+
+    // 3. Initiate Payment Session
+    // We need to create payment collection first if missing
+    const cartRetrieveRes = await fetch(`${backendUrl}/store/carts/${cartId}`, { headers });
+    const cartRetrieveData = await cartRetrieveRes.json();
+    const cartObj = cartRetrieveData.cart;
+
+    let pColId = cartObj?.payment_collection?.id;
+    if (!pColId) {
+      const pColRes = await fetch(`${backendUrl}/store/payment-collections`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ cart_id: cartId }),
+      }).then(r => r.json());
+      pColId = pColRes.payment_collection?.id;
+    }
+
+    if (!pColId) {
+      throw new Error("Failed to configure payment collection context.");
+    }
+
+    // Create payment session
+    const pSessionRes = await fetch(`${backendUrl}/store/payment-collections/${pColId}/payment-sessions`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ provider_id: "pp_system_default" }),
+    });
+    if (!pSessionRes.ok) {
+      throw new Error("Failed to initialize payment session context.");
+    }
+
+    // 4. Complete Cart
+    const completeRes = await fetch(`${backendUrl}/store/carts/${cartId}/complete`, {
+      method: "POST",
+      headers,
+    });
+
+    const completeData = await completeRes.json();
+    if (!completeRes.ok) {
+      throw new Error(completeData.message || "Failed to complete order checkout.");
+    }
+
+    return { success: true, order: completeData.order };
+  } catch (err: any) {
+    console.error("Checkout server action failed:", err);
+    return { error: err.message || "Something went wrong during checkout." };
+  }
+}
+
+
 export async function sendContactMessage(formData: FormData) {
   const name = formData.get("name") as string;
   const email = formData.get("email") as string;

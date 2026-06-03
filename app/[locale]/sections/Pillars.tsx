@@ -1,61 +1,9 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 
-const pillars = [
-  {
-    numeral: "I",
-    title: "Quality",
-    description:
-      "We never settle. Every product meets the highest standard before it reaches you.",
-    image: "/quality.jpg",
-  },
-  {
-    numeral: "II",
-    title: "Trust",
-    description:
-      "Our word is our bond. Reliable and consistent, every single time.",
-    image: "/trust.jpg",
-  },
-  {
-    numeral: "III",
-    title: "Authenticity",
-    description: "Genuine sourcing, true to nature. Nothing artificial, ever.",
-    image: "/auth.jpg",
-  },
-  {
-    numeral: "IV",
-    title: "Premium",
-    description: "Luxury in every grain and date we carefully deliver to you.",
-    image: "/premium.jpg",
-  },
-];
-
-const stats = [
-  {
-    value: "100%",
-    label: "NATURALLY\nSOURCED\nINGREDIENTS",
-    rotate: "-rotate-3",
-    bg: "bg-cream",
-    text: "text-navy",
-  },
-  {
-    value: "50+",
-    label: "TRUSTED\nFARM\nPARTNERS",
-    rotate: "rotate-2",
-    bg: "bg-gold",
-    text: "text-navy",
-  },
-  {
-    value: "10K+",
-    label: "ORDERS\nDELIVERED\nFRESH",
-    rotate: "-rotate-1",
-    bg: "bg-[#c8a96e]",
-    text: "text-navy",
-  },
-];
-
-const PillarCard = ({ pillar }: { pillar: (typeof pillars)[0] }) => {
+const PillarCard = ({ pillar }: { pillar: any }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -104,16 +52,70 @@ const PillarCard = ({ pillar }: { pillar: (typeof pillars)[0] }) => {
 };
 
 const Pillars = () => {
+  const t = useTranslations("ValueSection");
+
+  const pillars = [
+    {
+      numeral: "I",
+      title: t("pillars.quality.title"),
+      description: t("pillars.quality.description"),
+      image: "/quality.jpg",
+    },
+    {
+      numeral: "II",
+      title: t("pillars.trust.title"),
+      description: t("pillars.trust.description"),
+      image: "/trust.jpg",
+    },
+    {
+      numeral: "III",
+      title: t("pillars.authenticity.title"),
+      description: t("pillars.authenticity.description"),
+      image: "/auth.jpg",
+    },
+    {
+      numeral: "IV",
+      title: t("pillars.premium.title"),
+      description: t("pillars.premium.description"),
+      image: "/premium.jpg",
+    },
+  ];
+
+  const stats = [
+    {
+      value: "100%",
+      label: t("stats.stat1"),
+      rotate: "-rotate-3",
+      bg: "bg-cream",
+      text: "text-navy",
+    },
+    {
+      value: "50+",
+      label: t("stats.stat2"),
+      rotate: "rotate-2",
+      bg: "bg-gold",
+      text: "text-navy",
+    },
+    {
+      value: "10K+",
+      label: t("stats.stat3"),
+      rotate: "-rotate-1",
+      bg: "bg-[#c8a96e]",
+      text: "text-navy",
+    },
+  ];
+
   return (
     <div className="flex flex-col items-center w-full max-w-[1440px] mx-auto gap-14">
       {/* Heading */}
       <div className="flex flex-col items-center gap-4 text-center">
         <h3 className="font-serif text-black text-[clamp(2rem,4.4vw,4rem)] leading-none max-w-[650px]">
-          Nature's <span className="italic text-deepgold">Finest</span>,
-          Delivered with Purpose.
+          {t.rich("title", {
+            finest: (chunks) => <span className="italic text-deepgold">{chunks}</span>
+          })}
         </h3>
         <h3 className="font-serif text-[clamp(1rem,1.5vw,1.5rem)] mt-4 leading-none text-black/70">
-          Where Quality is Not a Promise — It's Our Standard.
+          {t("subtitle")}
         </h3>
       </div>
 
@@ -129,18 +131,15 @@ const Pillars = () => {
         {/* Left — text */}
         <div className="flex flex-col gap-6 flex-1 max-w-[480px] max-md:text-center max-md:items-center">
           <h3 className="font-serif text-[clamp(2rem,4.5vw,4.5rem)] text-cream leading-none">
-            Our Unbreakable
-            <br />
-           <span className="italic text-lightgold">Commitment</span> 
+            {t.rich("commitment.title", {
+              commitment: (chunks) => <><br /><span className="italic text-lightgold">{chunks}</span></>
+            })}
           </h3>
           <p className="text-cream/70 text-[clamp(0.9rem,1.3vw,1.1rem)] leading-relaxed tracking-tight">
-            We will never compromise on quality, freshness, or delivery. From
-            our sourcing partners to your doorstep — every Naema product carries
-            the same unwavering promise of excellence, rooted in the finest
-            orchards across India.
+            {t("commitment.description")}
           </p>
           <div className="w-10 h-px bg-gold" />
-          <p className="font-serif  text-cream text-sm">— The Naema Promise</p>
+          <p className="font-serif  text-cream text-sm">{t("commitment.promise")}</p>
         </div>
 
         {/* Right — stacked stat cards */}
@@ -152,7 +151,7 @@ const Pillars = () => {
             </span>
 
             <span className="text-[10px] font-medium tracking-wider whitespace-pre-line text-navy opacity-80 leading-tight pb-1">
-              {"NATURALLY\nSOURCED\nINGREDIENTS"}
+              {stats[0].label}
             </span>
           </div>
 
@@ -163,7 +162,7 @@ const Pillars = () => {
             </span>
 
             <span className="text-[10px] font-medium tracking-wider whitespace-pre-line text-navy opacity-80 leading-tight pb-1">
-              {"TRUSTED\nFARM\nPARTNERS"}
+              {stats[1].label}
             </span>
           </div>
 
@@ -174,7 +173,7 @@ const Pillars = () => {
             </span>
 
             <span className="text-[10px] font-medium tracking-wider whitespace-pre-line text-navy opacity-80 leading-tight pb-1">
-              {"ORDERS\nDELIVERED\nFRESH"}
+              {stats[2].label}
             </span>
           </div>
         </div>

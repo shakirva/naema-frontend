@@ -54,7 +54,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         const existing = await getCart(storedId);
         if (existing) {
           setCart(existing);
-          return;
+          return existing;
         }
       }
       // Create new cart
@@ -62,10 +62,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       if (newCart) {
         localStorage.setItem(CART_ID_KEY, newCart.id);
         setCart(newCart);
+        return newCart;
       }
     } catch (err) {
       console.error("Cart init failed:", err);
     }
+    return null;
   }, []);
 
   useEffect(() => {
@@ -84,10 +86,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const addToCart = async (variantId: string, quantity: number = 1) => {
-    if (!cart?.id) {
-      await initCart();
+    let currentCart = cart;
+    if (!currentCart?.id) {
+      currentCart = await initCart();
     }
-    const cartId = cart?.id || localStorage.getItem(CART_ID_KEY);
+    const cartId = currentCart?.id || localStorage.getItem(CART_ID_KEY);
     if (!cartId) return;
 
     setLoading(true);
@@ -99,6 +102,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         const newCart = await createCart();
         if (newCart) {
           localStorage.setItem(CART_ID_KEY, newCart.id);
+          setCart(newCart);
           updated = await addItemToCart(newCart.id, variantId, quantity);
         }
       }

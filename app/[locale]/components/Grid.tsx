@@ -2,48 +2,109 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import React from "react";
 import ComboBundle from "../sections/ComboBundle";
-import { getCollections, getProducts } from "@/lib/api";
+import { getCollections, getProducts, getCategories } from "@/lib/api";
+import { getTranslations } from "next-intl/server";
 
 const Grid = async () => {
+  const t = await getTranslations("Grid");
   const collections = await getCollections();
-  const { products } = await getProducts({ limit: 100 });
-
-  // Filter products by metadata.featured
-  const featuredProducts = products.filter(
-    (p) => p.metadata?.featured === true || p.metadata?.featured === "true" || p.metadata?.featured === "yes"
-  );
+  const categories = await getCategories();
+  const rootCategories = categories.filter((c) => !c.parent_category_id);
 
   const fallbackItems = [
-    { title: "The Royal Ajwa", image: "/chocolate.png", height: "lg:row-span-2", href: "/shop" },
-    { title: "The Sweetness of Tradition", image: "/dn.png", height: "", href: "/shop" },
-    { title: "The Caramelly Classic", image: "/datedark.png", height: "", href: "/shop" },
-    { title: "An Exquisite Symphony", image: "/misc.png", height: "lg:row-span-2", href: "/shop" },
+    { title: "Best Seller", image: "/chocolate.png", height: "lg:row-span-2", href: "/shop/best-seller" },
+    { title: "Dates", image: "/dn.png", height: "", href: "/shop/dates" },
+    { title: "Chocolates", image: "/datedark.png", height: "", href: "/shop/chocolates" },
+    { title: "Nuts", image: "/misc.png", height: "lg:row-span-2", href: "/shop/nuts" },
   ];
 
-  const items = fallbackItems.map((fallback, i) => {
-    // 1. Try featured product first
-    const prod = featuredProducts[i];
-    if (prod) {
-      return {
-        title: prod.title,
-        image: prod.thumbnail || fallback.image,
-        height: fallback.height,
-        href: `/shop/${prod.categories?.[0]?.handle || "all"}/${prod.handle}`,
-      };
-    }
-    // 2. Try dynamic collection second
-    const col = collections[i];
-    if (col) {
-      return {
-        title: col.title,
-        image: (col.metadata?.image as string) || fallback.image,
-        height: fallback.height,
-        href: `/shop/${col.handle}`,
-      };
-    }
-    // 3. Fallback to static items
-    return fallback;
+  // Build the list of dynamic candidates
+  const candidates: { title: string; image?: string; href: string; type: "collection" | "category"; id: string }[] = [];
+
+  // 1. Add collections
+  for (const col of collections) {
+    candidates.push({
+      title: col.title,
+      image: col.metadata?.image as string | undefined,
+      href: `/shop/${col.handle}`,
+      type: "collection",
+      id: col.id,
+    });
+  }
+
+  // 2. Add top root categories if we have fewer than 4 candidates
+  const foodCategoryHandles = ["dates", "chocolates", "nuts", "dry-fruits", "gift-boxes"];
+  const sortedRootCategories = [...rootCategories].sort((a, b) => {
+    const idxA = foodCategoryHandles.indexOf(a.handle || "");
+    const idxB = foodCategoryHandles.indexOf(b.handle || "");
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
+    return 0;
   });
+
+  for (const cat of sortedRootCategories) {
+    if (candidates.length >= 4) break;
+    // Don't add duplicate titles
+    if (candidates.some((c) => c.title.toLowerCase() === cat.name.toLowerCase())) continue;
+    candidates.push({
+      title: cat.name,
+      image: (cat.metadata as any)?.image_url || (cat.metadata as any)?.image,
+      href: `/shop/${cat.handle}`,
+      type: "category",
+      id: cat.id,
+    });
+  }
+
+  // 3. Resolve images for the top 4 candidates asynchronously
+  const items = await Promise.all(
+    Array.from({ length: 4 }).map(async (_, i) => {
+      const candidate = candidates[i];
+      const fallback = fallbackItems[i];
+      const height = fallback.height;
+
+      if (!candidate) {
+        return {
+          title: fallback.title,
+          image: fallback.image,
+          height,
+          href: fallback.href,
+        };
+      }
+
+      let image = candidate.image;
+      if (!image) {
+        // Fetch first product in this collection or category to use as cover image
+        if (candidate.type === "collection") {
+          const { products } = await getProducts({ collection_id: [candidate.id], limit: 5 });
+          const prodWithImg = products.find((p) => p.thumbnail);
+          if (prodWithImg) image = prodWithImg.thumbnail || undefined;
+        } else {
+          const { products } = await getProducts({ category_id: [candidate.id], limit: 5 });
+          const prodWithImg = products.find((p) => p.thumbnail);
+          if (prodWithImg) image = prodWithImg.thumbnail || undefined;
+        }
+      }
+
+      return {
+        title: candidate.title,
+        image: image || fallback.image,
+        height,
+        href: candidate.href,
+      };
+    })
+  );
+
+  const translateTitle = (title: string) => {
+    switch (title) {
+      case "Dates": return t("categories.Dates");
+      case "Nuts": return t("categories.Nuts");
+      case "Chocolates": return t("categories.Chocolates");
+      case "Best Seller": return t("categories.BestSeller");
+      case "Dry Fruits": return t("categories.DryFruits");
+      default: return title;
+    }
+  };
 
   return (
     <section className="w-full bg-[#0A223A] px-5 md:px-8 lg:px-16 py-16 md:py-24 lg:rounded-t-[200px] md:rounded-t-[120px] rounded-t-[60px] border-t-10 border-darkgold relative overflow-hidden">
@@ -61,16 +122,17 @@ const Grid = async () => {
         {/* Heading */}
         <div className="flex flex-col items-center text-center">
           <span className="font-serif text-[22px] text-cream leading-none w-fit bg-gold/10 border border-gold/30 rounded-lg px-4 py-2">
-            Featured Collections
+            {t("featuredCollections")}
           </span>
 
           <h2 className="font-serif text-[clamp(2.8rem,6vw,6rem)] leading-[0.95] text-cream mt-8 max-w-[900px]">
-            Handpicked <span className="italic text-gold">Favorites.</span>
+            {t.rich("handpickedFavorites", {
+              gold: (chunks) => <span className="italic text-gold">{chunks}</span>
+            })}
           </h2>
 
           <p className="mt-6 text-cream/70 text-[clamp(1rem,1.5vw,1.15rem)] tracking-tight leading-[1.3] max-w-[620px]">
-            Curated selections crafted for gifting, sharing, and everyday
-            indulgence.
+            {t("curatedSelections")}
           </p>
         </div>
 
@@ -96,10 +158,10 @@ const Grid = async () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
                 <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[280px]">
-                  {items[0].title}
+                  {translateTitle(items[0].title)}
                 </h3>
                 <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
-                  View Collection
+                  {t("viewCollection")}
                 </span>
               </div>
             </Link>
@@ -127,10 +189,10 @@ const Grid = async () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
                   <div className="absolute bottom-0 left-0 w-full p-5 md:p-6">
                     <h3 className="font-serif text-[clamp(1.8rem,2vw,2.8rem)] leading-[1] text-cream max-w-[300px]">
-                      {item.title}
+                      {translateTitle(item.title)}
                     </h3>
                     <span className="inline-block mt-3 text-sm text-gold border-b border-gold/40 pb-1">
-                      View Collection
+                      {t("viewCollection")}
                     </span>
                   </div>
                 </Link>
@@ -156,10 +218,10 @@ const Grid = async () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
                 <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[320px]">
-                  {items[3].title}
+                  {translateTitle(items[3].title)}
                 </h3>
                 <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
-                  View Collection
+                  {t("viewCollection")}
                 </span>
               </div>
             </Link>
@@ -183,10 +245,10 @@ const Grid = async () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 w-full p-8">
                 <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[280px]">
-                  {items[0].title}
+                  {translateTitle(items[0].title)}
                 </h3>
                 <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
-                  View Collection
+                  {t("viewCollection")}
                 </span>
               </div>
             </Link>
@@ -208,10 +270,10 @@ const Grid = async () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
                   <div className="absolute bottom-0 left-0 w-full p-6">
                     <h3 className="font-serif text-[clamp(1.8rem,2vw,2.8rem)] leading-[1] text-cream max-w-[300px]">
-                      {item.title}
+                      {translateTitle(item.title)}
                     </h3>
                     <span className="inline-block mt-3 text-sm text-gold border-b border-gold/40 pb-1">
-                      View Collection
+                      {t("viewCollection")}
                     </span>
                   </div>
                 </Link>
@@ -232,10 +294,10 @@ const Grid = async () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 w-full p-8">
                 <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[320px]">
-                  {items[3].title}
+                  {translateTitle(items[3].title)}
                 </h3>
                 <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
-                  View Collection
+                  {t("viewCollection")}
                 </span>
               </div>
             </Link>

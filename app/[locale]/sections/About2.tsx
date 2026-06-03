@@ -13,8 +13,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+import { useTranslations } from "next-intl";
+
 const About2 = () => {
   const container = useRef<HTMLDivElement | null>(null);
+  const t = useTranslations("About2");
 
   const sticker = useRef<HTMLDivElement | null>(null);
   const stickerlg = useRef<HTMLDivElement | null>(null);
@@ -120,7 +123,9 @@ const About2 = () => {
           ref={span}
           className="font-serif text-[clamp(1.5rem,4vw,5rem)] text-center leading-none bg-cream border-2 border-deepgold rounded-lg px-4 md:px-6 py-2 -rotate-2"
         >
-          Our <span className="italic">Story</span>
+          {t.rich("ourStory", {
+            story: (chunks) => <span className="italic">{chunks}</span>
+          })}
         </span>
 
         {/* Title */}
@@ -128,8 +133,8 @@ const About2 = () => {
           ref={title}
           className="text-[clamp(3rem,14vw,180px)] font-serif font-medium text-cream leading-none text-center mt-12 md:mt-18 lg:mt-24"
         >
-          Born in <br />{" "}
-          <span className="text-lightgold">Kuwait</span>
+          {t("bornIn")} <br />{" "}
+          <span className="text-lightgold">{t("kuwait")}</span>
         </p>
 
         {/* Paragraph */}
@@ -137,10 +142,7 @@ const About2 = () => {
           ref={para}
           className="font-serif text-[clamp(1.1rem,2.5vw,3rem)] text-cream leading-[1.25] text-center mt-10 md:mt-12 lg:mt-14 max-w-[90%] md:max-w-[80%]"
         >
-          Naema was created with a deep appreciation for exceptional dates,
-          premium nuts, and thoughtful craftsmanship — bringing together rich
-          flavour, everyday luxury, and carefully sourced ingredients in every
-          collection we create.
+          {t("description")}
         </p>
 
         {/* Icons + CTA */}
@@ -153,15 +155,15 @@ const About2 = () => {
             {[
               {
                 image: "/truck-icon.png",
-                label: "Farm-fresh delivery daily",
+                label: t("features.farmFresh"),
               },
               {
                 image: "/orchard-icon.png",
-                label: "Sourced straight from orchards",
+                label: t("features.sourced"),
               },
               {
                 image: "/premium-icon.png",
-                label: "Premium quality, always",
+                label: t("features.premium"),
               },
             ].map(({ image, label }) => (
               <div
@@ -187,16 +189,16 @@ const About2 = () => {
 
           {/* CTA */}
          <Link
-  href="/about"
-  className="px-8 md:px-12 py-4 md:py-5 text-sm md:text-base font-medium tracking-tight border-2 border-gold bg-cream rounded-full text-navy relative group overflow-hidden inline-block"
->
-  <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
-    Our Origins
-  </span>
-  <span className="block absolute inset-0 flex items-center justify-center bg-navy text-cream  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
-    Our Origins
-  </span>
-</Link>
+          href="/about"
+          className="px-8 md:px-12 py-4 md:py-5 text-sm md:text-base font-medium tracking-tight border-2 border-gold bg-cream rounded-full text-navy relative group overflow-hidden inline-block"
+        >
+          <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+            {t("ourOrigins")}
+          </span>
+          <span className="block absolute inset-0 flex items-center justify-center bg-navy text-cream  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+            {t("ourOrigins")}
+          </span>
+        </Link>
         </div>
       </div>
     </section>

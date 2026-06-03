@@ -4,6 +4,7 @@ export type MedusaMoneyAmount = {
   id: string;
   currency_code: string;
   amount: number;
+  raw_amount?: { value: string; precision: number };
 };
 
 export type MedusaProductVariant = {
@@ -14,6 +15,7 @@ export type MedusaProductVariant = {
   calculated_price?: {
     id: string;
     calculated_amount: number;
+    raw_calculated_amount?: { value: string; precision: number };
     currency_code?: string;
     is_calculated_price_tax_inclusive?: boolean;
   } | null;
@@ -156,19 +158,27 @@ export function getLowestPrice(variant: MedusaProductVariant | null | undefined)
   if (!variant) return null;
   
   // First try calculated_price (region-aware, comes from API with region_id)
-  if (variant.calculated_price?.calculated_amount != null) {
-    return variant.calculated_price.calculated_amount;
+  if (variant.calculated_price) {
+    if (variant.calculated_price.raw_calculated_amount?.value != null) {
+      return Number(variant.calculated_price.raw_calculated_amount.value);
+    }
+    if (variant.calculated_price.calculated_amount != null) {
+      return variant.calculated_price.calculated_amount;
+    }
   }
   
   // Fall back to KWD price from prices array
   if (variant.prices && variant.prices.length > 0) {
     const kwdPrice = variant.prices.find((p) => p?.currency_code === "kwd");
-    if (kwdPrice && kwdPrice.amount != null) return kwdPrice.amount;
+    if (kwdPrice) {
+      if (kwdPrice.raw_amount?.value != null) return Number(kwdPrice.raw_amount.value);
+      if (kwdPrice.amount != null) return kwdPrice.amount;
+    }
     
     // Get minimum price from any currency
     const validPrices = variant.prices
-      .filter((p) => p && p.amount != null)
-      .map((p) => p.amount);
+      .filter((p) => p && (p.raw_amount?.value != null || p.amount != null))
+      .map((p) => p.raw_amount?.value != null ? Number(p.raw_amount.value) : p.amount);
     if (validPrices.length > 0) {
       return Math.min(...validPrices);
     }

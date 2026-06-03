@@ -3,11 +3,13 @@ import { PiTreePalm } from "react-icons/pi";
 import { LuShoppingBasket } from "react-icons/lu";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { AiOutlineInstagram, AiFillFacebook } from "react-icons/ai";
 import { navLinks } from "../../constants";
 
 const Footer = () => {
+  const t = useTranslations("Footer");
   return (
     <footer className="bg-[#0A223A] px-16 py-12 text-cream w-full relative  max-lg:pt-8 max-lg:px-8 max-md:px-5 ">
       <div className="h-full w-full absolute inset-0 opacity-5">
@@ -18,13 +20,13 @@ const Footer = () => {
         {/* Top Section */}
         <div className="flex items-center max-lg:flex-col  gap-16">
           <div className="flex flex-col lg:w-[50%] max-lg:w-full   order-2 lg:order-0">
-            <h4 className="font-serif text-[clamp(2.50rem,4.44vw,4rem)] leading-none">
-              Direct from <br className="max-lg:hidden" /> Farm to You
-            </h4>
+            <h4
+              className="font-serif text-[clamp(2.50rem,4.44vw,4rem)] leading-none"
+              dangerouslySetInnerHTML={{ __html: t.raw("title") }}
+            />
 
             <p className="mt-4 text-[18px] text-cream/80 tracking-tight lg:max-w-[400px]">
-              Handled entirely in-house from growing to packing so you get
-              nothing but the best.
+              {t("description")}
             </p>
 
             <div className="flex gap-4 text-black mt-14">
@@ -32,10 +34,10 @@ const Footer = () => {
                 <PiTreePalm size={70} color="#baa448" />
                 <div className="mt-auto">
                   <h4 className="font-semibold font-serif text-[24px] max-md:text-[20px]">
-                    Perfectly Ripened
+                    {t("perfectlyRipened")}
                   </h4>
                   <p className="md:text-base text-sm leading-[1.2em] mt-2">
-                    Harvested only when each date reaches its natural peak.
+                    {t("perfectlyRipenedDesc")}
                   </p>
                 </div>
               </div>
@@ -44,10 +46,10 @@ const Footer = () => {
                 <LuShoppingBasket size={70} color="#baa448" />
                 <div className="mt-auto">
                   <h4 className="font-semibold font-serif text-[24px] max-md:text-[20px]">
-                    Rooted in Tradition
+                    {t("rootedInTradition")}
                   </h4>
                   <p className="md:text-base text-sm leading-[1.2em] mt-2">
-                    Years of expertise shape every harvest with care
+                    {t("rootedInTraditionDesc")}
                   </p>
                 </div>
               </div>
@@ -75,10 +77,9 @@ const Footer = () => {
               <Image src="/newnaema.png" width={90} height={90} alt="logo" />
             </Link>
             <p className="text-cream/70 text-sm leading-relaxed  mt-4 mb-6">
-              Thoughtfully sourced dates, nuts, and chocolates — crafted for
-              moments worth savoring.
+              {t("aboutDesc")}
             </p>
-            <p className="text-sm text-cream/80 mb-2">support@naema.co</p>
+            <p className="text-sm text-cream/80 mb-2">{t("email")}</p>
             <div className="flex gap-3 mt-4">
               <Link href="https://instagram.com" target="_blank">
                 <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
@@ -95,7 +96,7 @@ const Footer = () => {
 
           {/* Shop */}
           <div className="w-fit">
-            <h4 className="font-semibold mb-4">Shop</h4>
+            <h4 className="font-semibold mb-4">{t("shop")}</h4>
             <ul className="space-y-2 text-cream/70 text-sm">
               {navLinks.slice(0, 4).map((link) => (
                 <li key={link.label} className="">
@@ -112,7 +113,7 @@ const Footer = () => {
 
           {/* Explore */}
           <div className="w-fit">
-            <h4 className="font-semibold mb-4">Explore</h4>
+            <h4 className="font-semibold mb-4">{t("explore")}</h4>
             <ul className="space-y-2 text-cream/70 text-sm">
               {navLinks.slice(4).map((link) => (
                 <li key={link.label}>
@@ -129,7 +130,7 @@ const Footer = () => {
                   href="/track"
                   className="hover:text-cream transition underlinee"
                 >
-                  Track Order
+                  {t("trackOrder")}
                 </Link>
               </li>
               <li>
@@ -137,7 +138,7 @@ const Footer = () => {
                   href="/contact"
                   className="hover:text-cream transition underlinee"
                 >
-                  Contact
+                  {t("contact")}
                 </Link>
               </li>
             </ul>
@@ -145,21 +146,21 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div className=" max-md:col-span-1">
-            <h4 className="font-semibold mb-4">The Inner Circle</h4>
+            <h4 className="font-semibold mb-4">{t("innerCircle")}</h4>
             <p className="text-cream/70 text-sm mb-4">
-              Join for early access, exclusive drops, and special offers.
+              {t("innerCircleDesc")}
             </p>
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder={t("emailPlaceholder")}
               className="w-full px-4 py-3 text-black bg-cream rounded-full outline-none mb-3"
             />
             <button className="w-full bg-gold text-black py-3 rounded-full font-medium relative group overflow-hidden cursor-pointer">
               <span className="block group-hover:-translate-y-full tracking-tight transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
-                Join Now
+                {t("joinNow")}
               </span>
               <span className="block absolute inset-0 flex items-center tracking-tight justify-center bg-navy text-cream border-2 border-gold rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
-                Join Now
+                {t("joinNow")}
               </span>
             </button>
           </div>
@@ -167,19 +168,19 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="flex max-md:flex-col max-md:items-center max-md:gap-4 justify-between items-center mt-12 text-cream/50 text-sm">
-          <p>© 2026 Naema. All rights reserved.</p>
+          <p>{t("copyright")}</p>
           <div className="flex gap-6 max-md:gap-4 flex-wrap max-md:justify-center">
             <Link href="/privacy" className="hover:text-cream transition">
-              Privacy Policy
+              {t("privacy")}
             </Link>
             <Link href="/terms" className="hover:text-cream transition">
-              Terms
+              {t("terms")}
             </Link>
             <Link href="/shipping" className="hover:text-cream transition">
-              Shipping
+              {t("shipping")}
             </Link>
             <Link href="/returns" className="hover:text-cream transition">
-              Returns
+              {t("returns")}
             </Link>
           </div>
         </div>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FiInstagram } from "react-icons/fi";
+import { useTranslations } from "next-intl";
 
 const socials = [
   {
@@ -25,25 +26,25 @@ const socials = [
 ];
 
 const SocialFeed = () => {
+  const t = useTranslations("SocialFeed");
   return (
     <section className="w-full bg-cream px-5 md:px-8 lg:px-16 py-16 md:py-24 overflow-hidden">
       <div className="max-w-[1440px] mx-auto flex flex-col items-center">
         {/* Label */}
         <span className="font-serif text-[22px] text-navy leading-none w-fit bg-gold/20 border border-gold/40 rounded-lg px-4 py-2">
-          Social Feed
+          {t("badge")}
         </span>
 
         {/* Heading */}
-        <h2 className="font-serif text-[clamp(2.5rem,6vw,6rem)] text-center text-navy leading-[0.95] mt-8">
-          Follow the <span className="italic text-deepgold">Naema</span>
-          <br />
-          Experience.
+        <h2 className="font-serif text-[clamp(2.5rem,6vw,6rem)] text-center text-navy whitespace-pre-line leading-[0.95] mt-8">
+          {t.rich("title", {
+            naema: (chunks) => <span className="italic text-deepgold">{chunks}</span>
+          })}
         </h2>
 
         {/* Body */}
         <p className="text-[clamp(1rem,1.5vw,1.15rem)] text-center text-navy/70 tracking-tight leading-[1.3] mt-6 max-w-[560px]">
-          From orchard moments to beautifully packed collections — discover
-          what’s happening behind the scenes and inside every Naema box.
+          {t("description")}
         </p>
 
         {/* Feed Grid */}
@@ -83,13 +84,13 @@ const SocialFeed = () => {
           <span className="flex items-center gap-3 group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
             <FiInstagram className="text-[18px]" />
             <span className="text-sm font-medium leading-none tracking-tight">
-              Follow Us
+              {t("followUs")}
             </span>
           </span>
           <span className="absolute inset-0 flex items-center justify-center gap-3 bg-gold text-navy  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
             <FiInstagram className="text-[18px]" />
             <span className="text-sm font-medium leading-none tracking-tight">
-              Follow Us
+              {t("followUs")}
             </span>
           </span>
         </Link>

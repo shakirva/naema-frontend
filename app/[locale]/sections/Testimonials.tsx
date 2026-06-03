@@ -2,65 +2,68 @@
 
 import React from "react";
 import { IoMdStar } from "react-icons/io";
-
-const testimonials = [
-  {
-    id: 1,
-    quote: "Perfectly soft, rich, and naturally sweet.",
-    author: "Amina K.",
-    rating: 5,
-    bg: "bg-[#f4a987]",
-    border: "border-[#ed8253]",
-  },
-  {
-    id: 2,
-    quote:
-      "Fresh, crunchy, and packed beautifully. You can really taste the quality.",
-    author: "Rahul M.",
-    rating: 5,
-    bg: "bg-[#b9d789]",
-    border: "border-[#B5CD92]",
-  },
-  {
-    id: 3,
-    quote:
-      "The perfect balance of texture and sweetness. My family finished it instantly.",
-    author: "Sara H.",
-    rating: 4,
-    bg: "bg-[#f5db94]",
-    border: "border-[#DFC57A]",
-  },
-  {
-    id: 4,
-    quote: "Luxury chocolate that actually tastes handcrafted.",
-    author: "Yousef T.",
-    rating: 5,
-    bg: "bg-[#c9997c]",
-    border: "border-[#B8937C]",
-  },
-  {
-    id: 5,
-    quote: "Elegant packaging and incredible flavour in every bite.",
-    author: "Leena F.",
-    rating: 5,
-    bg: "bg-[#d8bde7]",
-    border: "border-[#BFA7CC]",
-  },
-];
+import { useTranslations } from "next-intl";
 
 const Testimonials = () => {
+  const t = useTranslations("Testimonials");
+
+  const testimonials = [
+    {
+      id: 1,
+      quote: t("items.item1.quote"),
+      author: t("items.item1.author"),
+      rating: 5,
+      bg: "bg-[#f4a987]",
+      border: "border-[#ed8253]",
+    },
+    {
+      id: 2,
+      quote: t("items.item2.quote"),
+      author: t("items.item2.author"),
+      rating: 5,
+      bg: "bg-[#b9d789]",
+      border: "border-[#B5CD92]",
+    },
+    {
+      id: 3,
+      quote: t("items.item3.quote"),
+      author: t("items.item3.author"),
+      rating: 4,
+      bg: "bg-[#f5db94]",
+      border: "border-[#DFC57A]",
+    },
+    {
+      id: 4,
+      quote: t("items.item4.quote"),
+      author: t("items.item4.author"),
+      rating: 5,
+      bg: "bg-[#c9997c]",
+      border: "border-[#B8937C]",
+    },
+    {
+      id: 5,
+      quote: t("items.item5.quote"),
+      author: t("items.item5.author"),
+      rating: 5,
+      bg: "bg-[#d8bde7]",
+      border: "border-[#BFA7CC]",
+    },
+  ];
+
   return (
     <section className="w-full bg-cream py-24 max-md:py-12 overflow-hidden px-16 max-lg:px-8 max-md:px-5">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col items-center">
           <h2 className="font-serif text-[clamp(1.5rem,3.3vw,3rem)] lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4 py-2">
-            Reviews
+            {t("reviews")}
           </h2>
 
           <h2 className="font-serif text-[clamp(2.5rem,5vw,5rem)] text-center leading-[1.25] mt-10 max-lg:mt-5 max-w-[900px] text-black">
-            Loved by people <span className="italic text-deepgold">everywhere.</span>
+            {t.rich("titleLine1", {
+              everywhere: (chunks) => <span className="italic text-deepgold">{chunks}</span>
+            })}
             <br />
-            Here's what they're saying.
+            {t("titleLine2")}
           </h2>
         </div>
 
@@ -106,7 +109,7 @@ const Testimonials = () => {
   <div className="w-10 h-[2px] bg-deepgold/40 rounded-full" />
 
   <span className="text-xs tracking-tight text-deepgold">
-    Swipe to explore
+    {t("swipeToExplore")}
   </span>
 
   <div className="w-10 h-[2px] bg-deepgold/40 rounded-full" />

@@ -16,43 +16,41 @@ import { getCategories } from "@/lib/api";
 const megaMenu = {
   columns: [
     {
+      heading: "Dry Fruits and Nuts",
+      links: [
+        { label: "Walnut", href: "/shop?search=Walnut" },
+        { label: "Cashew", href: "/shop?search=Cashew" },
+        { label: "Almond", href: "/shop?search=Almond" },
+        { label: "Pista", href: "/shop?search=Pista" },
+        { label: "Fig (Theen Afghan)", href: "/shop?search=Fig" },
+        { label: "Fig (Theen Iran)", href: "/shop?search=Fig" },
+        { label: "Kismis (Golden Raisins)", href: "/shop?search=Kismis" },
+        { label: "Pumpkin Seeds", href: "/shop?search=Pumpkin" },
+      ],
+    },
+    {
       heading: "Dates",
       links: [
-        { label: "Pressed Dates", href: "/shop/dates" },
-        { label: "Stuffed Dates", href: "/shop/dates" },
-        { label: "Dry Dates", href: "/shop/dates" },
-        { label: "Rutab", href: "/shop/dates" },
-        { label: "Gift Boxes", href: "/shop/dates" },
+        { label: "Khudri", href: "/shop?search=Khudri" },
+        { label: "Safawi", href: "/shop?search=Safawi" },
+        { label: "Medjool Jordan", href: "/shop?search=Medjool" },
+        { label: "Mabroom", href: "/shop?search=Mabroom" },
+        { label: "Ajwa", href: "/shop?search=Ajwa" },
+        { label: "Medjool Saudi", href: "/shop?search=Medjool" },
+        { label: "Sikhai", href: "/shop?search=Sikhai" },
+        { label: "Munaifi", href: "/shop?search=Munaifi" },
+        { label: "Mufathal (3kg box)", href: "/shop?search=Mufathal" },
+        { label: "Galaxy (3kg box)", href: "/shop?search=Galaxy" },
+        { label: "Sukkari (3kg box)", href: "/shop?search=Sukkari" },
       ],
     },
     {
-      heading: "Nuts",
+      heading: "Other Products",
       links: [
-        { label: "Almonds (Badam)", href: "/shop/nuts" },
-        { label: "Cashew (Kaju)", href: "/shop/nuts" },
-        { label: "Walnuts (Akhrot)", href: "/shop/nuts" },
-        { label: "Pistachio (Pista)", href: "/shop/nuts" },
-        { label: "Mixed Nuts", href: "/shop/nuts" },
-      ],
-    },
-    {
-      heading: "Dry Fruits",
-      links: [
-        { label: "Raisins (Kishmish)", href: "/shop/dry-fruits" },
-        { label: "Dried Figs (Anjeer)", href: "/shop/dry-fruits" },
-        { label: "Dried Apricots", href: "/shop/dry-fruits" },
-        { label: "Dried Kiwi", href: "/shop/dry-fruits" },
-        { label: "Dried Prunes", href: "/shop/dry-fruits" },
-      ],
-    },
-    {
-      heading: "Chocolates",
-      links: [
-        { label: "Dark Chocolate", href: "/shop/chocolates" },
-        { label: "Milk Chocolate", href: "/shop/chocolates" },
-        { label: "Date Chocolates", href: "/shop/chocolates" },
-        { label: "Chocolate Gift Box", href: "/shop/chocolates" },
-        { label: "Artisan Bars", href: "/shop/chocolates" },
+        { label: "Pressed Dates", href: "/shop?search=Pressed" },
+        { label: "Arabic Coffee (Robusta Mix)", href: "/shop?search=Robusta" },
+        { label: "Arabic Coffee (Mysore mix)", href: "/shop?search=Mysore" },
+        { label: "Date Honey (1 litre)", href: "/shop?search=Honey" },
       ],
     },
   ],
@@ -186,24 +184,6 @@ const Header = () => {
   const handleLeave = () => {
     closeTimer.current = setTimeout(() => setShopHovered(false), 150);
   };
-
-  useEffect(() => {
-    getCategories().then((cats) => {
-      const parentCats = cats.filter((c) => !c.parent_category_id);
-      const dynamicCols = parentCats.map((parent) => {
-        const children = cats.filter((c) => c.parent_category_id === parent.id);
-        return {
-          heading: parent.name,
-          links: children.length > 0
-            ? children.map((child) => ({ label: child.name, href: `/shop/${child.handle}` }))
-            : [{ label: `All ${parent.name}`, href: `/shop/${parent.handle}` }],
-        };
-      });
-      if (dynamicCols.length > 0) {
-        setCategories(dynamicCols);
-      }
-    });
-  }, []);
 
   return (
     <header className="w-full relative z-[9999]">
@@ -393,7 +373,7 @@ const Header = () => {
               {categories.map((col) => (
                 <Link
                   key={col.heading}
-                  href={`/shop/${col.heading.toLowerCase().replace(" ", "-")}`}
+                  href={`/shop/${col.heading.toLowerCase().replaceAll(" ", "-")}`}
                   onClick={() => setMenuOpen(false)}
                   className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-navy/5 hover:bg-navy/10 text-[13px] font-medium text-navy hover:text-gold transition-all duration-200"
                 >

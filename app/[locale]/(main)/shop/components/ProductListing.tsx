@@ -6,8 +6,8 @@ import { Link } from "@/i18n/routing";
 import ProductCard from "./ProductCard";
 
 import Footer from "@/app/[locale]/sections/Footer";
-import { getProducts, getCategoryByHandle } from "@/lib/api";
-import type { MedusaProduct } from "@/lib/types";
+import { getProducts, getCategoryByHandle, getCategories } from "@/lib/api";
+import type { MedusaProduct, MedusaProductCategory } from "@/lib/types";
 import { getProductPrice } from "@/lib/types";
 
 /* ------------------ TYPES ------------------ */
@@ -64,6 +64,15 @@ const ProductListing = ({ category, label, searchQuery }: Props) => {
   const [products, setProducts] = useState<MedusaProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState<SortOrder>("default");
+  const [allCategories, setAllCategories] = useState<MedusaProductCategory[]>([]);
+
+  useEffect(() => {
+    getCategories().then((cats) => {
+      // Filter parent categories only
+      const parents = cats.filter((c) => !c.parent_category_id);
+      setAllCategories(parents);
+    });
+  }, []);
 
   useEffect(() => {
     const load = async () => {
@@ -154,16 +163,40 @@ const ProductListing = ({ category, label, searchQuery }: Props) => {
           {/* Sidebar */}
           <aside className="w-[260px] hidden lg:block shrink-0">
             <h3 className="text-sm font-medium mb-4">Categories</h3>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1.5">
+              {/* Shop All Shortcut */}
               <Link
-                href={`/shop/${category}`}
-                className="w-full flex items-center justify-between px-3 py-2 rounded-full text-sm bg-gold text-navy font-medium"
+                href="/shop"
+                className={`w-full flex items-center justify-between px-4 py-2.5 rounded-full text-sm transition-all duration-200
+                  ${!category && !searchQuery
+                    ? "bg-gold text-navy font-semibold shadow-md"
+                    : "text-black/70 hover:bg-black/5 hover:text-black"
+                  }`}
               >
-                <span>{label}</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-white/30 text-navy">
-                  {products.length}
-                </span>
+                <span>All Products</span>
               </Link>
+
+              {allCategories.map((cat) => {
+                const isSelected = category === cat.handle;
+                return (
+                  <Link
+                    key={cat.id}
+                    href={`/shop/${cat.handle}`}
+                    className={`w-full flex items-center justify-between px-4 py-2.5 rounded-full text-sm transition-all duration-200
+                      ${isSelected
+                        ? "bg-gold text-navy font-semibold shadow-md"
+                        : "text-black/70 hover:bg-black/5 hover:text-black"
+                      }`}
+                  >
+                    <span>{cat.name}</span>
+                    {isSelected && (
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-white/30 text-navy font-medium">
+                        {products.length}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
             </div>
 
             <div className="my-6 border-t border-black/10" />

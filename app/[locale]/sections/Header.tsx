@@ -7,102 +7,109 @@ import { FiSearch, FiUser, FiShoppingCart, FiX } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import { navLinks } from "../../constants";
 import { useCart } from "@/app/context/CartContext";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { getCategories } from "@/lib/api";
 
 /* ------------------ DATA ------------------ */
 
-const megaMenu = {
+const getMegaMenu = (t: any) => ({
   columns: [
     {
-      heading: "Dry Fruits and Nuts",
+      heading: t("Dry Fruits and Nuts"),
+      handle: "dry-fruits-and-nuts",
       links: [
-        { label: "Walnut", href: "/shop?search=Walnut" },
-        { label: "Cashew", href: "/shop?search=Cashew" },
-        { label: "Almond", href: "/shop?search=Almond" },
-        { label: "Pista", href: "/shop?search=Pista" },
-        { label: "Fig (Theen Afghan)", href: "/shop?search=Fig" },
-        { label: "Fig (Theen Iran)", href: "/shop?search=Fig" },
-        { label: "Kismis (Golden Raisins)", href: "/shop?search=Kismis" },
-        { label: "Pumpkin Seeds", href: "/shop?search=Pumpkin" },
+        { label: t("Walnut"), href: "/shop?search=Walnut" },
+        { label: t("Cashew"), href: "/shop?search=Cashew" },
+        { label: t("Almond"), href: "/shop?search=Almond" },
+        { label: t("Pista"), href: "/shop?search=Pista" },
+        { label: t("Fig (Theen Afghan)"), href: "/shop?search=Fig" },
+        { label: t("Fig (Theen Iran)"), href: "/shop?search=Fig" },
+        { label: t("Kismis (Golden Raisins)"), href: "/shop?search=Kismis" },
+        { label: t("Pumpkin Seeds"), href: "/shop?search=Pumpkin" },
       ],
     },
     {
-      heading: "Dates",
+      heading: t("Dates"),
+      handle: "dates",
       links: [
-        { label: "Khudri", href: "/shop?search=Khudri" },
-        { label: "Safawi", href: "/shop?search=Safawi" },
-        { label: "Medjool Jordan", href: "/shop?search=Medjool" },
-        { label: "Mabroom", href: "/shop?search=Mabroom" },
-        { label: "Ajwa", href: "/shop?search=Ajwa" },
-        { label: "Medjool Saudi", href: "/shop?search=Medjool" },
-        { label: "Sikhai", href: "/shop?search=Sikhai" },
-        { label: "Munaifi", href: "/shop?search=Munaifi" },
-        { label: "Mufathal (3kg box)", href: "/shop?search=Mufathal" },
-        { label: "Galaxy (3kg box)", href: "/shop?search=Galaxy" },
-        { label: "Sukkari (3kg box)", href: "/shop?search=Sukkari" },
+        { label: t("Khudri"), href: "/shop?search=Khudri" },
+        { label: t("Safawi"), href: "/shop?search=Safawi" },
+        { label: t("Medjool Jordan"), href: "/shop?search=Medjool" },
+        { label: t("Mabroom"), href: "/shop?search=Mabroom" },
+        { label: t("Ajwa"), href: "/shop?search=Ajwa" },
+        { label: t("Medjool Saudi"), href: "/shop?search=Medjool" },
+        { label: t("Sikhai"), href: "/shop?search=Sikhai" },
+        { label: t("Munaifi"), href: "/shop?search=Munaifi" },
+        { label: t("Mufathal (3kg box)"), href: "/shop?search=Mufathal" },
+        { label: t("Galaxy (3kg box)"), href: "/shop?search=Galaxy" },
+        { label: t("Sukkari (3kg box)"), href: "/shop?search=Sukkari" },
       ],
     },
     {
-      heading: "Other Products",
+      heading: t("Other Products"),
+      handle: "other-products",
       links: [
-        { label: "Pressed Dates", href: "/shop?search=Pressed" },
-        { label: "Arabic Coffee (Robusta Mix)", href: "/shop?search=Robusta" },
-        { label: "Arabic Coffee (Mysore mix)", href: "/shop?search=Mysore" },
-        { label: "Date Honey (1 litre)", href: "/shop?search=Honey" },
+        { label: t("Pressed Dates"), href: "/shop?search=Pressed" },
+        { label: t("Arabic Coffee (Robusta Mix)"), href: "/shop?search=Robusta" },
+        { label: t("Arabic Coffee (Mysore mix)"), href: "/shop?search=Mysore" },
+        { label: t("Date Honey (1 litre)"), href: "/shop?search=Honey" },
       ],
     },
   ],
   featured: [
-    { label: "Explore Gift Boxes", image: "/chocos.jpg", href: "/shop/chocolates" },
-    { label: "Explore Premium Dates", image: "/datedark.png", href: "/shop/dates" },
+    { label: t("Explore Gift Boxes"), image: "/chocos.jpg", href: "/shop/chocolates" },
+    { label: t("Explore Premium Dates"), image: "/datedark.png", href: "/shop/dates" },
   ],
-};
+});
 
 /* ------------------ MEGA MENU (desktop) ------------------ */
 
-const MegaMenu = ({ categories }: { categories: any[] }) => (
-  <div className="bg-cream border-t border-gold/30 shadow-xl w-full flex">
-    <div className="flex flex-col pl-16 py-10 gap-8 flex-1">
-      <div className="flex gap-16">
-        {categories.map((col) => (
-          <div key={col.heading} className="flex flex-col gap-3 min-w-[120px]">
-            <span className="text-[10px] font-bold text-black/40 uppercase">{col.heading}</span>
-            <div className="flex flex-col gap-2.5">
-              {col.links.map((item: any) => (                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="text-[13px] text-black/70 hover:text-deepgold cursor-pointer transition-colors duration-200 leading-tight tracking-tight"
-                >
-                  {item.label}
-                </Link>
-              ))}
+const MegaMenu = ({ categories, featured, t }: { categories: any[], featured: any[], t: any }) => (
+  <div className="w-fit bg-cream border-t border-x border-b border-gold/30 shadow-2xl flex justify-center rounded-b-2xl overflow-hidden mt-[1px]">
+    <div className="w-fit flex flex-row justify-center gap-12 lg:gap-24 px-8">
+      <div className="flex flex-col py-10 gap-8">
+        <div className="flex gap-16 flex-wrap">
+          {categories.map((col) => (
+            <div key={col.heading} className="flex flex-col gap-3 min-w-[120px]">
+              <span className="text-[10px] font-bold text-black/40 uppercase">{col.heading}</span>
+              <div className="flex flex-col gap-2.5">
+                {col.links.map((item: any) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="text-[13px] text-black/70 hover:text-deepgold cursor-pointer transition-colors duration-200 leading-tight tracking-tight"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <Link
-        href="/shop"
-        className="relative inline-flex w-fit overflow-hidden rounded-full border border-gold bg-navy text-xs font-medium tracking-tight text-cream group"
-      >
-        <span className="block px-5 py-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
-          Shop All
-        </span>
-        <span className="absolute inset-0 flex items-center justify-center rounded-full bg-cream text-navy translate-y-full scale-[0.5] transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0 group-hover:scale-100">
-          Shop All
-        </span>
-      </Link>
-    </div>
-    <div className="flex gap-3 pr-16 pl-8 py-10 shrink-0 border-l border-gold/20">
-      {megaMenu.featured.map((f) => (
-        <Link key={f.label} href={f.href} className="relative w-[160px] h-[200px] rounded-2xl overflow-hidden group">
-          <Image src={f.image} alt={f.label} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
-          <div className="absolute inset-0 bg-navy/40" />
-          <span className="absolute bottom-4 left-4 right-4 font-serif text-[18px] font-medium text-white leading-tight">            {f.label}
+          ))}
+        </div>
+        <Link
+          href="/shop"
+          className="relative inline-flex w-fit overflow-hidden rounded-full border border-gold bg-navy text-xs font-medium tracking-tight text-cream group"
+        >
+          <span className="block px-5 py-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
+            {t("Shop All")}
+          </span>
+          <span className="absolute inset-0 flex items-center justify-center rounded-full bg-cream text-navy translate-y-full scale-[0.5] transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0 group-hover:scale-100">
+            {t("Shop All")}
           </span>
         </Link>
-      ))}
+      </div>
+      <div className="flex gap-4 py-10 shrink-0 border-s border-gold/20 ps-8">
+        {featured.map((f) => (
+          <Link key={f.label} href={f.href} className="relative w-[180px] h-[220px] rounded-2xl overflow-hidden group">
+            <Image src={f.image} alt={f.label} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-navy/40" />
+            <span className="absolute bottom-4 left-4 right-4 font-serif text-[18px] font-medium text-white leading-tight">
+              {f.label}
+            </span>
+          </Link>
+        ))}
+      </div>
     </div>
   </div>
 );
@@ -168,7 +175,10 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [shopHovered, setShopHovered] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [categories, setCategories] = useState<{ heading: string; links: { label: string; href: string }[] }[]>(megaMenu.columns);  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const t = useTranslations("Header");
+  const megaMenu = getMegaMenu(t);
+  const categories = megaMenu.columns;
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { openCart, items } = useCart();
   const pathname = usePathname();
@@ -306,11 +316,11 @@ const Header = () => {
 
       {/* Desktop Mega Menu */}
       <div
-        className={`hidden lg:block absolute top-full left-0 w-full transition-all duration-200 ease-in-out ${shopHovered ? "opacity-100 pointer-events-auto translate-y-0" : "opacity-0 pointer-events-none -translate-y-1"}`}
+        className={`hidden lg:flex justify-center absolute top-full left-0 w-full transition-all duration-200 ease-in-out ${shopHovered ? "opacity-100 pointer-events-auto translate-y-0" : "opacity-0 pointer-events-none -translate-y-1"}`}
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
       >
-        <MegaMenu categories={categories} />
+        <MegaMenu categories={categories} featured={megaMenu.featured} t={t} />
       </div>
 
       {/* Mobile backdrop */}
@@ -367,13 +377,13 @@ const Header = () => {
             className={`mt-6 transition-all duration-400 ${menuOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
           >
             <span className="text-[10px] uppercase tracking-[0.2em] text-black/35 font-bold block mb-4">
-              Shop by Category
+              {t("Shop by Category")}
             </span>
             <div className="grid grid-cols-2 gap-2">
               {categories.map((col) => (
                 <Link
                   key={col.heading}
-                  href={`/shop/${col.heading.toLowerCase().replaceAll(" ", "-")}`}
+                  href={`/shop/${col.handle}`}
                   onClick={() => setMenuOpen(false)}
                   className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-navy/5 hover:bg-navy/10 text-[13px] font-medium text-navy hover:text-gold transition-all duration-200"
                 >

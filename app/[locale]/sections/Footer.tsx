@@ -171,16 +171,16 @@ const Footer = () => {
         <div className="flex max-md:flex-col max-md:items-center max-md:gap-4 justify-between items-center mt-12 text-cream/50 text-sm">
           <p>{t("copyright")}</p>
           <div className="flex gap-6 max-md:gap-4 flex-wrap max-md:justify-center">
-            <Link href="/privacy" className="hover:text-cream transition">
+            <Link href="/policies" className="hover:text-cream transition">
               {t("privacy")}
             </Link>
-            <Link href="/terms" className="hover:text-cream transition">
+            <Link href="/policies" className="hover:text-cream transition">
               {t("terms")}
             </Link>
-            <Link href="/shipping" className="hover:text-cream transition">
+            <Link href="/policies" className="hover:text-cream transition">
               {t("shipping")}
             </Link>
-            <Link href="/returns" className="hover:text-cream transition">
+            <Link href="/policies" className="hover:text-cream transition">
               {t("returns")}
             </Link>
           </div>

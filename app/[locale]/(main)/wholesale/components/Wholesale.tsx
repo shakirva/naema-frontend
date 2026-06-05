@@ -6,6 +6,7 @@ import { Link } from "@/i18n/routing";
 import { FiArrowUpRight } from "react-icons/fi";
 import { getProducts } from "@/lib/api";
 import type { MedusaProduct } from "@/lib/types";
+import { useTranslations } from "next-intl";
 
 /* ------------------ DATA ------------------ */
 
@@ -81,6 +82,7 @@ const ProductCard = ({ product, index }: { product: MedusaProduct; index: number
 /* ------------------ PAGE ------------------ */
 
 const Wholesale = () => {
+  const t = useTranslations("WholesalePage");
   const [activeCategory, setActiveCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
   const [products, setProducts] = useState<MedusaProduct[]>([]);
@@ -119,27 +121,26 @@ const Wholesale = () => {
           <div className="max-w-[1440px] mx-auto flex flex-col gap-8">
             {/* Label */}
             <span className="font-serif text-[22px] text-cream leading-none w-fit bg-gold/10 border border-gold/30 rounded-lg px-4 py-2">
-              Featured Collections
+              {t("label")}
             </span>
 
             {/* Heading */}
             <div>
               <h1 className="font-serif text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] text-cream max-w-[700px]">
-                Premium dates,{" "}
-                <span className="italic text-lightgold">sourced</span> at scale.
+                {t("heroLine1")}{" "}
+                <span className="italic text-lightgold">{t("heroLine2")}</span>
               </h1>
               <p className="mt-4 text-base text-cream/80 max-w-[480px] leading-relaxed tracking-tight">
-                Bulk dates and dry fruits for businesses, retailers and
-                distributors.{" "}
-                <span className="text-lightgold">Minimum order 20kg.</span>{" "}
-                Pricing and availability on enquiry.
+                {t("heroDesc")}{" "}
+                <span className="text-lightgold">{t("heroMin")}</span>{" "}
+                {t("heroPricing")}
               </p>
             </div>
 
             {/* Category filter pills */}
             <div className="flex flex-col gap-3">
               <p className="text-[10px] text-cream uppercase">
-                Explore by category
+                {t("exploreBy")}
               </p>
               <div className="flex flex-wrap gap-2">
                 {categories.map((cat) => (
@@ -176,7 +177,7 @@ const Wholesale = () => {
               <>
                 {/* Results count */}
                 <p className="text-sm text-black/40 mb-8 tracking-tight">
-                  Showing {visible.length} of {filtered.length} products
+                  {t("showing")} {visible.length} {t("of")} {filtered.length} {t("products")}
                 </p>
 
                 <div className="grid grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-2 gap-8 max-sm:gap-4">
@@ -193,10 +194,10 @@ const Wholesale = () => {
                       className="relative group overflow-hidden inline-flex items-center justify-center px-12 py-4 rounded-full border-2 border-gold bg-cream text-black text-sm font-medium tracking-tight cursor-pointer"
                     >
                       <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
-                        Load More
+                        {t("loadMore")}
                       </span>
                       <span className="block absolute inset-0 flex items-center justify-center bg-navy text-cream border-2 border-navy rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
-                        Load More
+                        {t("loadMore")}
                       </span>
                     </button>
                   </div>
@@ -208,11 +209,10 @@ const Wholesale = () => {
             <div className="mt-20 border-2 border-gold/40 rounded-2xl bg-gold/10 px-12 py-10 max-md:px-6 max-sm:px-5 max-sm:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
                 <h3 className="font-serif text-[clamp(1.5rem,2.5vw,2.2rem)] leading-tight text-black">
-                  Ready to place a bulk order?
+                  {t("ctaTitle")}
                 </h3>
                 <p className="text-sm text-black/60 mt-2 tracking-tight">
-                  Our team will get back to you with pricing, availability and
-                  shipping details.
+                  {t("ctaDesc")}
                 </p>
               </div>
               <Link
@@ -220,10 +220,10 @@ const Wholesale = () => {
                 className="relative group overflow-hidden inline-flex items-center justify-center px-8 py-4 rounded-full border-2 border-gold bg-navy text-cream text-sm font-medium tracking-tight shrink-0 cursor-pointer"
               >
                 <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
-                  Get in touch
+                  {t("ctaBtn")}
                 </span>
                 <span className="block absolute inset-0 flex items-center justify-center bg-cream text-black rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
-                  Get in touch
+                  {t("ctaBtn")}
                 </span>
               </Link>
             </div>

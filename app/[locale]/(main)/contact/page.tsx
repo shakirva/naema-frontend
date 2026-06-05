@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import React, { useState } from "react";
 import {
   FiMail,
@@ -10,8 +10,13 @@ import {
   FiInstagram,
 } from "react-icons/fi";
 import Footer from "../../sections/Footer";
+import { useTranslations, useLocale } from "next-intl";
 
 const page = () => {
+  const t = useTranslations("Contact");
+  const locale = useLocale();
+  const isAr = locale === "ar";
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,7 +36,7 @@ const page = () => {
 
   return (
     <>
-      <main className="w-full bg-cream overflow-hidden">
+      <main className="w-full bg-cream overflow-hidden" dir={isAr ? "rtl" : "ltr"}>
         {/* Hero */}
         <section className="relative w-full px-5 md:px-8 lg:px-16 pt-24 md:pt-32 pb-14 md:pb-20">
           {/* Background */}
@@ -47,20 +52,19 @@ const page = () => {
           <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col items-center text-center">
             {/* Label */}
             <span className="font-serif text-[22px] text-navy leading-none w-fit bg-gold/20 border border-gold/40 rounded-lg px-4 py-2">
-              Contact Us
+              {t("label")}
             </span>
 
             {/* Heading */}
             <h1 className="font-serif text-[clamp(2.2rem,8vw,7rem)] leading-[0.95] text-navy mt-6 md:mt-8 max-w-[1000px]">
-              We’d Love to Hear
+              {t("heroLine1")}
               <br />
-              From You.
+              {t("heroLine2")}
             </h1>
 
             {/* Body */}
             <p className="text-[clamp(1rem,1.5vw,1.2rem)] tracking-tight text-navy/70 leading-[1.3] max-w-[650px] mt-6">
-              Questions about gifting, wholesale, orders, or custom collections?
-              Reach out and our team will get back to you shortly.
+              {t("heroDesc")}
             </p>
           </div>
         </section>
@@ -69,22 +73,20 @@ const page = () => {
         <section className="w-full px-5 md:px-8 lg:px-16 pb-20 md:pb-28">
           <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12">
             {/* Left */}
-            <div className="bg-darkgold/20 border border-gold/30 rounded-[30px] p-5 md:p-8 lg:p-10 flex flex-col justify-between min-h-auto md:min-h-[720px]">
+            <div className="bg-darkgold/20 border border-gold/30 rounded-[30px] p-5 md:p-8 lg:p-10 flex flex-col justify-between md:min-h-[720px]">
               <div>
-                <span className="text-[11px] uppercase  text-navy/50">
-                  Get In Touch
+                <span className="text-[11px] uppercase text-navy/50">
+                  {t("getInTouch")}
                 </span>
 
                 <h2 className="font-serif text-[clamp(2rem,5vw,5rem)] leading-[0.95] text-navy mt-5">
-                  Let’s Start a
+                  {t("leftHeadLine1")}
                   <br />
-                  Conversation.
+                  {t("leftHeadLine2")}
                 </h2>
 
                 <p className="text-navy/70 text-[15px] md:text-base leading-relaxed tracking-tight mt-6 max-w-[520px]">
-                  Whether you're planning corporate gifting, sourcing premium
-                  products for your café, or simply have a question about your
-                  order, we’re here to help.
+                  {t("leftDesc")}
                 </p>
               </div>
 
@@ -98,7 +100,7 @@ const page = () => {
 
                   <div className="flex flex-col min-w-0">
                     <span className="text-[11px] uppercase text-navy/40">
-                      Email
+                      {t("emailLabel")}
                     </span>
 
                     <a
@@ -118,7 +120,7 @@ const page = () => {
 
                   <div className="flex flex-col min-w-0">
                     <span className="text-[11px] uppercase text-navy/40">
-                      Phone (Calls & WhatsApp)
+                      {t("phoneLabel")}
                     </span>
 
                     <a
@@ -138,11 +140,11 @@ const page = () => {
 
                   <div className="flex flex-col min-w-0">
                     <span className="text-[11px] uppercase text-navy/40">
-                      Based In
+                      {t("locationLabel")}
                     </span>
 
                     <p className="mt-1 text-navy text-[15px] md:text-lg tracking-tight">
-                      Shuwaikh Industrial Area 3, Kuwait
+                      {t("locationValue")}
                     </p>
                   </div>
                 </div>
@@ -155,7 +157,7 @@ const page = () => {
 
                   <div className="flex flex-col min-w-0">
                     <span className="text-[11px] uppercase text-navy/40">
-                      Instagram
+                      {t("instagramLabel")}
                     </span>
 
                     <Link
@@ -172,14 +174,14 @@ const page = () => {
             {/* Right */}
             <div className="bg-white border border-gold/30 rounded-[30px] p-5 md:p-8 lg:p-10">
               <div className="flex flex-col">
-                <span className="text-[11px] uppercase  text-navy/50">
-                  Send a Message
+                <span className="text-[11px] uppercase text-navy/50">
+                  {t("formLabel")}
                 </span>
 
                 <h3 className="font-serif text-[clamp(1.8rem,4vw,4rem)] text-navy leading-none mt-4 md:mt-5">
-                  Tell Us What
+                  {t("formHeadLine1")}
                   <br />
-                  You Need.
+                  {t("formHeadLine2")}
                 </h3>
               </div>
 
@@ -187,7 +189,7 @@ const page = () => {
                 {/* Name */}
                 <div className="flex flex-col gap-2">
                   <label className="text-sm text-navy/70 tracking-tight">
-                    Full Name
+                    {t("fullName")}
                   </label>
 
                   <input
@@ -195,7 +197,7 @@ const page = () => {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Your name"
+                    placeholder={t("namePlaceholder")}
                     className="w-full h-[58px] rounded-xl border border-gold/30 bg-cream px-5 outline-none text-navy placeholder:text-navy/35"
                   />
                 </div>
@@ -203,7 +205,7 @@ const page = () => {
                 {/* Email */}
                 <div className="flex flex-col gap-2">
                   <label className="text-sm text-navy/70 tracking-tight">
-                    Email Address
+                    {t("emailAddress")}
                   </label>
 
                   <input
@@ -219,7 +221,7 @@ const page = () => {
                 {/* Subject */}
                 <div className="flex flex-col gap-2">
                   <label className="text-sm text-navy/70 tracking-tight">
-                    Subject
+                    {t("subject")}
                   </label>
 
                   <input
@@ -227,7 +229,7 @@ const page = () => {
                     required
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    placeholder="Wholesale, gifting, order inquiry..."
+                    placeholder={t("subjectPlaceholder")}
                     className="w-full h-[58px] rounded-xl border border-gold/30 bg-cream px-5 outline-none text-navy placeholder:text-navy/35"
                   />
                 </div>
@@ -235,14 +237,14 @@ const page = () => {
                 {/* Message */}
                 <div className="flex flex-col gap-2">
                   <label className="text-sm text-navy/70 tracking-tight">
-                    Message
+                    {t("message")}
                   </label>
 
                   <textarea
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Tell us more about your inquiry..."
+                    placeholder={t("messagePlaceholder")}
                     className="w-full h-[180px] rounded-xl border border-gold/30 bg-cream px-5 py-4 outline-none resize-none text-navy placeholder:text-navy/35"
                   />
                 </div>
@@ -252,7 +254,7 @@ const page = () => {
                   type="submit"
                   className="mt-2 h-[58px] rounded-full bg-navy text-cream font-medium tracking-tight hover:opacity-90 transition cursor-pointer"
                 >
-                  Send Message
+                  {t("sendBtn")}
                 </button>
               </form>
             </div>

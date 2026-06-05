@@ -1,34 +1,33 @@
 import Image from "next/image";
 import React from "react";
-
-const values = [
-  {
-    title: "Naturally Sourced",
-    description:
-      "Every date and nut traced back to its orchard. No shortcuts, no compromise.",
-    image: "/val1.png",
-  },
-  {
-    title: "Zero Additives",
-    description:
-      "Pure as nature intended. Nothing artificial ever makes it into our products.",
-    image: "/val-2.png",
-  },
-  {
-    title: "Responsible Farming",
-    description:
-      "We work only with growers who respect the land and the people who work it.",
-    image: "/val-3.png",
-  },
-  {
-    title: "Premium Always",
-    description:
-      "Every product is held to the same uncompromising standard before it reaches you.",
-    image: "/val-4.png",
-  },
-];
+import { useTranslations } from "next-intl";
 
 const NaemaValues = () => {
+  const t = useTranslations("About");
+
+  const values = [
+    {
+      title: t("val1Title"),
+      description: t("val1Desc"),
+      image: "/val1.png",
+    },
+    {
+      title: t("val2Title"),
+      description: t("val2Desc"),
+      image: "/val-2.png",
+    },
+    {
+      title: t("val3Title"),
+      description: t("val3Desc"),
+      image: "/val-3.png",
+    },
+    {
+      title: t("val4Title"),
+      description: t("val4Desc"),
+      image: "/val-4.png",
+    },
+  ];
+
   return (
     <section className="w-full bg-navy px-5 md:px-8 lg:px-16 py-16 md:py-24 relative overflow-scroll">
       <div className="absolute inset-0 h-full w-full opacity-5  ">
@@ -42,20 +41,17 @@ const NaemaValues = () => {
       <div className="max-w-[1000px]  relative z-1 mx-auto flex flex-col items-center">
         {/* Label */}
         <span className="font-serif text-[clamp(1rem,1.5vw,1.5rem)] text-cream font-medium lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4 py-2">
-          Our Values
+          {t("valuesLabel")}
         </span>
 
         {/* Big heading */}
         <h2 className="font-serif text-[clamp(3rem,10vw,7.5rem)] text-cream leading-none text-center mt-8 max-w-[900px]">
-          Fresh From the <span className="italic text-lightgold">Source.</span>
+          {t("valuesHeadLine1")} <span className="italic text-lightgold">{t("valuesHeadLine2")}</span>
         </h2>
 
         {/* Body */}
         <p className="text-[clamp(0.875rem,1.4vw,1.25rem)] max-w-[450px] text-center tracking-tight mt-8 text-cream/80 leading-[1.25]">
-          Quality shows up in the everyday choices — how our dates are grown,
-          how they're sourced, and how they're packed. We work with growers who
-          care for their land and deliver nothing less than the finest to your
-          door.
+          {t("valuesDesc")}
         </p>
 
         {/* Cards */}

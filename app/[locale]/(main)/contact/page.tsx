@@ -33,7 +33,7 @@ const page = () => {
     <>
       <main className="w-full bg-cream overflow-hidden">
         {/* Hero */}
-        <section className="relative w-full px-5 md:px-8 lg:px-16 pt-32 pb-20">
+        <section className="relative w-full px-5 md:px-8 lg:px-16 pt-24 md:pt-32 pb-14 md:pb-20">
           {/* Background */}
           <div className="absolute inset-0 opacity-10">
             <Image
@@ -51,7 +51,7 @@ const page = () => {
             </span>
 
             {/* Heading */}
-            <h1 className="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] text-navy mt-8 max-w-[1000px]">
+            <h1 className="font-serif text-[clamp(2.2rem,8vw,7rem)] leading-[0.95] text-navy mt-6 md:mt-8 max-w-[1000px]">
               We’d Love to Hear
               <br />
               From You.
@@ -69,13 +69,13 @@ const page = () => {
         <section className="w-full px-5 md:px-8 lg:px-16 pb-20 md:pb-28">
           <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12">
             {/* Left */}
-            <div className="bg-darkgold/20 border border-gold/30 rounded-[30px] p-6 md:p-8 lg:p-10 flex flex-col justify-between min-h-[720px]">
+            <div className="bg-darkgold/20 border border-gold/30 rounded-[30px] p-5 md:p-8 lg:p-10 flex flex-col justify-between min-h-auto md:min-h-[720px]">
               <div>
                 <span className="text-[11px] uppercase  text-navy/50">
                   Get In Touch
                 </span>
 
-                <h2 className="font-serif text-[clamp(2.5rem,5vw,5rem)] leading-[0.95] text-navy mt-5">
+                <h2 className="font-serif text-[clamp(2rem,5vw,5rem)] leading-[0.95] text-navy mt-5">
                   Let’s Start a
                   <br />
                   Conversation.
@@ -91,19 +91,19 @@ const page = () => {
               {/* Contact cards */}
               <div className="flex flex-col gap-4 mt-10">
                 {/* Email */}
-                <div className="bg-cream border border-gold/30 rounded-2xl p-5 flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center shrink-0">
+                <div className="bg-cream border border-gold/30 rounded-2xl p-4 md:p-5 flex items-center gap-4">
+                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center shrink-0">
                     <FiMail className="text-navy text-[18px]" />
                   </div>
 
-                  <div className="flex flex-col">
-                    <span className="text-[11px] uppercase  text-navy/40">
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-[11px] uppercase text-navy/40">
                       Email
                     </span>
 
                     <a
                       href="mailto:support@naemafoodstuff.com"
-                      className="mt-2 text-navy text-lg tracking-tight"
+                      className="mt-1 text-navy text-[15px] md:text-lg tracking-tight break-all"
                     >
                       support@naemafoodstuff.com
                     </a>
@@ -111,19 +111,19 @@ const page = () => {
                 </div>
 
                 {/* Phone */}
-                <div className="bg-cream border border-gold/30 rounded-2xl p-5 flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center shrink-0">
+                <div className="bg-cream border border-gold/30 rounded-2xl p-4 md:p-5 flex items-center gap-4">
+                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center shrink-0">
                     <FiPhone className="text-navy text-[18px]" />
                   </div>
 
-                  <div className="flex flex-col">
-                    <span className="text-[11px] uppercase  text-navy/40">
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-[11px] uppercase text-navy/40">
                       Phone (Calls & WhatsApp)
                     </span>
 
                     <a
                       href="tel:+96598043912"
-                      className="mt-2 text-navy text-lg tracking-tight"
+                      className="mt-1 text-navy text-[15px] md:text-lg tracking-tight"
                     >
                       +965 9804 3912
                     </a>
@@ -131,36 +131,36 @@ const page = () => {
                 </div>
 
                 {/* Location */}
-                <div className="bg-cream border border-gold/30 rounded-2xl p-5 flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center shrink-0">
+                <div className="bg-cream border border-gold/30 rounded-2xl p-4 md:p-5 flex items-center gap-4">
+                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center shrink-0">
                     <FiMapPin className="text-navy text-[18px]" />
                   </div>
 
-                  <div className="flex flex-col">
-                    <span className="text-[11px] uppercase  text-navy/40">
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-[11px] uppercase text-navy/40">
                       Based In
                     </span>
 
-                    <p className="mt-2 text-navy text-lg tracking-tight">
+                    <p className="mt-1 text-navy text-[15px] md:text-lg tracking-tight">
                       Shuwaikh Industrial Area 3, Kuwait
                     </p>
                   </div>
                 </div>
 
                 {/* Instagram */}
-                <div className="bg-cream border border-gold/30 rounded-2xl p-5 flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center shrink-0">
+                <div className="bg-cream border border-gold/30 rounded-2xl p-4 md:p-5 flex items-center gap-4">
+                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center shrink-0">
                     <FiInstagram className="text-navy text-[18px]" />
                   </div>
 
-                  <div className="flex flex-col">
-                    <span className="text-[11px] uppercase  text-navy/40">
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-[11px] uppercase text-navy/40">
                       Instagram
                     </span>
 
                     <Link
                       href="/"
-                      className="mt-2 text-navy text-lg tracking-tight"
+                      className="mt-1 text-navy text-[15px] md:text-lg tracking-tight"
                     >
                       @naema
                     </Link>
@@ -170,13 +170,13 @@ const page = () => {
             </div>
 
             {/* Right */}
-            <div className="bg-white border border-gold/30 rounded-[30px] p-6 md:p-8 lg:p-10">
+            <div className="bg-white border border-gold/30 rounded-[30px] p-5 md:p-8 lg:p-10">
               <div className="flex flex-col">
                 <span className="text-[11px] uppercase  text-navy/50">
                   Send a Message
                 </span>
 
-                <h3 className="font-serif text-[clamp(2rem,4vw,4rem)] text-navy leading-none mt-5">
+                <h3 className="font-serif text-[clamp(1.8rem,4vw,4rem)] text-navy leading-none mt-4 md:mt-5">
                   Tell Us What
                   <br />
                   You Need.

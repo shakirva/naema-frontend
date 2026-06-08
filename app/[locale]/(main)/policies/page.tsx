@@ -178,7 +178,7 @@ export default function PoliciesPage() {
           <div className="grid md:grid-cols-4 gap-5 mb-8">
             {[
               { channel: "WhatsApp", detail: "+965 9804 3912", note: "Response within 2 hours" },
-              { channel: "Email", detail: "neama@gmail.com", note: "Response within 24 hours" },
+              { channel: "Email", detail: "support@naema.com", note: "Response within 24 hours" },
               { channel: "Phone", detail: "+965 9804 3912", note: "During working hours" },
               { channel: "Website", detail: "www.Naemafoodstuff.com", note: "24/7 available" },
             ].map((c) => (
@@ -254,7 +254,7 @@ export default function PoliciesPage() {
           <ul className="list-disc pl-5 space-y-2 text-black/70">
             <li>All payments are processed through Tap Payments, a PCI-DSS compliant gateway.</li>
             <li>Personal information is accessible only to authorised staff.</li>
-            <li>Customers may request deletion of personal information by contacting neama@gmail.com.</li>
+            <li>Customers may request deletion of personal information by contacting support@naema.com.</li>
           </ul>
         </section>
       </div>
@@ -267,10 +267,10 @@ export default function PoliciesPage() {
           NAEMA FOODSTUFF EST · CR No. 42567 · Shuwaikh Industrial Area 3, Kuwait
         </p>
         <a
-          href="mailto:neama@gmail.com"
+          href="mailto:support@naema.com"
           className="shrink-0 text-xs text-gold border border-gold/80 rounded-full px-5 py-2 hover:bg-gold/20 transition-colors"
         >
-          neama@gmail.com
+          support@naema.com
         </a>
       </div>
     </main>

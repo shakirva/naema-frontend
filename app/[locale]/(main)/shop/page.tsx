@@ -3,6 +3,7 @@ import { Link } from "@/i18n/routing";
 import { FiArrowRight } from "react-icons/fi";
 import ProductListing from "./components/ProductListing";
 import { getCategories } from "@/lib/api";
+import Footer from "../../sections/Footer";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }> | { [key: string]: string | string[] | undefined };
@@ -28,6 +29,7 @@ export default async function CategoryPage({ searchParams }: Props) {
   };
 
   return (
+    <>
     <section className="min-h-screen bg-cream px-16 py-16 max-lg:px-8 max-md:px-5">
       <div className="max-w-[1440px] mx-auto">
 
@@ -127,5 +129,7 @@ export default async function CategoryPage({ searchParams }: Props) {
         </div>
       </div>
     </section>
+    <Footer />
+    </>
   );
 }

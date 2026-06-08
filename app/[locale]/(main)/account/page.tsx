@@ -7,6 +7,7 @@ import ProfileTab from "./components/ProfileTab";
 import AddressesTab from "./components/AddressesTab";
 import OrdersTab from "./components/OrdersTab";
 import { getCurrentCustomer, getCustomerOrders, logoutCustomer } from "../../../actions";
+import Footer from "../../sections/Footer";
 
 type Tab = "profile" | "orders" | "addresses";
 
@@ -61,6 +62,7 @@ const AccountPage = () => {
     : "";
 
   return (
+    <>
     <section className="min-h-screen bg-cream px-8 py-12 max-md:px-4">
       <div className="max-w-[1200px] mx-auto flex gap-8 items-start max-lg:flex-col">
 
@@ -134,6 +136,8 @@ const AccountPage = () => {
         </div>
       </div>
     </section>
+    <Footer />
+    </>
   );
 };
 

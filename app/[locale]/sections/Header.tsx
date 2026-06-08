@@ -210,10 +210,10 @@ const Header = () => {
           >
             <Image
               src="/newnaema.png"
-              width={70}
-              height={70}
+              width={80}
+              height={80}
               alt="Naema logo"
-              className="size-[44px] sm:size-[52px] md:size-[60px] object-contain"
+              className="size-[52px] sm:size-[60px] md:size-[68px] object-contain"
             />
           </Link>
 
@@ -337,7 +337,7 @@ const Header = () => {
       >
         {/* Drawer header — close button on the RIGHT, matching burger position */}
         <div className="flex items-center justify-between px-7 pt-7 pb-5">
-          <Image src="/newnaema.png" width={48} height={48} alt="Naema logo" className="size-[40px] object-contain" />
+          <Image src="/newnaema.png" width={56} height={56} alt="Naema logo" className="size-[48px] object-contain" />
           <button
             onClick={() => setMenuOpen(false)}
             className="w-8 h-8 flex items-center justify-center transition-colors duration-200"

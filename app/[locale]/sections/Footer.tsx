@@ -128,18 +128,10 @@ const Footer = () => {
               ))}
               <li>
                 <Link
-                  href="/track"
+                  href="/account"
                   className="hover:text-cream transition underlinee"
                 >
-                  {t("trackOrder")}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="hover:text-cream transition underlinee"
-                >
-                  {t("contact")}
+                  {t("account")}
                 </Link>
               </li>
             </ul>

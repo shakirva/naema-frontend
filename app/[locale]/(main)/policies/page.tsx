@@ -1,4 +1,5 @@
 "use client";
+import Footer from "../../sections/Footer";
 
 const navItems: [string, string][] = [
   ["Terms", "terms"],
@@ -18,6 +19,7 @@ function scrollToSection(id: string) {
 
 export default function PoliciesPage() {
   return (
+    <>
     <main className="max-w-[1440px] mx-auto px-5 md:px-8 lg:px-16 py-20">
       
       <section className="mb-16 text-center">
@@ -274,5 +276,7 @@ export default function PoliciesPage() {
         </a>
       </div>
     </main>
+    <Footer />
+    </>
   );
 }

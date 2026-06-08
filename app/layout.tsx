@@ -7,8 +7,46 @@ import { CartProvider } from "./context/CartContext";
 import LenisSmoothScroll from "./[locale]/components/SmoothScroll/Lenis";
 
 export const metadata: Metadata = {
-  title: "Naema",
-  description: "Premium dates and artisan products",
+  title: "Naema | Premium Dates and Artisan Products",
+  description: "Experience the luxury of Naema's premium quality dates and artisan products. Handpicked, natural, and rich in tradition.",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || 
+    (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : "http://localhost:3000")
+  ),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Naema | Premium Dates and Artisan Products",
+    description: "Experience the luxury of Naema's premium quality dates and artisan products. Handpicked, natural, and rich in tradition.",
+    url: "/",
+    siteName: "Naema",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Naema - Premium Dates & Artisan Products",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Naema | Premium Dates and Artisan Products",
+    description: "Experience the luxury of Naema's premium quality dates and artisan products. Handpicked, natural, and rich in tradition.",
+    images: ["/opengraph-image.png"],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png" },
+    ],
+  },
 };
 
 const instrumentSerif = Instrument_Serif({

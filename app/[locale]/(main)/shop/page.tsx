@@ -51,7 +51,7 @@ export default async function CategoryPage({ searchParams }: Props) {
             Our Collection
           </h1>
           <p className="mt-5 text-[15px] text-black/55 max-w-[520px] leading-relaxed tracking-tight">
-            From premium dates to artisan chocolates — discover curated
+            From premium dates to premium nuts and dry fruits — discover curated
             collections crafted for gifting, wellness, and everyday indulgence.
           </p>
         </div>

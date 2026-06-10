@@ -59,7 +59,7 @@ const Footer = () => {
           <div className="ml-auto lg:w-[50%] h-[600px]  w-full  overflow-hidden relative rounded-2xl border-3 border-gold">
             <Image
               src="/dateman.jpg"
-              alt="Chocolates"
+              alt="Premium Dates"
               fill
               className="object-cover"
             />

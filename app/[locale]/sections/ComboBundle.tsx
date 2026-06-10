@@ -54,8 +54,8 @@ const ComboBundle = () => {
 
           <div className="w-[220px] h-[300px] max-lg:w-[110px] max-lg:h-[160px] max-md:w-[140px] max-md:h-[200px] rounded-[999px] overflow-hidden rotate-12 max-lg:rotate-8 ml-5 max-lg:ml-3 border-2 border-gold">
             <Image
-              src="/chocos.jpg"
-              alt="Chocolates"
+              src="/nuts.jpg"
+              alt="Nuts"
               width={320}
               height={420}
               className="w-full h-full object-cover"

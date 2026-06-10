@@ -70,13 +70,13 @@ const NewCollection = () => {
           <ParallaxImage
             mainclass="w-full h-[60vw] max-lg:h-[50vw] max-md:h-[70vw] relative overflow-hidden rounded-tr-md rounded-br-md max-lg:rounded-tr-none max-lg:rounded-br-none max-lg:rounded-bl-md max-lg:rounded-br-md"
             imageClass="object-cover rounded-tr-md rounded-br-md scale-110 max-lg:rounded-tr-none max-lg:rounded-br-none"
-            src="/chocobg.jpg"
-            alt="Chocolate background"
+            src="/bg5.jpg"
+            alt="Orchard background"
           />
           <div className="self-end max-w-[450px] pl-16 max-lg:pl-8 max-md:pl-5 flex flex-col items-start">
             <p className="mt-2 text-[16px] max-md:text-sm text-black/80 tracking-tight text-left">
-              Discover freshly curated selections of premium dates, artisan
-              chocolates, and handcrafted treats designed for everyday
+              Discover freshly curated selections of premium dates, handpicked
+              nuts, and handcrafted treats designed for everyday
               indulgence and thoughtful gifting.
             </p>
 

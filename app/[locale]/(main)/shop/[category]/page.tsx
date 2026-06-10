@@ -7,7 +7,6 @@ const categoryMap: Record<string, string> = {
   "dry-fruits": "Dry Fruits",
   "dry-fruits-and-nuts": "Dry Fruits and Nuts",
   "other-products": "Other Products",
-  chocolates: "Chocolates",
 };
 
 const CategoryProductPage = async ({

@@ -14,8 +14,7 @@ export type Product = {
   category:
     | "dates"
     | "nuts"
-    | "dry-fruits"
-    | "chocolates";
+    | "dry-fruits";
 
   tags: string[];
 
@@ -84,15 +83,15 @@ export const products: Product[] = [
 
   {
     id: 15,
-    name: "Dark Choc Bar",
-    category: "chocolates",
-    tags: ["Dark", "Rich"],
-    price: 650,
+    name: "Pistachios",
+    category: "nuts",
+    tags: ["Salted", "Roasted"],
+    price: 950,
     rating: 5,
-    reviews: 54,
-    image: "/n3.jpg",
+    reviews: 64,
+    image: "/misc.png",
     description:
-      "Rich dark chocolate with deep cocoa flavor and smooth finish.",
+      "Premium quality roasted and salted pistachios.",
     badge: "Limited",
     featured: true,
   },

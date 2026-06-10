@@ -67,7 +67,6 @@ const Shop = () => {
     dates: "/dbox.jpg",
     nuts: "/nuts.jpg",
     "dry-fruits": "/dry.jpg",
-    chocolates: "/chocos.jpg",
   };
 
   return (
@@ -162,7 +161,6 @@ const Shop = () => {
                 { src: "/dbox.jpg", label: t("categories.Dates"), href: "/shop/dates" },
                 { src: "/nuts.jpg", label: t("categories.Nuts"), href: "/shop/nuts" },
                 { src: "/dry.jpg", label: t("categories.Dry Fruits"), href: "/shop/dry-fruits" },
-                { src: "/chocos.jpg", label: t("categories.Chocolates"), href: "/shop/chocolates" },
               ]).map(({ src, label, href }) => (
                 <Link
                   key={label}

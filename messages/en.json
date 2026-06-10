@@ -27,15 +27,16 @@
     "Arabic Coffee (Mysore mix)": "Arabic Coffee (Mysore mix)",
     "Date Honey (1 litre)": "Date Honey (1 litre)",
     "Explore Gift Boxes": "Explore Gift Boxes",
+    "Explore Dry Fruits": "Explore Dry Fruits",
     "Explore Premium Dates": "Explore Premium Dates",
     "Shop All": "Shop All",
     "Shop by Category": "Shop by Category"
   },
   "Hero": {
     "customers": "Cherished by 100,000+ customers",
-    "titleLine1": "Finest dates and artisan",
-    "titleLine2": "chocolate crafted by Naema.",
-    "description": "Discover the finest selection of premium dates, nuts and artisan chocolate, masterfully created by Naema",
+    "titleLine1": "Finest dates and premium",
+    "titleLine2": "nuts crafted by Naema.",
+    "description": "Discover the finest selection of premium dates, nuts and dry fruits, masterfully created by Naema",
     "button": "Shop Now"
   },
   "Carousel": {
@@ -45,7 +46,7 @@
     "giftPackaging": "Gift Packaging"
   },
   "Shop": {
-    "greatBox": "A great box starts with carefully selected <dates>dates,</dates> roasted <nuts>nuts,</nuts> and rich artisan <chocolate>chocolate.</chocolate>",
+    "greatBox": "A great box starts with carefully selected <dates>dates,</dates> roasted <nuts>nuts,</nuts> and premium <chocolate>dry fruits.</chocolate>",
     "bestSellersTitle": "Shop Our Best Sellers",
     "bestSellersDesc": "Our most loved products, trusted by thousands of customers.",
     "collectionTitle": "Our Collection",
@@ -80,7 +81,7 @@
     "missionLabel": "Our Mission",
     "missionLine1": "Exceptional Flavours Crafted",
     "missionLine2": "For Everyday Indulgence",
-    "missionDesc": "We source premium dates, chocolate, nuts, and dry fruits with a focus on quality and freshness. Every collection is thoughtfully curated for rich flavour, elegant presentation, and ingredients worth sharing.",
+    "missionDesc": "We source premium dates, nuts, and dry fruits with a focus on quality and freshness. Every collection is thoughtfully curated for rich flavour, elegant presentation, and ingredients worth sharing.",
     "founderLine1": "A Note From",
     "founderLine2": "Our Brand",
     "founderQuote": "\"Naema was never just about dates — it was about bringing something truly pure to your table. We set out with one belief: that premium quality, honest sourcing, and real care could exist in every box we send. Every date we pick, every nut we select, carries that same intention — to give you nothing less than nature's finest.\"",
@@ -114,7 +115,7 @@
     "block1Desc": "Our dates begin their journey in the sun-drenched orchards of India, carefully hand-picked at peak ripeness. We build lasting relationships with our growers — people who know their land and treat every harvest with deep respect.",
     "block2Label": "Our Craft",
     "block2Title": "Made with Intention",
-    "block2Desc": "Every product in our collection is assembled with care — from stuffed dates and roasted nuts to our artisan chocolate range. No shortcuts, no fillers. Just premium ingredients brought together thoughtfully.",
+    "block2Desc": "Every product in our collection is assembled with care — from stuffed dates and roasted nuts to our premium dry fruits range. No shortcuts, no fillers. Just premium ingredients brought together thoughtfully.",
     "block3Label": "Our Promise",
     "block3Title": "To Your Door, Fresh",
     "block3Desc": "From the moment an order is placed, we move fast. Every Naema box is packed to preserve freshness and delivered with the same care we put into sourcing — because the last mile matters just as much as the first."
@@ -180,7 +181,7 @@
         "author": "Sara H."
       },
       "item4": {
-        "quote": "Luxury chocolate that actually tastes handcrafted.",
+        "quote": "Pure, natural dates that taste absolutely amazing.",
         "author": "Yousef T."
       },
       "item5": {
@@ -248,7 +249,7 @@
     "followUs": "Follow Us"
   },
   "Wholesale": {
-    "partnerDesc": "Partner with Naema for premium dates, artisan chocolates, handpicked nuts, and luxury gifting collections crafted for cafés, hotels, retailers, and modern hospitality spaces.",
+    "partnerDesc": "Partner with Naema for premium dates, handpicked nuts, dry fruits, and luxury gifting collections crafted for cafés, hotels, retailers, and modern hospitality spaces.",
     "becomePartner": "Become a Partner",
     "badge": "Wholesale",
     "title": "Our Café &\nWholesale Partners",
@@ -262,7 +263,7 @@
     "perfectlyRipenedDesc": "Harvested only when each date reaches its natural peak.",
     "rootedInTradition": "Rooted in Tradition",
     "rootedInTraditionDesc": "Years of expertise shape every harvest with care",
-    "aboutDesc": "Thoughtfully sourced dates, nuts, and chocolates — crafted for moments worth savoring.",
+    "aboutDesc": "Thoughtfully sourced dates, nuts, and dry fruits — crafted for moments worth savoring.",
     "email": "support@naemafoodstuff.com",
     "phone": "+965 9804 3912",
     "shop": "Shop",

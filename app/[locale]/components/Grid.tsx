@@ -12,10 +12,10 @@ const Grid = async () => {
   const rootCategories = categories.filter((c) => !c.parent_category_id);
 
   const fallbackItems = [
-    { title: "Best Seller", image: "/chocolate.png", height: "lg:row-span-2", href: "/shop/best-seller" },
+    { title: "Best Seller", image: "/dates.jpg", height: "lg:row-span-2", href: "/shop/best-seller" },
     { title: "Dates", image: "/dn.png", height: "", href: "/shop/dates" },
-    { title: "Chocolates", image: "/datedark.png", height: "", href: "/shop/chocolates" },
-    { title: "Nuts", image: "/misc.png", height: "lg:row-span-2", href: "/shop/nuts" },
+    { title: "Dry Fruits", image: "/dry.jpg", height: "", href: "/shop/dry-fruits" },
+    { title: "Nuts", image: "/nuts.jpg", height: "lg:row-span-2", href: "/shop/nuts" },
   ];
 
   // Build the list of dynamic candidates
@@ -33,7 +33,7 @@ const Grid = async () => {
   }
 
   // 2. Add top root categories if we have fewer than 4 candidates
-  const foodCategoryHandles = ["dates", "chocolates", "nuts", "dry-fruits", "gift-boxes"];
+  const foodCategoryHandles = ["dates", "nuts", "dry-fruits", "gift-boxes"];
   const sortedRootCategories = [...rootCategories].sort((a, b) => {
     const idxA = foodCategoryHandles.indexOf(a.handle || "");
     const idxB = foodCategoryHandles.indexOf(b.handle || "");
@@ -99,7 +99,6 @@ const Grid = async () => {
     switch (title) {
       case "Dates": return t("categories.Dates");
       case "Nuts": return t("categories.Nuts");
-      case "Chocolates": return t("categories.Chocolates");
       case "Best Seller": return t("categories.BestSeller");
       case "Dry Fruits": return t("categories.DryFruits");
       default: return title;

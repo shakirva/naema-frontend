@@ -50,7 +50,18 @@ const Hospitality = () => {
   };
 
   useEffect(() => {
-    scrollToCard(1);
+    const container = sliderRef.current;
+    if (!container) return;
+    const card = container.children[1] as HTMLElement | undefined;
+    if (!card) return;
+    isAutoScrolling.current = true;
+    container.scrollTo({
+      left: card.offsetLeft - container.offsetWidth / 2 + card.offsetWidth / 2,
+      behavior: "smooth",
+    });
+    setTimeout(() => {
+      isAutoScrolling.current = false;
+    }, 500);
   }, []);
 
   useEffect(() => {

@@ -51,52 +51,28 @@ const getMegaMenu = (t: any) => ({
       handle: "other-products",
       links: [
         { label: t("Pressed Dates"), href: "/shop?search=Pressed" },
-        {
-          label: t("Arabic Coffee (Robusta Mix)"),
-          href: "/shop?search=Robusta",
-        },
+        { label: t("Arabic Coffee (Robusta Mix)"), href: "/shop?search=Robusta" },
         { label: t("Arabic Coffee (Mysore mix)"), href: "/shop?search=Mysore" },
         { label: t("Date Honey (1 litre)"), href: "/shop?search=Honey" },
       ],
     },
   ],
   featured: [
-    {
-      label: t("Explore Dry Fruits"),
-      image: "/dry.webp",
-      href: "/shop/dry-fruits",
-    },
-    {
-      label: t("Explore Premium Dates"),
-      image: "/datedark.png",
-      href: "/shop/dates",
-    },
+    { label: t("Explore Dry Fruits"), image: "/dry.webp", href: "/shop/dry-fruits" },
+    { label: t("Explore Premium Dates"), image: "/datedark.png", href: "/shop/dates" },
   ],
 });
 
 /* ------------------ MEGA MENU (desktop) ------------------ */
 
-const MegaMenu = ({
-  categories,
-  featured,
-  t,
-}: {
-  categories: any[];
-  featured: any[];
-  t: any;
-}) => (
+const MegaMenu = ({ categories, featured, t }: { categories: any[], featured: any[], t: any }) => (
   <div className="w-fit bg-cream border-t border-x border-b border-gold/30 shadow-2xl flex justify-center rounded-b-2xl overflow-hidden mt-[1px]">
     <div className="w-fit flex flex-row justify-center gap-12 lg:gap-24 px-8">
       <div className="flex flex-col py-10 gap-8">
         <div className="flex gap-16 flex-wrap">
           {categories.map((col) => (
-            <div
-              key={col.heading}
-              className="flex flex-col gap-3 min-w-[120px]"
-            >
-              <span className="text-[10px] font-bold text-black/40 uppercase">
-                {col.heading}
-              </span>
+            <div key={col.heading} className="flex flex-col gap-3 min-w-[120px]">
+              <span className="text-[10px] font-bold text-black/40 uppercase">{col.heading}</span>
               <div className="flex flex-col gap-2.5">
                 {col.links.map((item: any) => (
                   <Link
@@ -125,18 +101,8 @@ const MegaMenu = ({
       </div>
       <div className="flex gap-4 py-10 shrink-0 border-s border-gold/20 ps-8">
         {featured.map((f) => (
-          <Link
-            key={f.label}
-            href={f.href}
-            className="relative w-[180px] h-[220px] rounded-2xl overflow-hidden group"
-          >
-            <Image
-              src={f.image}
-              alt={f.label}
-              fill
-              sizes="(min-width:1024px) 180px, 40vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-            />
+          <Link key={f.label} href={f.href} className="relative w-[180px] h-[220px] rounded-2xl overflow-hidden group">
+            <Image src={f.image} alt={f.label} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
             <div className="absolute inset-0 bg-navy/40" />
             <span className="absolute bottom-4 left-4 right-4 font-serif text-[18px] font-medium text-white leading-tight">
               {f.label}
@@ -150,13 +116,7 @@ const MegaMenu = ({
 
 /* ------------------ SEARCH OVERLAY ------------------ */
 
-const SearchOverlay = ({
-  open,
-  onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) => {
+const SearchOverlay = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const [query, setQuery] = useState("");
   const { push } = useRouter();
 
@@ -173,17 +133,9 @@ const SearchOverlay = ({
     }
   };
   return (
-    <div
-      className={`fixed inset-0 z-[99999] transition-all duration-300 ease-out ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
-    >
-      <button
-        aria-label="Close search"
-        onClick={onClose}
-        className="absolute inset-0 bg-navy/60 backdrop-blur-sm"
-      />
-      <div
-        className={`relative z-10 w-full bg-cream border-b-2 border-darkgold shadow-2xl transition-transform duration-300 ease-out ${open ? "translate-y-0" : "-translate-y-full"}`}
-      >
+    <div className={`fixed inset-0 z-[99999] transition-all duration-300 ease-out ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+      <div className="absolute inset-0 bg-navy/60 backdrop-blur-sm" onClick={onClose} />
+      <div className={`relative z-10 w-full bg-cream border-b-2 border-darkgold shadow-2xl transition-transform duration-300 ease-out ${open ? "translate-y-0" : "-translate-y-full"}`}>
         <div className="max-w-[1440px] mx-auto px-8 h-[80px] flex items-center gap-4">
           <button
             onClick={triggerSearch}
@@ -209,13 +161,8 @@ const SearchOverlay = ({
             Search
           </button>
 
-          <button
-            aria-label="Close"
-            onClick={onClose}
-            className="text-navy/60 hover:text-navy transition-colors p-1 ml-2"
-          >
-            <FiX size={20} />{" "}
-          </button>
+          <button onClick={onClose} className="text-navy/60 hover:text-navy transition-colors p-1 ml-2">
+            <FiX size={20} />          </button>
         </div>
       </div>
     </div>
@@ -255,6 +202,7 @@ const Header = () => {
       {/* ── NAV BAR ── */}
       <div className="w-full px-5 sm:px-8 md:px-12 lg:px-16 lg:py-8 py-4 bg-navy border-b border-darkgold">
         <div className="max-w-[1440px] mx-auto w-full flex items-center justify-between">
+
           {/* Logo — left on mobile/tablet, centered on desktop */}
           <Link
             href="/"
@@ -274,9 +222,7 @@ const Header = () => {
             <div className="flex gap-12 text-[14px] tracking-tight font-medium">
               {navLinks.map((link, index) => {
                 const isShop = link.label.toLowerCase() === "shop";
-                const isActive =
-                  pathname === link.href ||
-                  pathname.startsWith(link.href + "/");
+                const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
                 return (
                   <div
                     key={index}
@@ -304,9 +250,9 @@ const Header = () => {
 
           {/* Right side — desktop icons + mobile icons + burger */}
           <div className="flex items-center gap-3 sm:gap-4 lg:gap-6">
+
             {/* Desktop only: search icon */}
             <button
-              aria-label="Open search"
               className="hidden lg:flex text-cream/70 hover:text-gold transition-colors"
               onClick={() => setSearchOpen(true)}
             >
@@ -315,45 +261,18 @@ const Header = () => {
 
             {/* Desktop only: language */}
             <div className="hidden lg:flex items-center gap-2">
-              <Link
-                href={pathname}
-                locale="en"
-                className={`text-[12px] tracking-tight transition-colors duration-300 ${locale === "en" ? "text-gold" : "text-cream/50 hover:text-cream"}`}
-              >
-                EN
-              </Link>
+              <Link href={pathname} locale="en" className={`text-[12px] tracking-tight transition-colors duration-300 ${locale === "en" ? "text-gold" : "text-cream/50 hover:text-cream"}`}>EN</Link>
               <span className="text-cream/20">/</span>
-              <Link
-                href={pathname}
-                locale="ar"
-                className={`text-[12px] tracking-tight transition-colors duration-300 ${locale === "ar" ? "text-gold" : "text-cream/50 hover:text-cream"}`}
-              >
-                AR
-              </Link>
+              <Link href={pathname} locale="ar" className={`text-[12px] tracking-tight transition-colors duration-300 ${locale === "ar" ? "text-gold" : "text-cream/50 hover:text-cream"}`}>AR</Link>
             </div>
 
             {/* Desktop only: login */}
-            <Link
-              href="/account"
-              aria-label="Account"
-              className="hidden lg:block"
-            >
-              <FiUser
-                size={20}
-                className="text-cream/70 hover:text-gold transition-colors"
-              />{" "}
-            </Link>
+            <Link href="/account" className="hidden lg:block">
+              <FiUser size={20} className="text-cream/70 hover:text-gold transition-colors" />            </Link>
 
             {/* Desktop only: cart */}
-            <button
-              aria-label="Open cart"
-              onClick={openCart}
-              className="relative hidden lg:block"
-            >
-              <FiShoppingCart
-                size={20}
-                className="text-cream/70 hover:text-gold transition-colors"
-              />
+            <button onClick={openCart} className="relative hidden lg:block">
+              <FiShoppingCart size={20} className="text-cream/70 hover:text-gold transition-colors" />
               {totalItems > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold rounded-full text-[9px] text-navy font-medium flex items-center justify-center">
                   {totalItems}
@@ -362,32 +281,18 @@ const Header = () => {
             </button>
 
             {/* Mobile/tablet: search */}
-            <button
-              aria-label="Open search"
-              className="lg:hidden text-cream/80 hover:text-gold transition-colors"
-              onClick={() => setSearchOpen(true)}
-            >
+            <button className="lg:hidden text-cream/80 hover:text-gold transition-colors" onClick={() => setSearchOpen(true)}>
               <FiSearch size={20} />
             </button>
 
             {/* Mobile/tablet: login */}
-            <Link href="/login" aria-label="Login" className="lg:hidden">
-              <FiUser
-                size={20}
-                className="text-cream/80 hover:text-gold transition-colors"
-              />
+            <Link href="/login" className="lg:hidden">
+              <FiUser size={20} className="text-cream/80 hover:text-gold transition-colors" />
             </Link>
 
             {/* Mobile/tablet: cart */}
-            <button
-              aria-label="Open cart"
-              onClick={openCart}
-              className="relative lg:hidden"
-            >
-              <FiShoppingCart
-                size={20}
-                className="text-cream/80 hover:text-gold transition-colors"
-              />
+            <button onClick={openCart} className="relative lg:hidden">
+              <FiShoppingCart size={20} className="text-cream/80 hover:text-gold transition-colors" />
               {totalItems > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold rounded-full text-[9px] text-navy font-medium flex items-center justify-center">
                   {totalItems}
@@ -401,15 +306,9 @@ const Header = () => {
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
             >
-              <span
-                className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "rotate-45 translate-y-0" : "-translate-y-[7px]"}`}
-              />
-              <span
-                className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "opacity-0 scale-x-0" : "opacity-100 scale-x-100"}`}
-              />
-              <span
-                className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "-rotate-45 translate-y-0" : "translate-y-[7px]"}`}
-              />
+              <span className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "rotate-45 translate-y-0" : "-translate-y-[7px]"}`} />
+              <span className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "opacity-0 scale-x-0" : "opacity-100 scale-x-100"}`} />
+              <span className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "-rotate-45 translate-y-0" : "translate-y-[7px]"}`} />
             </button>
           </div>
         </div>
@@ -438,13 +337,7 @@ const Header = () => {
       >
         {/* Drawer header — close button on the RIGHT, matching burger position */}
         <div className="flex items-center justify-between px-7 pt-7 pb-5">
-          <Image
-            src="/newnaema.png"
-            width={56}
-            height={56}
-            alt="Naema logo"
-            className="size-[48px] object-contain"
-          />
+          <Image src="/newnaema.png" width={56} height={56} alt="Naema logo" className="size-[48px] object-contain" />
           <button
             onClick={() => setMenuOpen(false)}
             className="w-8 h-8 flex items-center justify-center transition-colors duration-200"
@@ -456,6 +349,7 @@ const Header = () => {
 
         {/* Scrollable content */}
         <div className="flex-1 overflow-y-auto px-7 py-6 flex flex-col gap-0">
+
           {/* Main nav links — staggered animation */}
           <nav className="flex flex-col">
             {navLinks.map((link, index) => (
@@ -472,20 +366,14 @@ const Header = () => {
                   hover:text-gold`}
               >
                 <span>{link.label}</span>
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-gold text-[13px]">
-                  →
-                </span>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-gold text-[13px]">→</span>
               </Link>
             ))}
           </nav>
 
           {/* Shop categories */}
           <div
-            style={{
-              transitionDelay: menuOpen
-                ? `${navLinks.length * 55 + 100}ms`
-                : "0ms",
-            }}
+            style={{ transitionDelay: menuOpen ? `${navLinks.length * 55 + 100}ms` : "0ms" }}
             className={`mt-6 transition-all duration-400 ${menuOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
           >
             <span className="text-[10px] uppercase tracking-[0.2em] text-black/35 font-bold block mb-4">
@@ -512,9 +400,7 @@ const Header = () => {
           className={`px-7 py-6 transition-all duration-400 ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
         >
           <div className="flex items-center gap-3">
-            <span className="text-[11px] text-black/30 uppercase tracking-widest">
-              Language
-            </span>
+            <span className="text-[11px] text-black/30 uppercase tracking-widest">Language</span>
             <div className="flex items-center gap-2 ml-1">
               <Link
                 href={pathname}
@@ -533,8 +419,7 @@ const Header = () => {
                 عربي
               </Link>
             </div>
-          </div>{" "}
-        </div>
+          </div>        </div>
       </div>
     </header>
   );

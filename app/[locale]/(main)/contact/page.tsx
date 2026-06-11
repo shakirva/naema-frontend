@@ -3,12 +3,7 @@
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import React, { useState } from "react";
-import {
-  FiMail,
-  FiMapPin,
-  FiPhone,
-  FiInstagram,
-} from "react-icons/fi";
+import { FiMail, FiMapPin, FiPhone, FiInstagram } from "react-icons/fi";
 import Footer from "../../sections/Footer";
 import { useTranslations, useLocale } from "next-intl";
 
@@ -27,24 +22,30 @@ const page = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const targetEmails = "support@naemafoodstuff.com";
-    const mailtoSubject = encodeURIComponent(`Naema Inquiry: ${formData.subject || "Contact Form"}`);
+    const mailtoSubject = encodeURIComponent(
+      `Naema Inquiry: ${formData.subject || "Contact Form"}`,
+    );
     const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`,
     );
     window.location.href = `mailto:${targetEmails}?subject=${mailtoSubject}&body=${body}`;
   };
 
   return (
     <>
-      <main className="w-full bg-cream overflow-hidden" dir={isAr ? "rtl" : "ltr"}>
+      <main
+        className="w-full bg-cream overflow-hidden"
+        dir={isAr ? "rtl" : "ltr"}
+      >
         {/* Hero */}
         <section className="relative w-full px-5 md:px-8 lg:px-16 pt-24 md:pt-32 pb-14 md:pb-20">
           {/* Background */}
           <div className="absolute inset-0 opacity-10">
             <Image
               src="/goldpalmm.webp"
-              alt="Palm background"
+              alt=""
               fill
+              sizes="100vw"
               className="object-cover"
             />
           </div>
@@ -185,7 +186,10 @@ const page = () => {
                 </h3>
               </div>
 
-              <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-10">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-5 mt-10"
+              >
                 {/* Name */}
                 <div className="flex flex-col gap-2">
                   <label className="text-sm text-navy/70 tracking-tight">
@@ -196,7 +200,9 @@ const page = () => {
                     type="text"
                     required
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     placeholder={t("namePlaceholder")}
                     className="w-full h-[58px] rounded-xl border border-gold/30 bg-cream px-5 outline-none text-navy placeholder:text-navy/35"
                   />
@@ -212,7 +218,9 @@ const page = () => {
                     type="email"
                     required
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     placeholder="you@example.com"
                     className="w-full h-[58px] rounded-xl border border-gold/30 bg-cream px-5 outline-none text-navy placeholder:text-navy/35"
                   />
@@ -228,7 +236,9 @@ const page = () => {
                     type="text"
                     required
                     value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, subject: e.target.value })
+                    }
                     placeholder={t("subjectPlaceholder")}
                     className="w-full h-[58px] rounded-xl border border-gold/30 bg-cream px-5 outline-none text-navy placeholder:text-navy/35"
                   />
@@ -243,7 +253,9 @@ const page = () => {
                   <textarea
                     required
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     placeholder={t("messagePlaceholder")}
                     className="w-full h-[180px] rounded-xl border border-gold/30 bg-cream px-5 py-4 outline-none resize-none text-navy placeholder:text-navy/35"
                   />

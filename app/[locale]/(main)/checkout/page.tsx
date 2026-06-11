@@ -110,9 +110,11 @@ const CheckoutPage = () => {
     fetchCustomer();
   }, []);
 
-  const shippingTotal = cart?.shipping_total || (subtotal > 15 * 1000 ? 0 : 1.5 * 1000);
-  const discountTotal = cart?.discount_total || (discountApplied ? Math.round(subtotal * 0.1) : 0);
-  const grandTotal = total || (subtotal + shippingTotal - discountTotal);
+  const shippingTotal =
+    cart?.shipping_total || (subtotal > 15 * 1000 ? 0 : 1.5 * 1000);
+  const discountTotal =
+    cart?.discount_total || (discountApplied ? Math.round(subtotal * 0.1) : 0);
+  const grandTotal = total || subtotal + shippingTotal - discountTotal;
 
   const handleApplyDiscount = () => {
     if (discountCode.toLowerCase() === "naema10") setDiscountApplied(true);
@@ -123,7 +125,9 @@ const CheckoutPage = () => {
     if (!cart?.id) return;
 
     if (!email || !lastName || !address || !city || !phone) {
-      setErrorMessage("Please fill in all required fields (Email, Last name, Address, City, Phone).");
+      setErrorMessage(
+        "Please fill in all required fields (Email, Last name, Address, City, Phone).",
+      );
       return;
     }
 
@@ -160,18 +164,22 @@ const CheckoutPage = () => {
         cart.id,
         email,
         shippingAddress,
-        billingAddress
+        billingAddress,
       );
 
       if (completeRes.success && completeRes.order) {
         setPlacedOrder(completeRes.order);
         clearCart();
       } else {
-        throw new Error(completeRes.error || "Failed to place your order. Please try again.");
+        throw new Error(
+          completeRes.error || "Failed to place your order. Please try again.",
+        );
       }
     } catch (err: any) {
       console.error("Checkout failed:", err);
-      setErrorMessage(err.message || "An unexpected error occurred during order submission.");
+      setErrorMessage(
+        err.message || "An unexpected error occurred during order submission.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -185,29 +193,40 @@ const CheckoutPage = () => {
           <div className="w-16 h-16 rounded-full bg-gold/20 flex items-center justify-center text-navy font-bold text-3xl">
             ✓
           </div>
-          <h1 className="font-serif text-3xl text-navy">Order Placed Successfully!</h1>
+          <h1 className="font-serif text-3xl text-navy">
+            Order Placed Successfully!
+          </h1>
           <p className="text-black/60 text-sm max-w-[400px]">
-            Thank you for shopping with Naema. Your order has been registered in our system and is currently being processed.
+            Thank you for shopping with Naema. Your order has been registered in
+            our system and is currently being processed.
           </p>
-          
+
           <div className="w-full border-t border-b border-black/5 py-4 my-2 flex justify-between items-center text-sm">
             <span className="text-black/40">Order Reference</span>
-            <span className="font-mono font-bold text-navy">#{placedOrder.display_id}</span>
+            <span className="font-mono font-bold text-navy">
+              #{placedOrder.display_id}
+            </span>
           </div>
 
           <div className="w-full text-left bg-cream/40 rounded-2xl p-6 flex flex-col gap-3 text-sm">
             <p className="font-semibold text-black/80 mb-1">Shipping Details</p>
             <p className="text-black/60">
-              {placedOrder.shipping_address?.first_name} {placedOrder.shipping_address?.last_name}
+              {placedOrder.shipping_address?.first_name}{" "}
+              {placedOrder.shipping_address?.last_name}
             </p>
             <p className="text-black/60">
               {placedOrder.shipping_address?.address_1}
-              {placedOrder.shipping_address?.address_2 ? `, ${placedOrder.shipping_address.address_2}` : ""}
+              {placedOrder.shipping_address?.address_2
+                ? `, ${placedOrder.shipping_address.address_2}`
+                : ""}
             </p>
             <p className="text-black/60">
-              {placedOrder.shipping_address?.city}, {placedOrder.shipping_address?.province}, Kuwait
+              {placedOrder.shipping_address?.city},{" "}
+              {placedOrder.shipping_address?.province}, Kuwait
             </p>
-            <p className="text-black/60">Phone: {placedOrder.shipping_address?.phone}</p>
+            <p className="text-black/60">
+              Phone: {placedOrder.shipping_address?.phone}
+            </p>
           </div>
 
           <Link
@@ -226,11 +245,19 @@ const CheckoutPage = () => {
       <div className="max-w-[900px] mx-auto">
         <div className="mb-10">
           <Link href="/">
-            <Image src="/naemadarklogo.png" width={70} height={70} alt="logo" />
+            <Image
+              src="/naemadarklogo.png"
+              width={70}
+              height={70}
+              alt="Naema"
+            />
           </Link>
         </div>
 
-        <form onSubmit={handleCompleteOrder} className="flex gap-16 max-lg:flex-col">
+        <form
+          onSubmit={handleCompleteOrder}
+          className="flex gap-16 max-lg:flex-col"
+        >
           <div className="flex-1 flex flex-col gap-10">
             {/* 1. Contact */}
             <div>
@@ -479,10 +506,7 @@ const CheckoutPage = () => {
                   items.map((item) => {
                     const thumbnail = item.thumbnail || "/n1.webp";
                     return (
-                      <div
-                        key={item.id}
-                        className="flex gap-3 items-center"
-                      >
+                      <div key={item.id} className="flex gap-3 items-center">
                         <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-black/10 shrink-0 bg-cream">
                           <Image
                             src={thumbnail}
@@ -545,7 +569,9 @@ const CheckoutPage = () => {
                 <div className="flex justify-between text-sm">
                   <span className="text-black/60">Shipping</span>
                   <span
-                    className={shippingTotal === 0 ? "text-gold font-medium" : ""}
+                    className={
+                      shippingTotal === 0 ? "text-gold font-medium" : ""
+                    }
                   >
                     {shippingTotal === 0 ? "FREE" : formatPrice(shippingTotal)}
                   </span>
@@ -558,13 +584,12 @@ const CheckoutPage = () => {
                 )}
                 <div className="border-t border-black/10 pt-3 flex justify-between font-semibold">
                   <span>Total</span>
-                  <span className="text-lg">
-                    {formatPrice(grandTotal)}
-                  </span>
+                  <span className="text-lg">{formatPrice(grandTotal)}</span>
                 </div>
                 {subtotal < 15 * 1000 && (
                   <p className="text-xs text-black/40 text-center mt-2">
-                    Add {formatPrice(15 * 1000 - subtotal)} more for free shipping
+                    Add {formatPrice(15 * 1000 - subtotal)} more for free
+                    shipping
                   </p>
                 )}
               </div>

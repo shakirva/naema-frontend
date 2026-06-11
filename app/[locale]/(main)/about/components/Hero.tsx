@@ -12,7 +12,7 @@ const Hero = () => {
         mainclass="w-full h-full absolute inset-0 overflow-hidden"
         imageClass="object-cover object-bottom scale-110 opacity-50"
         src="/palmbg.png"
-        alt="palm"
+        alt=""
       />
 
       <div className="absolute inset-0 flex flex-col items-center justify-center px-5 md:px-8 lg:px-16">

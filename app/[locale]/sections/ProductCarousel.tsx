@@ -96,10 +96,10 @@ const CarouselCard = ({ product }: { product: MedusaProduct }) => {
                 product.metadata?.badge === "New"
                   ? "bg-[#e6f2d7] text-black"
                   : product.metadata?.badge === "Limited"
-                  ? "bg-navy text-cream"
-                  : product.metadata?.badge === "Best Seller"
-                  ? "bg-gold text-black"
-                  : "bg-[#b63f3f] text-white"
+                    ? "bg-navy text-cream"
+                    : product.metadata?.badge === "Best Seller"
+                      ? "bg-gold text-black"
+                      : "bg-[#b63f3f] text-white"
               }`}
             >
               {String(product.metadata?.badge)}
@@ -139,9 +139,7 @@ const CarouselCard = ({ product }: { product: MedusaProduct }) => {
 
       {/* PRICE */}
       <div className="flex items-end gap-2">
-        <p className="font-bold text-xl text-black">
-          {formatPrice(price)}
-        </p>
+        <p className="font-bold text-xl text-black">{formatPrice(price)}</p>
       </div>
 
       {/* BUTTON */}
@@ -170,7 +168,12 @@ type Props = {
   fetchBestsellers?: boolean;
 };
 
-const ProductCarousel = ({ title, description, products: propProducts, fetchBestsellers }: Props) => {
+const ProductCarousel = ({
+  title,
+  description,
+  products: propProducts,
+  fetchBestsellers,
+}: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -184,7 +187,10 @@ const ProductCarousel = ({ title, description, products: propProducts, fetchBest
     }
     // Fetch products from Medusa
     const load = async () => {
-      const res = await getProducts({ limit: 10, order: fetchBestsellers ? "-created_at" : undefined });
+      const res = await getProducts({
+        limit: 10,
+        order: fetchBestsellers ? "-created_at" : undefined,
+      });
       if (!ignore) {
         setProducts(res.products);
       }
@@ -236,7 +242,6 @@ const ProductCarousel = ({ title, description, products: propProducts, fetchBest
 
   return (
     <div className="max-w-[1440px] mx-auto px-16 pt-40 max-lg:px-8 max-lg:pt-20 max-md:px-0">
-
       {/* HEADING */}
       <h2 className="font-serif w-fit text-[clamp(2rem,3.33vw,3rem)] leading-none bg-gold/20 border border-gold/50 rounded-lg px-4 py-2 max-md:mx-5">
         {title}
@@ -256,31 +261,45 @@ const ProductCarousel = ({ title, description, products: propProducts, fetchBest
           <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
+            aria-label="Scroll left"
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer ${
-              canScrollLeft ? "bg-navy border-navy" : "bg-white border-gold cursor-not-allowed"
+              canScrollLeft
+                ? "bg-navy border-navy"
+                : "bg-white border-gold cursor-not-allowed"
             }`}
           >
-            <ChevronLeft className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronLeft
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
+            aria-label="Scroll right"
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer ${
-              canScrollRight ? "bg-navy border-navy" : "bg-white border-gold cursor-not-allowed"
+              canScrollRight
+                ? "bg-navy border-navy"
+                : "bg-white border-gold cursor-not-allowed"
             }`}
           >
-            <ChevronRight className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronRight
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
         </div>
       </div>
 
       {/* PRODUCTS + MOBILE OVERLAY ARROWS */}
       <div className="relative">
-
         {/* Mobile left arrow */}
         <button
           onClick={() => scroll("left")}
           disabled={!canScrollLeft}
+          aria-label="Scroll left"
           className={`md:hidden absolute left-2 top-[calc(128px)] -translate-y-1/2 z-10 w-10 h-10 rounded-full border flex items-center justify-center shadow-md transition-all duration-150 cursor-pointer
             ${canScrollLeft ? "bg-navy border-navy" : "bg-white/80 border-gold cursor-not-allowed"}`}
         >
@@ -291,6 +310,7 @@ const ProductCarousel = ({ title, description, products: propProducts, fetchBest
         <button
           onClick={() => scroll("right")}
           disabled={!canScrollRight}
+          aria-label="Scroll right"
           className={`md:hidden absolute right-2 top-[calc(128px)] -translate-y-1/2 z-10 w-10 h-10 rounded-full border flex items-center justify-center shadow-md transition-all duration-150 cursor-pointer
             ${canScrollRight ? "bg-navy border-navy" : "bg-white/80 border-gold cursor-not-allowed"}`}
         >

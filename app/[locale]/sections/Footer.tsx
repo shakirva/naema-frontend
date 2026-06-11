@@ -13,7 +13,13 @@ const Footer = () => {
   return (
     <footer className="bg-[#0A223A] px-16 py-12 text-cream w-full relative  max-lg:pt-8 max-lg:px-8 max-md:px-5 ">
       <div className="h-full w-full absolute inset-0 opacity-5">
-        <Image src="/footer.png" fill alt="palm" className=" object-cover " />
+        <Image
+          src="/footer.png"
+          fill
+          alt=""
+          sizes="100vw"
+          className=" object-cover "
+        />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -61,6 +67,7 @@ const Footer = () => {
               src="/dateman.webp"
               alt="Premium Dates"
               fill
+              sizes="(min-width:1024px) 50vw, 100vw"
               className="object-cover"
             />
           </div>
@@ -74,7 +81,7 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <Link href="/">
-              <Image src="/newnaema.png" width={90} height={90} alt="logo" />
+              <Image src="/newnaema.png" width={90} height={90} alt="Naema" />
             </Link>
             <p className="text-cream/70 text-sm leading-relaxed  mt-4 mb-6">
               {t("aboutDesc")}
@@ -140,9 +147,7 @@ const Footer = () => {
           {/* Newsletter */}
           <div className=" max-md:col-span-1">
             <h4 className="font-semibold mb-4">{t("innerCircle")}</h4>
-            <p className="text-cream/70 text-sm mb-4">
-              {t("innerCircleDesc")}
-            </p>
+            <p className="text-cream/70 text-sm mb-4">{t("innerCircleDesc")}</p>
             <input
               type="email"
               placeholder={t("emailPlaceholder")}

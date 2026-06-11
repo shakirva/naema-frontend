@@ -76,8 +76,8 @@ const NewCollection = () => {
           <div className="self-end max-w-[450px] pl-16 max-lg:pl-8 max-md:pl-5 flex flex-col items-start">
             <p className="mt-2 text-[16px] max-md:text-sm text-black/80 tracking-tight text-left">
               Discover freshly curated selections of premium dates, handpicked
-              nuts, and handcrafted treats designed for everyday
-              indulgence and thoughtful gifting.
+              nuts, and handcrafted treats designed for everyday indulgence and
+              thoughtful gifting.
             </p>
 
             <Link
@@ -95,6 +95,7 @@ const NewCollection = () => {
             {/* Prev arrow */}
             <button
               onClick={prev}
+              aria-label="Previous"
               className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-gold hover:bg-gold/10 transition cursor-pointer shrink-0"
             >
               <FiArrowLeft size={16} />
@@ -112,7 +113,6 @@ const NewCollection = () => {
                     fill
                     className="object-cover transition-all duration-500"
                     sizes="(max-width: 768px) 320px, 400px"
-                    priority
                   />
                   <div className="absolute top-5 right-5 bg-white/90 backdrop-blur-sm text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full">
                     New Arrival
@@ -129,11 +129,7 @@ const NewCollection = () => {
                       <div className="flex flex-col items-end gap-2 shrink-0">
                         <div className="flex gap-0.5">
                           {Array.from({ length: 5 }).map((_, i) => (
-                            <IoMdStar
-                              key={i}
-                              size={15}
-                              color="#ccba78"
-                            />
+                            <IoMdStar key={i} size={15} color="#ccba78" />
                           ))}
                         </div>
                         <span className="text-xs text-black/40 underline underline-offset-2">
@@ -194,6 +190,7 @@ const NewCollection = () => {
             {/* Next arrow */}
             <button
               onClick={next}
+              aria-label="Next"
               className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-gold hover:bg-gold/10 transition cursor-pointer shrink-0"
             >
               <FiArrowRight size={16} />

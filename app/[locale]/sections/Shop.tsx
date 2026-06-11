@@ -12,7 +12,9 @@ const Shop = () => {
   const [products, setProducts] = useState<MedusaProduct[]>([]);
   const [latestProducts, setLatestProducts] = useState<MedusaProduct[]>([]);
   const [categories, setCategories] = useState<MedusaProductCategory[]>([]);
-  const [collections, setCollections] = useState<{ id: string; title: string; handle: string }[]>([]);
+  const [collections, setCollections] = useState<
+    { id: string; title: string; handle: string }[]
+  >([]);
 
   useEffect(() => {
     const load = async () => {
@@ -53,10 +55,12 @@ const Shop = () => {
   };
 
   // Products grouped by collection ID
-  const productsByCollection = collections.map((col) => ({
-    collection: col,
-    items: products.filter((p) => p.collection?.id === col.id),
-  })).filter((group) => group.items.length > 0);
+  const productsByCollection = collections
+    .map((col) => ({
+      collection: col,
+      items: products.filter((p) => p.collection?.id === col.id),
+    }))
+    .filter((group) => group.items.length > 0);
 
   const latest = latestProducts.slice(0, 8);
 
@@ -71,13 +75,19 @@ const Shop = () => {
 
   return (
     <section className="min-h-screen w-full bg-cream pb-16 lg:pb-32">
-      <h1 className="font-serif text-[clamp(1.75rem,4.5vw,3.5rem)] text-center px-5 md:px-8 lg:px-16 pt-10 lg:pt-16 leading-tight">
+      <h2 className="font-serif text-[clamp(1.75rem,4.5vw,3.5rem)] text-center px-5 md:px-8 lg:px-16 pt-10 lg:pt-16 leading-tight">
         {t.rich("greatBox", {
-          dates: (chunks) => <span className="italic text-deepgold">{chunks}</span>,
-          nuts: (chunks) => <span className="italic text-deepgold">{chunks}</span>,
-          chocolate: (chunks) => <span className="italic text-deepgold">{chunks}</span>,
+          dates: (chunks) => (
+            <span className="italic text-deepgold">{chunks}</span>
+          ),
+          nuts: (chunks) => (
+            <span className="italic text-deepgold">{chunks}</span>
+          ),
+          chocolate: (chunks) => (
+            <span className="italic text-deepgold">{chunks}</span>
+          ),
         })}
-      </h1>
+      </h2>
 
       <ProductCarousel
         title={t("bestSellersTitle")}
@@ -157,11 +167,23 @@ const Shop = () => {
                   </Link>
                 );
               })
-            : ([
-                { src: "/dbox.webp", label: t("categories.Dates"), href: "/shop/dates" },
-                { src: "/nuts.webp", label: t("categories.Nuts"), href: "/shop/nuts" },
-                { src: "/dry.webp", label: t("categories.Dry Fruits"), href: "/shop/dry-fruits" },
-              ]).map(({ src, label, href }) => (
+            : [
+                {
+                  src: "/dbox.webp",
+                  label: t("categories.Dates"),
+                  href: "/shop/dates",
+                },
+                {
+                  src: "/nuts.webp",
+                  label: t("categories.Nuts"),
+                  href: "/shop/nuts",
+                },
+                {
+                  src: "/dry.webp",
+                  label: t("categories.Dry Fruits"),
+                  href: "/shop/dry-fruits",
+                },
+              ].map(({ src, label, href }) => (
                 <Link
                   key={label}
                   href={href}

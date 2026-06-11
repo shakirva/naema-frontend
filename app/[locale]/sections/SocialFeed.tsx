@@ -9,19 +9,19 @@ import { useTranslations } from "next-intl";
 const socials = [
   {
     id: 1,
-    image: "/shop2.png",
+    image: "/shop2.webp",
   },
   {
     id: 2,
-    image: "/shop.png",
+    image: "/shop.webp",
   },
   {
     id: 3,
-    image: "/shop3.png",
+    image: "/shop3.webp",
   },
   {
     id: 4,
-    image: "/palm-2.jpg",
+    image: "/longpalmtrees.webp",
   },
 ];
 
@@ -38,7 +38,9 @@ const SocialFeed = () => {
         {/* Heading */}
         <h2 className="font-serif text-[clamp(2.5rem,6vw,6rem)] text-center text-navy whitespace-pre-line leading-[0.95] mt-8">
           {t.rich("title", {
-            naema: (chunks) => <span className="italic text-deepgold">{chunks}</span>
+            naema: (chunks) => (
+              <span className="italic text-deepgold">{chunks}</span>
+            ),
           })}
         </h2>
 
@@ -59,6 +61,7 @@ const SocialFeed = () => {
                 src={item.image}
                 alt="Social feed"
                 fill
+                sizes="(min-width:1024px) 25vw, 50vw"
                 className="object-cover  rounded-[28px]   "
               />
 

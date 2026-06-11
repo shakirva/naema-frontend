@@ -20,7 +20,7 @@ const FrequentlyBought = ({ currentId }: { currentId: string }) => {
       setLoading(true);
       try {
         const res = await getProducts({ limit: 10 });
-        setRelated(res.products.filter(p => p.id !== currentId));
+        setRelated(res.products.filter((p) => p.id !== currentId));
       } catch (err) {
         console.error(err);
       } finally {
@@ -69,7 +69,11 @@ const FrequentlyBought = ({ currentId }: { currentId: string }) => {
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer
               ${canScrollLeft ? "bg-navy border-navy" : "bg-white border-gold cursor-not-allowed"}`}
           >
-            <ChevronLeft className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronLeft
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
           <button
             onClick={() => scroll("right")}
@@ -78,7 +82,11 @@ const FrequentlyBought = ({ currentId }: { currentId: string }) => {
             className={`w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-150 cursor-pointer
               ${canScrollRight ? "bg-navy border-navy" : "bg-white border-gold cursor-not-allowed"}`}
           >
-            <ChevronRight className="w-5 h-5" strokeWidth={2.5} color="#ccba78" />
+            <ChevronRight
+              className="w-5 h-5"
+              strokeWidth={2.5}
+              color="#ccba78"
+            />
           </button>
         </div>
       </div>
@@ -89,6 +97,7 @@ const FrequentlyBought = ({ currentId }: { currentId: string }) => {
         <button
           onClick={() => scroll("left")}
           disabled={!canScrollLeft}
+          aria-label="Scroll left"
           className={`md:hidden absolute left-2 top-[128px] -translate-y-1/2 z-10 w-10 h-10 rounded-full border flex items-center justify-center shadow-md transition-all duration-150 cursor-pointer
             ${canScrollLeft ? "bg-navy border-navy" : "bg-white/80 border-gold cursor-not-allowed"}`}
         >
@@ -99,6 +108,7 @@ const FrequentlyBought = ({ currentId }: { currentId: string }) => {
         <button
           onClick={() => scroll("right")}
           disabled={!canScrollRight}
+          aria-label="Scroll right"
           className={`md:hidden absolute right-2 top-[128px] -translate-y-1/2 z-10 w-10 h-10 rounded-full border flex items-center justify-center shadow-md transition-all duration-150 cursor-pointer
             ${canScrollRight ? "bg-navy border-navy" : "bg-white/80 border-gold cursor-not-allowed"}`}
         >

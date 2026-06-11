@@ -84,7 +84,7 @@ const About2 = () => {
           .to(icons.current, { y: -50 }, 0);
       });
     },
-    { scope: container }
+    { scope: container },
   );
 
   return (
@@ -110,7 +110,7 @@ const About2 = () => {
           mainclass="h-full w-full absolute inset-0"
           imageClass="object-cover scale-120"
           src="/goldpalmbg.webp"
-          alt="palm"
+          alt=""
         />
 
         <div className="h-full w-full absolute inset-0 bg-gold opacity-15" />
@@ -124,7 +124,7 @@ const About2 = () => {
           className="font-serif text-[clamp(1.5rem,4vw,5rem)] text-center leading-none bg-cream border-2 border-deepgold rounded-lg px-4 md:px-6 py-2 -rotate-2"
         >
           {t.rich("ourStory", {
-            story: (chunks) => <span className="italic">{chunks}</span>
+            story: (chunks) => <span className="italic">{chunks}</span>,
           })}
         </span>
 
@@ -188,17 +188,17 @@ const About2 = () => {
           </div>
 
           {/* CTA */}
-         <Link
-          href="/about"
-          className="px-8 md:px-12 py-4 md:py-5 text-sm md:text-base font-medium tracking-tight border-2 border-gold bg-cream rounded-full text-navy relative group overflow-hidden inline-block"
-        >
-          <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
-            {t("ourOrigins")}
-          </span>
-          <span className="block absolute inset-0 flex items-center justify-center bg-navy text-cream  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
-            {t("ourOrigins")}
-          </span>
-        </Link>
+          <Link
+            href="/about"
+            className="px-8 md:px-12 py-4 md:py-5 text-sm md:text-base font-medium tracking-tight border-2 border-gold bg-cream rounded-full text-navy relative group overflow-hidden inline-block"
+          >
+            <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
+              {t("ourOrigins")}
+            </span>
+            <span className="block absolute inset-0 flex items-center justify-center bg-navy text-cream  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+              {t("ourOrigins")}
+            </span>
+          </Link>
         </div>
       </div>
     </section>

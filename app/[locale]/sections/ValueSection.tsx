@@ -10,18 +10,21 @@ const ValueSection = () => {
     <section className="w-full relative px-16 py-24 max-lg:py-16 max-lg:px-8 max-md:px-5 border-y-2 border-darkgold">
       {/* Shared goldpalm background */}
       <div className="h-full w-full absolute inset-0 opacity-25">
-        <Image src="/goldpalmm.webp" fill alt="palm" className="object-cover" />
+        <Image
+          src="/goldpalmm.webp"
+          fill
+          alt=""
+          sizes="100vw"
+          className="object-cover"
+        />
       </div>
 
       <div className="relative z-10 flex flex-col gap-18 max-lg:gap-16">
         {/* Pillars */}
         <Pillars />
 
-      
-
         <Wholesale />
       </div>
-     
     </section>
   );
 };

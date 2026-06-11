@@ -23,7 +23,7 @@ const LoginPage = () => {
       const formData = new FormData();
       formData.append("email", email);
       formData.append("password", password);
-      
+
       const res = await login(formData);
       if (res.error) {
         setError(res.error);
@@ -35,12 +35,17 @@ const LoginPage = () => {
 
   return (
     <section className="min-h-screen bg-cream flex">
-
       {/* LEFT — decorative panel */}
       <div className="hidden lg:flex w-1/2 bg-navy relative overflow-hidden flex-col items-center justify-center p-16">
         {/* Background texture */}
         <div className="absolute inset-0 opacity-5">
-          <Image src="/verydarkpalm.png" fill alt="" className="object-cover" />
+          <Image
+            src="/verydarkpalm.png"
+            fill
+            alt=""
+            sizes="(min-width:1024px) 50vw, 100vw"
+            className="object-cover"
+          />
         </div>
 
         <div className="relative z-10 flex flex-col items-center text-center gap-6">
@@ -52,8 +57,6 @@ const LoginPage = () => {
             Sign in to track your orders, manage your account and enjoy
             exclusive member offers.
           </p>
-
-         
         </div>
       </div>
 
@@ -65,7 +68,6 @@ const LoginPage = () => {
         </div>
 
         <div className="w-full max-w-[420px] flex flex-col gap-6">
-
           {/* Heading */}
           <div>
             <h1 className="font-serif text-[clamp(2rem,3vw,2.5rem)] leading-none">
@@ -73,7 +75,10 @@ const LoginPage = () => {
             </h1>
             <p className="text-sm text-black/50 mt-2 tracking-tight">
               Don't have an account?{" "}
-              <Link href="/sign-up" className="text-navy font-medium underline underline-offset-4 hover:text-gold transition">
+              <Link
+                href="/sign-up"
+                className="text-navy font-medium underline underline-offset-4 hover:text-gold transition"
+              >
                 Create one
               </Link>
             </p>
@@ -99,12 +104,18 @@ const LoginPage = () => {
 
           {/* Form */}
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-            {error && <div className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">{error}</div>}
-
+            {error && (
+              <div className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">
+                {error}
+              </div>
+            )}
 
             {/* Email */}
             <div className="relative">
-              <FiMail size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30" />
+              <FiMail
+                size={15}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30"
+              />
               <input
                 type="email"
                 placeholder="Email address"
@@ -116,7 +127,10 @@ const LoginPage = () => {
 
             {/* Password */}
             <div className="relative">
-              <FiLock size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30" />
+              <FiLock
+                size={15}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30"
+              />
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
@@ -133,31 +147,35 @@ const LoginPage = () => {
             </div>
 
             {/* Forgot */}
-            <div className="flex justify-center w-full"><Link
-              href="/forgot-password"
-              className="text-xs text-black/40 w-fit  hover:text-black transition underline underline-offset-4 "
+            <div className="flex justify-center w-full">
+              <Link
+                href="/forgot-password"
+                className="text-xs text-black/40 w-fit  hover:text-black transition underline underline-offset-4 "
+              >
+                Forgot your password?
+              </Link>
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={isPending}
+              className="w-full py-4 rounded-full bg-navy text-cream text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer disabled:opacity-50"
             >
-              Forgot your password?
-            </Link></div>
-            
-          {/* Submit */}
-          <button 
-            type="submit" 
-            disabled={isPending}
-            className="w-full py-4 rounded-full bg-navy text-cream text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer disabled:opacity-50"
-          >
-            {isPending ? "Signing In..." : "Sign In"}
-          </button>
+              {isPending ? "Signing In..." : "Sign In"}
+            </button>
           </form>
 
           {/* Help */}
           <p className="text-xs text-black/50 text-center leading-relaxed">
             Need help?{" "}
-            <Link href="/contact" className="underline underline-offset-4 hover:text-black transition">
+            <Link
+              href="/contact"
+              className="underline underline-offset-4 hover:text-black transition"
+            >
               Contact us
             </Link>
           </p>
-
         </div>
       </div>
     </section>

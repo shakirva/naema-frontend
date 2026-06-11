@@ -85,18 +85,11 @@ const ratingBreakdown = [
 const totalReviews = ratingBreakdown.reduce((sum, r) => sum + r.count, 0);
 
 const avgRating = (
-  ratingBreakdown.reduce((sum, r) => sum + r.stars * r.count, 0) /
-  totalReviews
+  ratingBreakdown.reduce((sum, r) => sum + r.stars * r.count, 0) / totalReviews
 ).toFixed(1);
 
 /* ─── Stars ─── */
-const Stars = ({
-  rating,
-  size = 14,
-}: {
-  rating: number;
-  size?: number;
-}) => (
+const Stars = ({ rating, size = 14 }: { rating: number; size?: number }) => (
   <div className="flex items-center gap-0.5">
     {Array.from({ length: 5 }).map((_, i) => (
       <IoMdStar
@@ -117,10 +110,8 @@ const ReviewCard = ({ review }: { review: Review }) => (
     "
   >
     <div className="flex flex-col gap-4">
-      
       {/* Top section */}
       <div className="flex justify-between items-start gap-4">
-        
         {/* Left */}
         <div className="flex flex-col min-w-0">
           <span className="font-semibold text-sm tracking-tight">
@@ -143,7 +134,6 @@ const ReviewCard = ({ review }: { review: Review }) => (
 
       {/* Desktop */}
       <div className="hidden md:flex gap-5 items-start">
-        
         {/* Content */}
         <div className="flex-1 flex flex-col gap-3">
           <Stars rating={review.rating} size={13} />
@@ -285,7 +275,6 @@ const CustomerReviews = () => {
 
   return (
     <div className="max-w-[1440px] mx-auto mt-20 px-16 max-lg:px-8 max-md:px-5 border border-navy/20 py-12 rounded-2xl bg-white">
-      
       {/* Header */}
       <div className="flex items-end justify-between mb-10">
         <h2 className="font-serif text-[clamp(2rem,3.33vw,3rem)] leading-none">
@@ -302,7 +291,6 @@ const CustomerReviews = () => {
 
       {/* Summary */}
       <div className="flex gap-14 lg:justify-center items-center max-md:flex-col max-md:gap-8 mb-10 bg-[#faf7ed] border border-gold/30 rounded-2xl px-8 py-7">
-        
         {/* Score */}
         <div className="flex flex-col items-center gap-2 shrink-0">
           <IoMdStar size={44} color="#ccba78" />
@@ -360,7 +348,10 @@ const CustomerReviews = () => {
             {showForm ? "Cancel" : "Write a Review"}
           </button>
 
-          <button className="w-10 h-10 rounded-full border border-black/15 flex items-center justify-center">
+          <button
+            aria-label="Filter reviews"
+            className="w-10 h-10 rounded-full border border-black/15 flex items-center justify-center"
+          >
             <FiSliders size={15} />
           </button>
         </div>
@@ -392,9 +383,7 @@ const CustomerReviews = () => {
       {/* Cards */}
       <div className="flex flex-col gap-3">
         {filtered.length > 0 ? (
-          filtered.map((r) => (
-            <ReviewCard key={r.id} review={r} />
-          ))
+          filtered.map((r) => <ReviewCard key={r.id} review={r} />)
         ) : (
           <p className="text-sm text-black/35 py-12 text-center">
             No reviews for this rating yet.

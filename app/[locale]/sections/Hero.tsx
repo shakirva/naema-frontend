@@ -1,5 +1,3 @@
-
-
 import Image from "next/image";
 
 import React from "react";
@@ -28,7 +26,9 @@ const Hero = () => {
             <Image
               src="/verydarkpalm.png"
               fill
-              alt="palm"
+              alt=""
+              loading="eager"
+              priority
               className="object-cover"
             />
           </div>
@@ -39,7 +39,7 @@ const Hero = () => {
               <IoMdStar size={24} className="text-gold" />
               <IoMdStar size={24} className="text-gold" />
               <IoMdStar size={24} className="text-gold" />
-              <IoMdStar size={24} className="text-gold"/>
+              <IoMdStar size={24} className="text-gold" />
             </div>
 
             <span className="text-xs text-cream/60 mt-2 leading-none">

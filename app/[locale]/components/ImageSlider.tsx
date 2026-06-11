@@ -3,7 +3,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import ParallaxImage from "./ParallaxImage";
 
-const images = ["/dates2.webp", "/bg2.webp", "/bg3.webp", "/bg4.webp", "/bg5.webp"];
+const images = [
+  "/dates2.webp",
+  "/bg2.webp",
+  "/bg3.webp",
+  "/bg4.webp",
+  "/bg5.webp",
+];
 
 const ImageSlider = () => {
   const [current, setCurrent] = useState(0);
@@ -28,7 +34,7 @@ const ImageSlider = () => {
             mainclass="w-full h-screen max-lg:h-full relative overflow-hidden "
             imageClass="object-cover scale-110"
             src={src}
-            alt="Naema"
+            alt=""
           />
         </div>
       ))}

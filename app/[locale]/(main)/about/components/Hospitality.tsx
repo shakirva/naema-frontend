@@ -73,7 +73,9 @@ const Hospitality = () => {
       setActive(closestIndex);
     };
     container.addEventListener("scroll", handleScroll);
-    return () => { container.removeEventListener("scroll", handleScroll); };
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
@@ -86,7 +88,8 @@ const Hospitality = () => {
 
         {/* Heading */}
         <h2 className="font-serif text-[clamp(2.8rem,7vw,6rem)] text-center text-navy leading-[0.95] mt-8 max-w-[900px]">
-          {t("philoLine1")} <span className="italic text-deepgold">{t("philoLine2")}</span>
+          {t("philoLine1")}{" "}
+          <span className="italic text-deepgold">{t("philoLine2")}</span>
         </h2>
 
         {/* Body */}
@@ -127,7 +130,13 @@ const Hospitality = () => {
                 key={card.title}
                 className="relative min-w-[92vw] md:min-w-[78vw] lg:min-w-[48vw] h-[420px] md:h-[480px] rounded-[24px] overflow-hidden border border-gold/30 shrink-0 snap-center first:ml-[2vw] last:mr-[2vw]"
               >
-                <Image src={card.image} alt={card.title} fill className="object-cover" />
+                <Image
+                  src={card.image}
+                  alt={card.title}
+                  fill
+                  sizes="(max-width:767px) 92vw, (max-width:1023px) 78vw, 48vw"
+                  className="object-cover"
+                />
                 <div className="absolute inset-0 bg-black/10" />
                 <div
                   className={`absolute left-5 bottom-5 md:left-8 md:bottom-8 max-w-[300px] md:max-w-[320px] rounded-xl border border-black/10 px-5 py-5 md:px-6 md:py-6 backdrop-blur-sm ${card.accent}`}

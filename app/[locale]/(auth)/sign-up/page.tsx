@@ -13,7 +13,7 @@ const SignupPage = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
-  
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -37,7 +37,7 @@ const SignupPage = () => {
       formData.append("last_name", lastName);
       formData.append("email", email);
       formData.append("password", password);
-      
+
       const res = await signup(formData);
       if (res.error) {
         setError(res.error);
@@ -47,13 +47,14 @@ const SignupPage = () => {
     });
   };
 
-  const passwordStrength = password.length === 0
-    ? null
-    : password.length < 6
-    ? "weak"
-    : password.length < 10
-    ? "medium"
-    : "strong";
+  const passwordStrength =
+    password.length === 0
+      ? null
+      : password.length < 6
+        ? "weak"
+        : password.length < 10
+          ? "medium"
+          : "strong";
 
   const strengthColor = {
     weak: "bg-red-400",
@@ -63,11 +64,16 @@ const SignupPage = () => {
 
   return (
     <section className="min-h-screen bg-cream flex">
-
       {/* LEFT — decorative panel */}
       <div className="hidden lg:flex w-1/2 bg-navy relative overflow-hidden flex-col items-center justify-center p-16">
         <div className="absolute inset-0 opacity-5">
-          <Image src="/verydarkpalm.png" fill alt="" className="object-cover" />
+          <Image
+            src="/verydarkpalm.png"
+            fill
+            alt=""
+            sizes="(min-width:1024px) 50vw, 100vw"
+            className="object-cover"
+          />
         </div>
 
         <div className="relative z-10 flex flex-col items-center justify-center text-center gap-6">
@@ -91,7 +97,9 @@ const SignupPage = () => {
                 <div className="w-5 h-5 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center shrink-0">
                   <IoMdCheckmark size={10} className="text-gold" />
                 </div>
-                <span className="text-cream/60 text-xs tracking-tight">{perk}</span>
+                <span className="text-cream/60 text-xs tracking-tight">
+                  {perk}
+                </span>
               </div>
             ))}
           </div>
@@ -100,14 +108,12 @@ const SignupPage = () => {
 
       {/* RIGHT — form */}
       <div className="flex-1 flex flex-col items-center justify-center px-8 py-16">
-
         {/* Mobile logo */}
         <div className="lg:hidden mb-8">
           <Image src="/logo.png" width={70} height={70} alt="Naema" />
         </div>
 
         <div className="w-full max-w-[420px] flex flex-col gap-6">
-
           {/* Heading */}
           <div>
             <h1 className="font-serif text-[clamp(2rem,3vw,2.5rem)] leading-none">
@@ -115,7 +121,10 @@ const SignupPage = () => {
             </h1>
             <p className="text-sm text-black/50 mt-2 tracking-tight">
               Already have an account?{" "}
-              <Link href="/login" className="text-navy font-medium underline underline-offset-4 hover:text-gold transition">
+              <Link
+                href="/login"
+                className="text-navy font-medium underline underline-offset-4 hover:text-gold transition"
+              >
                 Sign in
               </Link>
             </p>
@@ -141,12 +150,19 @@ const SignupPage = () => {
 
           {/* Form */}
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-            {error && <div className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">{error}</div>}
+            {error && (
+              <div className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">
+                {error}
+              </div>
+            )}
 
             {/* Name row */}
             <div className="flex gap-3">
               <div className="relative flex-1">
-                <FiUser size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30" />
+                <FiUser
+                  size={15}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30"
+                />
                 <input
                   type="text"
                   placeholder="First name"
@@ -170,7 +186,10 @@ const SignupPage = () => {
 
             {/* Email */}
             <div className="relative">
-              <FiMail size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30" />
+              <FiMail
+                size={15}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30"
+              />
               <input
                 type="email"
                 placeholder="Email address"
@@ -184,7 +203,10 @@ const SignupPage = () => {
             {/* Password */}
             <div className="flex flex-col gap-2">
               <div className="relative">
-                <FiLock size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30" />
+                <FiLock
+                  size={15}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30"
+                />
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
@@ -208,21 +230,28 @@ const SignupPage = () => {
                       <div
                         key={level}
                         className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-                          ["weak", "medium", "strong"].indexOf(passwordStrength) >= i
+                          ["weak", "medium", "strong"].indexOf(
+                            passwordStrength,
+                          ) >= i
                             ? strengthColor[passwordStrength]
                             : "bg-black/10"
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-[10px] text-black/40 capitalize">{passwordStrength}</span>
+                  <span className="text-[10px] text-black/40 capitalize">
+                    {passwordStrength}
+                  </span>
                 </div>
               )}
             </div>
 
             {/* Confirm Password */}
             <div className="relative">
-              <FiLock size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30" />
+              <FiLock
+                size={15}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-black/30"
+              />
               <input
                 type={showConfirm ? "text" : "password"}
                 placeholder="Confirm password"
@@ -247,34 +276,42 @@ const SignupPage = () => {
                   emailUpdates ? "bg-navy border-navy" : "border-black/30"
                 }`}
               >
-                {emailUpdates && <IoMdCheckmark size={10} className="text-cream" />}
+                {emailUpdates && (
+                  <IoMdCheckmark size={10} className="text-cream" />
+                )}
               </div>
               <span className="text-xs text-black/50 leading-relaxed">
                 Email me with exclusive offers, new arrivals and Naema updates.
               </span>
             </label>
-          {/* Submit */}
-          <button 
-            type="submit" 
-            disabled={isPending}
-            className="w-full py-4 rounded-full bg-navy text-cream text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer disabled:opacity-50"
-          >
-            {isPending ? "Creating Account..." : "Create Account"}
-          </button>
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={isPending}
+              className="w-full py-4 rounded-full bg-navy text-cream text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer disabled:opacity-50"
+            >
+              {isPending ? "Creating Account..." : "Create Account"}
+            </button>
           </form>
 
           {/* Terms */}
           <p className="text-xs text-black/50 text-center leading-relaxed">
             By creating an account you agree to our{" "}
-            <Link href="/terms" className="underline underline-offset-4 hover:text-black transition">
+            <Link
+              href="/terms"
+              className="underline underline-offset-4 hover:text-black transition"
+            >
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="/privacy" className="underline underline-offset-4 hover:text-black transition">
+            <Link
+              href="/privacy"
+              className="underline underline-offset-4 hover:text-black transition"
+            >
               Privacy Policy
-            </Link>.
+            </Link>
+            .
           </p>
-
         </div>
       </div>
     </section>

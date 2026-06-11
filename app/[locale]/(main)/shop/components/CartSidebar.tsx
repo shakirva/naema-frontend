@@ -24,12 +24,16 @@ const CartSidebar = () => {
     addToCart,
   } = useCart();
 
-  const [suggestedProducts, setSuggestedProducts] = useState<MedusaProduct[]>([]);
+  const [suggestedProducts, setSuggestedProducts] = useState<MedusaProduct[]>(
+    [],
+  );
 
   useEffect(() => {
     if (isOpen && suggestedProducts.length === 0) {
       // Fetch some products for "Frequently Bought Together"
-      getProducts({ limit: 5 }).then(res => setSuggestedProducts(res.products));
+      getProducts({ limit: 5 }).then((res) =>
+        setSuggestedProducts(res.products),
+      );
     }
   }, [isOpen, suggestedProducts.length]);
 
@@ -45,7 +49,8 @@ const CartSidebar = () => {
   return (
     <>
       {/* Backdrop */}
-      <div
+      <button
+        aria-label="Close cart"
         onClick={closeCart}
         className={`fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ${
           isOpen
@@ -64,6 +69,7 @@ const CartSidebar = () => {
         <div className="flex items-center justify-between px-6 py-5 border-b border-black/10">
           <h2 className="font-serif text-2xl leading-none">Your Cart</h2>
           <button
+            aria-label="Close cart"
             onClick={closeCart}
             className="text-black/50 hover:text-black transition"
           >
@@ -166,12 +172,15 @@ const CartSidebar = () => {
                         <div className="flex flex-col items-end justify-between h-full gap-4">
                           <button
                             onClick={() => removeFromCart(item.id)}
+                            aria-label={`Remove ${item.title || "item"}`}
                             className="text-black/30 hover:text-black transition"
                           >
                             <FiTrash2 size={15} />
                           </button>
                           <span className="font-semibold text-sm">
-                            {formatPrice((item.unit_price ?? 0) * item.quantity)}
+                            {formatPrice(
+                              (item.unit_price ?? 0) * item.quantity,
+                            )}
                           </span>
                         </div>
                       </div>
@@ -189,7 +198,8 @@ const CartSidebar = () => {
                   {suggested.map((p) => {
                     const price = getProductPrice(p);
                     const variant = getCheapestVariant(p);
-                    const thumb = p.thumbnail || p.images?.[0]?.url || "/n1.webp";
+                    const thumb =
+                      p.thumbnail || p.images?.[0]?.url || "/n1.webp";
                     return (
                       <div
                         key={p.id}
@@ -209,9 +219,7 @@ const CartSidebar = () => {
                           </p>
                           <div className="flex items-center gap-1 mt-0.5">
                             <IoMdStar size={12} color="#ccba78" />
-                            <span className="text-xs text-black/40">
-                              (5)
-                            </span>
+                            <span className="text-xs text-black/40">(5)</span>
                           </div>
                           <p className="text-sm font-semibold mt-0.5">
                             {formatPrice(price)}

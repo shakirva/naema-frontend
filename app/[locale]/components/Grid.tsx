@@ -12,14 +12,35 @@ const Grid = async () => {
   const rootCategories = categories.filter((c) => !c.parent_category_id);
 
   const fallbackItems = [
-    { title: "Best Seller", image: "/dates.jpg", height: "lg:row-span-2", href: "/shop/best-seller" },
+    {
+      title: "Best Seller",
+      image: "/dates.jpg",
+      height: "lg:row-span-2",
+      href: "/shop/best-seller",
+    },
     { title: "Dates", image: "/dn.png", height: "", href: "/shop/dates" },
-    { title: "Dry Fruits", image: "/dry.webp", height: "", href: "/shop/dry-fruits" },
-    { title: "Nuts", image: "/nuts.webp", height: "lg:row-span-2", href: "/shop/nuts" },
+    {
+      title: "Dry Fruits",
+      image: "/dry.webp",
+      height: "",
+      href: "/shop/dry-fruits",
+    },
+    {
+      title: "Nuts",
+      image: "/nuts.webp",
+      height: "lg:row-span-2",
+      href: "/shop/nuts",
+    },
   ];
 
   // Build the list of dynamic candidates
-  const candidates: { title: string; image?: string; href: string; type: "collection" | "category"; id: string }[] = [];
+  const candidates: {
+    title: string;
+    image?: string;
+    href: string;
+    type: "collection" | "category";
+    id: string;
+  }[] = [];
 
   // 1. Add collections
   for (const col of collections) {
@@ -46,7 +67,10 @@ const Grid = async () => {
   for (const cat of sortedRootCategories) {
     if (candidates.length >= 4) break;
     // Don't add duplicate titles
-    if (candidates.some((c) => c.title.toLowerCase() === cat.name.toLowerCase())) continue;
+    if (
+      candidates.some((c) => c.title.toLowerCase() === cat.name.toLowerCase())
+    )
+      continue;
     candidates.push({
       title: cat.name,
       image: (cat.metadata as any)?.image_url || (cat.metadata as any)?.image,
@@ -76,11 +100,17 @@ const Grid = async () => {
       if (!image) {
         // Fetch first product in this collection or category to use as cover image
         if (candidate.type === "collection") {
-          const { products } = await getProducts({ collection_id: [candidate.id], limit: 5 });
+          const { products } = await getProducts({
+            collection_id: [candidate.id],
+            limit: 5,
+          });
           const prodWithImg = products.find((p) => p.thumbnail);
           if (prodWithImg) image = prodWithImg.thumbnail || undefined;
         } else {
-          const { products } = await getProducts({ category_id: [candidate.id], limit: 5 });
+          const { products } = await getProducts({
+            category_id: [candidate.id],
+            limit: 5,
+          });
           const prodWithImg = products.find((p) => p.thumbnail);
           if (prodWithImg) image = prodWithImg.thumbnail || undefined;
         }
@@ -92,16 +122,21 @@ const Grid = async () => {
         height,
         href: candidate.href,
       };
-    })
+    }),
   );
 
   const translateTitle = (title: string) => {
     switch (title) {
-      case "Dates": return t("categories.Dates");
-      case "Nuts": return t("categories.Nuts");
-      case "Best Seller": return t("categories.BestSeller");
-      case "Dry Fruits": return t("categories.DryFruits");
-      default: return title;
+      case "Dates":
+        return t("categories.Dates");
+      case "Nuts":
+        return t("categories.Nuts");
+      case "Best Seller":
+        return t("categories.BestSeller");
+      case "Dry Fruits":
+        return t("categories.DryFruits");
+      default:
+        return title;
     }
   };
 
@@ -109,12 +144,7 @@ const Grid = async () => {
     <section className="w-full bg-[#0A223A] px-5 md:px-8 lg:px-16 py-16 md:py-24 lg:rounded-t-[200px] md:rounded-t-[120px] rounded-t-[60px] border-t-10 border-darkgold relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 opacity-5">
-        <Image
-          src="/bigdarkpalm.png"
-          alt="Palm"
-          fill
-          className="object-cover"
-        />
+        <Image src="/bigdarkpalm.png" alt="" fill className="object-cover" />
       </div>
 
       <div className="max-w-[1440px] mx-auto relative z-10">
@@ -126,7 +156,9 @@ const Grid = async () => {
 
           <h2 className="font-serif text-[clamp(2.8rem,6vw,6rem)] leading-[0.95] text-cream mt-8 max-w-[900px]">
             {t.rich("handpickedFavorites", {
-              gold: (chunks) => <span className="italic text-gold">{chunks}</span>
+              gold: (chunks) => (
+                <span className="italic text-gold">{chunks}</span>
+              ),
             })}
           </h2>
 
@@ -261,7 +293,7 @@ const Grid = async () => {
                   className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-[320px]"
                 >
                   <Image
-                     src={item.image}
+                    src={item.image}
                     alt={item.title}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"

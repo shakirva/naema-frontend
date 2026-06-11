@@ -31,12 +31,7 @@ const NaemaValues = () => {
   return (
     <section className="w-full bg-navy px-5 md:px-8 lg:px-16 py-16 md:py-24 relative overflow-scroll">
       <div className="absolute inset-0 h-full w-full opacity-5  ">
-        <Image
-          src={"/bigdarkpalm.png"}
-          alt="dates"
-          fill
-          className="object-cover"
-        />
+        <Image src={"/bigdarkpalm.png"} alt="" fill className="object-cover" />
       </div>
       <div className="max-w-[1000px]  relative z-1 mx-auto flex flex-col items-center">
         {/* Label */}
@@ -46,7 +41,8 @@ const NaemaValues = () => {
 
         {/* Big heading */}
         <h2 className="font-serif text-[clamp(3rem,10vw,7.5rem)] text-cream leading-none text-center mt-8 max-w-[900px]">
-          {t("valuesHeadLine1")} <span className="italic text-lightgold">{t("valuesHeadLine2")}</span>
+          {t("valuesHeadLine1")}{" "}
+          <span className="italic text-lightgold">{t("valuesHeadLine2")}</span>
         </h2>
 
         {/* Body */}

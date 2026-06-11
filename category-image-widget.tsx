@@ -178,7 +178,7 @@ const CategoryImageWidget = ({ data }: DetailWidgetProps<AdminProductCategory>) 
 
         {/* Image Preview */}
         <div className="flex items-start gap-4">
-          <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl border-2 border-dashed border-ui-border-base bg-ui-bg-subtle">
+          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border-2 border-dashed border-ui-border-base bg-ui-bg-subtle">
             {currentImageUrl && !previewError ? (
               <img
                 src={currentImageUrl}

@@ -7,7 +7,13 @@ const OurStoryBlocks = () => {
   return (
     <section className="w-full bg-cream px-5 md:px-8 lg:px-16 py-16 md:py-24  border-b-2 border-gold relative overflow-hidden">
       <div className="h-full w-full absolute inset-0 opacity-10">
-        <Image src="/goldpalmm.webp" fill alt="" className="object-cover" />
+        <Image
+          src="/goldpalmm.webp"
+          fill
+          alt=""
+          sizes="100vw"
+          className="object-cover"
+        />
       </div>
       <div className="max-w-[1440px] mx-auto flex flex-col">
         <h2 className="font-serif text-[clamp(2.8rem,8vw,5rem)] text-center text-navy leading-none">
@@ -22,6 +28,7 @@ const OurStoryBlocks = () => {
               src="/orchard.webp"
               alt="Our orchards"
               fill
+              sizes="(min-width:1024px) 48vw, (min-width:768px) 78vw, 100vw"
               className="object-cover"
             />
           </div>
@@ -58,6 +65,7 @@ const OurStoryBlocks = () => {
               src="/craft.webp"
               alt="Our craft"
               fill
+              sizes="(min-width:1024px) 48vw, (min-width:768px) 78vw, 100vw"
               className="object-cover"
             />
           </div>
@@ -70,6 +78,7 @@ const OurStoryBlocks = () => {
               src="/fresh.webp"
               alt="Our delivery"
               fill
+              sizes="(min-width:1024px) 48vw, (min-width:768px) 78vw, 100vw"
               className="object-cover"
             />
           </div>

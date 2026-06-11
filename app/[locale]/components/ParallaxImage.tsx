@@ -8,15 +8,23 @@ type ImageProps = {
   imageClass?: string;
   src: string;
   alt: string;
+  sizes?: string;
 };
 
-const ParallaxImage = ({ mainclass = "", imageClass = "", src, alt }: ImageProps) => {
+const ParallaxImage = ({
+  mainclass = "",
+  imageClass = "",
+  src,
+  alt,
+  sizes,
+}: ImageProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
   useLenis(() => {
     if (!containerRef.current || !imageRef.current) return;
-    const scrollY = containerRef.current.getBoundingClientRect().top / window.innerHeight;
+    const scrollY =
+      containerRef.current.getBoundingClientRect().top / window.innerHeight;
     imageRef.current.style.transform = `translateY(${-scrollY * 120}px)`;
   });
 
@@ -26,6 +34,7 @@ const ParallaxImage = ({ mainclass = "", imageClass = "", src, alt }: ImageProps
         ref={imageRef}
         src={src}
         fill
+        sizes={sizes ?? "100vw"}
         className={`size-full object-cover ${imageClass}`}
         alt={alt}
       />

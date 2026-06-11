@@ -147,14 +147,14 @@ const Grid = async () => {
         <Image src="/bigdarkpalm.png" alt="" fill className="object-cover" />
       </div>
 
-      <div className="max-w-[1440px] mx-auto relative z-10">
+      <div className="max-w-360 mx-auto relative z-10">
         {/* Heading */}
         <div className="flex flex-col items-center text-center">
           <span className="font-serif text-[22px] text-cream leading-none w-fit bg-gold/10 border border-gold/30 rounded-lg px-4 py-2">
             {t("featuredCollections")}
           </span>
 
-          <h2 className="font-serif text-[clamp(2.8rem,6vw,6rem)] leading-[0.95] text-cream mt-8 max-w-[900px]">
+          <h2 className="font-serif text-[clamp(2.8rem,6vw,6rem)] leading-[0.95] text-cream mt-8 max-w-225">
             {t.rich("handpickedFavorites", {
               gold: (chunks) => (
                 <span className="italic text-gold">{chunks}</span>
@@ -162,7 +162,7 @@ const Grid = async () => {
             })}
           </h2>
 
-          <p className="mt-6 text-cream/70 text-[clamp(1rem,1.5vw,1.15rem)] tracking-tight leading-[1.3] max-w-[620px]">
+          <p className="mt-6 text-cream/70 text-[clamp(1rem,1.5vw,1.15rem)] tracking-tight leading-[1.3] max-w-155">
             {t("curatedSelections")}
           </p>
         </div>
@@ -176,7 +176,7 @@ const Grid = async () => {
               className={`
                 group relative overflow-hidden rounded-[28px]
                 border-2 border-gold
-                h-[420px] lg:h-auto
+                h-105 lg:h-auto
                 ${items[0].height}
               `}
             >
@@ -186,9 +186,9 @@ const Grid = async () => {
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
-                <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[280px]">
+                <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-70">
                   {translateTitle(items[0].title)}
                 </h3>
                 <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
@@ -208,7 +208,7 @@ const Grid = async () => {
                     rounded-[28px]
                     border-2 border-gold
                     flex-1
-                    min-h-[240px]
+                    min-h-60
                   "
                 >
                   <Image
@@ -217,9 +217,9 @@ const Grid = async () => {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/5 to-transparent" />
                   <div className="absolute bottom-0 left-0 w-full p-5 md:p-6">
-                    <h3 className="font-serif text-[clamp(1.8rem,2vw,2.8rem)] leading-[1] text-cream max-w-[300px]">
+                    <h3 className="font-serif text-[clamp(1.8rem,2vw,2.8rem)] leading-none text-cream max-w-75">
                       {translateTitle(item.title)}
                     </h3>
                     <span className="inline-block mt-3 text-sm text-gold border-b border-gold/40 pb-1">
@@ -236,7 +236,7 @@ const Grid = async () => {
               className={`
                 group relative overflow-hidden rounded-[28px]
                 border-2 border-gold
-                h-[420px] lg:h-auto
+                h-105 lg:h-auto
                 ${items[3].height}
               `}
             >
@@ -246,7 +246,7 @@ const Grid = async () => {
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
                 <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[320px]">
                   {translateTitle(items[3].title)}
@@ -265,7 +265,7 @@ const Grid = async () => {
             {/* Card 1 — full width */}
             <Link
               href={items[0].href}
-              className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-[350px]"
+              className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-87.5"
             >
               <Image
                 src={items[0].image}
@@ -273,9 +273,9 @@ const Grid = async () => {
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 w-full p-8">
-                <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[280px]">
+                <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-70">
                   {translateTitle(items[0].title)}
                 </h3>
                 <span className="inline-block mt-4 text-sm text-gold border-b border-gold/40 pb-1">
@@ -290,7 +290,7 @@ const Grid = async () => {
                 <Link
                   key={item.title}
                   href={item.href}
-                  className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-[320px]"
+                  className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-80"
                 >
                   <Image
                     src={item.image}
@@ -298,9 +298,9 @@ const Grid = async () => {
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/5 to-transparent" />
                   <div className="absolute bottom-0 left-0 w-full p-6">
-                    <h3 className="font-serif text-[clamp(1.8rem,2vw,2.8rem)] leading-[1] text-cream max-w-[300px]">
+                    <h3 className="font-serif text-[clamp(1.8rem,2vw,2.8rem)] leading-none text-cream max-w-75">
                       {translateTitle(item.title)}
                     </h3>
                     <span className="inline-block mt-3 text-sm text-gold border-b border-gold/40 pb-1">
@@ -314,7 +314,7 @@ const Grid = async () => {
             {/* Card 4 — full width */}
             <Link
               href={items[3].href}
-              className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-[350px]"
+              className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-87.5"
             >
               <Image
                 src={items[3].image}
@@ -322,7 +322,7 @@ const Grid = async () => {
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute bottom-0 left-0 w-full p-8">
                 <h3 className="font-serif text-[clamp(2.2rem,3vw,4rem)] leading-[0.95] text-cream max-w-[320px]">
                   {translateTitle(items[3].title)}

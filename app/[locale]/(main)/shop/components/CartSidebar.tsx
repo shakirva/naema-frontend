@@ -127,6 +127,7 @@ const CartSidebar = () => {
                             src={thumbnail}
                             alt={item.title || "Product Image"}
                             fill
+                            sizes="80px"
                             className="object-cover"
                           />
                         </div>
@@ -210,6 +211,7 @@ const CartSidebar = () => {
                             src={thumb}
                             alt={p.title}
                             fill
+                            sizes="64px"
                             className="object-cover"
                           />
                         </div>

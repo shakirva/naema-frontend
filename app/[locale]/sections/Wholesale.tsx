@@ -17,6 +17,7 @@ const Wholesale = () => {
             imageClass="object-cover scale-110"
             src="/chocobg.webp"
             alt="Cafe"
+            sizes="(min-width:1024px) 50vw, 100vw"
           />
           <div className="max-w-[450px] px-5 pb-6 flex flex-col justify-between">
             <p className="mt-2 text-[clamp(0.875rem,1.2vw,1rem)] text-black/80 tracking-tight text-left leading-[1.35]">

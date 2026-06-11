@@ -13,6 +13,7 @@ const FounderNote = () => {
             src="/manwithdates.webp"
             alt="Naema founder"
             fill
+            sizes="(min-width:1024px) 38vw, (min-width:768px) 50vw, 100vw"
             className="object-cover"
           />
         </div>
@@ -32,6 +33,7 @@ const FounderNote = () => {
                 src="/mwd2.webp"
                 alt="Naema portrait"
                 fill
+                sizes="96px"
                 className="object-cover"
               />
             </div>

@@ -239,7 +239,9 @@ const OrderDetail = ({
             </div>
             <div className="flex items-center gap-1.5 text-xs text-blue-500 font-medium">
               <FiTruck size={13} />
-              {order.status === "delivered" ? "Delivered" : "Active / Processing"}
+              {order.status === "delivered"
+                ? "Delivered"
+                : "Active / Processing"}
             </div>
           </div>
 
@@ -251,6 +253,7 @@ const OrderDetail = ({
                     src={item.image}
                     alt={item.name}
                     fill
+                    sizes="64px"
                     className="object-cover"
                   />
                 </div>
@@ -402,6 +405,7 @@ const OrdersTab = ({
                       src={item.image}
                       alt={item.name}
                       fill
+                      sizes="48px"
                       className="object-cover"
                     />
                   </div>
@@ -415,7 +419,9 @@ const OrdersTab = ({
 
               {/* Info */}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium">#{order.display_id || order.id}</p>
+                <p className="text-sm font-medium">
+                  #{order.display_id || order.id}
+                </p>
                 <p className="text-xs text-black/40 mt-0.5">
                   {order.items.length} item{order.items.length !== 1 ? "s" : ""}{" "}
                   · KWD {order.total.toLocaleString()}

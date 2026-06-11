@@ -18,6 +18,7 @@ const PillarCard = ({ pillar }: { pillar: any }) => {
         src={pillar.image}
         alt={pillar.title}
         fill
+        sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
         className="object-cover transition-transform duration-500 group-hover:scale-103"
       />
       <div
@@ -111,7 +112,9 @@ const Pillars = () => {
       <div className="flex flex-col items-center gap-4 text-center">
         <h3 className="font-serif text-black text-[clamp(2rem,4.4vw,4rem)] leading-none max-w-[650px]">
           {t.rich("title", {
-            finest: (chunks) => <span className="italic text-deepgold">{chunks}</span>
+            finest: (chunks) => (
+              <span className="italic text-deepgold">{chunks}</span>
+            ),
           })}
         </h3>
         <h3 className="font-serif text-[clamp(1rem,1.5vw,1.5rem)] mt-4 leading-none text-black/70">
@@ -132,14 +135,21 @@ const Pillars = () => {
         <div className="flex flex-col gap-6 flex-1 max-w-[480px] max-md:text-center max-md:items-center">
           <h3 className="font-serif text-[clamp(2rem,4.5vw,4.5rem)] text-cream leading-none">
             {t.rich("commitment.title", {
-              commitment: (chunks) => <><br /><span className="italic text-lightgold">{chunks}</span></>
+              commitment: (chunks) => (
+                <>
+                  <br />
+                  <span className="italic text-lightgold">{chunks}</span>
+                </>
+              ),
             })}
           </h3>
           <p className="text-cream/70 text-[clamp(0.9rem,1.3vw,1.1rem)] leading-relaxed tracking-tight">
             {t("commitment.description")}
           </p>
           <div className="w-10 h-px bg-gold" />
-          <p className="font-serif  text-cream text-sm">{t("commitment.promise")}</p>
+          <p className="font-serif  text-cream text-sm">
+            {t("commitment.promise")}
+          </p>
         </div>
 
         {/* Right — stacked stat cards */}

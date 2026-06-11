@@ -35,6 +35,7 @@ const ImageSlider = () => {
             imageClass="object-cover scale-110"
             src={src}
             alt=""
+            sizes="(min-width:1024px) 50vw, 100vw"
           />
         </div>
       ))}

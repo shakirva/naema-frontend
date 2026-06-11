@@ -31,7 +31,13 @@ const NaemaValues = () => {
   return (
     <section className="w-full bg-navy px-5 md:px-8 lg:px-16 py-16 md:py-24 relative overflow-scroll">
       <div className="absolute inset-0 h-full w-full opacity-5  ">
-        <Image src={"/bigdarkpalm.png"} alt="" fill className="object-cover" />
+        <Image
+          src="/bigdarkpalm.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
       </div>
       <div className="max-w-[1000px]  relative z-1 mx-auto flex flex-col items-center">
         {/* Label */}
@@ -63,6 +69,7 @@ const NaemaValues = () => {
                   src={v.image}
                   alt={v.title}
                   fill
+                  sizes="48px"
                   className="object-contain"
                 />
               </div>

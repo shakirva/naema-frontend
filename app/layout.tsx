@@ -8,17 +8,21 @@ import LenisSmoothScroll from "./[locale]/components/SmoothScroll/Lenis";
 
 export const metadata: Metadata = {
   title: "Naema | Premium Dates and Artisan Products",
-  description: "Experience the luxury of Naema's premium quality dates and artisan products. Handpicked, natural, and rich in tradition.",
+  description:
+    "Experience the luxury of Naema's premium quality dates and artisan products. Handpicked, natural, and rich in tradition.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || 
-    (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : "http://localhost:3000")
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.NEXT_PUBLIC_VERCEL_URL
+        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+        : "http://localhost:3000"),
   ),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Naema | Premium Dates and Artisan Products",
-    description: "Experience the luxury of Naema's premium quality dates and artisan products. Handpicked, natural, and rich in tradition.",
+    description:
+      "Experience the luxury of Naema's premium quality dates and artisan products. Handpicked, natural, and rich in tradition.",
     url: "/",
     siteName: "Naema",
     images: [
@@ -35,17 +39,13 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Naema | Premium Dates and Artisan Products",
-    description: "Experience the luxury of Naema's premium quality dates and artisan products. Handpicked, natural, and rich in tradition.",
+    description:
+      "Experience the luxury of Naema's premium quality dates and artisan products. Handpicked, natural, and rich in tradition.",
     images: ["/opengraph-image.png"],
   },
   icons: {
-    icon: [
-      { url: "/favicon.ico" },
-      { url: "/icon.png", type: "image/png" },
-    ],
-    apple: [
-      { url: "/apple-icon.png" },
-    ],
+    icon: [{ url: "/favicon.ico" }, { url: "/icon.png", type: "image/png" }],
+    apple: [{ url: "/apple-icon.png" }],
   },
 };
 
@@ -71,6 +71,7 @@ const helveticaNeue = localFont({
     { path: "./fonts/HelveticaNeue/HelveticaNeueBlack.otf", weight: "900" },
   ],
   variable: "--font-helvetica",
+  preload: false,
 });
 
 export default function RootLayout({

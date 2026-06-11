@@ -58,7 +58,7 @@ const getMegaMenu = (t: any) => ({
     },
   ],
   featured: [
-    { label: t("Explore Dry Fruits"), image: "/dry.jpg", href: "/shop/dry-fruits" },
+    { label: t("Explore Dry Fruits"), image: "/dry.webp", href: "/shop/dry-fruits" },
     { label: t("Explore Premium Dates"), image: "/datedark.png", href: "/shop/dates" },
   ],
 });

@@ -10,7 +10,7 @@ const FounderNote = () => {
         {/* Left — main image */}
         <div className="w-full lg:flex-1 lg:w-[38%] shrink-0 rounded-2xl overflow-hidden border-2 border-gold h-[420px] md:h-[550px] lg:h-[650px] relative">
           <Image
-            src="/manwithdates.jpg"
+            src="/manwithdates.webp"
             alt="Naema founder"
             fill
             className="object-cover"
@@ -29,7 +29,7 @@ const FounderNote = () => {
 
             <div className="shrink-0 w-16 h-24 md:w-24 md:h-36 lg:w-30 lg:h-44 rounded-xl overflow-hidden border-2 -rotate-2 border-gold relative">
               <Image
-                src="/mwd2.jpg"
+                src="/mwd2.webp"
                 alt="Naema portrait"
                 fill
                 className="object-cover"

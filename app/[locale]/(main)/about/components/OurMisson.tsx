@@ -7,7 +7,7 @@ const OurMisson = () => {
   return (
     <section className=" w-full bg-cream  border-y-2 border-darkgold  relative overflow-hidden  ">
     <div className="h-full w-full absolute inset-0 opacity-10">
-            <Image src="/goldpalmm.jpg" fill alt="palm" className="object-cover" />
+            <Image src="/goldpalmm.webp" fill alt="palm" className="object-cover" />
           </div>
       <div className=" max-w-[1440px] mx-auto px-16  max-lg:px-8 max-md:px-5">
         <div className="w-full flex flex-col  items-center py-16">

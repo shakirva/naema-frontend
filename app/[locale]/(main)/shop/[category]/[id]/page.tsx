@@ -73,7 +73,7 @@ const ProductDetail = () => {
   };
 
   // Get best image with fallbacks
-  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
+  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.webp";
   const tags = product.tags?.map((t) => t?.value).filter(Boolean) ?? [];
   const variant = product.variants?.find(v => v?.title === selectedSize) || getCheapestVariant(product);
   

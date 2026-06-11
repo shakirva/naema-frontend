@@ -44,7 +44,7 @@ export const products: Product[] = [
     originalPrice: 1500,
     rating: 5,
     reviews: 120,
-    image: "/n1.jpg",
+    image: "/n1.webp",
     description:
       "Soft, naturally sweet dates with a rich caramel flavor.",
     badge: "Best Seller",
@@ -59,7 +59,7 @@ export const products: Product[] = [
     price: 850,
     rating: 5,
     reviews: 95,
-    image: "/n2.jpg",
+    image: "/n2.webp",
     description:
       "Fresh, crunchy almonds packed with nutrients and flavor.",
     badge: "New",
@@ -75,7 +75,7 @@ export const products: Product[] = [
     originalPrice: 950,
     rating: 4,
     reviews: 42,
-    image: "/n5.jpg",
+    image: "/n5.webp",
     description:
       "Naturally dried figs with a chewy texture and rich taste.",
     featured: false,

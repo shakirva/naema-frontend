@@ -64,9 +64,9 @@ const Shop = () => {
 
   // Default category images (fallback)
   const categoryImages: Record<string, string> = {
-    dates: "/dbox.jpg",
-    nuts: "/nuts.jpg",
-    "dry-fruits": "/dry.jpg",
+    dates: "/dbox.webp",
+    nuts: "/nuts.webp",
+    "dry-fruits": "/dry.webp",
   };
 
   return (
@@ -158,9 +158,9 @@ const Shop = () => {
                 );
               })
             : ([
-                { src: "/dbox.jpg", label: t("categories.Dates"), href: "/shop/dates" },
-                { src: "/nuts.jpg", label: t("categories.Nuts"), href: "/shop/nuts" },
-                { src: "/dry.jpg", label: t("categories.Dry Fruits"), href: "/shop/dry-fruits" },
+                { src: "/dbox.webp", label: t("categories.Dates"), href: "/shop/dates" },
+                { src: "/nuts.webp", label: t("categories.Nuts"), href: "/shop/nuts" },
+                { src: "/dry.webp", label: t("categories.Dry Fruits"), href: "/shop/dry-fruits" },
               ]).map(({ src, label, href }) => (
                 <Link
                   key={label}

@@ -26,7 +26,7 @@ const INITIAL_COUNT = 8;
 /* ------------------ PRODUCT CARD ------------------ */
 
 const ProductCard = ({ product, index }: { product: MedusaProduct; index: number }) => {
-  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
+  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.webp";
   const category = product.categories?.[0]?.handle || "Uncategorized";
   const badge = product.metadata?.badge ? String(product.metadata.badge) : "WHOLESALE";
   const color = cardColors[index % cardColors.length];

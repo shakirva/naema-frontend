@@ -59,25 +59,25 @@ const Pillars = () => {
       numeral: "I",
       title: t("pillars.quality.title"),
       description: t("pillars.quality.description"),
-      image: "/quality.jpg",
+      image: "/quality.webp",
     },
     {
       numeral: "II",
       title: t("pillars.trust.title"),
       description: t("pillars.trust.description"),
-      image: "/trust.jpg",
+      image: "/trust.webp",
     },
     {
       numeral: "III",
       title: t("pillars.authenticity.title"),
       description: t("pillars.authenticity.description"),
-      image: "/auth.jpg",
+      image: "/auth.webp",
     },
     {
       numeral: "IV",
       title: t("pillars.premium.title"),
       description: t("pillars.premium.description"),
-      image: "/premium.jpg",
+      image: "/premium.webp",
     },
   ];
 

@@ -58,7 +58,7 @@ const Footer = () => {
 
           <div className="ml-auto lg:w-[50%] h-[600px]  w-full  overflow-hidden relative rounded-2xl border-3 border-gold">
             <Image
-              src="/dateman.jpg"
+              src="/dateman.webp"
               alt="Premium Dates"
               fill
               className="object-cover"

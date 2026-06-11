@@ -42,7 +42,7 @@ const ComboBundle = () => {
         <div className="flex items-center justify-center max-md:mt-4 shrink-0">
           <div className="w-[220px] h-[300px] max-lg:w-[110px] max-lg:h-[160px] max-md:w-[140px] max-md:h-[200px] rounded-[999px] overflow-hidden -rotate-12 max-lg:-rotate-8 mr-5 max-lg:mr-3 border-2 border-gold">
             <Image
-              src="/dry.jpg"
+              src="/dry.webp"
               alt="Dry Fruits"
               width={320}
               height={420}
@@ -54,7 +54,7 @@ const ComboBundle = () => {
 
           <div className="w-[220px] h-[300px] max-lg:w-[110px] max-lg:h-[160px] max-md:w-[140px] max-md:h-[200px] rounded-[999px] overflow-hidden rotate-12 max-lg:rotate-8 ml-5 max-lg:ml-3 border-2 border-gold">
             <Image
-              src="/nuts.jpg"
+              src="/nuts.webp"
               alt="Nuts"
               width={320}
               height={420}

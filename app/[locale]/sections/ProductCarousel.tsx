@@ -66,7 +66,7 @@ const CarouselCard = ({ product }: { product: MedusaProduct }) => {
     setTimeout(() => setAdded(false), 1500);
   };
 
-  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
+  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.webp";
   const category = product.categories?.[0]?.handle || "all";
   const tags = product.tags?.map((t) => t.value) ?? [];
 

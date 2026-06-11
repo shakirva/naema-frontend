@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import ParallaxImage from "./ParallaxImage";
 
-const images = ["/dates2.jpg", "/bg2.jpg", "/bg3.jpg", "/bg4.jpg", "/bg5.jpg"];
+const images = ["/dates2.webp", "/bg2.webp", "/bg3.webp", "/bg4.webp", "/bg5.webp"];
 
 const ImageSlider = () => {
   const [current, setCurrent] = useState(0);

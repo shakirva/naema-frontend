@@ -477,7 +477,7 @@ const CheckoutPage = () => {
                   <p className="text-sm text-black/40">No items in cart.</p>
                 ) : (
                   items.map((item) => {
-                    const thumbnail = item.thumbnail || "/n1.jpg";
+                    const thumbnail = item.thumbnail || "/n1.webp";
                     return (
                       <div
                         key={item.id}

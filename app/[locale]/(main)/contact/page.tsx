@@ -42,7 +42,7 @@ const page = () => {
           {/* Background */}
           <div className="absolute inset-0 opacity-10">
             <Image
-              src="/goldpalmm.jpg"
+              src="/goldpalmm.webp"
               alt="Palm background"
               fill
               className="object-cover"

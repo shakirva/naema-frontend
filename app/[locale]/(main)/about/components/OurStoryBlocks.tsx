@@ -7,7 +7,7 @@ const OurStoryBlocks = () => {
   return (
     <section className="w-full bg-cream px-5 md:px-8 lg:px-16 py-16 md:py-24  border-b-2 border-gold relative overflow-hidden">
       <div className="h-full w-full absolute inset-0 opacity-10">
-              <Image src="/goldpalmm.jpg" fill alt="palm" className="object-cover" />
+              <Image src="/goldpalmm.webp" fill alt="palm" className="object-cover" />
             </div>
       <div className="max-w-[1440px] mx-auto flex flex-col">
 
@@ -18,7 +18,7 @@ const OurStoryBlocks = () => {
         {/* Block 1 */}
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 mt-24 max-md:mt-12">
           <div className="w-full flex-1 rounded-2xl overflow-hidden aspect-[4/3] border-3 border-gold relative shrink-0">
-            <Image src="/orchard.jpg" alt="Our orchards" fill className="object-cover" />
+            <Image src="/orchard.webp" alt="Our orchards" fill className="object-cover" />
           </div>
           <div className="flex flex-col gap-5 flex-1 max-md:w-full">
             <span className="w-fit font-serif text-[clamp(0.75rem,1vw,0.875rem)] border border-gold bg-gold/20 text-navy px-3 py-1.5 rounded">
@@ -49,14 +49,14 @@ const OurStoryBlocks = () => {
             </p>
           </div>
           <div className="w-full flex-1 rounded-2xl overflow-hidden aspect-[4/3] relative border-3 border-gold shrink-0">
-            <Image src="/craft.jpg" alt="Our craft" fill className="object-cover" />
+            <Image src="/craft.webp" alt="Our craft" fill className="object-cover" />
           </div>
         </div>
 
         {/* Block 3 */}
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16 mt-24 max-md:mt-12">
           <div className="w-full flex-1 rounded-2xl overflow-hidden aspect-[4/3] relative border-3 border-gold shrink-0">
-            <Image src="/fresh.jpg" alt="Our delivery" fill className="object-cover" />
+            <Image src="/fresh.webp" alt="Our delivery" fill className="object-cover" />
           </div>
           <div className="flex flex-1 w-full flex-col gap-5 ">
             <span className="w-fit font-serif text-[clamp(0.75rem,1vw,0.875rem)] border border-gold bg-gold/20 text-navy px-3 py-1.5 rounded">

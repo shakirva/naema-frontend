@@ -109,7 +109,7 @@ const CartSidebar = () => {
               {!loading && (
                 <div className="flex flex-col gap-4">
                   {items.map((item) => {
-                    const thumbnail = item.thumbnail || "/n1.jpg";
+                    const thumbnail = item.thumbnail || "/n1.webp";
                     return (
                       <div
                         key={item.id}
@@ -189,7 +189,7 @@ const CartSidebar = () => {
                   {suggested.map((p) => {
                     const price = getProductPrice(p);
                     const variant = getCheapestVariant(p);
-                    const thumb = p.thumbnail || p.images?.[0]?.url || "/n1.jpg";
+                    const thumb = p.thumbnail || p.images?.[0]?.url || "/n1.webp";
                     return (
                       <div
                         key={p.id}

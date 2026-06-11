@@ -14,8 +14,8 @@ const Grid = async () => {
   const fallbackItems = [
     { title: "Best Seller", image: "/dates.jpg", height: "lg:row-span-2", href: "/shop/best-seller" },
     { title: "Dates", image: "/dn.png", height: "", href: "/shop/dates" },
-    { title: "Dry Fruits", image: "/dry.jpg", height: "", href: "/shop/dry-fruits" },
-    { title: "Nuts", image: "/nuts.jpg", height: "lg:row-span-2", href: "/shop/nuts" },
+    { title: "Dry Fruits", image: "/dry.webp", height: "", href: "/shop/dry-fruits" },
+    { title: "Nuts", image: "/nuts.webp", height: "lg:row-span-2", href: "/shop/nuts" },
   ];
 
   // Build the list of dynamic candidates

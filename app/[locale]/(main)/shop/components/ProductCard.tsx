@@ -25,7 +25,7 @@ const ProductCard = ({
     price = 0;
   }
 
-  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
+  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.webp";
   const tags = product.tags?.map((t) => t?.value).filter(Boolean) ?? [];
 
   return (

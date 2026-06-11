@@ -22,10 +22,10 @@ export default async function CategoryPage({ searchParams }: Props) {
 
   // Fallback images in case metadata.image is not set on the Medusa backend
   const fallbackImages: Record<string, string> = {
-    dates: "/n1.jpg",
-    nuts: "/n2.jpg",
-    "dry-fruits": "/n3.jpg",
-    chocolates: "/n4.jpg",
+    dates: "/n1.webp",
+    nuts: "/n2.webp",
+    "dry-fruits": "/n3.webp",
+    chocolates: "/n4.webp",
   };
 
   return (

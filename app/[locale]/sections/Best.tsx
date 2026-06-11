@@ -23,7 +23,7 @@ const products: Product[] = [
     price: "$34.99",
     rating: 5,
     reviewCount: 2672,
-    image: "/n1.jpg",
+    image: "/n1.webp",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const products: Product[] = [
     price: "$29.99",
     rating: 4.5,
     reviewCount: 693,
-    image: "/n2.jpg",
+    image: "/n2.webp",
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const products: Product[] = [
     price: "$39.99",
     rating: 4,
     reviewCount: 57,
-    image: "/n3.jpg",
+    image: "/n3.webp",
   },
   {
     id: 4,
@@ -50,7 +50,7 @@ const products: Product[] = [
     price: "$43.99",
     rating: 5,
     reviewCount: 11,
-    image: "/n4.jpg",
+    image: "/n4.webp",
   },
   {
     id: 5,
@@ -59,7 +59,7 @@ const products: Product[] = [
     price: "$49.99",
     rating: 5,
     reviewCount: 312,
-    image: "/n5.jpg",
+    image: "/n5.webp",
   },
   {
     id: 6,
@@ -68,7 +68,7 @@ const products: Product[] = [
     price: "$38.99",
     rating: 4.5,
     reviewCount: 148,
-    image: "/n6.jpg",
+    image: "/n6.webp",
   },
 ];
 const StarRating = ({ rating }: { rating: number }) => {

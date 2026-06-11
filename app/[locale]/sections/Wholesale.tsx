@@ -15,7 +15,7 @@ const Wholesale = () => {
           <ParallaxImage
             mainclass="w-full h-[680px] max-lg:h-[60vw] max-md:h-[80vw] relative overflow-hidden"
             imageClass="object-cover scale-110"
-            src="/chocobg.jpg"
+            src="/chocobg.webp"
             alt="Cafe"
           />
           <div className="max-w-[450px] px-5 pb-6 flex flex-col justify-between">

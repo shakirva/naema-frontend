@@ -25,7 +25,7 @@ const reviews: Review[] = [
     comment:
       "These are absolutely delicious! Perfectly packaged and my new favourite date variety. Will order again.",
     itemType: "500g",
-    image: "/n1.jpg",
+    image: "/n1.webp",
     verified: true,
   },
   {
@@ -36,7 +36,7 @@ const reviews: Review[] = [
     comment:
       "Good sweetness and flavour. Sometimes warming them for 10 seconds helps soften them up a little.",
     itemType: "1kg",
-    image: "/n2.jpg",
+    image: "/n2.webp",
     verified: true,
   },
   {
@@ -69,7 +69,7 @@ const reviews: Review[] = [
     comment:
       "Naema never disappoints. Ordered for Eid and everyone loved them. Premium quality.",
     itemType: "2kg",
-    image: "/n3.jpg",
+    image: "/n3.webp",
     verified: true,
   },
 ];

@@ -14,19 +14,19 @@ const Hospitality = () => {
     {
       title: t("tab1"),
       description: t("card1Desc"),
-      image: "/tradition.jpg",
+      image: "/tradition.webp",
       accent: "bg-[#ead6c2]",
     },
     {
       title: t("tab2"),
       description: t("card2Desc"),
-      image: "/connection.jpg",
+      image: "/connection.webp",
       accent: "bg-[#d9c9a6]",
     },
     {
       title: t("tab3"),
       description: t("card3Desc"),
-      image: "/celeb.jpg",
+      image: "/celeb.webp",
       accent: "bg-[#d7d1b8]",
     },
   ];

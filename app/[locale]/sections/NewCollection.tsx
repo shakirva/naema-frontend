@@ -51,7 +51,7 @@ const NewCollection = () => {
   const product = featured[index];
   const variant = getCheapestVariant(product);
   const price = getProductPrice(product);
-  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.jpg";
+  const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.webp";
   const category = product.categories?.[0]?.handle || "all";
 
   return (
@@ -70,7 +70,7 @@ const NewCollection = () => {
           <ParallaxImage
             mainclass="w-full h-[60vw] max-lg:h-[50vw] max-md:h-[70vw] relative overflow-hidden rounded-tr-md rounded-br-md max-lg:rounded-tr-none max-lg:rounded-br-none max-lg:rounded-bl-md max-lg:rounded-br-md"
             imageClass="object-cover rounded-tr-md rounded-br-md scale-110 max-lg:rounded-tr-none max-lg:rounded-br-none"
-            src="/bg5.jpg"
+            src="/bg5.webp"
             alt="Orchard background"
           />
           <div className="self-end max-w-[450px] pl-16 max-lg:pl-8 max-md:pl-5 flex flex-col items-start">

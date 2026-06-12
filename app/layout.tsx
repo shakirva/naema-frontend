@@ -47,6 +47,9 @@ export const metadata: Metadata = {
     icon: [{ url: "/favicon.ico" }, { url: "/icon.png", type: "image/png" }],
     apple: [{ url: "/apple-icon.png" }],
   },
+  verification: {
+    google: "9qJ5LmK0R0_LYZSm7LKFTvBRUC5cjLDBi1YSSUIT5-s",
+  },
 };
 
 const instrumentSerif = Instrument_Serif({

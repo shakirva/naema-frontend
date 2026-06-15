@@ -125,14 +125,14 @@ const About2 = () => {
       {/* Content */}
       <div className="flex flex-col items-center relative w-full max-w-[1440px] mx-auto h-full">
         {/* Badge */}
-        <h3
+        <p
           ref={span}
           className="font-serif text-[clamp(1.5rem,4vw,5rem)] text-center leading-none bg-cream border-2 border-deepgold rounded-lg px-4 md:px-6 py-2 -rotate-2"
         >
           {t.rich("ourStory", {
             story: (chunks) => <span className="italic">{chunks}</span>,
           })}
-        </h3>
+        </p>
 
         {/* Title */}
         <h2
@@ -157,6 +157,7 @@ const About2 = () => {
           {/* ICONS */}
           <div
             ref={icons}
+            role="list"
             className="flex flex-wrap justify-center gap-8 md:gap-12 lg:gap-16"
           >
             {[
@@ -173,7 +174,7 @@ const About2 = () => {
                 label: t("features.premium"),
               },
             ].map(({ image, label }) => (
-              <figure
+              <div
                 key={label}
                 role="listitem"
                 className="flex flex-col gap-3 md:gap-4 items-center justify-center"
@@ -181,17 +182,17 @@ const About2 = () => {
                 <div className="size-20 md:size-24 lg:size-32 bg-cream border-2 border-gold rounded-full flex items-center justify-center">
                   <Image
                     src={image}
-                    alt={label}
+                    alt=""
                     width={70}
                     height={70}
                     className="w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 object-contain"
                   />
                 </div>
 
-                <figcaption className="font-serif text-base md:text-lg lg:text-xl text-cream max-w-[90px] md:max-w-[100px] text-center leading-snug">
+                <p className="font-serif text-base md:text-lg lg:text-xl text-cream max-w-[90px] md:max-w-[100px] text-center leading-snug">
                   {label}
-                </figcaption>
-              </figure>
+                </p>
+              </div>
             ))}
           </div>
 

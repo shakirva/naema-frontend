@@ -89,12 +89,12 @@ const Footer = () => {
             <p className="text-sm text-cream/80 mb-2">{t("email")}</p>
             <p className="text-sm text-cream/80 mb-2">{t("phone")}</p>
             <div className="flex gap-3 mt-4">
-              <Link href="https://instagram.com" target="_blank">
+              <Link href="https://instagram.com/naemafoodstuff" target="_blank">
                 <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
                   <AiOutlineInstagram />
                 </div>
               </Link>
-              <Link href="https://facebook.com" target="_blank">
+              <Link href="https://facebook.com/naemafoodstuff" target="_blank">
                 <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
                   <AiFillFacebook />
                 </div>

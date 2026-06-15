@@ -490,7 +490,7 @@ export async function addCustomerAddress(addressData: {
         "x-publishable-api-key": publishableKey,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ address: addressData }),
+      body: JSON.stringify(addressData),
     });
 
     const data = await res.json();

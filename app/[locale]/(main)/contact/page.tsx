@@ -162,10 +162,11 @@ const page = () => {
                     </span>
 
                     <Link
-                      href="/"
+                      href="https://instagram.com/naemafoodstuff"
+                      target="_blank"
                       className="mt-1 text-navy text-[15px] md:text-lg tracking-tight"
                     >
-                      @naema
+                      @naemafoodstuff
                     </Link>
                   </div>
                 </div>

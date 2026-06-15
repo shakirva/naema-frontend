@@ -59,6 +59,54 @@ export async function login(formData: FormData) {
   }
 }
 
+export async function requestPasswordReset(email: string) {
+  if (!email) return { error: "Email is required." };
+  const backendUrl = getBackendUrl();
+
+  try {
+    const res = await fetch(`${backendUrl}/auth/customer/emailpass/reset-password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ identifier: email }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      return { error: data.message || "Failed to request password reset." };
+    }
+
+    // Since it's a 201 Created and we hooked the token via event subscriber, we succeed.
+    return { success: true };
+  } catch (err: any) {
+    return { error: err.message || "Something went wrong." };
+  }
+}
+
+export async function resetPassword(password: string, token: string) {
+  if (!password || !token) return { error: "Password and token are required." };
+  const backendUrl = getBackendUrl();
+
+  try {
+    const res = await fetch(`${backendUrl}/auth/customer/emailpass/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ password }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      return { error: data.message || "Failed to reset password. The link might be expired." };
+    }
+
+    return { success: true };
+  } catch (err: any) {
+    return { error: err.message || "Something went wrong." };
+  }
+}
+
 export async function signup(formData: FormData) {
   const firstName = formData.get("first_name") as string;
   const lastName = formData.get("last_name") as string;

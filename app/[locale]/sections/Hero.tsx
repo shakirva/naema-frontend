@@ -46,7 +46,7 @@ const Hero = () => {
             <div
               className="flex gap-1"
               role="img"
-              aria-label="5 out of 5 stars"
+              
             >
               <IoMdStar aria-hidden="true" size={24} className="text-gold" />
               <IoMdStar aria-hidden="true" size={24} className="text-gold" />

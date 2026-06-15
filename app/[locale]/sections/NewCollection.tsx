@@ -147,7 +147,7 @@ const NewCollection = () => {
                         {product.title}
                       </h3>
                       <div className="flex flex-col items-end gap-2 shrink-0">
-                        <div className="flex gap-0.5" role="img" aria-label="Rating: 5 out of 5 stars">
+                        <div className="flex gap-0.5" role="img" >
                           {Array.from({ length: 5 }).map((_, i) => (
                             <IoMdStar key={i} size={15} color="#ccba78" aria-hidden="true" />
                           ))}

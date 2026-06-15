@@ -77,7 +77,7 @@ const StarRating = ({ rating }: { rating: number }) => {
     <div
       className="flex items-center gap-0.5"
       role="img"
-      aria-label={`Rating: ${rating} out of 5 stars`}
+      
     >
       {[1, 2, 3, 4, 5].map((star) => {
         const filled = rating >= star;

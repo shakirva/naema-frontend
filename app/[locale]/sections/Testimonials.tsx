@@ -92,7 +92,7 @@ const Testimonials = () => {
               >
                 <div
                   className="flex gap-0.5"
-                  aria-label={`${item.rating} out of 5 stars`}
+                 
                 >
                   {Array.from({ length: 5 }).map((_, i) => (
                     <IoMdStar

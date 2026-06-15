@@ -155,7 +155,7 @@ const Shop = () => {
                     <div className="w-[200px] h-[260px] md:w-[230px] md:h-[300px] lg:w-[260px] lg:h-[340px] rounded-[999px] overflow-hidden border-3 border-gold">
                       <Image
                         src={src}
-                        alt={cat.name}
+                        alt=""
                         width={260}
                         height={340}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -192,7 +192,7 @@ const Shop = () => {
                   <div className="w-[200px] h-[260px] md:w-[230px] md:h-[300px] lg:w-[260px] lg:h-[340px] rounded-[999px] overflow-hidden border-3 border-gold">
                     <Image
                       src={src}
-                      alt={label}
+                      alt=""
                       width={260}
                       height={340}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"

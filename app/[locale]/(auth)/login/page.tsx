@@ -86,8 +86,16 @@ const LoginPage = () => {
 
           {/* Google SSO */}
           <button
-            onClick={() => {
-              window.location.href = `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/auth/customer/google`;
+            onClick={async () => {
+              try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/auth/customer/google`);
+                const data = await res.json();
+                if (data.location) {
+                  window.location.href = data.location;
+                }
+              } catch (e) {
+                console.error("Failed to fetch Google Auth location", e);
+              }
             }}
             className="w-full flex items-center justify-center gap-3 py-3.5 rounded-full border-2 border-black/10 bg-white hover:border-gold transition-all duration-200 text-sm font-medium cursor-pointer"
           >

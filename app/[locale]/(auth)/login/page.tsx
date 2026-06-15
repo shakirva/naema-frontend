@@ -87,7 +87,7 @@ const LoginPage = () => {
           {/* Google SSO */}
           <button
             onClick={() => {
-              window.location.href = "/auth/customer/google";
+              window.location.href = `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/auth/customer/google`;
             }}
             className="w-full flex items-center justify-center gap-3 py-3.5 rounded-full border-2 border-black/10 bg-white hover:border-gold transition-all duration-200 text-sm font-medium cursor-pointer"
           >

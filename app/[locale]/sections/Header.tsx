@@ -311,7 +311,7 @@ const Header = () => {
 
           {/* Desktop Nav — left side */}
           <nav className="hidden lg:flex" aria-label="Primary">
-            <div className="flex gap-12 text-[14px] tracking-tight font-medium">
+            <div className="flex gap-12 text-[14px] uppercase tracking-tight font-medium">
               {navLinks.map((link, index) => {
                 const isShop = link.label.toLowerCase() === "shop";
                 const isActive =

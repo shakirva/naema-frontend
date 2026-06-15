@@ -93,7 +93,6 @@ const Footer = () => {
                 href="https://instagram.com/naemafoodstuff"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Open Instagram (opens in a new tab)"
                 className="inline-block"
               >
                 <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
@@ -105,7 +104,6 @@ const Footer = () => {
                 href="https://facebook.com/naemafoodstuff"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Open Facebook (opens in a new tab)"
                 className="inline-block"
               >
                 <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">

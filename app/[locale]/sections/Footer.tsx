@@ -2,7 +2,7 @@ import React from "react";
 import { PiTreePalm } from "react-icons/pi";
 import { LuShoppingBasket } from "react-icons/lu";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 
 import { AiOutlineInstagram, AiFillFacebook } from "react-icons/ai";

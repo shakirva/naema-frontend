@@ -49,7 +49,7 @@ const ImageSlider = () => {
         </div>
       ))}
 
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+     <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1 z-10">
         {images.map((_, index) => (
           <button
             key={index}
@@ -58,10 +58,14 @@ const ImageSlider = () => {
             aria-label={`Go to slide ${index + 1} of ${images.length}`}
             aria-controls={`carousel-slide-${index + 1}`}
             aria-pressed={current === index}
-            className={`w-2.5 h-2.5 rounded-full transition-all ${
-              current === index ? "bg-white scale-110" : "bg-white/40"
-            }`}
-          />
+            className="p-2.5 flex items-center justify-center cursor-pointer"
+          >
+            <span
+              className={`block w-2.5 h-2.5 rounded-full transition-all ${
+                current === index ? "bg-white scale-110" : "bg-white/40"
+              }`}
+            />
+          </button>
         ))}
       </div>
     </div>

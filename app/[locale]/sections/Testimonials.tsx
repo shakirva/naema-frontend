@@ -79,15 +79,10 @@ const Testimonials = () => {
           className="mt-24 max-lg:mt-12 overflow-x-auto scrollbar-hide"
           aria-label="Customer testimonials"
         >
-          <div
-            className="flex gap-4 min-w-max pb-4"
-            role="list"
-            aria-label="Testimonials list"
-          >
+          <div className="flex gap-4 min-w-max pb-4">
             {testimonials.map((item) => (
-              <article
+              <div
                 key={item.id}
-                role="listitem"
                 className={`w-[320px] h-[320px] rounded-[22px] border-2 shadow-sm flex flex-col items-center justify-center gap-5 p-8 ${item.bg} ${item.border}`}
               >
                 <div
@@ -123,7 +118,7 @@ const Testimonials = () => {
                     {item.author}
                   </cite>
                 </div>
-              </article>
+              </div>
             ))}
           </div>
         </div>

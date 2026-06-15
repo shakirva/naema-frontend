@@ -9,6 +9,8 @@ type ImageProps = {
   src: string;
   alt: string;
   sizes?: string;
+  priority?: boolean;
+  loading?: "eager" | "lazy";
 };
 
 const ParallaxImage = ({
@@ -17,6 +19,8 @@ const ParallaxImage = ({
   src,
   alt,
   sizes,
+  priority = false,
+  loading,
 }: ImageProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -37,6 +41,8 @@ const ParallaxImage = ({
         sizes={sizes ?? "100vw"}
         className={`size-full object-cover ${imageClass}`}
         alt={alt}
+        priority={priority}
+        loading={!priority ? (loading ?? "lazy") : undefined}
       />
     </div>
   );

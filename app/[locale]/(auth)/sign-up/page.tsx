@@ -68,7 +68,7 @@ const SignupPage = () => {
       <div className="hidden lg:flex w-1/2 bg-navy relative overflow-hidden flex-col items-center justify-center p-16">
         <div className="absolute inset-0 opacity-5">
           <Image
-            src="/verydarkpalm.png"
+            src="/verydarkpalm.webp"
             fill
             alt=""
             sizes="(min-width:1024px) 50vw, 100vw"
@@ -77,7 +77,7 @@ const SignupPage = () => {
         </div>
 
         <div className="relative z-10 flex flex-col items-center justify-center text-center gap-6">
-          <Image src="/logo.png" width={90} height={90} alt="Naema" />
+          <Image src="/logo.webp" width={90} height={90} alt="Naema" />
           <h2 className="font-serif text-[clamp(2rem,3vw,3rem)] text-cream leading-none">
             Join Naema.
           </h2>
@@ -110,7 +110,7 @@ const SignupPage = () => {
       <div className="flex-1 flex flex-col items-center justify-center px-8 py-16">
         {/* Mobile logo */}
         <div className="lg:hidden mb-8">
-          <Image src="/logo.png" width={70} height={70} alt="Naema" />
+          <Image src="/logo.webp" width={70} height={70} alt="Naema" />
         </div>
 
         <div className="w-full max-w-[420px] flex flex-col gap-6">

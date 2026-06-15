@@ -51,69 +51,98 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="w-full bg-cream py-24 max-md:py-12 overflow-hidden px-16 max-lg:px-8 max-md:px-5">
+    <section
+      className="w-full bg-cream py-24 max-md:py-12 overflow-hidden px-16 max-lg:px-8 max-md:px-5"
+      aria-labelledby="testimonials-heading"
+    >
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col items-center">
-          <h2 className="font-serif text-[clamp(1.5rem,3.3vw,3rem)] lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4 py-2">
+          <p className="font-serif text-[clamp(1.5rem,3.3vw,3rem)] lg:text-center leading-none w-fit bg-gold/20 border border-gold/50 rounded-lg px-4 py-2">
             {t("reviews")}
-          </h2>
+          </p>
 
-          <h2 className="font-serif text-[clamp(2.5rem,5vw,5rem)] text-center leading-[1.25] mt-10 max-lg:mt-5 max-w-[900px] text-black">
+          <h2
+            id="testimonials-heading"
+            className="font-serif text-[clamp(2.5rem,5vw,5rem)] text-center leading-[1.25] mt-10 max-lg:mt-5 max-w-[900px] text-black"
+          >
             {t.rich("titleLine1", {
-              everywhere: (chunks) => <span className="italic text-deepgold">{chunks}</span>
+              everywhere: (chunks) => (
+                <span className="italic text-deepgold">{chunks}</span>
+              ),
             })}
             <br />
             {t("titleLine2")}
           </h2>
         </div>
 
-        <div className="mt-24 max-lg:mt-12 overflow-x-auto scrollbar-hide">
-          <div className="flex gap-4 min-w-max pb-4">
+        <div
+          className="mt-24 max-lg:mt-12 overflow-x-auto scrollbar-hide"
+          aria-label="Customer testimonials"
+        >
+          <div
+            className="flex gap-4 min-w-max pb-4"
+            role="list"
+            aria-label="Testimonials list"
+          >
             {testimonials.map((item) => (
-              <div
+              <article
                 key={item.id}
+                role="listitem"
                 className={`w-[320px] h-[320px] rounded-[22px] border-2 shadow-sm flex flex-col items-center justify-center gap-5 p-8 ${item.bg} ${item.border}`}
               >
-                {/* Stars */}
-                <div className="flex gap-0.5">
+                <div
+                  className="flex gap-0.5"
+                  aria-label={`${item.rating} out of 5 stars`}
+                >
                   {Array.from({ length: 5 }).map((_, i) => (
                     <IoMdStar
                       key={i}
                       size={18}
                       color={i < item.rating ? "#1a2e5a" : "#00000025"}
+                      aria-hidden="true"
+                      focusable="false"
                     />
                   ))}
                 </div>
 
-                {/* Quote */}
-                <p className="font-serif text-[22px] leading-[1.2] text-center text-black max-w-[230px]">
-                  "{item.quote}"
-                </p>
+                <blockquote>
+                  <p className="font-serif text-[22px] leading-[1.2] text-center text-black max-w-[230px]">
+                    "{item.quote}"
+                  </p>
+                </blockquote>
 
-                {/* Author */}
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-black/15 flex items-center justify-center text-black text-xs font-medium shrink-0">
+                  <div
+                    className="w-7 h-7 rounded-full bg-black/15 flex items-center justify-center text-black text-xs font-medium shrink-0"
+                    aria-hidden="true"
+                  >
                     {item.author.charAt(0)}
                   </div>
 
-                  <span className="text-black/60 text-sm tracking-tight">
+                  <cite className="not-italic text-black/80 text-sm tracking-tight">
                     {item.author}
-                  </span>
+                  </cite>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>
-        {/* Swipe hint */}
-<div className="flex items-center justify-center gap-2 mt-3">
-  <div className="w-10 h-[2px] bg-deepgold/40 rounded-full" />
 
-  <span className="text-xs tracking-tight text-deepgold">
-    {t("swipeToExplore")}
-  </span>
+        <div className="flex items-center justify-center gap-2 mt-3">
+          <div
+            className="w-10 h-[2px] bg-deepgold/40 rounded-full"
+            aria-hidden="true"
+          />
 
-  <div className="w-10 h-[2px] bg-deepgold/40 rounded-full" />
-</div>
+          <span className="text-xs tracking-tight text-deepgold">
+            {t("swipeToExplore")}
+          </span>
+
+          <div
+            className="w-10 h-[2px] bg-deepgold/40 rounded-full"
+            aria-hidden="true"
+          />
+        </div>
       </div>
     </section>
   );

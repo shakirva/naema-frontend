@@ -22,8 +22,8 @@ const About2 = () => {
   const sticker = useRef<HTMLDivElement | null>(null);
   const stickerlg = useRef<HTMLDivElement | null>(null);
 
-  const span = useRef<HTMLSpanElement | null>(null);
-  const title = useRef<HTMLParagraphElement | null>(null);
+  const span = useRef<HTMLHeadingElement | null>(null);
+  const title = useRef<HTMLHeadingElement | null>(null);
   const para = useRef<HTMLParagraphElement | null>(null);
   const icons = useRef<HTMLDivElement | null>(null);
 
@@ -90,15 +90,21 @@ const About2 = () => {
   return (
     <section
       ref={container}
+      aria-labelledby="about-title"
       className="w-full relative border-y-2 border-navy bg-cream px-16 py-32 max-lg:pt-8 max-lg:px-8 max-md:px-5"
     >
       {/* Stickers */}
-      <div ref={sticker} className="absolute top-0 right-2 z-10 lg:hidden">
+      <div
+        ref={sticker}
+        aria-hidden="true"
+        className="absolute top-0 right-2 z-10 lg:hidden"
+      >
         <DateSticker size={120} />
       </div>
 
       <div
         ref={stickerlg}
+        aria-hidden="true"
         className="absolute top-0 right-10 z-10 max-lg:hidden"
       >
         <DateSticker />
@@ -119,23 +125,24 @@ const About2 = () => {
       {/* Content */}
       <div className="flex flex-col items-center relative w-full max-w-[1440px] mx-auto h-full">
         {/* Badge */}
-        <span
+        <h3
           ref={span}
           className="font-serif text-[clamp(1.5rem,4vw,5rem)] text-center leading-none bg-cream border-2 border-deepgold rounded-lg px-4 md:px-6 py-2 -rotate-2"
         >
           {t.rich("ourStory", {
             story: (chunks) => <span className="italic">{chunks}</span>,
           })}
-        </span>
+        </h3>
 
         {/* Title */}
-        <p
+        <h2
+          id="about-title"
           ref={title}
           className="text-[clamp(3rem,14vw,180px)] font-serif font-medium text-cream leading-none text-center mt-12 md:mt-18 lg:mt-24"
         >
           {t("bornIn")} <br />{" "}
           <span className="text-lightgold">{t("kuwait")}</span>
-        </p>
+        </h2>
 
         {/* Paragraph */}
         <p
@@ -154,20 +161,21 @@ const About2 = () => {
           >
             {[
               {
-                image: "/truck-icon.png",
+                image: "/truck-icon.webp",
                 label: t("features.farmFresh"),
               },
               {
-                image: "/orchard-icon.png",
+                image: "/orchard-icon.webp",
                 label: t("features.sourced"),
               },
               {
-                image: "/premium-icon.png",
+                image: "/premium-icon.webp",
                 label: t("features.premium"),
               },
             ].map(({ image, label }) => (
-              <div
+              <figure
                 key={label}
+                role="listitem"
                 className="flex flex-col gap-3 md:gap-4 items-center justify-center"
               >
                 <div className="size-20 md:size-24 lg:size-32 bg-cream border-2 border-gold rounded-full flex items-center justify-center">
@@ -180,22 +188,26 @@ const About2 = () => {
                   />
                 </div>
 
-                <p className="font-serif text-base md:text-lg lg:text-xl text-cream max-w-[90px] md:max-w-[100px] text-center leading-snug">
+                <figcaption className="font-serif text-base md:text-lg lg:text-xl text-cream max-w-[90px] md:max-w-[100px] text-center leading-snug">
                   {label}
-                </p>
-              </div>
+                </figcaption>
+              </figure>
             ))}
           </div>
 
           {/* CTA */}
           <Link
             href="/about"
-            className="px-8 md:px-12 py-4 md:py-5 text-sm md:text-base font-medium tracking-tight border-2 border-gold bg-cream rounded-full text-navy relative group overflow-hidden inline-block"
+            aria-label={t("ourOrigins")}
+            className="px-8 md:px-12 py-4 md:py-5 text-sm md:text-base font-medium tracking-tight border-2 border-gold bg-cream rounded-full text-navy relative group overflow-hidden inline-block focus:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
           >
             <span className="block group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
               {t("ourOrigins")}
             </span>
-            <span className="block absolute inset-0 flex items-center justify-center bg-navy text-cream  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 flex items-center justify-center bg-navy text-cream  rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]"
+            >
               {t("ourOrigins")}
             </span>
           </Link>

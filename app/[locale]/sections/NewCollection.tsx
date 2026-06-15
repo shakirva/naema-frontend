@@ -16,6 +16,7 @@ const NewCollection = () => {
   const { addToCart } = useCart();
   const [featured, setFeatured] = useState<MedusaProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const [announcement, setAnnouncement] = useState("");
 
   useEffect(() => {
     const fetchNew = async () => {
@@ -37,11 +38,16 @@ const NewCollection = () => {
 
   if (loading) {
     return (
-      <section className="w-full bg-cream relative min-h-screen mt-24 border-darkgold border-b flex items-center justify-center">
-        <div className="animate-pulse flex flex-col items-center">
+      <section
+        className="w-full bg-cream relative min-h-screen mt-24 border-darkgold border-b flex items-center justify-center"
+        aria-busy="true"
+        aria-label="Loading new collections"
+      >
+        <div className="animate-pulse flex flex-col items-center" aria-hidden="true">
           <div className="w-48 h-10 bg-black/10 rounded mb-10"></div>
           <div className="w-[400px] h-[550px] bg-black/5 rounded-3xl"></div>
         </div>
+        <span className="sr-only">Loading new collections, please wait.</span>
       </section>
     );
   }
@@ -54,11 +60,25 @@ const NewCollection = () => {
   const thumbnail = product.thumbnail || product.images?.[0]?.url || "/n1.webp";
   const category = product.categories?.[0]?.handle || "all";
 
+  const handleAddToCart = async () => {
+    if (variant) {
+      await addToCart(variant.id, 1);
+      setAnnouncement(`${product.title} added to cart`);
+      setTimeout(() => setAnnouncement(""), 1500);
+    }
+  };
+
   return (
-    <section className="w-full bg-cream relative min-h-screen mt-24 border-darkgold border-b">
+    <section
+      className="w-full bg-cream relative min-h-screen mt-24 border-darkgold border-b"
+      aria-labelledby="new-collections-heading"
+    >
       {/* Section label */}
       <div className="flex flex-col w-full items-center px-5">
-        <h2 className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] text-center leading-none  bg-gold/20 border border-gold/50 rounded-lg px-6 py-2 ">
+        <h2
+          id="new-collections-heading"
+          className="font-serif text-[clamp(2.5rem,4.4vw,4rem)] text-center leading-none  bg-gold/20 border border-gold/50 rounded-lg px-6 py-2 "
+        >
           New Collections
         </h2>
       </div>
@@ -82,7 +102,7 @@ const NewCollection = () => {
 
             <Link
               href="/shop"
-              className="px-5 py-2.5 text-sm font-medium mt-6 tracking-tight border-2 border-gold bg-cream rounded-full text-black w-fit"
+              className="px-5 py-2.5 text-sm font-medium mt-6 tracking-tight border-2 border-gold bg-cream rounded-full text-black w-fit focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
             >
               Shop All Collections
             </Link>
@@ -95,10 +115,10 @@ const NewCollection = () => {
             {/* Prev arrow */}
             <button
               onClick={prev}
-              aria-label="Previous"
-              className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-gold hover:bg-gold/10 transition cursor-pointer shrink-0"
+              aria-label="Previous product"
+              className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-gold hover:bg-gold/10 transition cursor-pointer shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
             >
-              <FiArrowLeft size={16} />
+              <FiArrowLeft size={16} aria-hidden="true" />
             </button>
 
             {/* Card + dots */}
@@ -127,9 +147,9 @@ const NewCollection = () => {
                         {product.title}
                       </h3>
                       <div className="flex flex-col items-end gap-2 shrink-0">
-                        <div className="flex gap-0.5">
+                        <div className="flex gap-0.5" role="img" aria-label="Rating: 5 out of 5 stars">
                           {Array.from({ length: 5 }).map((_, i) => (
-                            <IoMdStar key={i} size={15} color="#ccba78" />
+                            <IoMdStar key={i} size={15} color="#ccba78" aria-hidden="true" />
                           ))}
                         </div>
                         <span className="text-xs text-black/40 underline underline-offset-2">
@@ -144,6 +164,7 @@ const NewCollection = () => {
                     </p>
 
                     <p className="text-3xl font-semibold tracking-tight">
+                      <span className="sr-only">Price: </span>
                       {formatPrice(price)}
                     </p>
                   </div>
@@ -151,19 +172,17 @@ const NewCollection = () => {
                   <div className="flex gap-3">
                     <button
                       disabled={!variant}
-                      onClick={async () => {
-                        if (variant) {
-                          await addToCart(variant.id, 1);
-                        }
-                      }}
-                      className="flex-1 flex items-center justify-center gap-2 py-2.5 max-md:text-xs rounded-full border-2 border-gold bg-gold/30 text-sm font-bold tracking-tight hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 cursor-pointer disabled:opacity-50"
+                      onClick={handleAddToCart}
+                      aria-label={`Add ${product.title} to cart, ${formatPrice(price)}`}
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 max-md:text-xs rounded-full border-2 border-gold bg-gold/30 text-sm font-bold tracking-tight hover:bg-navy hover:text-white hover:border-navy transition-all duration-200 cursor-pointer disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
                     >
-                      <FiShoppingCart className="size-[14px] max-md:size-[12px]" />
+                      <FiShoppingCart className="size-[14px] max-md:size-[12px]" aria-hidden="true" />
                       Add to Cart
                     </button>
                     <Link
                       href={`/shop/${category}/${product.handle}`}
-                      className="flex-1 py-2.5 rounded-full flex items-center max-md:text-xs  justify-center bg-navy text-white font-bold tracking-tight text-sm hover:opacity-90 transition cursor-pointer"
+                      className="flex-1 py-2.5 rounded-full flex items-center max-md:text-xs  justify-center bg-navy text-white font-bold tracking-tight text-sm hover:opacity-90 transition cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                      aria-label={`View product details for ${product.title}`}
                     >
                       View Product
                     </Link>
@@ -173,11 +192,13 @@ const NewCollection = () => {
 
               {/* Dots */}
               <div className="flex items-center justify-center gap-2 mt-3">
-                {featured.map((_, i) => (
+                {featured.map((item, i) => (
                   <button
-                    key={i}
+                    key={item.id}
                     onClick={() => setIndex(i)}
-                    className={`rounded-full transition-all duration-200 cursor-pointer ${
+                    aria-label={`Show ${item.title}`}
+                    aria-current={i === index ? "true" : undefined}
+                    className={`rounded-full transition-all duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy ${
                       i === index
                         ? "w-6 h-2 bg-navy"
                         : "w-2 h-2 bg-black/20 hover:bg-black/40"
@@ -190,12 +211,17 @@ const NewCollection = () => {
             {/* Next arrow */}
             <button
               onClick={next}
-              aria-label="Next"
-              className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-gold hover:bg-gold/10 transition cursor-pointer shrink-0"
+              aria-label="Next product"
+              className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-gold hover:bg-gold/10 transition cursor-pointer shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
             >
-              <FiArrowRight size={16} />
+              <FiArrowRight size={16} aria-hidden="true" />
             </button>
           </div>
+
+          {/* Live region for cart announcements */}
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
       </div>
     </section>

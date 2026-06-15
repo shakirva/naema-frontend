@@ -40,7 +40,7 @@ const LoginPage = () => {
         {/* Background texture */}
         <div className="absolute inset-0 opacity-5">
           <Image
-            src="/verydarkpalm.png"
+            src="/verydarkpalm.webp"
             fill
             alt=""
             sizes="(min-width:1024px) 50vw, 100vw"
@@ -49,7 +49,7 @@ const LoginPage = () => {
         </div>
 
         <div className="relative z-10 flex flex-col items-center text-center gap-6">
-          <Image src="/logo.png" width={100} height={100} alt="Naema" />
+          <Image src="/logo.webp" width={100} height={100} alt="Naema" />
           <h2 className="font-serif text-[clamp(2rem,3vw,3rem)] text-cream leading-none">
             Welcome back.
           </h2>
@@ -64,7 +64,7 @@ const LoginPage = () => {
       <div className="flex-1 flex flex-col items-center justify-center px-8 py-16">
         {/* Mobile logo */}
         <div className="lg:hidden mb-8">
-          <Image src="/logo.png" width={90} height={90} alt="Naema" />
+          <Image src="/logo.webp" width={90} height={90} alt="Naema" />
         </div>
 
         <div className="w-full max-w-[420px] flex flex-col gap-6">

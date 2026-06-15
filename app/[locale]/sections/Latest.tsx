@@ -71,9 +71,14 @@ const products: Product[] = [
     image: "/x6.webp",
   },
 ];
+
 const StarRating = ({ rating }: { rating: number }) => {
   return (
-    <div className="flex items-center gap-0.5">
+    <div
+      className="flex items-center gap-0.5"
+      role="img"
+      aria-label={`Rating: ${rating} out of 5 stars`}
+    >
       {[1, 2, 3, 4, 5].map((star) => {
         const filled = rating >= star;
         const half = !filled && rating >= star - 0.5;
@@ -84,6 +89,7 @@ const StarRating = ({ rating }: { rating: number }) => {
             viewBox="0 0 20 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
           >
             {filled ? (
               <path
@@ -118,10 +124,15 @@ const StarRating = ({ rating }: { rating: number }) => {
 
 const ProductCard = ({ product }: { product: Product }) => {
   const [added, setAdded] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
 
   const handleAddToCart = () => {
     setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+    setAnnouncement(`${product.name} added to cart`);
+    setTimeout(() => {
+      setAdded(false);
+      setAnnouncement("");
+    }, 1500);
   };
 
   return (
@@ -130,7 +141,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       <div className="relative w-full h-64 rounded-2xl overflow-hidden border">
         <Image
           src={product.image}
-          alt={product.name}
+          alt={`${product.name} - ${product.tags.join(", ")}`}
           fill
           className="object-cover group-hover:scale-[1.1] transition-all duration-300 ease-in-out"
           sizes="288px"
@@ -140,9 +151,13 @@ const ProductCard = ({ product }: { product: Product }) => {
       {/* Rating */}
       <div className="flex items-center gap-1.5">
         <StarRating rating={product.rating} />
-        <span className="text-sm font-semibold text-gold underline underline-offset-2 cursor-pointer">
+        <Link
+          href={`#reviews-${product.id}`}
+          className="text-sm font-semibold text-gold underline underline-offset-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy rounded-sm"
+          aria-label={`Read ${product.reviewCount.toLocaleString()} reviews for ${product.name}`}
+        >
           ({product.reviewCount.toLocaleString()})
-        </span>
+        </Link>
       </div>
 
       {/* Name */}
@@ -163,16 +178,29 @@ const ProductCard = ({ product }: { product: Product }) => {
       </div>
 
       {/* Price */}
-      <p className="font-bold text-lg text-black">{product.price}</p>
+      <p className="font-bold text-lg text-black">
+        <span className="sr-only">Price: </span>
+        {product.price}
+      </p>
 
       {/* Button */}
       <button
         onClick={handleAddToCart}
-        className={`w-full py-3.5 rounded-full border-2 border-gold  bg-gold/40 font-bold  tracking-tight text-sm  hover:border-navy hover:bg-navy hover:text-white transition-all duration-200 cursor-pointer
+        aria-label={
+          added
+            ? `${product.name} added to cart`
+            : `Add ${product.name} to cart, ${product.price}`
+        }
+        className={`w-full py-3.5 rounded-full border-2 border-gold  bg-gold/40 font-bold  tracking-tight text-sm  hover:border-navy hover:bg-navy hover:text-white transition-all duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy
          `}
       >
         {added ? "Added ✓" : "Add to Cart"}
       </button>
+
+      {/* Live region for screen reader announcement */}
+      <span className="sr-only" role="status" aria-live="polite">
+        {announcement}
+      </span>
     </div>
   );
 };
@@ -202,14 +230,19 @@ const Latest = () => {
   };
 
   return (
-    <div className="mt-32 max-lg:mt-24 max-md:mt-12 ">
+    <section
+      className="mt-32 max-lg:mt-24 max-md:mt-12"
+      aria-labelledby="latest-drops-heading"
+    >
       {/* Header row */}
-        <h2 className=" font-serif text-[clamp(2rem,3.33vw,3rem)]  leading-none">
-            Shop Our Latest drops
-          </h2>
+      <h2
+        id="latest-drops-heading"
+        className=" font-serif text-[clamp(2rem,3.33vw,3rem)]  leading-none"
+      >
+        Shop Our Latest drops
+      </h2>
       <div className="flex items-end justify-between mb-8">
         <div>
-        
           <p className="mt-2  text-[16px] max-md:text-sm text-black/80 tracking-tight">
             From classic whole dates to gourmet stuffed varieties – find your
             perfect date match.
@@ -221,8 +254,8 @@ const Latest = () => {
           <button
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
-            aria-label="Scroll left"
-            className={`w-11 h-11 rounded-full border border-black/50 flex items-center justify-center transition-all duration-150 cursor-pointer
+            aria-label="Scroll to previous products"
+            className={`w-11 h-11 rounded-full border border-black/50 flex items-center justify-center transition-all duration-150 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy
               ${
                 canScrollLeft
                   ? "bg-navy text-white   active:shadow-none "
@@ -233,13 +266,14 @@ const Latest = () => {
               className="w-5 h-5"
               strokeWidth={2.5}
               color="#ccba78"
+              aria-hidden="true"
             />
           </button>
           <button
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
-            aria-label="Scroll right"
-            className={`w-11 h-11 rounded-full border- border-black/50 flex items-center justify-center transition-all duration-150 cursor-pointer
+            aria-label="Scroll to next products"
+            className={`w-11 h-11 rounded-full border- border-black/50 flex items-center justify-center transition-all duration-150 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy
               ${
                 canScrollRight
                   ? "bg-navy text-white  active:shadow-none "
@@ -250,6 +284,7 @@ const Latest = () => {
               className="w-5 h-5"
               strokeWidth={2.5}
               color="#ccba78"
+              aria-hidden="true"
             />
           </button>
         </div>
@@ -261,12 +296,15 @@ const Latest = () => {
         onScroll={updateScrollState}
         className="flex gap-6 overflow-x-auto pb-4 scroll-smooth"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        role="region"
+        aria-label="Product carousel"
+        tabIndex={0}
       >
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

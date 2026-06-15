@@ -246,7 +246,7 @@ const CheckoutPage = () => {
         <div className="mb-10">
           <Link href="/">
             <Image
-              src="/naemadarklogo.png"
+              src="/naemadarklogo.webp"
               width={70}
               height={70}
               alt="Naema"

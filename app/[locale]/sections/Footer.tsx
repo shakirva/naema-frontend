@@ -14,7 +14,7 @@ const Footer = () => {
     <footer className="bg-[#0A223A] px-16 py-12 text-cream w-full relative  max-lg:pt-8 max-lg:px-8 max-md:px-5 ">
       <div className="h-full w-full absolute inset-0 opacity-5">
         <Image
-          src="/footer.png"
+          src="/footer.webp"
           fill
           alt=""
           sizes="100vw"
@@ -81,7 +81,7 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <Link href="/">
-              <Image src="/newnaema.png" width={90} height={90} alt="Naema" />
+              <Image src="/newnaema.webp" width={90} height={90} alt="Naema" />
             </Link>
             <p className="text-cream/70 text-sm leading-relaxed  mt-4 mb-6">
               {t("aboutDesc")}

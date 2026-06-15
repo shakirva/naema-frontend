@@ -51,28 +51,52 @@ const getMegaMenu = (t: any) => ({
       handle: "other-products",
       links: [
         { label: t("Pressed Dates"), href: "/shop?search=Pressed" },
-        { label: t("Arabic Coffee (Robusta Mix)"), href: "/shop?search=Robusta" },
+        {
+          label: t("Arabic Coffee (Robusta Mix)"),
+          href: "/shop?search=Robusta",
+        },
         { label: t("Arabic Coffee (Mysore mix)"), href: "/shop?search=Mysore" },
         { label: t("Date Honey (1 litre)"), href: "/shop?search=Honey" },
       ],
     },
   ],
   featured: [
-    { label: t("Explore Dry Fruits"), image: "/dry.webp", href: "/shop/dry-fruits" },
-    { label: t("Explore Premium Dates"), image: "/datedark.png", href: "/shop/dates" },
+    {
+      label: t("Explore Dry Fruits"),
+      image: "/dry.webp",
+      href: "/shop/dry-fruits",
+    },
+    {
+      label: t("Explore Premium Dates"),
+      image: "/datedark.png",
+      href: "/shop/dates",
+    },
   ],
 });
 
 /* ------------------ MEGA MENU (desktop) ------------------ */
 
-const MegaMenu = ({ categories, featured, t }: { categories: any[], featured: any[], t: any }) => (
+const MegaMenu = ({
+  categories,
+  featured,
+  t,
+}: {
+  categories: any[];
+  featured: any[];
+  t: any;
+}) => (
   <div className="w-fit bg-cream border-t border-x border-b border-gold/30 shadow-2xl flex justify-center rounded-b-2xl overflow-hidden mt-[1px]">
     <div className="w-fit flex flex-row justify-center gap-12 lg:gap-24 px-8">
       <div className="flex flex-col py-10 gap-8">
         <div className="flex gap-16 flex-wrap">
           {categories.map((col) => (
-            <div key={col.heading} className="flex flex-col gap-3 min-w-[120px]">
-              <span className="text-[10px] font-bold text-black/40 uppercase">{col.heading}</span>
+            <div
+              key={col.heading}
+              className="flex flex-col gap-3 min-w-[120px]"
+            >
+              <span className="text-[10px] font-bold text-black/40 uppercase">
+                {col.heading}
+              </span>
               <div className="flex flex-col gap-2.5">
                 {col.links.map((item: any) => (
                   <Link
@@ -94,15 +118,27 @@ const MegaMenu = ({ categories, featured, t }: { categories: any[], featured: an
           <span className="block px-5 py-2 rounded-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
             {t("Shop All")}
           </span>
-          <span className="absolute inset-0 flex items-center justify-center rounded-full bg-cream text-navy translate-y-full scale-[0.5] transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0 group-hover:scale-100">
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 flex items-center justify-center rounded-full bg-cream text-navy translate-y-full scale-[0.5] transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0 group-hover:scale-100"
+          >
             {t("Shop All")}
           </span>
         </Link>
       </div>
       <div className="flex gap-4 py-10 shrink-0 border-s border-gold/20 ps-8">
         {featured.map((f) => (
-          <Link key={f.label} href={f.href} className="relative w-[180px] h-[220px] rounded-2xl overflow-hidden group">
-            <Image src={f.image} alt={f.label} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+          <Link
+            key={f.label}
+            href={f.href}
+            className="relative w-[180px] h-[220px] rounded-2xl overflow-hidden group"
+          >
+            <Image
+              src={f.image}
+              alt={f.label}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+            />
             <div className="absolute inset-0 bg-navy/40" />
             <span className="absolute bottom-4 left-4 right-4 font-serif text-[18px] font-medium text-white leading-tight">
               {f.label}
@@ -116,7 +152,13 @@ const MegaMenu = ({ categories, featured, t }: { categories: any[], featured: an
 
 /* ------------------ SEARCH OVERLAY ------------------ */
 
-const SearchOverlay = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+const SearchOverlay = ({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) => {
   const [query, setQuery] = useState("");
   const { push } = useRouter();
 
@@ -133,36 +175,75 @@ const SearchOverlay = ({ open, onClose }: { open: boolean; onClose: () => void }
     }
   };
   return (
-    <div className={`fixed inset-0 z-[99999] transition-all duration-300 ease-out ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
-      <div className="absolute inset-0 bg-navy/60 backdrop-blur-sm" onClick={onClose} />
-      <div className={`relative z-10 w-full bg-cream border-b-2 border-darkgold shadow-2xl transition-transform duration-300 ease-out ${open ? "translate-y-0" : "-translate-y-full"}`}>
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Search"
+      className={`fixed inset-0 z-[99999] transition-all duration-300 ease-out ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+    >
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-navy/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <div
+        className={`relative z-10 w-full bg-cream border-b-2 border-darkgold shadow-2xl transition-transform duration-300 ease-out ${open ? "translate-y-0" : "-translate-y-full"}`}
+      >
         <div className="max-w-[1440px] mx-auto px-8 h-[80px] flex items-center gap-4">
           <button
+            type="button"
             onClick={triggerSearch}
-            className="text-gold hover:text-darkgold transition-colors p-1"
+            aria-label="Execute search"
+            className="text-gold hover:text-darkgold transition-colors p-1 focus:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
             title="Search"
           >
             <FiSearch size={22} className="shrink-0" />
           </button>
+          <label
+            htmlFor="header-search"
+            style={{
+              position: "absolute",
+              width: 1,
+              height: 1,
+              padding: 0,
+              margin: -1,
+              overflow: "hidden",
+              clip: "rect(0 0 0 0)",
+              whiteSpace: "nowrap",
+              border: 0,
+            }}
+          >
+            Search products
+          </label>
           <input
+            id="header-search"
             autoFocus={open}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleSearch}
             placeholder="Search products..."
+            aria-label="Search products"
             className="flex-1 bg-transparent text-navy placeholder-navy/40 text-[18px] tracking-tight outline-none"
           />
 
           <button
+            type="button"
             onClick={triggerSearch}
-            className="px-5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full bg-gold text-navy hover:bg-darkgold hover:text-cream transition-all duration-300"
+            aria-label="Search"
+            className="px-5 py-2 text-xs font-semibold uppercase tracking-wider rounded-full bg-gold text-navy hover:bg-darkgold hover:text-cream transition-all duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
           >
             Search
           </button>
 
-          <button onClick={onClose} className="text-navy/60 hover:text-navy transition-colors p-1 ml-2">
-            <FiX size={20} />          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close search"
+            className="text-navy/60 hover:text-navy transition-colors p-1 ml-2 focus:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
+          >
+            <FiX size={20} />
+          </button>
         </div>
       </div>
     </div>
@@ -186,6 +267,17 @@ const Header = () => {
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (menuOpen) setMenuOpen(false);
+        if (searchOpen) setSearchOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen, searchOpen]);
+
   const handleEnter = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     setShopHovered(true);
@@ -202,14 +294,14 @@ const Header = () => {
       {/* ── NAV BAR ── */}
       <div className="w-full px-5 sm:px-8 md:px-12 lg:px-16 lg:py-8 py-4 bg-navy border-b border-darkgold">
         <div className="max-w-[1440px] mx-auto w-full flex items-center justify-between">
-
           {/* Logo — left on mobile/tablet, centered on desktop */}
           <Link
             href="/"
+            aria-label="Home"
             className="cursor-pointer shrink-0 lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2"
           >
             <Image
-              src="/newnaema.png"
+              src="/newnaema.webp"
               width={80}
               height={80}
               alt="Naema logo"
@@ -218,11 +310,13 @@ const Header = () => {
           </Link>
 
           {/* Desktop Nav — left side */}
-          <nav className="hidden lg:flex">
+          <nav className="hidden lg:flex" aria-label="Primary">
             <div className="flex gap-12 text-[14px] tracking-tight font-medium">
               {navLinks.map((link, index) => {
                 const isShop = link.label.toLowerCase() === "shop";
-                const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
+                const isActive =
+                  pathname === link.href ||
+                  pathname.startsWith(link.href + "/");
                 return (
                   <div
                     key={index}
@@ -236,10 +330,15 @@ const Header = () => {
                         ${isActive ? "text-gold" : "text-cream/60"}
                         ${isShop && shopHovered ? "text-gold" : ""}
                       `}
+                      onFocus={() => isShop && handleEnter()}
+                      onBlur={() => isShop && handleLeave()}
                     >
                       {link.label}{" "}
                       {isShop && (
-                        <IoIosArrowDown className="inline-flex items-center ml-2 size-[14px] transition-all duration-300 group-hover:-rotate-180" />
+                        <IoIosArrowDown
+                          aria-hidden="true"
+                          className="inline-flex items-center ml-2 size-[14px] transition-all duration-300 group-hover:-rotate-180"
+                        />
                       )}
                     </Link>
                   </div>
@@ -250,29 +349,62 @@ const Header = () => {
 
           {/* Right side — desktop icons + mobile icons + burger */}
           <div className="flex items-center gap-3 sm:gap-4 lg:gap-6">
-
             {/* Desktop only: search icon */}
             <button
-              className="hidden lg:flex text-cream/70 hover:text-gold transition-colors"
+              type="button"
+              aria-label="Open search"
+              className="hidden lg:flex text-cream/70 hover:text-gold transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
               onClick={() => setSearchOpen(true)}
             >
-              <FiSearch size={20} />
+              <FiSearch size={20} aria-hidden="true" />
             </button>
 
             {/* Desktop only: language */}
             <div className="hidden lg:flex items-center gap-2">
-              <Link href={pathname} locale="en" className={`text-[12px] tracking-tight transition-colors duration-300 ${locale === "en" ? "text-gold" : "text-cream/50 hover:text-cream"}`}>EN</Link>
-              <span className="text-cream/20">/</span>
-              <Link href={pathname} locale="ar" className={`text-[12px] tracking-tight transition-colors duration-300 ${locale === "ar" ? "text-gold" : "text-cream/50 hover:text-cream"}`}>AR</Link>
+              <Link
+                href={pathname}
+                locale="en"
+                className={`text-[12px] tracking-tight transition-colors duration-300 ${locale === "en" ? "text-gold" : "text-cream/50 hover:text-cream"}`}
+              >
+                EN
+              </Link>
+              <span className="text-cream/20" aria-hidden="true">
+                /
+              </span>
+              <Link
+                href={pathname}
+                locale="ar"
+                className={`text-[12px] tracking-tight transition-colors duration-300 ${locale === "ar" ? "text-gold" : "text-cream/50 hover:text-cream"}`}
+              >
+                AR
+              </Link>
             </div>
 
             {/* Desktop only: login */}
-            <Link href="/account" className="hidden lg:block">
-              <FiUser size={20} className="text-cream/70 hover:text-gold transition-colors" />            </Link>
+            <Link
+              href="/account"
+              aria-label="Account"
+              className="hidden lg:block focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+            >
+              <FiUser
+                aria-hidden="true"
+                size={20}
+                className="text-cream/70 hover:text-gold transition-colors"
+              />
+            </Link>
 
             {/* Desktop only: cart */}
-            <button onClick={openCart} className="relative hidden lg:block">
-              <FiShoppingCart size={20} className="text-cream/70 hover:text-gold transition-colors" />
+            <button
+              type="button"
+              onClick={openCart}
+              aria-label="Open cart"
+              className="relative hidden lg:block focus:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+            >
+              <FiShoppingCart
+                aria-hidden="true"
+                size={20}
+                className="text-cream/70 hover:text-gold transition-colors"
+              />
               {totalItems > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold rounded-full text-[9px] text-navy font-medium flex items-center justify-center">
                   {totalItems}
@@ -281,18 +413,40 @@ const Header = () => {
             </button>
 
             {/* Mobile/tablet: search */}
-            <button className="lg:hidden text-cream/80 hover:text-gold transition-colors" onClick={() => setSearchOpen(true)}>
-              <FiSearch size={20} />
+            <button
+              type="button"
+              aria-label="Open search"
+              className="lg:hidden text-cream/80 hover:text-gold transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+              onClick={() => setSearchOpen(true)}
+            >
+              <FiSearch aria-hidden="true" size={20} />
             </button>
 
             {/* Mobile/tablet: login */}
-            <Link href="/login" className="lg:hidden">
-              <FiUser size={20} className="text-cream/80 hover:text-gold transition-colors" />
+            <Link
+              href="/login"
+              aria-label="Login"
+              className="lg:hidden focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+            >
+              <FiUser
+                aria-hidden="true"
+                size={20}
+                className="text-cream/80 hover:text-gold transition-colors"
+              />
             </Link>
 
             {/* Mobile/tablet: cart */}
-            <button onClick={openCart} className="relative lg:hidden">
-              <FiShoppingCart size={20} className="text-cream/80 hover:text-gold transition-colors" />
+            <button
+              type="button"
+              onClick={openCart}
+              aria-label="Open cart"
+              className="relative lg:hidden focus:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+            >
+              <FiShoppingCart
+                aria-hidden="true"
+                size={20}
+                className="text-cream/80 hover:text-gold transition-colors"
+              />
               {totalItems > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-gold rounded-full text-[9px] text-navy font-medium flex items-center justify-center">
                   {totalItems}
@@ -302,13 +456,25 @@ const Header = () => {
 
             {/* Mobile/tablet: animated burger — rightmost, aligns with close button in drawer */}
             <button
-              className="lg:hidden relative w-8 h-8 flex items-center justify-center ml-1"
-              onClick={() => setMenuOpen(!menuOpen)}
+              type="button"
               aria-label="Toggle menu"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-drawer"
+              className="lg:hidden relative w-8 h-8 flex items-center justify-center ml-1 focus:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-navy"
+              onClick={() => setMenuOpen(!menuOpen)}
             >
-              <span className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "rotate-45 translate-y-0" : "-translate-y-[7px]"}`} />
-              <span className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "opacity-0 scale-x-0" : "opacity-100 scale-x-100"}`} />
-              <span className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "-rotate-45 translate-y-0" : "translate-y-[7px]"}`} />
+              <span
+                aria-hidden="true"
+                className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "rotate-45 translate-y-0" : "-translate-y-[7px]"}`}
+              />
+              <span
+                aria-hidden="true"
+                className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "opacity-0 scale-x-0" : "opacity-100 scale-x-100"}`}
+              />
+              <span
+                aria-hidden="true"
+                className={`absolute h-[1.5px] w-[22px] bg-cream rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${menuOpen ? "-rotate-45 translate-y-0" : "translate-y-[7px]"}`}
+              />
             </button>
           </div>
         </div>
@@ -325,6 +491,7 @@ const Header = () => {
 
       {/* Mobile backdrop */}
       <div
+        aria-hidden="true"
         className={`fixed inset-0 bg-black/50 backdrop-blur-[2px] z-40 lg:hidden transition-all duration-500 ${menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         onClick={() => setMenuOpen(false)}
       />
@@ -334,22 +501,29 @@ const Header = () => {
         className={`fixed top-0 right-0 h-full w-[85vw] sm:w-[60vw] md:w-[45vw] bg-[#faf7f2] z-50 flex flex-col lg:hidden
           transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
           ${menuOpen ? "translate-x-0 shadow-2xl" : "translate-x-full shadow-none"}`}
+        id="mobile-drawer"
       >
         {/* Drawer header — close button on the RIGHT, matching burger position */}
         <div className="flex items-center justify-between px-7 pt-7 pb-5">
-          <Image src="/newnaema.png" width={56} height={56} alt="Naema logo" className="size-[48px] object-contain" />
+          <Image
+            src="/newnaema.png"
+            width={56}
+            height={56}
+            alt="Naema logo"
+            className="size-[48px] object-contain"
+          />
           <button
+            type="button"
             onClick={() => setMenuOpen(false)}
-            className="w-8 h-8 flex items-center justify-center transition-colors duration-200"
+            className="w-8 h-8 flex items-center justify-center transition-colors duration-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-cream"
             aria-label="Close menu"
           >
-            <FiX size={22} className="text-navy" />
+            <FiX aria-hidden="true" size={22} className="text-navy" />
           </button>
         </div>
 
         {/* Scrollable content */}
         <div className="flex-1 overflow-y-auto px-7 py-6 flex flex-col gap-0">
-
           {/* Main nav links — staggered animation */}
           <nav className="flex flex-col">
             {navLinks.map((link, index) => (
@@ -366,14 +540,20 @@ const Header = () => {
                   hover:text-gold`}
               >
                 <span>{link.label}</span>
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-gold text-[13px]">→</span>
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-gold text-[13px]">
+                  →
+                </span>
               </Link>
             ))}
           </nav>
 
           {/* Shop categories */}
           <div
-            style={{ transitionDelay: menuOpen ? `${navLinks.length * 55 + 100}ms` : "0ms" }}
+            style={{
+              transitionDelay: menuOpen
+                ? `${navLinks.length * 55 + 100}ms`
+                : "0ms",
+            }}
             className={`mt-6 transition-all duration-400 ${menuOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
           >
             <span className="text-[10px] uppercase tracking-[0.2em] text-black/35 font-bold block mb-4">
@@ -400,7 +580,9 @@ const Header = () => {
           className={`px-7 py-6 transition-all duration-400 ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
         >
           <div className="flex items-center gap-3">
-            <span className="text-[11px] text-black/30 uppercase tracking-widest">Language</span>
+            <span className="text-[11px] text-black/30 uppercase tracking-widest">
+              Language
+            </span>
             <div className="flex items-center gap-2 ml-1">
               <Link
                 href={pathname}
@@ -419,7 +601,8 @@ const Header = () => {
                 عربي
               </Link>
             </div>
-          </div>        </div>
+          </div>{" "}
+        </div>
       </div>
     </header>
   );

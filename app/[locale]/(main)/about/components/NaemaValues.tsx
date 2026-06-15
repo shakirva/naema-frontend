@@ -9,22 +9,22 @@ const NaemaValues = () => {
     {
       title: t("val1Title"),
       description: t("val1Desc"),
-      image: "/val1.png",
+      image: "/val1.webp",
     },
     {
       title: t("val2Title"),
       description: t("val2Desc"),
-      image: "/val-2.png",
+      image: "/val-2.webp",
     },
     {
       title: t("val3Title"),
       description: t("val3Desc"),
-      image: "/val-3.png",
+      image: "/val-3.webp",
     },
     {
       title: t("val4Title"),
       description: t("val4Desc"),
-      image: "/val-4.png",
+      image: "/val-4.webp",
     },
   ];
 
@@ -32,7 +32,7 @@ const NaemaValues = () => {
     <section className="w-full bg-navy px-5 md:px-8 lg:px-16 py-16 md:py-24 relative overflow-scroll">
       <div className="absolute inset-0 h-full w-full opacity-5  ">
         <Image
-          src="/bigdarkpalm.png"
+          src="/bigdarkpalm.webp"
           alt=""
           fill
           sizes="100vw"

@@ -14,11 +14,11 @@ const Grid = async () => {
   const fallbackItems = [
     {
       title: "Best Seller",
-      image: "/dates.jpg",
+      image: "/dateplate.webp",
       height: "lg:row-span-2",
       href: "/shop/best-seller",
     },
-    { title: "Dates", image: "/dn.png", height: "", href: "/shop/dates" },
+    { title: "Dates", image: "/dn.webp", height: "", href: "/shop/dates" },
     {
       title: "Dry Fruits",
       image: "/dry.webp",
@@ -141,20 +141,26 @@ const Grid = async () => {
   };
 
   return (
-    <section className="w-full bg-[#0A223A] px-5 md:px-8 lg:px-16 py-16 md:py-24 lg:rounded-t-[200px] md:rounded-t-[120px] rounded-t-[60px] border-t-10 border-darkgold relative overflow-hidden">
+    <section
+      className="w-full bg-[#0A223A] px-5 md:px-8 lg:px-16 py-16 md:py-24 lg:rounded-t-[200px] md:rounded-t-[120px] rounded-t-[60px] border-t-10 border-darkgold relative overflow-hidden"
+      aria-labelledby="grid-heading"
+    >
       {/* Background */}
       <div className="absolute inset-0 opacity-5">
-        <Image src="/bigdarkpalm.png" alt="" fill className="object-cover" />
+        <Image src="/bigdarkpalm.webp" alt="" fill className="object-cover" />
       </div>
 
       <div className="max-w-360 mx-auto relative z-10">
         {/* Heading */}
         <div className="flex flex-col items-center text-center">
-          <span className="font-serif text-[22px] text-cream leading-none w-fit bg-gold/10 border border-gold/30 rounded-lg px-4 py-2">
+          <p className="font-serif text-[22px] text-cream leading-none w-fit bg-gold/10 border border-gold/30 rounded-lg px-4 py-2">
             {t("featuredCollections")}
-          </span>
+          </p>
 
-          <h2 className="font-serif text-[clamp(2.8rem,6vw,6rem)] leading-[0.95] text-cream mt-8 max-w-225">
+          <h2
+            id="grid-heading"
+            className="font-serif text-[clamp(2.8rem,6vw,6rem)] leading-[0.95] text-cream mt-8 max-w-225"
+          >
             {t.rich("handpickedFavorites", {
               gold: (chunks) => (
                 <span className="italic text-gold">{chunks}</span>
@@ -177,12 +183,13 @@ const Grid = async () => {
                 group relative overflow-hidden rounded-[28px]
                 border-2 border-gold
                 h-105 lg:h-auto
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold
                 ${items[0].height}
               `}
             >
               <Image
                 src={items[0].image}
-                alt={items[0].title}
+                alt=""
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
@@ -209,11 +216,12 @@ const Grid = async () => {
                     border-2 border-gold
                     flex-1
                     min-h-60
+                    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold
                   "
                 >
                   <Image
                     src={item.image}
-                    alt={item.title}
+                    alt=""
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
@@ -237,12 +245,13 @@ const Grid = async () => {
                 group relative overflow-hidden rounded-[28px]
                 border-2 border-gold
                 h-105 lg:h-auto
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold
                 ${items[3].height}
               `}
             >
               <Image
                 src={items[3].image}
-                alt={items[3].title}
+                alt=""
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
@@ -265,11 +274,11 @@ const Grid = async () => {
             {/* Card 1 — full width */}
             <Link
               href={items[0].href}
-              className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-87.5"
+              className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-87.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
             >
               <Image
                 src={items[0].image}
-                alt={items[0].title}
+                alt=""
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
@@ -290,11 +299,11 @@ const Grid = async () => {
                 <Link
                   key={item.title}
                   href={item.href}
-                  className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-80"
+                  className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
                 >
                   <Image
                     src={item.image}
-                    alt={item.title}
+                    alt=""
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
@@ -314,11 +323,11 @@ const Grid = async () => {
             {/* Card 4 — full width */}
             <Link
               href={items[3].href}
-              className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-87.5"
+              className="group relative overflow-hidden rounded-[28px] border-2 border-gold h-87.5 "
             >
               <Image
                 src={items[3].image}
-                alt={items[3].title}
+                alt=""
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />

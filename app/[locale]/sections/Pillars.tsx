@@ -8,7 +8,7 @@ const PillarCard = ({ pillar }: { pillar: any }) => {
 
   return (
     <div
-      className="relative rounded-2xl overflow-hidden border border-gold cursor-pointer shadow-lg group"
+      className="relative rounded-2xl overflow-hidden border border-gold cursor-pointer shadow-lg group "
       style={{ minHeight: 420 }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
@@ -16,7 +16,7 @@ const PillarCard = ({ pillar }: { pillar: any }) => {
     >
       <Image
         src={pillar.image}
-        alt={pillar.title}
+        alt=""
         fill
         sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
         className="object-cover transition-transform duration-500 group-hover:scale-103"
@@ -31,11 +31,16 @@ const PillarCard = ({ pillar }: { pillar: any }) => {
             {pillar.title}
           </h3>
           <button
-            className="shrink-0 size-8 rounded-full border border-gold text-cream flex items-center justify-center text-lg leading-none transition-transform duration-500"
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen((v) => !v);
+            }}
+            className="shrink-0 size-8 rounded-full border border-gold text-cream flex items-center justify-center text-lg leading-none transition-transform duration-500 cursor-pointer "
             style={{ transform: open ? "rotate(45deg)" : "rotate(0deg)" }}
-            aria-label={open ? "Close" : "Open"}
+            aria-label={open ? `Hide details about ${pillar.title}` : `Show details about ${pillar.title}`}
+            aria-expanded={open}
           >
-            +
+            <span aria-hidden="true">+</span>
           </button>
         </div>
         <div
@@ -110,16 +115,16 @@ const Pillars = () => {
     <div className="flex flex-col items-center w-full max-w-[1440px] mx-auto gap-14">
       {/* Heading */}
       <div className="flex flex-col items-center gap-4 text-center">
-        <h3 className="font-serif text-black text-[clamp(2rem,4.4vw,4rem)] leading-none max-w-[650px]">
+        <h2 className="font-serif text-black text-[clamp(2rem,4.4vw,4rem)] leading-none max-w-[650px]">
           {t.rich("title", {
             finest: (chunks) => (
               <span className="italic text-deepgold">{chunks}</span>
             ),
           })}
-        </h3>
-        <h3 className="font-serif text-[clamp(1rem,1.5vw,1.5rem)] mt-4 leading-none text-black/70">
+        </h2>
+        <p className="font-serif text-[clamp(1rem,1.5vw,1.5rem)] mt-4 leading-none text-black/70">
           {t("subtitle")}
-        </h3>
+        </p>
       </div>
 
       {/* Pillar cards */}
@@ -153,9 +158,13 @@ const Pillars = () => {
         </div>
 
         {/* Right — stacked stat cards */}
-        <div className="relative flex-1 flex flex-col gap-2 items-start max-md:items-center max-md:gap-0   justify-center w-full max-w-[420px] min-h-[300px]">
+        <div
+          className="relative flex-1 flex flex-col gap-2 items-start max-md:items-center max-md:gap-0   justify-center w-full max-w-[420px] min-h-[300px]"
+          role="list"
+          aria-label="Company statistics"
+        >
           {/* Card 1 */}
-          <div className=" w-[320px] max-lg:w-[280px]  -translate-x-10 -rotate-3 max-md:translate-0 shadow-[0_8px_30px_rgba(204,186,120,0.25)] bg-cream rounded-lg border-2 border-gold px-4 py-4 flex items-end gap-4">
+          <div className=" w-[320px] max-lg:w-[280px]  -translate-x-10 -rotate-3 max-md:translate-0 shadow-[0_8px_30px_rgba(204,186,120,0.25)] bg-cream rounded-lg border-2 border-gold px-4 py-4 flex items-end gap-4" role="listitem">
             <span className="font-serif font-bold text-[clamp(2.5rem,8vw,6.25rem)] leading-[0.8] text-navy">
               100%
             </span>
@@ -166,7 +175,7 @@ const Pillars = () => {
           </div>
 
           {/* Card 2 */}
-          <div className=" rotate-4 bg-gold rounded-lg  w-[320px] max-lg:w-[280px]  shadow-[0_8px_30px_rgba(204,186,120,0.25)] max-md:translate-0 border-2 border-deepgold px-4 py-4 flex items-end gap-4 translate-x-10 ">
+          <div className=" rotate-4 bg-gold rounded-lg  w-[320px] max-lg:w-[280px]  shadow-[0_8px_30px_rgba(204,186,120,0.25)] max-md:translate-0 border-2 border-deepgold px-4 py-4 flex items-end gap-4 translate-x-10 " role="listitem">
             <span className="font-serif font-bold text-[clamp(2.5rem,8vw,6.25rem)] leading-[0.8] text-navy">
               50+
             </span>
@@ -177,7 +186,7 @@ const Pillars = () => {
           </div>
 
           {/* Card 3 */}
-          <div className=" -rotate-3 bg-[#c8a96e] w-[320px] max-lg:w-[280px]  shadow-[0_8px_30px_rgba(204,186,120,0.25)] max-md:translate-0  rounded-lg border-2 border-gold px-4 py-4 flex -translate-x-2 items-end gap-4">
+          <div className=" -rotate-3 bg-[#c8a96e] w-[320px] max-lg:w-[280px]  shadow-[0_8px_30px_rgba(204,186,120,0.25)] max-md:translate-0  rounded-lg border-2 border-gold px-4 py-4 flex -translate-x-2 items-end gap-4" role="listitem">
             <span className="font-serif font-bold text-[clamp(2.5rem,8vw,6.25rem)] leading-[0.8] text-navy">
               10K+
             </span>

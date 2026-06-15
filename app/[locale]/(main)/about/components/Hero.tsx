@@ -11,7 +11,7 @@ const Hero = () => {
       <ParallaxImage
         mainclass="w-full h-full absolute inset-0 overflow-hidden"
         imageClass="object-cover object-bottom scale-110 opacity-50"
-        src="/palmbg.png"
+        src="/palmbg.webp"
         alt=""
       />
 

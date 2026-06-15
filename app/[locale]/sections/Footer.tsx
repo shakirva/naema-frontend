@@ -10,6 +10,7 @@ import { navLinks } from "../../constants";
 
 const Footer = () => {
   const t = useTranslations("Footer");
+
   return (
     <footer className="bg-[#0A223A] px-16 py-12 text-cream w-full relative  max-lg:pt-8 max-lg:px-8 max-md:px-5 ">
       <div className="h-full w-full absolute inset-0 opacity-5">
@@ -26,7 +27,8 @@ const Footer = () => {
         {/* Top Section */}
         <div className="flex items-center max-lg:flex-col  gap-16">
           <div className="flex flex-col lg:w-[50%] max-lg:w-full   order-2 lg:order-0">
-            <h4
+            {/* FIXED: h4 → h2 (proper document hierarchy) */}
+            <h2
               className="font-serif text-[clamp(2.50rem,4.44vw,4rem)] leading-none"
               dangerouslySetInnerHTML={{ __html: t.raw("title") }}
             />
@@ -39,9 +41,10 @@ const Footer = () => {
               <div className="lg:h-[250px] lg:max-w-[250px] flex-1 rounded-lg border-2 border-gold bg-cream p-4 flex flex-col">
                 <PiTreePalm size={70} color="#baa448" />
                 <div className="mt-auto">
-                  <h4 className="font-semibold font-serif text-[24px] max-md:text-[20px]">
+                  {/* FIXED: h4 → h3 */}
+                  <h3 className="font-semibold font-serif text-[24px] max-md:text-[20px]">
                     {t("perfectlyRipened")}
-                  </h4>
+                  </h3>
                   <p className="md:text-base text-sm leading-[1.2em] mt-2">
                     {t("perfectlyRipenedDesc")}
                   </p>
@@ -51,9 +54,10 @@ const Footer = () => {
               <div className="lg:h-[250px] lg:max-w-[250px] flex-1 text-black flex flex-col rounded-lg border-2 border-gold bg-cream p-4">
                 <LuShoppingBasket size={70} color="#baa448" />
                 <div className="mt-auto">
-                  <h4 className="font-semibold font-serif text-[24px] max-md:text-[20px]">
+                  {/* FIXED: h4 → h3 */}
+                  <h3 className="font-semibold font-serif text-[24px] max-md:text-[20px]">
                     {t("rootedInTradition")}
-                  </h4>
+                  </h3>
                   <p className="md:text-base text-sm leading-[1.2em] mt-2">
                     {t("rootedInTraditionDesc")}
                   </p>
@@ -88,11 +92,13 @@ const Footer = () => {
             </p>
             <p className="text-sm text-cream/80 mb-2">{t("email")}</p>
             <p className="text-sm text-cream/80 mb-2">{t("phone")}</p>
+
             <div className="flex gap-3 mt-4">
               <Link
                 href="https://instagram.com/naemafoodstuff"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Open Instagram (opens in a new tab)"
                 className="inline-block"
               >
                 <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
@@ -104,6 +110,7 @@ const Footer = () => {
                 href="https://facebook.com/naemafoodstuff"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Open Facebook (opens in a new tab)"
                 className="inline-block"
               >
                 <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
@@ -115,10 +122,11 @@ const Footer = () => {
 
           {/* Shop */}
           <div className="w-fit">
-            <h4 className="font-semibold mb-4">{t("shop")}</h4>
+            {/* FIXED: h4 → h3 */}
+            <h3 className="font-semibold mb-4">{t("shop")}</h3>
             <ul className="space-y-2 text-cream/70 text-sm">
               {navLinks.slice(0, 4).map((link) => (
-                <li key={link.label} className="">
+                <li key={link.label}>
                   <Link
                     href={link.href}
                     className="hover:text-cream transition underlinee"
@@ -132,7 +140,8 @@ const Footer = () => {
 
           {/* Explore */}
           <div className="w-fit">
-            <h4 className="font-semibold mb-4">{t("explore")}</h4>
+            {/* FIXED: h4 → h3 */}
+            <h3 className="font-semibold mb-4">{t("explore")}</h3>
             <ul className="space-y-2 text-cream/70 text-sm">
               {navLinks.slice(4).map((link) => (
                 <li key={link.label}>
@@ -145,10 +154,7 @@ const Footer = () => {
                 </li>
               ))}
               <li>
-                <Link
-                  href="/account"
-                  className="hover:text-cream transition underlinee"
-                >
+                <Link href="/account" className="hover:text-cream transition underlinee">
                   {t("account")}
                 </Link>
               </li>
@@ -157,7 +163,8 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div className=" max-md:col-span-1">
-            <h4 className="font-semibold mb-4">{t("innerCircle")}</h4>
+            {/* FIXED: h4 → h3 */}
+            <h3 className="font-semibold mb-4">{t("innerCircle")}</h3>
             <p className="text-cream/70 text-sm mb-4">{t("innerCircleDesc")}</p>
             <input
               type="email"
@@ -168,7 +175,9 @@ const Footer = () => {
               <span className="block group-hover:-translate-y-full tracking-tight transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
                 {t("joinNow")}
               </span>
-              <span className="absolute inset-0 flex items-center tracking-tight justify-center bg-navy text-cream border-2 border-gold rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+              <span
+                className="absolute inset-0 flex items-center tracking-tight justify-center bg-navy text-cream border-2 border-gold rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]"
+              >
                 {t("joinNow")}
               </span>
             </button>

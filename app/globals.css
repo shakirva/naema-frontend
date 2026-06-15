@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap");
+
 @import "tailwindcss";
 
 :root {
@@ -14,7 +14,6 @@
   --color-darkgold: #baa448;
   --color-deepgold:#a48924;
    --color-lightgold: #d4caa2;
-
   --color-navy: #0a223a;
   --color-brown: #361c0c;
   --color-background: var(--background);

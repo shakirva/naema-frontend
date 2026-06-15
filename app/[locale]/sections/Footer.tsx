@@ -89,14 +89,27 @@ const Footer = () => {
             <p className="text-sm text-cream/80 mb-2">{t("email")}</p>
             <p className="text-sm text-cream/80 mb-2">{t("phone")}</p>
             <div className="flex gap-3 mt-4">
-              <Link href="https://instagram.com/naemafoodstuff" target="_blank">
+              <Link
+                href="https://instagram.com/naemafoodstuff"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Instagram (opens in a new tab)"
+                className="inline-block"
+              >
                 <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
-                  <AiOutlineInstagram />
+                  <AiOutlineInstagram aria-hidden="true" />
                 </div>
               </Link>
-              <Link href="https://facebook.com/naemafoodstuff" target="_blank">
+
+              <Link
+                href="https://facebook.com/naemafoodstuff"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Facebook (opens in a new tab)"
+                className="inline-block"
+              >
                 <div className="w-9 h-9 border border-cream/40 rounded-full flex items-center justify-center hover:border-cream transition">
-                  <AiFillFacebook />
+                  <AiFillFacebook aria-hidden="true" />
                 </div>
               </Link>
             </div>
@@ -157,7 +170,7 @@ const Footer = () => {
               <span className="block group-hover:-translate-y-full tracking-tight transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">
                 {t("joinNow")}
               </span>
-              <span className="block absolute inset-0 flex items-center tracking-tight justify-center bg-navy text-cream border-2 border-gold rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
+              <span className="absolute inset-0 flex items-center tracking-tight justify-center bg-navy text-cream border-2 border-gold rounded-full translate-y-full scale-[0.5] transition-all duration-300 group-hover:scale-[1] group-hover:translate-y-0 ease-[cubic-bezier(0.65,0,0.35,1)]">
                 {t("joinNow")}
               </span>
             </button>

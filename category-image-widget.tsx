@@ -1,9 +1,12 @@
-import { defineWidgetConfig } from "@medusajs/admin-sdk"
-import { Photo, ArrowUpTray, XMark, Check } from "@medusajs/icons"
-import { Container, Heading, Button, Input, Text, Badge } from "@medusajs/ui"
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { useState, useRef } from "react"
-import type { DetailWidgetProps, AdminProductCategory } from "@medusajs/framework/types"
+import { defineWidgetConfig } from "@medusajs/admin-sdk";
+import { Photo, ArrowUpTray, XMark, Check } from "@medusajs/icons";
+import { Container, Heading, Button, Input, Text, Badge } from "@medusajs/ui";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState, useRef } from "react";
+import type {
+  DetailWidgetProps,
+  AdminProductCategory,
+} from "@medusajs/framework/types";
 
 // ─────────────────────────────────────────────
 // Icon options (same as the standalone page)
@@ -34,80 +37,90 @@ const ICON_OPTIONS = [
   { name: "music", label: "🎵 Music" },
   { name: "art", label: "🎨 Art" },
   { name: "travel", label: "✈️ Travel" },
-]
+];
 
 // ─────────────────────────────────────────────
 // Widget Component
 // ─────────────────────────────────────────────
-const CategoryImageWidget = ({ data }: DetailWidgetProps<AdminProductCategory>) => {
-  const queryClient = useQueryClient()
-  const fileInputRef = useRef<HTMLInputElement>(null)
+const CategoryImageWidget = ({
+  data,
+}: DetailWidgetProps<AdminProductCategory>) => {
+  const queryClient = useQueryClient();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [imageUrl, setImageUrl] = useState<string>((data as any)?.metadata?.image_url || "")
-  const [selectedIcon, setSelectedIcon] = useState<string>((data as any)?.metadata?.icon || "")
-  const [uploading, setUploading] = useState(false)
-  const [previewError, setPreviewError] = useState(false)
-  const [saved, setSaved] = useState(false)
-  const [showIconPicker, setShowIconPicker] = useState(false)
+  const [imageUrl, setImageUrl] = useState<string>(
+    (data as any)?.metadata?.image_url || "",
+  );
+  const [selectedIcon, setSelectedIcon] = useState<string>(
+    (data as any)?.metadata?.icon || "",
+  );
+  const [uploading, setUploading] = useState(false);
+  const [previewError, setPreviewError] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [showIconPicker, setShowIconPicker] = useState(false);
 
   // Also fetch fresh metadata from our custom endpoint
-  const { data: imageData } = useQuery<{ image_url: string | null; icon: string | null }>({
+  const { data: imageData } = useQuery<{
+    image_url: string | null;
+    icon: string | null;
+  }>({
     queryKey: ["category-image", data.id],
     queryFn: () =>
-      fetch(`/admin/categories/${data.id}/image`, { credentials: "include" })
-        .then((r) => r.json()),
+      fetch(`/admin/categories/${data.id}/image`, {
+        credentials: "include",
+      }).then((r) => r.json()),
     onSuccess: (d: any) => {
-      if (d.image_url && !imageUrl) setImageUrl(d.image_url)
-      if (d.icon && !selectedIcon) setSelectedIcon(d.icon)
+      if (d.image_url && !imageUrl) setImageUrl(d.image_url);
+      if (d.icon && !selectedIcon) setSelectedIcon(d.icon);
     },
-  } as any)
+  } as any);
 
   // Use fetched data if local state not set yet
-  const currentImageUrl = imageUrl || imageData?.image_url || ""
-  const currentIcon = selectedIcon || imageData?.icon || ""
+  const currentImageUrl = imageUrl || imageData?.image_url || "";
+  const currentIcon = selectedIcon || imageData?.icon || "";
 
   // File upload handler
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    setUploading(true)
-    setPreviewError(false)
+    setUploading(true);
+    setPreviewError(false);
 
     try {
-      const formData = new FormData()
-      formData.append("files", file)
+      const formData = new FormData();
+      formData.append("files", file);
 
       const response = await fetch("/admin/uploads", {
         method: "POST",
         body: formData,
         credentials: "include",
-      })
+      });
 
-      if (!response.ok) throw new Error("Upload failed")
+      if (!response.ok) throw new Error("Upload failed");
 
-      const uploadData = await response.json()
+      const uploadData = await response.json();
       const url =
         uploadData?.url ||
         uploadData?.files?.[0]?.url ||
         uploadData?.uploads?.[0]?.url ||
-        null
+        null;
 
       if (url) {
-        setImageUrl(url)
-        setPreviewError(false)
+        setImageUrl(url);
+        setPreviewError(false);
       } else {
-        throw new Error("No URL returned")
+        throw new Error("No URL returned");
       }
     } catch (error) {
-      console.error("Upload error:", error)
-      alert("Failed to upload image. Try pasting a URL instead.")
+      console.error("Upload error:", error);
+      alert("Failed to upload image. Try pasting a URL instead.");
     } finally {
-      setUploading(false)
+      setUploading(false);
       // reset input so same file can be re-selected
-      if (fileInputRef.current) fileInputRef.current.value = ""
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
-  }
+  };
 
   // Save mutation
   const saveMutation = useMutation({
@@ -120,23 +133,23 @@ const CategoryImageWidget = ({ data }: DetailWidgetProps<AdminProductCategory>) 
           image_url: imageUrl,
           icon: selectedIcon || undefined,
         }),
-      })
+      });
       if (!response.ok) {
-        const err = await response.json().catch(() => ({}))
-        throw new Error(err.message || "Failed to save")
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.message || "Failed to save");
       }
-      return response.json()
+      return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["category-image", data.id] })
-      queryClient.invalidateQueries({ queryKey: ["admin-categories"] })
-      setSaved(true)
-      setTimeout(() => setSaved(false), 2500)
+      queryClient.invalidateQueries({ queryKey: ["category-image", data.id] });
+      queryClient.invalidateQueries({ queryKey: ["admin-categories"] });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2500);
     },
     onError: (err: Error) => {
-      alert("Error saving image: " + err.message)
+      alert("Error saving image: " + err.message);
     },
-  })
+  });
 
   // Remove image
   const removeMutation = useMutation({
@@ -144,20 +157,20 @@ const CategoryImageWidget = ({ data }: DetailWidgetProps<AdminProductCategory>) 
       const response = await fetch(`/admin/categories/${data.id}/image`, {
         method: "DELETE",
         credentials: "include",
-      })
-      if (!response.ok) throw new Error("Failed to remove")
-      return response.json()
+      });
+      if (!response.ok) throw new Error("Failed to remove");
+      return response.json();
     },
     onSuccess: () => {
-      setImageUrl("")
-      setSelectedIcon("")
-      setPreviewError(false)
-      queryClient.invalidateQueries({ queryKey: ["category-image", data.id] })
+      setImageUrl("");
+      setSelectedIcon("");
+      setPreviewError(false);
+      queryClient.invalidateQueries({ queryKey: ["category-image", data.id] });
     },
-  })
+  });
 
-  const isSaving = saveMutation.isPending
-  const isRemoving = removeMutation.isPending
+  const isSaving = saveMutation.isPending;
+  const isRemoving = removeMutation.isPending;
 
   return (
     <Container className="p-0 overflow-hidden">
@@ -170,12 +183,13 @@ const CategoryImageWidget = ({ data }: DetailWidgetProps<AdminProductCategory>) 
           </Heading>
         </div>
         {currentImageUrl && (
-          <Badge color="green" size="small">Has Image</Badge>
+          <Badge color="green" size="small">
+            Has Image
+          </Badge>
         )}
       </div>
 
       <div className="p-4 space-y-4">
-
         {/* Image Preview */}
         <div className="flex items-start gap-4">
           <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border-2 border-dashed border-ui-border-base bg-ui-bg-subtle">
@@ -196,12 +210,16 @@ const CategoryImageWidget = ({ data }: DetailWidgetProps<AdminProductCategory>) 
 
           <div className="flex-1 min-w-0">
             <Text className="text-xs text-ui-fg-subtle mb-1">Handle</Text>
-            <Text className="text-xs font-mono text-ui-fg-base truncate">/{data.handle}</Text>
+            <Text className="text-xs font-mono text-ui-fg-base truncate">
+              /{data.handle}
+            </Text>
             {currentIcon && (
               <div className="mt-1 flex items-center gap-1">
                 <Text className="text-xs text-ui-fg-subtle">Icon:</Text>
                 <span className="text-sm">
-                  {ICON_OPTIONS.find((i) => i.name === currentIcon)?.label?.split(" ")[0] || currentIcon}
+                  {ICON_OPTIONS.find(
+                    (i) => i.name === currentIcon,
+                  )?.label?.split(" ")[0] || currentIcon}
                 </span>
               </div>
             )}
@@ -231,15 +249,17 @@ const CategoryImageWidget = ({ data }: DetailWidgetProps<AdminProductCategory>) 
 
         {/* URL Input */}
         <div>
-          <Text className="text-xs text-ui-fg-subtle mb-1.5">Or paste image URL</Text>
+          <Text className="text-xs text-ui-fg-subtle mb-1.5">
+            Or paste image URL
+          </Text>
           <Input
             type="url"
             size="small"
             placeholder="https://example.com/image.jpg"
             value={imageUrl}
             onChange={(e) => {
-              setImageUrl(e.target.value)
-              setPreviewError(false)
+              setImageUrl(e.target.value);
+              setPreviewError(false);
             }}
           />
         </div>
@@ -251,13 +271,17 @@ const CategoryImageWidget = ({ data }: DetailWidgetProps<AdminProductCategory>) 
             onClick={() => setShowIconPicker((v) => !v)}
             className="text-xs text-ui-fg-interactive hover:text-ui-fg-interactive-hover font-medium flex items-center gap-1"
           >
-            {showIconPicker ? "▲" : "▶"} {currentIcon ? `Icon: ${ICON_OPTIONS.find((i) => i.name === currentIcon)?.label?.split(" ")[0] || currentIcon}` : "Pick an icon (optional)"}
+            {showIconPicker ? "▲" : "▶"}{" "}
+            {currentIcon
+              ? `Icon: ${ICON_OPTIONS.find((i) => i.name === currentIcon)?.label?.split(" ")[0] || currentIcon}`
+              : "Pick an icon (optional)"}
           </button>
 
           {showIconPicker && (
             <div className="mt-2 grid grid-cols-5 gap-1 max-h-28 overflow-y-auto rounded-lg border border-ui-border-base p-2 bg-ui-bg-subtle">
               {/* Clear icon option */}
               <button
+                type="button"
                 onClick={() => setSelectedIcon("")}
                 className={`rounded p-1.5 text-center text-xs transition-colors ${
                   !selectedIcon
@@ -265,12 +289,14 @@ const CategoryImageWidget = ({ data }: DetailWidgetProps<AdminProductCategory>) 
                     : "hover:bg-ui-bg-base-hover"
                 }`}
                 title="No icon"
+                aria-label="No icon"
               >
                 ✕
               </button>
               {ICON_OPTIONS.map((icon) => (
                 <button
                   key={icon.name}
+                  type="button"
                   onClick={() => setSelectedIcon(icon.name)}
                   className={`rounded p-1.5 text-center text-sm transition-colors ${
                     selectedIcon === icon.name
@@ -278,6 +304,7 @@ const CategoryImageWidget = ({ data }: DetailWidgetProps<AdminProductCategory>) 
                       : "hover:bg-ui-bg-base-hover"
                   }`}
                   title={icon.label}
+                  aria-label={icon.label}
                 >
                   {icon.label.split(" ")[0]}
                 </button>
@@ -312,27 +339,30 @@ const CategoryImageWidget = ({ data }: DetailWidgetProps<AdminProductCategory>) 
               size="small"
               onClick={() => {
                 if (confirm("Remove the image for this category?")) {
-                  removeMutation.mutate()
+                  removeMutation.mutate();
                 }
               }}
               disabled={isRemoving}
+              aria-label="Remove image"
+              title="Remove image"
             >
-              <XMark className="h-3.5 w-3.5" />
+              <XMark className="h-3.5 w-3.5" aria-hidden="true" />
             </Button>
           )}
         </div>
 
         {/* Info note */}
         <p className="text-[11px] text-ui-fg-muted leading-relaxed">
-          This image appears in the mega menu and category pages on the storefront. Changes are saved immediately to the database.
+          This image appears in the mega menu and category pages on the
+          storefront. Changes are saved immediately to the database.
         </p>
       </div>
     </Container>
-  )
-}
+  );
+};
 
 export const config = defineWidgetConfig({
   zone: "product_category.details.side.before",
-})
+});
 
-export default CategoryImageWidget
+export default CategoryImageWidget;

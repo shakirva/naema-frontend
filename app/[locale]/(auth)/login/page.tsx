@@ -139,10 +139,17 @@ const LoginPage = () => {
                 className="w-full border border-black/20 rounded-xl pl-10 pr-12 py-3.5 text-sm outline-none focus:border-gold transition-colors bg-white placeholder:text-black/30"
               />
               <button
+                type="button"
                 onClick={() => setShowPassword((s) => !s)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-black/30 hover:text-black transition cursor-pointer"
               >
-                {showPassword ? <FiEyeOff size={15} /> : <FiEye size={15} />}
+                {showPassword ? (
+                  <FiEyeOff size={15} aria-hidden="true" />
+                ) : (
+                  <FiEye size={15} aria-hidden="true" />
+                )}
               </button>
             </div>
 

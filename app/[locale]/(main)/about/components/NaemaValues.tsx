@@ -9,22 +9,22 @@ const NaemaValues = () => {
     {
       title: t("val1Title"),
       description: t("val1Desc"),
-      image: "/val1.webp",
+      image: "/va1.webp",
     },
     {
       title: t("val2Title"),
       description: t("val2Desc"),
-      image: "/val-2.webp",
+      image: "/va2.webp",
     },
     {
       title: t("val3Title"),
       description: t("val3Desc"),
-      image: "/val-3.webp",
+      image: "/va3.webp",
     },
     {
       title: t("val4Title"),
       description: t("val4Desc"),
-      image: "/val-4.webp",
+      image: "/va4.webp",
     },
   ];
 
@@ -69,7 +69,7 @@ const NaemaValues = () => {
                   src={v.image}
                   alt={v.title}
                   fill
-                  sizes="48px"
+                 
                   className="object-contain"
                 />
               </div>

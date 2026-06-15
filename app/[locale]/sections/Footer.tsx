@@ -87,7 +87,7 @@ const Footer = () => {
             <Link href="/">
               <Image src="/newnaema.webp" width={90} height={90} alt="Naema" />
             </Link>
-            <p className="text-cream/70 text-sm leading-relaxed  mt-4 mb-6">
+            <p className="text-cream/70 text-sm leading-relaxed max-w-[200px]  mt-4 mb-6">
               {t("aboutDesc")}
             </p>
             <p className="text-sm text-cream/80 mb-2">{t("email")}</p>
@@ -129,7 +129,7 @@ const Footer = () => {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="hover:text-cream transition underlinee"
+                    className="hover:text-cream transition "
                   >
                     {link.label}
                   </Link>
@@ -147,14 +147,14 @@ const Footer = () => {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="hover:text-cream transition underlinee"
+                    className="hover:text-cream transition "
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="/account" className="hover:text-cream transition underlinee">
+                <Link href="/account" className="hover:text-cream transition ">
                   {t("account")}
                 </Link>
               </li>

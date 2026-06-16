@@ -1,6 +1,6 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import ParallaxImage from "./ParallaxImage";
 
 const images = [
@@ -18,6 +18,7 @@ const ImageSlider = () => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
     }, 5000);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -26,7 +27,7 @@ const ImageSlider = () => {
       role="region"
       aria-roledescription="carousel"
       aria-label="Hero image carousel"
-      className="w-1/2 max-lg:h-1/2  max-lg:w-full  bg-brown relative overflow-hidden"
+      className="w-1/2 max-lg:h-1/2 max-lg:w-full bg-brown relative overflow-hidden"
     >
       {images.map((src, index) => (
         <div
@@ -35,21 +36,22 @@ const ImageSlider = () => {
           className={`absolute inset-0 transition-opacity duration-1000 ease-out ${
             index === current ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
-          aria-hidden={index === current ? "false" : "true"}
+          aria-hidden={index !== current}
         >
           <ParallaxImage
-            mainclass="w-full h-screen max-lg:h-full relative overflow-hidden "
-            imageClass="object-cover scale-110"
+            mainclass="w-full h-screen max-lg:h-full relative overflow-hidden"
+            imageClass="object-cover"
             src={src}
             alt=""
             sizes="(min-width:1024px) 50vw, 100vw"
             priority={index === 0}
+            fetchPriority={index === 0 ? "high" : "auto"}
             loading={index === 0 ? "eager" : "lazy"}
           />
         </div>
       ))}
 
-     <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1 z-10">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1 z-20">
         {images.map((_, index) => (
           <button
             key={index}

@@ -1,4 +1,5 @@
 "use client";
+
 import { useLenis } from "lenis/react";
 import Image from "next/image";
 import React, { useRef } from "react";
@@ -11,6 +12,7 @@ type ImageProps = {
   sizes?: string;
   priority?: boolean;
   loading?: "eager" | "lazy";
+  fetchPriority?: "high" | "low" | "auto";
 };
 
 const ParallaxImage = ({
@@ -21,15 +23,20 @@ const ParallaxImage = ({
   sizes,
   priority = false,
   loading,
+  fetchPriority,
 }: ImageProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
   useLenis(() => {
     if (!containerRef.current || !imageRef.current) return;
+
     const scrollY =
       containerRef.current.getBoundingClientRect().top / window.innerHeight;
-    imageRef.current.style.transform = `translateY(${-scrollY * 120}px)`;
+
+    imageRef.current.style.transform = `translateY(${
+      -scrollY * 120
+    }px) scale(1.1)`;
   });
 
   return (
@@ -38,10 +45,11 @@ const ParallaxImage = ({
         ref={imageRef}
         src={src}
         fill
+        alt={alt}
         sizes={sizes ?? "100vw"}
         className={`size-full object-cover ${imageClass}`}
-        alt={alt}
         priority={priority}
+        fetchPriority={fetchPriority}
         loading={!priority ? (loading ?? "lazy") : undefined}
       />
     </div>

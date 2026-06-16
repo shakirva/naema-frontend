@@ -2,8 +2,8 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { ChevronLeft, ChevronRight, } from "lucide-react";
+
 
 type Product = {
   id: number;
@@ -205,7 +205,7 @@ const Best = () => {
     <div className="mt-32  max-lg:mt-24 max-md:mt-12">
       {/* Header row */}
       <h2 className=" font-serif text-[clamp(2rem,3.33vw,3rem)]  leading-none">
-            Shop Our Best Sellers
+            Shop Our Best Sellers 
           </h2>
       <div className="flex items-end justify-between mb-8">
         <div>

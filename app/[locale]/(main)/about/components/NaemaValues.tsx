@@ -69,7 +69,6 @@ const NaemaValues = () => {
                   src={v.image}
                   alt={v.title}
                   fill
-                 
                   className="object-contain"
                 />
               </div>

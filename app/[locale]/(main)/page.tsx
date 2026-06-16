@@ -9,6 +9,7 @@ import ValueSection from "../sections/ValueSection";
 import SocialFeed from "../sections/SocialFeed";
 import Footer from "../sections/Footer";
 import Grid from "../components/Grid";
+import { Star } from "lucide-react";
 
 
 const page = () => {
@@ -17,6 +18,7 @@ const page = () => {
       <Hero />
 
       <Carousel />
+      
 
       <Shop/>
 

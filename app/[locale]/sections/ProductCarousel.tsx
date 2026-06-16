@@ -111,7 +111,7 @@ const CarouselCard = ({ product }: { product: MedusaProduct }) => {
       {/* RATING */}
       <div className="flex items-center gap-1.5">
         <StarRating rating={5} />
-        <span className="text-sm font-semibold text-gold underline underline-offset-2">
+        <span className="text-sm font-semibold text-darkgold underline underline-offset-2">
           (★)
         </span>
       </div>

@@ -87,12 +87,16 @@ const CheckoutPage = () => {
   const [postalCode, setPostalCode] = useState("13001");
   const [phone, setPhone] = useState("+965");
 
+  // Saved addresses
+  const [savedAddresses, setSavedAddresses] = useState<any[]>([]);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
+
   // Flow states
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [placedOrder, setPlacedOrder] = useState<any>(null);
 
-  // Auto-fill customer details if logged in
+  // Auto-fill customer details and saved addresses if logged in
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
@@ -102,6 +106,25 @@ const CheckoutPage = () => {
           setFirstName(res.customer.first_name || "");
           setLastName(res.customer.last_name || "");
           setPhone(res.customer.phone || "+965");
+
+          // Fetch saved addresses
+          const addrRes = await (medusa.store.customer as any).listAddress().catch(() => null);
+          const addresses = addrRes?.addresses || res.customer.addresses || [];
+          setSavedAddresses(addresses);
+
+          // Auto-select first address if available
+          if (addresses.length > 0) {
+            const first = addresses[0];
+            setSelectedAddressId(first.id);
+            setFirstName(first.first_name || res.customer.first_name || "");
+            setLastName(first.last_name || res.customer.last_name || "");
+            setAddress(first.address_1 || "");
+            setApartment(first.address_2 || "");
+            setCity(first.city || "");
+            setGovernorate(first.province || "Capital Governorate");
+            setPostalCode(first.postal_code || "13001");
+            setPhone(first.phone || res.customer.phone || "+965");
+          }
         }
       } catch (err) {
         // Ignore guest session
@@ -109,6 +132,18 @@ const CheckoutPage = () => {
     };
     fetchCustomer();
   }, []);
+
+  const handleSelectSavedAddress = (addr: any) => {
+    setSelectedAddressId(addr.id);
+    setFirstName(addr.first_name || "");
+    setLastName(addr.last_name || "");
+    setAddress(addr.address_1 || "");
+    setApartment(addr.address_2 || "");
+    setCity(addr.city || "");
+    setGovernorate(addr.province || "Capital Governorate");
+    setPostalCode(addr.postal_code || "13001");
+    setPhone(addr.phone || phone);
+  };
 
   const shippingTotal =
     cart?.shipping_total || (subtotal > 15 * 1000 ? 0 : 1.5 * 1000);
@@ -293,6 +328,67 @@ const CheckoutPage = () => {
             <div>
               <SectionHeading number="2" title="Delivery" />
               <div className="flex flex-col gap-3">
+
+                {/* Saved addresses picker */}
+                {savedAddresses.length > 0 && (
+                  <div className="flex flex-col gap-2 mb-1">
+                    <p className="text-xs text-black/50 font-medium">Select a saved address</p>
+                    <div className="flex flex-col gap-2">
+                      {savedAddresses.map((addr) => (
+                        <button
+                          key={addr.id}
+                          type="button"
+                          onClick={() => handleSelectSavedAddress(addr)}
+                          className={`w-full text-left px-4 py-3 rounded-xl border-2 text-sm transition-all duration-150 cursor-pointer ${
+                            selectedAddressId === addr.id
+                              ? "border-gold bg-gold/10"
+                              : "border-black/10 hover:border-black/30 bg-white"
+                          }`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className={`mt-0.5 w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center ${
+                              selectedAddressId === addr.id ? "border-gold bg-gold" : "border-black/30"
+                            }`}>
+                              {selectedAddressId === addr.id && <IoMdCheckmark size={10} className="text-white" />}
+                            </div>
+                            <div>
+                              <p className="font-medium text-black/80">{addr.first_name} {addr.last_name}</p>
+                              <p className="text-black/50 text-xs mt-0.5">
+                                {addr.address_1}{addr.address_2 ? `, ${addr.address_2}` : ""}, {addr.city}, {addr.province}
+                              </p>
+                              {addr.phone && <p className="text-black/40 text-xs">{addr.phone}</p>}
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedAddressId(null);
+                          setFirstName(""); setLastName(""); setAddress("");
+                          setApartment(""); setCity(""); setPostalCode("13001");
+                          setGovernorate("Capital Governorate"); setPhone("+965");
+                        }}
+                        className={`w-full text-left px-4 py-3 rounded-xl border-2 text-sm transition-all cursor-pointer ${
+                          selectedAddressId === null
+                            ? "border-gold bg-gold/10"
+                            : "border-black/10 hover:border-black/30 bg-white"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`w-4 h-4 rounded-full border-2 shrink-0 flex items-center justify-center ${
+                            selectedAddressId === null ? "border-gold bg-gold" : "border-black/30"
+                          }`}>
+                            {selectedAddressId === null && <IoMdCheckmark size={10} className="text-white" />}
+                          </div>
+                          <span className="font-medium text-black/60">+ Enter a new address</span>
+                        </div>
+                      </button>
+                    </div>
+                    <div className="border-t border-black/10 mt-1" />
+                  </div>
+                )}
+
                 {/* Country Selection strictly Kuwait */}
                 <div className="relative">
                   <select className="w-full border border-black/20 rounded-xl px-4 py-3 text-sm outline-none focus:border-gold transition-colors bg-white appearance-none cursor-pointer">

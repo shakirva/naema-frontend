@@ -87,7 +87,7 @@ const mapMedusaOrder = (medusaOrder: any): Order => {
     id: item.id,
     name: item.title,
     size: item.variant_title || "Standard",
-    price: (item.unit_price ?? 0) / 100, // Medusa cents format
+    price: (item.unit_price ?? 0) / 1000, // KWD uses 1000 fils
     qty: item.quantity ?? 1,
     image: item.thumbnail || "/misc.png",
   }));
@@ -106,10 +106,10 @@ const mapMedusaOrder = (medusaOrder: any): Order => {
     date: formattedDate,
     status,
     items,
-    subtotal: (medusaOrder.subtotal ?? 0) / 100,
-    shipping: (medusaOrder.shipping_total ?? 0) / 100,
-    taxes: (medusaOrder.tax_total ?? 0) / 100,
-    total: (medusaOrder.total ?? 0) / 100,
+    subtotal: (medusaOrder.subtotal ?? 0) / 1000,
+    shipping: (medusaOrder.shipping_total ?? 0) / 1000,
+    taxes: (medusaOrder.tax_total ?? 0) / 1000,
+    total: (medusaOrder.total ?? 0) / 1000,
     shippingAddress: shippingStr || "No shipping address specified",
     billingAddress: billingStr || "No billing address specified",
   };
@@ -265,7 +265,7 @@ const OrderDetail = ({
                   <p className="text-xs text-black/40">Qty: {item.qty}</p>
                 </div>
                 <p className="font-semibold text-sm">
-                  KWD {(item.price * item.qty).toLocaleString()}
+                  KD {(item.price * item.qty).toFixed(3)}
                 </p>
               </div>
             ))}
@@ -301,29 +301,29 @@ const OrderDetail = ({
                 Subtotal · {order.items.length} item
                 {order.items.length !== 1 ? "s" : ""}
               </span>
-              <span>KWD {order.subtotal.toLocaleString()}</span>
+              <span>KD {order.subtotal.toFixed(3)}</span>
             </div>
             <div className="flex justify-between text-sm text-black/60">
               <span>Shipping</span>
               <span>
-                {order.shipping === 0 ? "FREE" : `KWD ${order.shipping}`}
+                {order.shipping === 0 ? "FREE" : `KD ${order.shipping.toFixed(3)}`}
               </span>
             </div>
             <div className="flex justify-between text-sm text-black/60">
               <span>Taxes</span>
-              <span>KWD {order.taxes}</span>
+              <span>KD {order.taxes.toFixed(3)}</span>
             </div>
 
             {order.discount && (
               <div className="flex justify-between text-sm text-darkgold">
                 <span>{order.discount.code}</span>
-                <span>−KWD {order.discount.amount.toLocaleString()}</span>
+                <span>−KD {order.discount.amount.toFixed(3)}</span>
               </div>
             )}
 
             <div className="border-t border-black/10 pt-3 flex justify-between font-semibold">
               <span>Total</span>
-              <span>KWD {order.total.toLocaleString()}</span>
+              <span>KD {order.total.toFixed(3)}</span>
             </div>
           </div>
         </div>
@@ -424,7 +424,7 @@ const OrdersTab = ({
                 </p>
                 <p className="text-xs text-black/40 mt-0.5">
                   {order.items.length} item{order.items.length !== 1 ? "s" : ""}{" "}
-                  · KWD {order.total.toLocaleString()}
+                  · KD {order.total.toFixed(3)}
                 </p>
               </div>
 

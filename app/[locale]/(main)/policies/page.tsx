@@ -73,7 +73,7 @@ export default function PoliciesPage() {
 
           <h3 className="font-semibold mb-3">Pricing & Payment</h3>
           <ul className="list-disc pl-5 space-y-2 text-black/70 mb-6">
-            <li>All prices are displayed in Kuwaiti Dinar (KWD).</li>
+            <li>All prices are displayed in Kuwaiti Dinar (KD).</li>
             <li>Prices may change without prior notice. Orders are charged at the price displayed at time of checkout.</li>
             <li>Accepted payment methods include KNET, Visa, Mastercard, and Apple Pay through our secure Tap Payments gateway.</li>
             <li>Payment information is processed securely and is not stored by NAEMA FOODSTUFF EST.</li>

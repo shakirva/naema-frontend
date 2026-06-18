@@ -145,7 +145,7 @@ export function formatPrice(amount: number, currencyCode: string = "kwd"): strin
   const code = currencyCode.toLowerCase();
   // Medusa stores amounts in smallest unit
   if (code === "kwd") {
-    return `KD ${(amount / 1000).toFixed(3)}`;
+    return `KD ${amount.toFixed(3)}`;
   }
   if (code === "inr") {
     return `₹${(amount / 100).toLocaleString()}`;

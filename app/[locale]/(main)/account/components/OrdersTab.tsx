@@ -87,7 +87,7 @@ const mapMedusaOrder = (medusaOrder: any): Order => {
     id: item.id,
     name: item.title,
     size: item.variant_title || "Standard",
-    price: (item.unit_price ?? 0) / 1000, // KWD uses 1000 fils
+    price: item.unit_price ?? 0,
     qty: item.quantity ?? 1,
     image: item.thumbnail || "/misc.png",
   }));
@@ -106,10 +106,10 @@ const mapMedusaOrder = (medusaOrder: any): Order => {
     date: formattedDate,
     status,
     items,
-    subtotal: (medusaOrder.subtotal ?? 0) / 1000,
-    shipping: (medusaOrder.shipping_total ?? 0) / 1000,
-    taxes: (medusaOrder.tax_total ?? 0) / 1000,
-    total: (medusaOrder.total ?? 0) / 1000,
+    subtotal: medusaOrder.subtotal ?? 0,
+    shipping: medusaOrder.shipping_total ?? 0,
+    taxes: medusaOrder.tax_total ?? 0,
+    total: medusaOrder.total ?? 0,
     shippingAddress: shippingStr || "No shipping address specified",
     billingAddress: billingStr || "No billing address specified",
   };

@@ -81,7 +81,7 @@ const SocialFeed = () => {
 
         {/* CTA */}
         <Link
-          href="/"
+          href="https://instagram.com/naema_foodstuff"
           className="mt-12 inline-flex items-center gap-3 rounded-full border-2 border-gold bg-navy px-7 py-3 text-cream relative group overflow-hidden"
         >
           <span className="flex items-center gap-3 group-hover:-translate-y-full transition-all duration-300 ease-[cubic-bezier(0.65,0,0.35,1)]">

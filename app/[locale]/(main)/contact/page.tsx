@@ -162,7 +162,7 @@ const page = () => {
                     </span>
 
                     <Link
-                      href="https://instagram.com/naemafoodstuff"
+                      href="https://instagram.com/naema_foodstuff"
                       target="_blank"
                       className="mt-1 text-navy text-[15px] md:text-lg tracking-tight"
                     >

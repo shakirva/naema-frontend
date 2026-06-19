@@ -27,12 +27,14 @@ export async function login(formData: FormData) {
   }
 
   const backendUrl = getBackendUrl();
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "pk_ed2e2b7b35796dd735f8ca890ae87375a50d3e5ac2076922d317b3a52cb76042";
 
   try {
     const res = await fetch(`${backendUrl}/auth/customer/emailpass`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-publishable-api-key": publishableKey,
       },
       body: JSON.stringify({ email, password }),
     });
@@ -62,11 +64,15 @@ export async function login(formData: FormData) {
 export async function requestPasswordReset(email: string) {
   if (!email) return { error: "Email is required." };
   const backendUrl = getBackendUrl();
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "pk_ed2e2b7b35796dd735f8ca890ae87375a50d3e5ac2076922d317b3a52cb76042";
 
   try {
     const res = await fetch(`${backendUrl}/auth/customer/emailpass/reset-password`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "x-publishable-api-key": publishableKey,
+      },
       body: JSON.stringify({ identifier: email }),
     });
 
@@ -85,13 +91,15 @@ export async function requestPasswordReset(email: string) {
 export async function resetPassword(password: string, token: string) {
   if (!password || !token) return { error: "Password and token are required." };
   const backendUrl = getBackendUrl();
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "pk_ed2e2b7b35796dd735f8ca890ae87375a50d3e5ac2076922d317b3a52cb76042";
 
   try {
     const res = await fetch(`${backendUrl}/auth/customer/emailpass/update`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        "Authorization": `Bearer ${token}`,
+        "x-publishable-api-key": publishableKey,
       },
       body: JSON.stringify({ password }),
     });
@@ -124,7 +132,10 @@ export async function signup(formData: FormData) {
     // 1. Register Auth Identity
     const authRes = await fetch(`${backendUrl}/auth/customer/emailpass/register`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "x-publishable-api-key": publishableKey,
+      },
       body: JSON.stringify({ email, password }),
     });
     

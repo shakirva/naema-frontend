@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useTransition, useEffect } from "react";
+import { useState, useTransition, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FiEye, FiEyeOff, FiMail, FiLock } from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
 import { login } from "../../../actions";
 
 declare global {
@@ -16,6 +15,9 @@ declare global {
           initialize: (config: any) => void;
           prompt: () => void;
           renderButton: (el: HTMLElement, config: any) => void;
+        };
+        oauth2: {
+          initCodeClient: (config: any) => any;
         };
       };
     };
@@ -33,15 +35,14 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
-  const [gisReady, setGisReady] = useState(false);
+  const googleBtnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const initGIS = () => {
-      if (!window.google?.accounts?.id) return;
+      if (!window.google?.accounts?.id || !googleBtnRef.current) return;
+
       window.google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT_ID,
-        ux_mode: "popup",
-        use_fedcm_for_prompt: false,
         callback: async (credentialResponse: { credential: string }) => {
           setGoogleLoading(true);
           setError(null);
@@ -68,27 +69,28 @@ const LoginPage = () => {
           }
         },
       });
-      setGisReady(true);
+
+      // Render Google's official sign-in button — this ALWAYS works, no FedCM issues
+      window.google.accounts.id.renderButton(googleBtnRef.current, {
+        type: "standard",
+        theme: "outline",
+        size: "large",
+        text: "continue_with",
+        shape: "pill",
+        width: 400,
+        logo_alignment: "left",
+      });
     };
 
     if (window.google?.accounts?.id) {
       initGIS();
     } else {
-      // Avoid loading the script twice
-      const existing = document.querySelector(
-        'script[src="https://accounts.google.com/gsi/client"]'
-      );
-      if (!existing) {
-        const script = document.createElement("script");
-        script.src = "https://accounts.google.com/gsi/client";
-        script.async = true;
-        script.defer = true;
-        script.onload = initGIS;
-        document.head.appendChild(script);
-      } else {
-        // Script already in DOM, just wait for it
-        existing.addEventListener("load", initGIS);
-      }
+      const script = document.createElement("script");
+      script.src = "https://accounts.google.com/gsi/client";
+      script.async = true;
+      script.defer = true;
+      script.onload = () => setTimeout(initGIS, 100);
+      document.head.appendChild(script);
     }
   }, [router]);
 
@@ -158,19 +160,13 @@ const LoginPage = () => {
             </p>
           </div>
 
-          {/* Google SSO — popup only, no redirect */}
-          <button
-            onClick={() => {
-              if (gisReady && window.google?.accounts?.id) {
-                window.google.accounts.id.prompt();
-              }
-            }}
-            disabled={googleLoading || !gisReady}
-            className="w-full flex items-center justify-center gap-3 py-3.5 rounded-full border-2 border-black/10 bg-white hover:border-gold transition-all duration-200 text-sm font-medium cursor-pointer disabled:opacity-60"
-          >
-            <FcGoogle size={20} />
-            {googleLoading ? "Signing in..." : !gisReady ? "Loading..." : "Continue with Google"}
-          </button>
+          {/* Google Sign-In — rendered by Google's own library */}
+          <div className="flex justify-center">
+            <div ref={googleBtnRef} />
+            {googleLoading && (
+              <p className="text-sm text-black/50 mt-2">Signing in with Google...</p>
+            )}
+          </div>
 
           {/* Divider */}
           <div className="flex items-center gap-3">

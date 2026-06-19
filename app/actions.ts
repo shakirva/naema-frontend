@@ -206,6 +206,34 @@ export async function logoutCustomer() {
   return { success: true };
 }
 
+export async function getSavedAddresses() {
+  const token = (await cookies()).get("_medusa_jwt")?.value;
+  if (!token) return { addresses: [], customer: null };
+
+  const backendUrl = getBackendUrl();
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "pk_ed2e2b7b35796dd735f8ca890ae87375a50d3e5ac2076922d317b3a52cb76042";
+
+  try {
+    const res = await fetch(`${backendUrl}/store/customers/me?fields=*addresses`, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "x-publishable-api-key": publishableKey,
+      },
+      next: { revalidate: 0 },
+    });
+
+    if (!res.ok) return { addresses: [], customer: null };
+
+    const data = await res.json();
+    const customer = data.customer || null;
+    const addresses = customer?.addresses || [];
+    return { addresses, customer };
+  } catch (err) {
+    console.error("Failed to fetch saved addresses:", err);
+    return { addresses: [], customer: null };
+  }
+}
+
 export async function getCustomerOrders() {
   const token = (await cookies()).get("_medusa_jwt")?.value;
   if (!token) return { orders: [] };

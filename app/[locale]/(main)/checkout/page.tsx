@@ -9,7 +9,7 @@ import { FiChevronDown, FiLock } from "react-icons/fi";
 import { useCart } from "../../../context/CartContext";
 import { formatPrice } from "@/lib/types";
 import medusa from "@/lib/medusa";
-import { completeCheckoutFlowServer } from "../../../actions";
+import { completeCheckoutFlowServer, getSavedAddresses } from "../../../actions";
 
 type PaymentMethod = "card" | "cod";
 
@@ -100,30 +100,27 @@ const CheckoutPage = () => {
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
-        const res = await medusa.store.customer.retrieve().catch(() => null);
-        if (res?.customer) {
-          setEmail(res.customer.email || "");
-          setFirstName(res.customer.first_name || "");
-          setLastName(res.customer.last_name || "");
-          setPhone(res.customer.phone || "+965");
-
-          // Fetch saved addresses
-          const addrRes = await (medusa.store.customer as any).listAddress().catch(() => null);
-          const addresses = addrRes?.addresses || res.customer.addresses || [];
+        // Use server action so it can read the httpOnly _medusa_jwt cookie
+        const { customer, addresses } = await getSavedAddresses();
+        if (customer) {
+          setEmail(customer.email || "");
+          setFirstName(customer.first_name || "");
+          setLastName(customer.last_name || "");
+          setPhone(customer.phone || "+965");
           setSavedAddresses(addresses);
 
-          // Auto-select first address if available
-          if (addresses.length > 0) {
-            const first = addresses[0];
-            setSelectedAddressId(first.id);
-            setFirstName(first.first_name || res.customer.first_name || "");
-            setLastName(first.last_name || res.customer.last_name || "");
-            setAddress(first.address_1 || "");
-            setApartment(first.address_2 || "");
-            setCity(first.city || "");
-            setGovernorate(first.province || "Capital Governorate");
-            setPostalCode(first.postal_code || "13001");
-            setPhone(first.phone || res.customer.phone || "+965");
+          // Auto-select default address, or first available
+          const defaultAddr = addresses.find((a: any) => a.is_default_shipping) || addresses[0];
+          if (defaultAddr) {
+            setSelectedAddressId(defaultAddr.id);
+            setFirstName(defaultAddr.first_name || customer.first_name || "");
+            setLastName(defaultAddr.last_name || customer.last_name || "");
+            setAddress(defaultAddr.address_1 || "");
+            setApartment(defaultAddr.address_2 || "");
+            setCity(defaultAddr.city || "");
+            setGovernorate(defaultAddr.province || "Capital Governorate");
+            setPostalCode(defaultAddr.postal_code || "13001");
+            setPhone(defaultAddr.phone || customer.phone || "+965");
           }
         }
       } catch (err) {

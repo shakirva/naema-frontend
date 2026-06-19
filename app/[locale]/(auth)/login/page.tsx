@@ -68,7 +68,7 @@ const LoginPage = () => {
               const expires = new Date();
               expires.setFullYear(expires.getFullYear() + 1);
               document.cookie = `_medusa_jwt=${data.token}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
-              router.replace("/account");
+              window.location.href = "/en/account";
             } else {
               setError(data.message || "Google sign-in failed. Please try again.");
             }

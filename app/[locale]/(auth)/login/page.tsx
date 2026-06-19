@@ -41,6 +41,7 @@ const LoginPage = () => {
       window.google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT_ID,
         ux_mode: "popup",
+        use_fedcm_for_prompt: false,
         callback: async (credentialResponse: { credential: string }) => {
           setGoogleLoading(true);
           setError(null);

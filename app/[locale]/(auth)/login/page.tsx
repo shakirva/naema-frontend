@@ -1,12 +1,26 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FiEye, FiEyeOff, FiMail, FiLock } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import { login } from "../../../actions";
+
+declare global {
+  interface Window {
+    google?: {
+      accounts: {
+        id: {
+          initialize: (config: any) => void;
+          prompt: () => void;
+          renderButton: (el: HTMLElement, config: any) => void;
+        };
+      };
+    };
+  }
+}
 
 const LoginPage = () => {
   const router = useRouter();
@@ -15,6 +29,63 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const handleGoogleCredential = async (credentialResponse: { credential: string }) => {
+    setGoogleLoading(true);
+    setError(null);
+    try {
+      const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL;
+      const res = await fetch(`${backendUrl}/auth/customer/google/token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id_token: credentialResponse.credential }),
+      });
+      const data = await res.json();
+      if (data.token) {
+        const expires = new Date();
+        expires.setFullYear(expires.getFullYear() + 1);
+        document.cookie = `_medusa_jwt=${data.token}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+        router.replace("/account");
+      } else {
+        // Fallback: use redirect flow
+        handleGoogleRedirect();
+      }
+    } catch {
+      handleGoogleRedirect();
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const handleGoogleRedirect = async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/auth/customer/google`);
+      const data = await res.json();
+      if (data.location) {
+        window.location.href = data.location;
+      }
+    } catch (e) {
+      console.error("Google auth failed", e);
+      setError("Google sign-in failed. Please try again.");
+    }
+  };
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+      window.google?.accounts.id.initialize({
+        client_id: "726121337716-m3e5adatl4k95rlcvi88sj2ivttce5nv.apps.googleusercontent.com",
+        callback: handleGoogleCredential,
+        ux_mode: "popup",
+      });
+    };
+    document.head.appendChild(script);
+    return () => { document.head.removeChild(script); };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -86,21 +157,18 @@ const LoginPage = () => {
 
           {/* Google SSO */}
           <button
-            onClick={async () => {
-              try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/auth/customer/google`);
-                const data = await res.json();
-                if (data.location) {
-                  window.location.href = data.location;
-                }
-              } catch (e) {
-                console.error("Failed to fetch Google Auth location", e);
+            onClick={() => {
+              if (window.google?.accounts?.id) {
+                window.google.accounts.id.prompt();
+              } else {
+                handleGoogleRedirect();
               }
             }}
-            className="w-full flex items-center justify-center gap-3 py-3.5 rounded-full border-2 border-black/10 bg-white hover:border-gold transition-all duration-200 text-sm font-medium cursor-pointer"
+            disabled={googleLoading}
+            className="w-full flex items-center justify-center gap-3 py-3.5 rounded-full border-2 border-black/10 bg-white hover:border-gold transition-all duration-200 text-sm font-medium cursor-pointer disabled:opacity-60"
           >
             <FcGoogle size={20} />
-            Continue with Google
+            {googleLoading ? "Signing in..." : "Continue with Google"}
           </button>
 
           {/* Divider */}

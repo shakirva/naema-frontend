@@ -48,9 +48,14 @@ const LoginPage = () => {
           setError(null);
           try {
             const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL;
+            const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "pk_ed2e2b7b35796dd735f8ca890ae87375a50d3e5ac2076922d317b3a52cb76042";
+            
             const res = await fetch(`${backendUrl}/store/auth/google/token`, {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
+              headers: { 
+                "Content-Type": "application/json",
+                "x-publishable-api-key": publishableKey
+              },
               body: JSON.stringify({ id_token: credentialResponse.credential }),
             });
             const data = await res.json();

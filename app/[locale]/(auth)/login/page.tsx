@@ -22,6 +22,9 @@ declare global {
   }
 }
 
+const GOOGLE_CLIENT_ID =
+  "726121337716-m3e5adatl4k95rlcvi88sj2ivttce5nv.apps.googleusercontent.com";
+
 const LoginPage = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -30,62 +33,63 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
-
-  const handleGoogleCredential = async (credentialResponse: { credential: string }) => {
-    setGoogleLoading(true);
-    setError(null);
-    try {
-      const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL;
-      const res = await fetch(`${backendUrl}/auth/customer/google/token`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id_token: credentialResponse.credential }),
-      });
-      const data = await res.json();
-      if (data.token) {
-        const expires = new Date();
-        expires.setFullYear(expires.getFullYear() + 1);
-        document.cookie = `_medusa_jwt=${data.token}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
-        router.replace("/account");
-      } else {
-        // Fallback: use redirect flow
-        handleGoogleRedirect();
-      }
-    } catch {
-      handleGoogleRedirect();
-    } finally {
-      setGoogleLoading(false);
-    }
-  };
-
-  const handleGoogleRedirect = async () => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/auth/customer/google`);
-      const data = await res.json();
-      if (data.location) {
-        window.location.href = data.location;
-      }
-    } catch (e) {
-      console.error("Google auth failed", e);
-      setError("Google sign-in failed. Please try again.");
-    }
-  };
+  const [gisReady, setGisReady] = useState(false);
 
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      window.google?.accounts.id.initialize({
-        client_id: "726121337716-m3e5adatl4k95rlcvi88sj2ivttce5nv.apps.googleusercontent.com",
-        callback: handleGoogleCredential,
+    const initGIS = () => {
+      if (!window.google?.accounts?.id) return;
+      window.google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
         ux_mode: "popup",
+        callback: async (credentialResponse: { credential: string }) => {
+          setGoogleLoading(true);
+          setError(null);
+          try {
+            const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL;
+            const res = await fetch(`${backendUrl}/store/auth/google/token`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id_token: credentialResponse.credential }),
+            });
+            const data = await res.json();
+            if (data.token) {
+              const expires = new Date();
+              expires.setFullYear(expires.getFullYear() + 1);
+              document.cookie = `_medusa_jwt=${data.token}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+              router.replace("/account");
+            } else {
+              setError(data.message || "Google sign-in failed. Please try again.");
+            }
+          } catch {
+            setError("Google sign-in failed. Please try again.");
+          } finally {
+            setGoogleLoading(false);
+          }
+        },
       });
+      setGisReady(true);
     };
-    document.head.appendChild(script);
-    return () => { document.head.removeChild(script); };
-  }, []);
+
+    if (window.google?.accounts?.id) {
+      initGIS();
+    } else {
+      // Avoid loading the script twice
+      const existing = document.querySelector(
+        'script[src="https://accounts.google.com/gsi/client"]'
+      );
+      if (!existing) {
+        const script = document.createElement("script");
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        script.defer = true;
+        script.onload = initGIS;
+        document.head.appendChild(script);
+      } else {
+        // Script already in DOM, just wait for it
+        existing.addEventListener("load", initGIS);
+      }
+    }
+  }, [router]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -94,7 +98,6 @@ const LoginPage = () => {
       const formData = new FormData();
       formData.append("email", email);
       formData.append("password", password);
-
       const res = await login(formData);
       if (res.error) {
         setError(res.error);
@@ -108,7 +111,6 @@ const LoginPage = () => {
     <section className="min-h-screen bg-cream flex">
       {/* LEFT — decorative panel */}
       <div className="hidden lg:flex w-1/2 bg-navy relative overflow-hidden flex-col items-center justify-center p-16">
-        {/* Background texture */}
         <div className="absolute inset-0 opacity-5">
           <Image
             src="/verydarkpalm.webp"
@@ -145,7 +147,7 @@ const LoginPage = () => {
               Sign In
             </h1>
             <p className="text-sm text-black/50 mt-2 tracking-tight">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 href="/sign-up"
                 className="text-navy font-medium underline underline-offset-4 hover:text-gold transition"
@@ -155,20 +157,18 @@ const LoginPage = () => {
             </p>
           </div>
 
-          {/* Google SSO */}
+          {/* Google SSO — popup only, no redirect */}
           <button
             onClick={() => {
-              if (window.google?.accounts?.id) {
+              if (gisReady && window.google?.accounts?.id) {
                 window.google.accounts.id.prompt();
-              } else {
-                handleGoogleRedirect();
               }
             }}
-            disabled={googleLoading}
+            disabled={googleLoading || !gisReady}
             className="w-full flex items-center justify-center gap-3 py-3.5 rounded-full border-2 border-black/10 bg-white hover:border-gold transition-all duration-200 text-sm font-medium cursor-pointer disabled:opacity-60"
           >
             <FcGoogle size={20} />
-            {googleLoading ? "Signing in..." : "Continue with Google"}
+            {googleLoading ? "Signing in..." : !gisReady ? "Loading..." : "Continue with Google"}
           </button>
 
           {/* Divider */}
@@ -216,46 +216,32 @@ const LoginPage = () => {
               />
               <button
                 type="button"
-                onClick={() => setShowPassword((s) => !s)}
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                aria-pressed={showPassword}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-black/30 hover:text-black transition cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-black/30 hover:text-black/60 transition"
               >
-                {showPassword ? (
-                  <FiEyeOff size={15} aria-hidden="true" />
-                ) : (
-                  <FiEye size={15} aria-hidden="true" />
-                )}
+                {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
               </button>
             </div>
 
-            {/* Forgot */}
-            <div className="flex justify-center w-full">
-              <Link
-                href="/forgot-password"
-                className="text-xs text-black/40 w-fit  hover:text-black transition underline underline-offset-4 "
-              >
-                Forgot your password?
-              </Link>
-            </div>
+            <Link
+              href="/forgot-password"
+              className="text-xs text-black/40 underline underline-offset-4 self-center hover:text-black/70 transition"
+            >
+              Forgot your password?
+            </Link>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={isPending}
-              className="w-full py-4 rounded-full bg-navy text-cream text-sm font-medium hover:opacity-90 transition-all duration-200 cursor-pointer disabled:opacity-50"
+              className="w-full py-3.5 bg-navy text-cream rounded-full text-sm font-medium hover:opacity-90 transition disabled:opacity-60"
             >
-              {isPending ? "Signing In..." : "Sign In"}
+              {isPending ? "Signing in..." : "Sign In"}
             </button>
           </form>
 
-          {/* Help */}
-          <p className="text-xs text-black/50 text-center leading-relaxed">
+          <p className="text-xs text-black/30 text-center">
             Need help?{" "}
-            <Link
-              href="/contact"
-              className="underline underline-offset-4 hover:text-black transition"
-            >
+            <Link href="/contact" className="underline hover:text-black/60 transition">
               Contact us
             </Link>
           </p>

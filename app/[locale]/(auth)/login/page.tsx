@@ -36,13 +36,18 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [googleLoading, setGoogleLoading] = useState(false);
   const googleBtnRef = useRef<HTMLDivElement>(null);
+  const isInitialized = useRef(false);
 
   useEffect(() => {
     const initGIS = () => {
-      if (!window.google?.accounts?.id || !googleBtnRef.current) return;
+      if (!window.google?.accounts?.id || !googleBtnRef.current || isInitialized.current) return;
+      
+      isInitialized.current = true;
+      googleBtnRef.current.innerHTML = "";
 
       window.google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT_ID,
+        use_fedcm_for_prompt: false,
         callback: async (credentialResponse: { credential: string }) => {
           setGoogleLoading(true);
           setError(null);

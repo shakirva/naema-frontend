@@ -145,8 +145,8 @@ const CheckoutPage = () => {
   const shippingTotal =
     cart?.shipping_total || (subtotal > 15 ? 0 : 1.5);
   const discountTotal =
-    cart?.discount_total || (discountApplied ? Math.round(subtotal * 0.1) : 0);
-  const grandTotal = total || subtotal + shippingTotal - discountTotal;
+    cart?.discount_total || (discountApplied ? Math.round(subtotal * 0.1 * 1000) / 1000 : 0);
+  const grandTotal = subtotal + shippingTotal - discountTotal;
 
   const handleApplyDiscount = () => {
     if (discountCode.toLowerCase() === "naema10") setDiscountApplied(true);

@@ -107,7 +107,7 @@ const SignupPage = () => {
       </div>
 
       {/* RIGHT — form */}
-      <div className="flex-1 flex flex-col items-center justify-center px-8 py-16">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-16">
         {/* Mobile logo */}
         <div className="lg:hidden mb-8">
           <Image src="/logo.webp" width={70} height={70} alt="Naema" />

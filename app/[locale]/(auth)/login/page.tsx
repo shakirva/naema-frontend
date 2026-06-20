@@ -39,57 +39,74 @@ const LoginPage = () => {
   const isInitialized = useRef(false);
 
   useEffect(() => {
+    let handleResize: (() => void) | null = null;
+    let lastWidth = 0;
+
     const initGIS = () => {
-      if (!window.google?.accounts?.id || !googleBtnRef.current || isInitialized.current) return;
+      if (!window.google?.accounts?.id || !googleBtnRef.current) return;
       
-      isInitialized.current = true;
-      googleBtnRef.current.innerHTML = "";
-
-      window.google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        use_fedcm_for_prompt: false,
-        callback: async (credentialResponse: { credential: string }) => {
-          setGoogleLoading(true);
-          setError(null);
-          try {
-            const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL;
-            const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "pk_ed2e2b7b35796dd735f8ca890ae87375a50d3e5ac2076922d317b3a52cb76042";
-            
-            const res = await fetch(`${backendUrl}/store/auth/google/token`, {
-              method: "POST",
-              headers: { 
-                "Content-Type": "application/json",
-                "x-publishable-api-key": publishableKey
-              },
-              body: JSON.stringify({ id_token: credentialResponse.credential }),
-            });
-            const data = await res.json();
-            if (data.token) {
-              const expires = new Date();
-              expires.setFullYear(expires.getFullYear() + 1);
-              document.cookie = `_medusa_jwt=${data.token}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
-              window.location.href = "/en/account";
-            } else {
-              setError(data.message || "Google sign-in failed. Please try again.");
+      if (!isInitialized.current) {
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          use_fedcm_for_prompt: false,
+          callback: async (credentialResponse: { credential: string }) => {
+            setGoogleLoading(true);
+            setError(null);
+            try {
+              const backendUrl = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL;
+              const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || "pk_ed2e2b7b35796dd735f8ca890ae87375a50d3e5ac2076922d317b3a52cb76042";
+              
+              const res = await fetch(`${backendUrl}/store/auth/google/token`, {
+                method: "POST",
+                headers: { 
+                  "Content-Type": "application/json",
+                  "x-publishable-api-key": publishableKey
+                },
+                body: JSON.stringify({ id_token: credentialResponse.credential }),
+              });
+              const data = await res.json();
+              if (data.token) {
+                const expires = new Date();
+                expires.setFullYear(expires.getFullYear() + 1);
+                document.cookie = `_medusa_jwt=${data.token}; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+                window.location.href = "/en/account";
+              } else {
+                setError(data.message || "Google sign-in failed. Please try again.");
+              }
+            } catch {
+              setError("Google sign-in failed. Please try again.");
+            } finally {
+              setGoogleLoading(false);
             }
-          } catch {
-            setError("Google sign-in failed. Please try again.");
-          } finally {
-            setGoogleLoading(false);
-          }
-        },
-      });
+          },
+        });
+        isInitialized.current = true;
+      }
 
-      // Render Google's official sign-in button — this ALWAYS works, no FedCM issues
-      window.google.accounts.id.renderButton(googleBtnRef.current, {
-        type: "standard",
-        theme: "outline",
-        size: "large",
-        text: "continue_with",
-        shape: "pill",
-        width: 400,
-        logo_alignment: "left",
-      });
+      const renderGoogleButton = () => {
+        if (!window.google?.accounts?.id || !googleBtnRef.current) return;
+        const parentWidth = googleBtnRef.current.parentElement?.offsetWidth || 400;
+        const calculatedWidth = Math.min(400, Math.max(200, parentWidth));
+        
+        if (Math.abs(calculatedWidth - lastWidth) < 10) return;
+        lastWidth = calculatedWidth;
+
+        googleBtnRef.current.innerHTML = "";
+        window.google.accounts.id.renderButton(googleBtnRef.current, {
+          type: "standard",
+          theme: "outline",
+          size: "large",
+          text: "continue_with",
+          shape: "pill",
+          width: calculatedWidth,
+          logo_alignment: "left",
+        });
+      };
+
+      renderGoogleButton();
+      
+      handleResize = renderGoogleButton;
+      window.addEventListener("resize", handleResize);
     };
 
     if (window.google?.accounts?.id) {
@@ -102,6 +119,12 @@ const LoginPage = () => {
       script.onload = () => setTimeout(initGIS, 100);
       document.head.appendChild(script);
     }
+
+    return () => {
+      if (handleResize) {
+        window.removeEventListener("resize", handleResize);
+      }
+    };
   }, [router]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -147,7 +170,7 @@ const LoginPage = () => {
       </div>
 
       {/* RIGHT — form */}
-      <div className="flex-1 flex flex-col items-center justify-center px-8 py-16">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-8 py-16">
         {/* Mobile logo */}
         <div className="lg:hidden mb-8">
           <Image src="/logo.webp" width={90} height={90} alt="Naema" />
@@ -171,8 +194,8 @@ const LoginPage = () => {
           </div>
 
           {/* Google Sign-In — rendered by Google's own library */}
-          <div className="flex justify-center">
-            <div ref={googleBtnRef} />
+          <div className="w-full flex flex-col items-center justify-center overflow-hidden">
+            <div ref={googleBtnRef} className="w-full flex justify-center" />
             {googleLoading && (
               <p className="text-sm text-black/50 mt-2">Signing in with Google...</p>
             )}

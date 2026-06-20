@@ -143,7 +143,7 @@ const CheckoutPage = () => {
   };
 
   const shippingTotal =
-    cart?.shipping_total || (subtotal > 15 * 1000 ? 0 : 1.5 * 1000);
+    cart?.shipping_total || (subtotal > 15 ? 0 : 1.5);
   const discountTotal =
     cart?.discount_total || (discountApplied ? Math.round(subtotal * 0.1) : 0);
   const grandTotal = total || subtotal + shippingTotal - discountTotal;
@@ -492,7 +492,7 @@ const CheckoutPage = () => {
                   {
                     label: "Kuwait Standard Shipping",
                     time: "1–2 business days",
-                    price: subtotal > 15 * 1000 ? "FREE" : "KD 1.500",
+                    price: subtotal > 15 ? "FREE" : "KD 1.500",
                   },
                 ].map((opt, i) => (
                   <div
@@ -679,9 +679,9 @@ const CheckoutPage = () => {
                   <span>Total</span>
                   <span className="text-lg">{formatPrice(grandTotal)}</span>
                 </div>
-                {subtotal < 15 * 1000 && (
+                {subtotal < 15 && (
                   <p className="text-xs text-black/40 text-center mt-2">
-                    Add {formatPrice(15 * 1000 - subtotal)} more for free
+                    Add {formatPrice(15 - subtotal)} more for free
                     shipping
                   </p>
                 )}

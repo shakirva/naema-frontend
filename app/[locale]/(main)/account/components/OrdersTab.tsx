@@ -28,7 +28,7 @@ type Order = {
   id: string;
   display_id?: number | string;
   date: string;
-  status: "paid" | "shipped" | "delivered" | "pending" | "canceled";
+  status: "paid" | "processing" | "shipped" | "delivered" | "pending" | "canceled";
   items: OrderItem[];
   subtotal: number;
   shipping: number;
@@ -69,13 +69,12 @@ const mapMedusaOrder = (medusaOrder: any): Order => {
   let status: Order["status"] = "pending";
   if (medusaOrder.status === "canceled") {
     status = "canceled";
-  } else if (
-    medusaOrder.fulfillment_status === "delivered" ||
-    medusaOrder.fulfillment_status === "fulfilled"
-  ) {
+  } else if (medusaOrder.fulfillment_status === "delivered") {
     status = "delivered";
   } else if (medusaOrder.fulfillment_status === "shipped") {
     status = "shipped";
+  } else if (medusaOrder.fulfillment_status === "fulfilled") {
+    status = "processing";
   } else if (
     medusaOrder.payment_status === "captured" ||
     medusaOrder.payment_status === "paid"
@@ -122,6 +121,10 @@ const StatusBadge = ({ status }: { status: Order["status"] }) => {
     paid: {
       label: "Paid",
       classes: "bg-green-50 text-green-600 border-green-200",
+    },
+    processing: {
+      label: "Processing",
+      classes: "bg-blue-50 text-blue-600 border-blue-200",
     },
     shipped: {
       label: "Shipped",
@@ -241,6 +244,10 @@ const OrderDetail = ({
               <FiTruck size={13} />
               {order.status === "delivered"
                 ? "Delivered"
+                : order.status === "shipped"
+                ? "Shipped"
+                : order.status === "processing"
+                ? "Processing"
                 : "Active / Processing"}
             </div>
           </div>
